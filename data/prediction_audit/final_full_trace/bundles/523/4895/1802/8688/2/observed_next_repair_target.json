@@ -1,0 +1,71 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "523",
+    "assessment_id": "4895",
+    "exercise_id": "1802",
+    "student_id": "8688",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "from math import*\n\npv = int(input(\"pontos de vida do monstro: \"))\nd1 = int(input(\"dado 1: \"))\nd2 = int(input(\"dado 2: \"))\n\np1 = int(sqrt(5*d1))\np2 = int(pi**(d2/3))\ndano = p1 + p2\n\nprint(int(pv-dano))\n\n\t\t  ",
+    "grade": 0.0,
+    "pass_count": 1,
+    "failed_test_indices_0idx": [
+      0,
+      1
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "from math import*\n\npv = int(input(\"pontos de vida do monstro: \"))\nd1 = int(input(\"dado 1: \"))\nd2 = int(input(\"dado 2: \"))\n\np1 = (sqrt(5*d1))\np2 = (pi**(d2/3))\ndano = p1 + p2\n\nprint(int(pv-dano))\n\n\t\t  ",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "200\n1\n6",
+        "expected": "188",
+        "actual": "187"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "300\n6\n6",
+        "expected": "285",
+        "actual": "284"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "500\n1\n1",
+        "expected": "497",
+        "actual": "496"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "regressed",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 6,
+        "end_line_0idx": 7,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 2,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 6,
+        "end_line_0idx": 7
+      }
+    ]
+  }
+}

@@ -1,0 +1,642 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 530
+- assessment_id: 4954
+- assessment_title: Lab 2 - Estrutura Condicional Composta
+- exercise_id: 3334
+- student_id: 8743
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-08-24T13:04:15.731000
+
+Execution Result
+
+- submitted_at: 2023-08-24 13:14:20
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1.0\n5.0\n6.0"
+    expected: "-2.0\n-3.0"
+    actual: "-4.5\n-5.5"
+  - test_index_0idx: 1 [FAIL]
+    input: "1.0\n4.0\n-5.0"
+    expected: "1.0\n-5.0"
+    actual: "-1.0\n-7.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "10.0\n6.0\n10.0"
+    expected: "a equacao nao possui raizes reais"
+    actual: ""
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 311
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["a"]	[""]	+input
+472	11	0	1	0	1	[" "]	[""]	+input
+806	15	0	2	0	2	["="]	[""]	+input
+1685	19	0	3	0	3	[" "]	[""]	+input
+2264	23	0	4	0	4	["f"]	[""]	+input
+2791	27	0	5	0	5	["l"]	[""]	+input
+3037	31	0	6	0	6	["o"]	[""]	+input
+3476	35	0	7	0	7	["a"]	[""]	+input
+4885	39	0	8	0	8	["t"]	[""]	+input
+12957	44	0	9	0	9	["()"]	[""]	+input
+13436	50	0	10	0	10	["i"]	[""]	+input
+13691	54	0	11	0	11	["n"]	[""]	+input
+14008	58	0	12	0	12	["p"]	[""]	+input
+14357	62	0	13	0	13	["u"]	[""]	+input
+14734	66	0	14	0	14	["t"]	[""]	+input
+16968	71	0	15	0	15	["()"]	[""]	+input
+21318	78	0	16	0	16	["\"\""]	[""]	+input
+22346	84	0	17	0	17	["d"]	[""]	+input
+22789	88	0	18	0	18	["i"]	[""]	+input
+23020	92	0	19	0	19	["g"]	[""]	+input
+23188	96	0	20	0	20	["i"]	[""]	+input
+23725	100	0	21	0	21	["t"]	[""]	+input
+23892	104	0	22	0	22	["e"]	[""]	+input
+24440	108	0	23	0	23	[" "]	[""]	+input
+24788	112	0	24	0	24	["a"]	[""]	+input
+24983	116	0	25	0	25	[" "]	[""]	+input
+25285	120	0	26	0	26	["v"]	[""]	+input
+25638	124	0	27	0	27	["a"]	[""]	+input
+25988	128	0	28	0	28	["r"]	[""]	+input
+26293	132	0	29	0	29	["i"]	[""]	+input
+26452	136	0	30	0	30	["a"]	[""]	+input
+26948	140	0	31	0	31	["v"]	[""]	+input
+27560	144	0	32	0	32	["e"]	[""]	+input
+27832	148	0	33	0	33	["l"]	[""]	+input
+29589	152	0	34	0	34	[" "]	[""]	+input
+30623	156	0	35	0	35	["x"]	[""]	+input
+31643	160	0	36	0	36	["2"]	[""]	+input
+32457	165	0	37	0	37	[":"]	[""]	+input
+33447	170	0	38	0	38	[" "]	[""]	+input
+35109	185	0	42	0	42	["",""]	[""]	+input
+36693	191	1	0	1	0	["b"]	[""]	+input
+37205	195	1	1	1	1	[" "]	[""]	+input
+37461	199	1	2	1	2	["="]	[""]	+input
+37652	203	1	3	1	3	[" "]	[""]	+input
+38629	207	1	4	1	4	["f"]	[""]	+input
+38951	211	1	5	1	5	["l"]	[""]	+input
+39176	215	1	6	1	6	["o"]	[""]	+input
+39478	219	1	7	1	7	["a"]	[""]	+input
+40395	223	1	8	1	8	["t"]	[""]	+input
+41884	228	1	9	1	9	["()"]	[""]	+input
+42393	234	1	10	1	10	["i"]	[""]	+input
+42630	238	1	11	1	11	["n"]	[""]	+input
+42982	242	1	12	1	12	["p"]	[""]	+input
+43527	246	1	13	1	13	["u"]	[""]	+input
+43770	250	1	14	1	14	["t"]	[""]	+input
+45717	255	1	15	1	15	["()"]	[""]	+input
+46343	262	1	16	1	16	["\"\""]	[""]	+input
+46869	268	1	17	1	17	["d"]	[""]	+input
+47176	272	1	18	1	18	["i"]	[""]	+input
+47508	276	1	19	1	19	["g"]	[""]	+input
+47640	279	1	20	1	20	["i"]	[""]	+input
+48021	284	1	21	1	21	["t"]	[""]	+input
+48340	288	1	22	1	22	["e"]	[""]	+input
+48565	292	1	23	1	23	[" "]	[""]	+input
+48871	296	1	24	1	24	["a"]	[""]	+input
+49191	300	1	25	1	25	[" "]	[""]	+input
+49625	304	1	26	1	26	["v"]	[""]	+input
+49892	308	1	27	1	27	["a"]	[""]	+input
+50186	312	1	28	1	28	["r"]	[""]	+input
+50404	316	1	29	1	29	["i"]	[""]	+input
+50609	320	1	30	1	30	["a"]	[""]	+input
+50885	324	1	31	1	31	["v"]	[""]	+input
+51332	328	1	32	1	32	["e"]	[""]	+input
+51524	332	1	33	1	33	["l"]	[""]	+input
+53145	336	1	34	1	34	[" "]	[""]	+input
+54394	340	1	35	1	35	["x"]	[""]	+input
+55180	345	1	36	1	36	[":"]	[""]	+input
+56025	350	1	37	1	37	[" "]	[""]	+input
+63756	362	1	41	1	41	["",""]	[""]	+input
+65426	368	2	0	2	0	["c"]	[""]	+input
+66636	372	2	1	2	1	["="]	[""]	+input
+68232	375	2	1	2	2	[""]	["="]	+delete
+69081	380	2	1	2	1	[" "]	[""]	+input
+69557	384	2	2	2	2	["="]	[""]	+input
+69828	388	2	3	2	3	[" "]	[""]	+input
+70682	392	2	4	2	4	["f"]	[""]	+input
+70948	396	2	5	2	5	["ç"]	[""]	+input
+71573	399	2	5	2	6	[""]	["ç"]	+delete
+71894	404	2	5	2	5	["l"]	[""]	+input
+72155	408	2	6	2	6	["o"]	[""]	+input
+72452	412	2	7	2	7	["s"]	[""]	+input
+73573	415	2	7	2	8	[""]	["s"]	+delete
+73720	419	2	7	2	7	["a"]	[""]	+input
+74068	424	2	8	2	8	["t"]	[""]	+input
+75561	429	2	9	2	9	["()"]	[""]	+input
+76116	435	2	10	2	10	["i"]	[""]	+input
+76404	439	2	11	2	11	["n"]	[""]	+input
+77076	443	2	12	2	12	["p"]	[""]	+input
+77640	447	2	13	2	13	["u"]	[""]	+input
+77876	451	2	14	2	14	["t"]	[""]	+input
+78406	456	2	15	2	15	["()"]	[""]	+input
+79062	463	2	16	2	16	["\"\""]	[""]	+input
+80682	469	2	17	2	17	["d"]	[""]	+input
+81019	473	2	18	2	18	["i"]	[""]	+input
+81430	477	2	19	2	19	["g"]	[""]	+input
+81607	481	2	20	2	20	["i"]	[""]	+input
+85269	485	2	21	2	21	["t"]	[""]	+input
+85398	489	2	22	2	22	["e"]	[""]	+input
+85657	493	2	23	2	23	[" "]	[""]	+input
+85893	497	2	24	2	24	["a"]	[""]	+input
+86101	501	2	25	2	25	[" "]	[""]	+input
+86309	505	2	26	2	26	["v"]	[""]	+input
+86600	509	2	27	2	27	["a"]	[""]	+input
+86917	513	2	28	2	28	["r"]	[""]	+input
+87159	517	2	29	2	29	["i"]	[""]	+input
+87288	521	2	30	2	30	["a"]	[""]	+input
+89015	525	2	31	2	31	["v"]	[""]	+input
+89431	529	2	32	2	32	["e"]	[""]	+input
+89621	533	2	33	2	33	["l"]	[""]	+input
+90116	537	2	34	2	34	[" "]	[""]	+input
+92544	541	2	35	2	35	["c"]	[""]	+input
+93145	546	2	36	2	36	[":"]	[""]	+input
+94168	551	2	37	2	37	[" "]	[""]	+input
+102216	563	2	41	2	41	["",""]	[""]	+input
+102569	568	3	0	3	0	["",""]	[""]	+input
+110378	574	4	0	4	0	["d"]	[""]	+input
+110740	578	4	1	4	1	["e"]	[""]	+input
+111062	582	4	2	4	2	["l"]	[""]	+input
+111605	586	4	3	4	3	["t"]	[""]	+input
+111752	590	4	4	4	4	["a"]	[""]	+input
+116987	594	4	5	4	5	[" "]	[""]	+input
+117355	598	4	6	4	6	["="]	[""]	+input
+117621	602	4	7	4	7	[" "]	[""]	+input
+119404	606	4	8	4	8	["b"]	[""]	+input
+120202	610	4	9	4	9	["*"]	[""]	+input
+120376	614	4	10	4	10	["*"]	[""]	+input
+121799	618	4	11	4	11	["2"]	[""]	+input
+125941	635	4	8	4	8	["("]	[""]	+input
+128860	653	4	13	4	13	[")"]	[""]	+input
+132631	658	4	14	4	14	[" "]	[""]	+input
+132837	662	4	15	4	15	["-"]	[""]	+input
+133110	666	4	16	4	16	[" "]	[""]	+input
+136150	670	4	17	4	17	["4"]	[""]	+input
+136742	674	4	18	4	18	["*"]	[""]	+input
+138137	678	4	19	4	19	["a"]	[""]	+input
+139847	682	4	20	4	20	["*"]	[""]	+input
+140473	686	4	21	4	21	["c"]	[""]	+input
+146057	689	4	22	4	22	["",""]	[""]	+input
+148790	694	5	0	5	0	["\t"]	[""]	+input
+154429	699	5	1	5	1	["x"]	[""]	+input
+155644	703	5	2	5	2	["1"]	[""]	+input
+156375	708	5	3	5	3	["()"]	[""]	+input
+158904	714	5	4	5	4	["-"]	[""]	+input
+159462	718	5	5	5	5	["b"]	[""]	+input
+163319	722	5	6	5	6	["+"]	[""]	+input
+198139	726	5	7	5	8	[""]	[")"]	+delete
+198309	730	5	6	5	7	[""]	["+"]	+delete
+198453	734	5	5	5	6	[""]	["b"]	+delete
+198605	738	5	4	5	5	[""]	["-"]	+delete
+198740	742	5	3	5	4	[""]	["("]	+delete
+198902	746	5	2	5	3	[""]	["1"]	+delete
+199350	750	5	1	5	2	[""]	["x"]	+delete
+200585	754	5	0	5	1	[""]	["\t"]	+delete
+202756	758	5	0	5	0	["",""]	[""]	+input
+203591	764	6	0	6	0	["i"]	[""]	+input
+203940	768	6	1	6	1	["f"]	[""]	+input
+204582	773	6	2	6	2	["()"]	[""]	+input
+216681	779	6	3	6	3	["d"]	[""]	+input
+217046	783	6	4	6	4	["e"]	[""]	+input
+217416	787	6	5	6	5	["l"]	[""]	+input
+217784	791	6	6	6	6	["t"]	[""]	+input
+218244	795	6	7	6	7	["a"]	[""]	+input
+219509	800	6	8	6	8	[">"]	[""]	+input
+220405	805	6	9	6	9	["="]	[""]	+input
+221928	809	6	10	6	10	["0"]	[""]	+input
+224742	815	6	12	6	12	["",""]	[""]	+input
+239962	824	6	12	6	12	[":"]	[""]	+input
+240534	828	6	13	6	13	["",""]	[""]	+input
+240534	829	7	0	7	0	["\t"]	[""]	+input
+243007	835	7	1	7	1	["x"]	[""]	+input
+244011	839	7	2	7	2	["1"]	[""]	+input
+245915	843	7	3	7	3	["="]	[""]	+input
+247190	847	7	4	7	4	[" "]	[""]	+input
+248245	851	7	5	7	5	["b"]	[""]	+input
+249940	854	7	5	7	6	[""]	["b"]	+delete
+251246	860	7	5	7	5	["()"]	[""]	+input
+253448	866	7	6	7	6	["-"]	[""]	+input
+253993	870	7	7	7	7	["b"]	[""]	+input
+260294	874	7	8	7	8	["+"]	[""]	+input
+309622	882	7	9	7	9	["d"]	[""]	+input
+309945	886	7	10	7	10	["r"]	[""]	+input
+311333	889	7	10	7	11	[""]	["r"]	+delete
+311525	894	7	10	7	10	["e"]	[""]	+input
+311909	898	7	11	7	11	["l"]	[""]	+input
+312168	902	7	12	7	12	["t"]	[""]	+input
+312841	906	7	13	7	13	["a"]	[""]	+input
+316743	913	7	15	7	15	["/"]	[""]	+input
+319354	917	7	16	7	16	["2"]	[""]	+input
+320031	921	7	17	7	17	["*"]	[""]	+input
+320854	925	7	18	7	18	["a"]	[""]	+input
+407733	930	7	14	7	14	["*"]	[""]	+input
+407861	934	7	15	7	15	["*"]	[""]	+input
+411830	938	7	16	7	16	["0"]	[""]	+input
+412966	942	7	17	7	17	["."]	[""]	+input
+416310	946	7	18	7	18	["5"]	[""]	+input
+426971	953	7	16	7	16	["("]	[""]	+input
+428201	957	7	16	7	17	[""]	["("]	+delete
+431223	964	7	9	7	9	["("]	[""]	+input
+444015	1005	7	25	7	25	["",""]	[""]	+input
+444015	1006	8	0	8	0	["\t\t  "]	[""]	+input
+445288	1011	8	3	8	4	[""]	[" "]	+delete
+445624	1015	8	2	8	3	[""]	[" "]	+delete
+445941	1019	8	1	8	2	[""]	["\t"]	+delete
+447303	1024	8	1	8	1	["x"]	[""]	+input
+448439	1028	8	2	8	2	["2"]	[""]	+input
+449112	1032	8	3	8	3	[" "]	[""]	+input
+449205	1035	8	4	8	4	["="]	[""]	+input
+449386	1040	8	5	8	5	[" "]	[""]	+input
+451958	1045	8	6	8	6	["()"]	[""]	+input
+455337	1051	8	7	8	7	["-"]	[""]	+input
+455927	1055	8	8	8	8	["b"]	[""]	+input
+457658	1060	8	9	8	9	["()"]	[""]	+input
+458546	1066	8	10	8	10	["d"]	[""]	+input
+458741	1070	8	11	8	11	["e"]	[""]	+input
+459093	1074	8	12	8	12	["l"]	[""]	+input
+459461	1078	8	13	8	13	["t"]	[""]	+input
+460117	1082	8	14	8	14	["a"]	[""]	+input
+464486	1104	8	9	8	9	["="]	[""]	+input
+465477	1107	8	9	8	10	[""]	["="]	+delete
+465946	1112	8	9	8	9	["-"]	[""]	+input
+470103	1134	8	16	8	16	["*"]	[""]	+input
+473221	1138	8	17	8	17	["*"]	[""]	+input
+475895	1142	8	18	8	18	["0"]	[""]	+input
+476775	1146	8	19	8	19	["."]	[""]	+input
+477125	1150	8	20	8	20	["5"]	[""]	+input
+483543	1163	8	22	8	22	["/"]	[""]	+input
+484379	1167	8	23	8	23	["2"]	[""]	+input
+484838	1171	8	24	8	24	["*"]	[""]	+input
+486542	1175	8	25	8	25	["a"]	[""]	+input
+490989	1183	7	25	7	25	["_"]	[""]	+input
+491724	1187	7	25	7	26	[""]	["_"]	+delete
+492396	1193	7	25	7	25	[")"]	[""]	+input
+500937	1267	7	3	7	3	[" "]	[""]	+input
+505261	1325	7	27	7	27	["",""]	[""]	+input
+505262	1326	8	0	8	0	["\t"]	[""]	+input
+506637	1331	8	0	8	1	[""]	["\t"]	+delete
+507079	1335	7	27	8	0	[""]	["",""]	+delete
+508743	1343	8	27	8	27	["",""]	[""]	+input
+508744	1344	9	0	9	0	["\t"]	[""]	+input
+525158	1350	9	1	9	1	["p"]	[""]	+input
+525415	1354	9	2	9	2	["r"]	[""]	+input
+525701	1358	9	3	9	3	["i"]	[""]	+input
+525973	1362	9	4	9	4	["n"]	[""]	+input
+526277	1366	9	5	9	5	["t"]	[""]	+input
+526773	1371	9	6	9	6	["()"]	[""]	+input
+527845	1377	9	7	9	7	["x"]	[""]	+input
+528948	1381	9	8	9	8	["1"]	[""]	+input
+531007	1387	9	10	9	10	["",""]	[""]	+input
+531007	1388	10	0	10	0	["\t"]	[""]	+input
+531498	1394	10	1	10	1	["p"]	[""]	+input
+531798	1398	10	2	10	2	["r"]	[""]	+input
+532330	1402	10	3	10	3	["i"]	[""]	+input
+532553	1406	10	4	10	4	["n"]	[""]	+input
+532839	1410	10	5	10	5	["t"]	[""]	+input
+533428	1415	10	6	10	6	["()"]	[""]	+input
+534057	1421	10	7	10	7	["x"]	[""]	+input
+534999	1425	10	8	10	8	["2"]	[""]	+input
+537655	1435	11	0	11	0	["e"]	[""]	+input
+537957	1439	11	1	11	1	["l"]	[""]	+input
+538200	1443	11	2	11	2	["s"]	[""]	+input
+538473	1447	11	3	11	3	["e"]	[""]	+input
+538999	1452	11	4	11	4	[":"]	[""]	+input
+539829	1456	11	5	11	5	["",""]	[""]	+input
+539829	1457	12	0	12	0	["\t"]	[""]	+input
+542616	1464	12	1	12	1	["()"]	[""]	+input
+545063	1470	12	2	12	2	["d"]	[""]	+input
+545351	1474	12	3	12	3	["e"]	[""]	+input
+559196	1483	12	4	12	5	[""]	[")"]	+delete
+559384	1487	12	3	12	4	[""]	["e"]	+delete
+559556	1491	12	2	12	3	[""]	["d"]	+delete
+561226	1497	12	2	12	2	["\"\""]	[""]	+input
+563591	1507	12	4	12	4	[")"]	[""]	+input
+565548	1518	12	3	12	3	["a"]	[""]	+input
+566308	1521	12	3	12	4	[""]	["a"]	+delete
+566757	1528	12	3	12	3	["A"]	[""]	+input
+567110	1534	12	4	12	4	[" "]	[""]	+input
+567422	1538	12	5	12	5	["e"]	[""]	+input
+567778	1542	12	6	12	6	["q"]	[""]	+input
+568200	1546	12	7	12	7	["u"]	[""]	+input
+568309	1549	12	8	12	8	["a"]	[""]	+input
+568665	1554	12	9	12	9	["c"]	[""]	+input
+568901	1558	12	10	12	10	["a"]	[""]	+input
+569125	1562	12	11	12	11	["o"]	[""]	+input
+569450	1566	12	12	12	12	[" "]	[""]	+input
+570058	1570	12	13	12	13	["n"]	[""]	+input
+570198	1574	12	14	12	14	["a"]	[""]	+input
+570492	1578	12	15	12	15	["o"]	[""]	+input
+570741	1582	12	16	12	16	[" "]	[""]	+input
+571104	1586	12	17	12	17	["p"]	[""]	+input
+571317	1590	12	18	12	18	["o"]	[""]	+input
+571589	1594	12	19	12	19	["s"]	[""]	+input
+571772	1598	12	20	12	20	["s"]	[""]	+input
+572037	1602	12	21	12	21	["u"]	[""]	+input
+572232	1606	12	22	12	22	["i"]	[""]	+input
+572544	1610	12	23	12	23	[" "]	[""]	+input
+572773	1614	12	24	12	24	["r"]	[""]	+input
+573201	1618	12	25	12	25	["a"]	[""]	+input
+573301	1622	12	26	12	26	["a"]	[""]	+input
+573605	1626	12	27	12	27	["i"]	[""]	+input
+573878	1630	12	28	12	28	["z"]	[""]	+input
+576918	1639	12	26	12	27	[""]	["a"]	+delete
+
+Local Run 1
+- event_time_delta_ms: 598180
+- raw_log_line: 1650
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+a = float(input("digite a variavel x2: "))
+b = float(input("digite a variavel x: "))
+c = float(input("digite a variavel c: "))
+
+delta = (b**2) - 4*a*c
+
+if(delta>=0):
+	x1 = (-b+(delta**0.5)/2*a)
+	x2 = (-b-(delta**0.5)/2*a)
+	print(x1)
+	print(x2)
+else:
+	("A equacao nao possui raiz")
+```
+Run Output
+```text
+digite a variavel x2: 1.0
+digite a variavel x: -2
+digite a variavel c: -3
+4.0
+0.0
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 604794
+- raw_log_line: 1651
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+a = float(input("digite a variavel x2: "))
+b = float(input("digite a variavel x: "))
+c = float(input("digite a variavel c: "))
+
+delta = (b**2) - 4*a*c
+
+if(delta>=0):
+	x1 = (-b+(delta**0.5)/2*a)
+	x2 = (-b-(delta**0.5)/2*a)
+	print(x1)
+	print(x2)
+else:
+	("A equacao nao possui raiz")
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-08-24T13:14:45.546000
+
+Execution Result
+
+- submitted_at: 2023-08-24 13:16:57
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [2]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "1.0\n5.0\n6.0"
+    expected: "-2.0\n-3.0"
+    actual: "-2.0\n-3.0"
+  - test_index_0idx: 1 [PASS]
+    input: "1.0\n4.0\n-5.0"
+    expected: "1.0\n-5.0"
+    actual: "1.0\n-5.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "10.0\n6.0\n10.0"
+    expected: "a equacao nao possui raizes reais"
+    actual: ""
+
+Attempt Start Code
+```python
+a = float(input("digite a variavel x2: "))
+b = float(input("digite a variavel x: "))
+c = float(input("digite a variavel c: "))
+
+delta = (b**2) - 4*a*c
+
+if(delta>=0):
+	x1 = (-b+(delta**0.5)/2*a)
+	x2 = (-b-(delta**0.5)/2*a)
+	print(x1)
+	print(x2)
+else:
+	("A equacao nao possui raiz")
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 6
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1657	4	17	4	17	["("]	[""]	+input
+2748	1678	4	23	4	23	[")"]	[""]	+input
+71071	1691	8	23	8	23	["("]	[""]	+input
+73667	1703	7	23	7	23	["("]	[""]	+input
+81874	1722	8	22	8	22	[")"]	[""]	+input
+84036	1734	7	22	7	22	[")"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 131592
+- raw_log_line: 1740
+- feedback: "You're almost there! Your code is 67% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+a = float(input("digite a variavel x2: "))
+b = float(input("digite a variavel x: "))
+c = float(input("digite a variavel c: "))
+
+delta = (b**2) - (4*a*c)
+
+if(delta>=0):
+	x1 = (-b+(delta**0.5))/(2*a)
+	x2 = (-b-(delta**0.5))/(2*a)
+	print(x1)
+	print(x2)
+else:
+	("A equacao nao possui raiz")
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-08-24T13:17:16.059000
+
+Execution Result
+
+- submitted_at: 2023-08-24 13:17:41
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [2]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "1.0\n5.0\n6.0"
+    expected: "-2.0\n-3.0"
+    actual: "-2.0\n-3.0"
+  - test_index_0idx: 1 [PASS]
+    input: "1.0\n4.0\n-5.0"
+    expected: "1.0\n-5.0"
+    actual: "1.0\n-5.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "10.0\n6.0\n10.0"
+    expected: "a equacao nao possui raizes reais"
+    actual: ""
+
+Attempt Start Code
+```python
+a = float(input("digite a variavel x2: "))
+b = float(input("digite a variavel x: "))
+c = float(input("digite a variavel c: "))
+
+delta = (b**2) - (4*a*c)
+
+if(delta>=0):
+	x1 = (-b+(delta**0.5))/(2*a)
+	x2 = (-b-(delta**0.5))/(2*a)
+	print(x1)
+	print(x2)
+else:
+	("A equacao nao possui raiz")
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 10
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1745	12	28	12	28	["e"]	[""]	+input
+381	1749	12	29	12	29	["s"]	[""]	+input
+2626	1753	12	30	12	30	[" "]	[""]	+input
+3187	1757	12	31	12	31	["r"]	[""]	+input
+3677	1761	12	32	12	32	["e"]	[""]	+input
+4030	1765	12	33	12	33	["a"]	[""]	+input
+5491	1769	12	34	12	34	["i"]	[""]	+input
+5571	1772	12	35	12	35	["s"]	[""]	+input
+14214	1817	12	3	12	4	[""]	["A"]	+delete
+14509	1822	12	3	12	3	["a"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 23780
+- raw_log_line: 1832
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+a = float(input("digite a variavel x2: "))
+b = float(input("digite a variavel x: "))
+c = float(input("digite a variavel c: "))
+
+delta = (b**2) - (4*a*c)
+
+if(delta>=0):
+	x1 = (-b+(delta**0.5))/(2*a)
+	x2 = (-b-(delta**0.5))/(2*a)
+	print(x1)
+	print(x2)
+else:
+	("a equacao nao possui raizes reais")
+```
+Run Output
+```text
+digite a variavel x2: 1
+digite a variavel x: -2
+digite a variavel c: -3
+3.0
+-1.0
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 25734
+- raw_log_line: 1833
+- feedback: "You're almost there! Your code is 67% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+a = float(input("digite a variavel x2: "))
+b = float(input("digite a variavel x: "))
+c = float(input("digite a variavel c: "))
+
+delta = (b**2) - (4*a*c)
+
+if(delta>=0):
+	x1 = (-b+(delta**0.5))/(2*a)
+	x2 = (-b-(delta**0.5))/(2*a)
+	print(x1)
+	print(x2)
+else:
+	("a equacao nao possui raizes reais")
+```

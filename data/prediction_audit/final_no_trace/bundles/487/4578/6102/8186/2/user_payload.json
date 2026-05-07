@@ -1,0 +1,140 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "487",
+    "assessment_id": "4578",
+    "assessment_title": "Extra 3 - Condicionais Encadeados (if/elif)",
+    "exercise_id": "6102",
+    "student_id": "8186",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2022-2/487/users/8186/executions/4578_6102.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2022-2/487/users/8186/codemirror/4578_6102.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-05-07 20:51:21",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "0\n0",
+            "expected": "Dados invalidos",
+            "actual": "Riscos: Baixo"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "25\n25",
+            "expected": "Risco: Medio",
+            "actual": "Riscos: Medio"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "50\n25",
+            "expected": "Risco: Alto",
+            "actual": "Riscos: Alto"
+          }
+        ]
+      },
+      "submitted_code": "i = int(input(\"Diga a idade: \"))\nimc = float(input(\"Diga o imc: \"))\n\nif ( i <= 0 ) and ( i > 130 ) and ( imc <= 0 ):\n\tprint(\"Dados invalidos\")\n\t\nelif ( i < 45 ) and ( imc < 22.0 ):\n\tprint(\"Riscos: Baixo\")\n\nelif ( i < 45 ) and ( imc >= 22.0 ):\n\tprint(\"Riscos: Medio\")\n\nelif ( i >= 45 ) and ( imc < 22.0 ):\n\tprint(\"Riscos: Medio\")\n\t\nelif ( i >= 45 ) and ( imc >= 22.0 ):\n\tprint(\"Riscos: Alto\")"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-05-07 20:51:49",
+        "grade": 67.0,
+        "pass_count": 2,
+        "failed_test_indices_0idx": [
+          0
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "0\n0",
+            "expected": "Dados invalidos",
+            "actual": "Risco: Baixo"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": true,
+            "input": "25\n25",
+            "expected": "Risco: Medio",
+            "actual": "Risco: Medio"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": true,
+            "input": "50\n25",
+            "expected": "Risco: Alto",
+            "actual": "Risco: Alto"
+          }
+        ]
+      },
+      "submitted_code": "i = int(input(\"Diga a idade: \"))\nimc = float(input(\"Diga o imc: \"))\n\nif ( i <= 0 ) and ( i > 130 ) and ( imc <= 0 ):\n\tprint(\"Dados invalidos\")\n\t\nelif ( i < 45 ) and ( imc < 22.0 ):\n\tprint(\"Risco: Baixo\")\n\nelif ( i < 45 ) and ( imc >= 22.0 ):\n\tprint(\"Risco: Medio\")\n\nelif ( i >= 45 ) and ( imc < 22.0 ):\n\tprint(\"Risco: Medio\")\n\t\nelif ( i >= 45 ) and ( imc >= 22.0 ):\n\tprint(\"Risco: Alto\")"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-05-07 20:53:47",
+        "grade": 67.0,
+        "pass_count": 2,
+        "failed_test_indices_0idx": [
+          0
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "0\n0",
+            "expected": "Dados invalidos",
+            "actual": "Risco: Baixo"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": true,
+            "input": "25\n25",
+            "expected": "Risco: Medio",
+            "actual": "Risco: Medio"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": true,
+            "input": "50\n25",
+            "expected": "Risco: Alto",
+            "actual": "Risco: Alto"
+          }
+        ]
+      },
+      "submitted_code": "i = int(input(\"Diga a idade: \"))\nimc = float(input(\"Diga o imc: \"))\n\nif ( i < 45 ) and ( imc < 22.0 ):\n\tprint(\"Risco: Baixo\")\n\t\t\nelif ( i <= 0 ) and ( i > 130 ) and ( imc <= 0 ):\n\tprint(\"Dados invalidos\")\n\nelif ( i < 45 ) and ( imc >= 22.0 ):\n\tprint(\"Risco: Medio\")\n\nelif ( i >= 45 ) and ( imc < 22.0 ):\n\tprint(\"Risco: Medio\")\n\t\nelif ( i >= 45 ) and ( imc >= 22.0 ):\n\tprint(\"Risco: Alto\")"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

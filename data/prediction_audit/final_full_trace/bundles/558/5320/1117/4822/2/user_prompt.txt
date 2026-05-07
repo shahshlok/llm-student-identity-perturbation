@@ -1,0 +1,1703 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 558
+- assessment_id: 5320
+- assessment_title: Lab 3: Estrutura Condicional Encadeada
+- exercise_id: 1117
+- student_id: 4822
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-01-30T21:32:40.431000
+
+Execution Result
+
+- submitted_at: 2024-01-30 21:18:50
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "70.56\n2\nN"
+    expected: "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92"
+    actual: "Entradas: 52.92 2 N\nTotal: R$ 52.92"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75"
+    actual: "Entradas: 120.75 6 S\nTotal: R$ 120.75"
+  - test_index_0idx: 2 [FAIL]
+    input: "0.00\n9\nS"
+    expected: "Entradas: 0.0 , 9 , S\nDados invalidos"
+    actual: "Entrada: 0.0 9 S\nDados invalidos\nEntradas: 0.0 9 S\nTotal: R$ 0.0"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 135
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["elif(nota >= 9.0):","\tprint(\"A\")"]	[""]	paste
+2167	13	0	0	1	11	[""]	["elif(nota >= 9.0):","\tprint(\"A\")"]	+delete
+8412	19	0	0	0	0	["e"]	[""]	+input
+8596	23	0	1	0	1	["n"]	[""]	+input
+8904	27	0	2	0	2	["r"]	[""]	+input
+9398	30	0	2	0	3	[""]	["r"]	+delete
+9693	35	0	2	0	2	["t"]	[""]	+input
+9835	39	0	3	0	3	["r"]	[""]	+input
+10272	43	0	4	0	4	["a"]	[""]	+input
+10577	47	0	5	0	5	["d"]	[""]	+input
+10844	51	0	6	0	6	["a"]	[""]	+input
+12246	55	0	7	0	7	[" "]	[""]	+input
+12363	58	0	8	0	8	["="]	[""]	+input
+12503	63	0	9	0	9	[" "]	[""]	+input
+13762	67	0	10	0	10	["f"]	[""]	+input
+14093	71	0	11	0	11	["o"]	[""]	+input
+14548	74	0	11	0	12	[""]	["o"]	+delete
+15285	79	0	11	0	11	["l"]	[""]	+input
+15577	83	0	12	0	12	["o"]	[""]	+input
+15784	87	0	13	0	13	["a"]	[""]	+input
+16517	91	0	14	0	14	["t"]	[""]	+input
+17433	96	0	15	0	15	["()"]	[""]	+input
+18201	102	0	16	0	16	["i"]	[""]	+input
+18561	106	0	17	0	17	["n"]	[""]	+input
+19959	110	0	18	0	18	["p"]	[""]	+input
+20347	114	0	19	0	19	["i"]	[""]	+input
+20662	118	0	20	0	20	["u"]	[""]	+input
+20991	121	0	20	0	21	[""]	["u"]	+delete
+21118	125	0	19	0	20	[""]	["i"]	+delete
+21799	130	0	19	0	19	["u"]	[""]	+input
+22103	134	0	20	0	20	["t"]	[""]	+input
+23043	139	0	21	0	21	["()"]	[""]	+input
+24005	146	0	22	0	22	["\"\""]	[""]	+input
+24922	153	0	23	0	23	["V"]	[""]	+input
+25134	158	0	24	0	24	["a"]	[""]	+input
+25309	161	0	25	0	25	["l"]	[""]	+input
+25496	166	0	26	0	26	["o"]	[""]	+input
+25610	170	0	27	0	27	["r"]	[""]	+input
+26324	175	0	28	0	28	[":"]	[""]	+input
+26863	180	0	29	0	29	[" "]	[""]	+input
+28724	192	0	33	0	33	["",""]	[""]	+input
+52454	198	1	0	1	0	["s"]	[""]	+input
+52667	202	1	1	1	1	["i"]	[""]	+input
+52822	206	1	2	1	2	["a"]	[""]	+input
+53725	209	1	2	1	3	[""]	["a"]	+delete
+53896	213	1	1	1	2	[""]	["i"]	+delete
+54026	217	1	0	1	1	[""]	["s"]	+delete
+54146	221	0	33	1	0	[""]	["",""]	+delete
+54277	227	0	33	0	33	["d"]	[""]	+input
+54635	231	0	34	0	34	["i"]	[""]	+input
+54777	235	0	35	0	35	["a"]	[""]	+input
+55715	238	0	35	0	36	[""]	["a"]	+delete
+55865	242	0	34	0	35	[""]	["i"]	+delete
+55993	246	0	33	0	34	[""]	["d"]	+delete
+56098	250	0	32	0	33	[""]	[")"]	+delete
+56973	256	0	32	0	32	[")"]	[""]	+input
+57144	260	0	33	0	33	["",""]	[""]	+input
+58101	266	1	0	1	0	["d"]	[""]	+input
+58259	270	1	1	1	1	["i"]	[""]	+input
+58376	274	1	2	1	2	["a"]	[""]	+input
+60573	278	1	3	1	3	[" "]	[""]	+input
+60665	282	1	4	1	4	["="]	[""]	+input
+60775	286	1	5	1	5	[" "]	[""]	+input
+67865	290	1	6	1	6	["i"]	[""]	+input
+68085	294	1	7	1	7	["n"]	[""]	+input
+68631	298	1	8	1	8	["t"]	[""]	+input
+69439	303	1	9	1	9	["()"]	[""]	+input
+70175	309	1	10	1	10	["i"]	[""]	+input
+70460	313	1	11	1	11	["n"]	[""]	+input
+70803	317	1	12	1	12	["p"]	[""]	+input
+71284	321	1	13	1	13	["u"]	[""]	+input
+71580	325	1	14	1	14	["t"]	[""]	+input
+72383	330	1	15	1	15	["()"]	[""]	+input
+73531	337	1	16	1	16	["\"\""]	[""]	+input
+74466	347	1	17	1	17	["v"]	[""]	+input
+75433	351	1	17	1	18	[""]	["v"]	+delete
+75710	356	1	17	1	17	["V"]	[""]	+input
+76056	361	1	18	1	18	["a"]	[""]	+input
+76632	365	1	19	1	19	["l"]	[""]	+input
+76827	369	1	20	1	20	["o"]	[""]	+input
+76977	373	1	21	1	21	["r"]	[""]	+input
+77702	378	1	22	1	22	[":"]	[""]	+input
+78026	383	1	23	1	23	[" "]	[""]	+input
+80677	395	1	27	1	27	["",""]	[""]	+input
+83091	401	2	0	2	0	["m"]	[""]	+input
+83370	405	2	1	2	1	["u"]	[""]	+input
+84407	409	2	2	2	2	["s"]	[""]	+input
+85747	413	2	3	2	3	["i"]	[""]	+input
+86420	417	2	4	2	4	["c"]	[""]	+input
+86609	421	2	5	2	5	["a"]	[""]	+input
+91042	427	2	6	2	6	[" "]	[""]	+input
+91191	431	2	7	2	7	["="]	[""]	+input
+91337	435	2	8	2	8	[" "]	[""]	+input
+96861	439	2	9	2	9	["u"]	[""]	+input
+97122	443	2	10	2	10	["n"]	[""]	+input
+98301	446	2	10	2	11	[""]	["n"]	+delete
+98475	450	2	9	2	10	[""]	["u"]	+delete
+99575	455	2	9	2	9	["i"]	[""]	+input
+99914	459	2	10	2	10	["n"]	[""]	+input
+101057	463	2	11	2	11	["p"]	[""]	+input
+101392	467	2	12	2	12	["u"]	[""]	+input
+101654	471	2	13	2	13	["t"]	[""]	+input
+102367	476	2	14	2	14	["()"]	[""]	+input
+103041	483	2	15	2	15	["\"\""]	[""]	+input
+111815	490	2	16	2	16	["S"]	[""]	+input
+112454	495	2	17	2	17	[" "]	[""]	+input
+112777	499	2	18	2	18	["o"]	[""]	+input
+113070	503	2	19	2	19	["u"]	[""]	+input
+113296	507	2	20	2	20	[" "]	[""]	+input
+114004	512	2	21	2	21	["N"]	[""]	+input
+115402	518	2	22	2	22	[":"]	[""]	+input
+115617	523	2	23	2	23	[" "]	[""]	+input
+221002	533	2	26	2	26	["",""]	[""]	+input
+221893	539	3	0	3	0	["m"]	[""]	+input
+222099	543	3	1	3	1	["u"]	[""]	+input
+222282	547	3	2	3	2	["s"]	[""]	+input
+222482	551	3	3	3	3	["i"]	[""]	+input
+223179	555	3	4	3	4	["c"]	[""]	+input
+223309	558	3	5	3	5	["a"]	[""]	+input
+229526	563	3	6	3	6	[" "]	[""]	+input
+229707	567	3	7	3	7	["="]	[""]	+input
+229807	571	3	8	3	8	[" "]	[""]	+input
+230343	575	3	9	3	9	["m"]	[""]	+input
+230553	579	3	10	3	10	["u"]	[""]	+input
+231939	583	3	11	3	11	["s"]	[""]	+input
+232222	587	3	12	3	12	["i"]	[""]	+input
+232872	591	3	13	3	13	["c"]	[""]	+input
+232989	594	3	14	3	14	["a"]	[""]	+input
+234001	599	3	15	3	15	["."]	[""]	+input
+269977	607	3	16	3	16	["u"]	[""]	+input
+270215	611	3	17	3	17	["p"]	[""]	+input
+271045	615	3	18	3	18	["p"]	[""]	+input
+271187	619	3	19	3	19	["e"]	[""]	+input
+271446	623	3	20	3	20	["r"]	[""]	+input
+272246	628	3	21	3	21	["()"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 277569
+- raw_log_line: 638
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+```
+Run Output
+```text
+Valor: 75.25
+Valor: 3
+S ou N: s
+```
+
+Edit Segment 2
+- raw_change_event_count: 286
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+628322	643	3	23	3	23	["",""]	[""]	+input
+630339	648	4	0	4	0	["",""]	[""]	+input
+630982	653	4	0	5	0	[""]	["",""]	+delete
+632081	658	4	0	4	0	["",""]	[""]	+input
+632787	664	5	0	5	0	["i"]	[""]	+input
+633130	668	5	1	5	1	["f"]	[""]	+input
+646793	673	5	2	5	2	["()"]	[""]	+input
+647357	679	5	3	5	3	[" "]	[""]	+input
+647636	683	5	4	5	4	["d"]	[""]	+input
+647858	687	5	5	5	5	["i"]	[""]	+input
+648061	691	5	6	5	6	["a"]	[""]	+input
+648378	695	5	7	5	7	[" "]	[""]	+input
+649551	699	5	8	5	8	["="]	[""]	+input
+649830	703	5	9	5	9	["="]	[""]	+input
+654300	707	5	10	5	10	["2"]	[""]	+input
+762193	711	5	11	5	11	[" "]	[""]	+input
+762509	715	5	12	5	12	["a"]	[""]	+input
+762602	718	5	13	5	13	["n"]	[""]	+input
+763373	723	5	14	5	14	["d"]	[""]	+input
+763651	727	5	15	5	15	[" "]	[""]	+input
+764666	731	5	16	5	16	["d"]	[""]	+input
+764855	735	5	17	5	17	["i"]	[""]	+input
+765039	739	5	18	5	18	["a"]	[""]	+input
+767015	743	5	19	5	19	[" "]	[""]	+input
+767235	747	5	20	5	20	["="]	[""]	+input
+767420	751	5	21	5	21	["="]	[""]	+input
+771060	755	5	22	5	22	["3"]	[""]	+input
+772255	759	5	23	5	23	[" "]	[""]	+input
+772446	763	5	24	5	24	["a"]	[""]	+input
+772656	767	5	25	5	25	["n"]	[""]	+input
+773154	771	5	26	5	26	["d"]	[""]	+input
+773551	775	5	27	5	27	[" "]	[""]	+input
+774265	779	5	28	5	28	["d"]	[""]	+input
+774538	783	5	29	5	29	["i"]	[""]	+input
+774702	787	5	30	5	30	["a"]	[""]	+input
+777093	791	5	31	5	31	["="]	[""]	+input
+777319	795	5	32	5	32	["="]	[""]	+input
+779000	799	5	33	5	33	["5"]	[""]	+input
+920961	811	5	35	5	35	[":"]	[""]	+input
+921629	815	5	36	5	36	["",""]	[""]	+input
+921630	816	6	0	6	0	["\t"]	[""]	+input
+922396	822	6	1	6	1	["p"]	[""]	+input
+922656	826	6	2	6	2	["r"]	[""]	+input
+922904	830	6	3	6	3	["i"]	[""]	+input
+923172	834	6	4	6	4	["n"]	[""]	+input
+923399	838	6	5	6	5	["t"]	[""]	+input
+924270	843	6	6	6	6	["()"]	[""]	+input
+927532	850	6	7	6	7	["R"]	[""]	+input
+927682	855	6	8	6	8	["o"]	[""]	+input
+928934	858	6	8	6	9	[""]	["o"]	+delete
+929100	862	6	7	6	8	[""]	["R"]	+delete
+929280	866	6	6	6	8	[""]	["()"]	+delete
+929520	870	6	5	6	6	[""]	["t"]	+delete
+929898	874	6	4	6	5	[""]	["n"]	+delete
+930119	878	6	3	6	4	[""]	["i"]	+delete
+930401	882	6	2	6	3	[""]	["r"]	+delete
+931279	886	6	1	6	2	[""]	["p"]	+delete
+933434	891	6	1	6	1	["t"]	[""]	+input
+933668	895	6	2	6	2	["o"]	[""]	+input
+933910	899	6	3	6	3	["t"]	[""]	+input
+934126	903	6	4	6	4	["a"]	[""]	+input
+935066	907	6	5	6	5	["l"]	[""]	+input
+938273	911	6	6	6	6	[" "]	[""]	+input
+938404	915	6	7	6	7	["="]	[""]	+input
+938580	919	6	8	6	8	[" "]	[""]	+input
+940637	923	6	9	6	9	["e"]	[""]	+input
+940895	927	6	10	6	10	["n"]	[""]	+input
+941147	931	6	11	6	11	["t"]	[""]	+input
+941332	935	6	12	6	12	["r"]	[""]	+input
+941569	939	6	13	6	13	["a"]	[""]	+input
+942236	943	6	14	6	14	["f"]	[""]	+input
+942405	947	6	15	6	15	["a"]	[""]	+input
+943425	950	6	15	6	16	[""]	["a"]	+delete
+943596	954	6	14	6	15	[""]	["f"]	+delete
+944223	959	6	14	6	14	["d"]	[""]	+input
+944426	963	6	15	6	15	["a"]	[""]	+input
+949336	967	6	16	6	16	[" "]	[""]	+input
+950694	971	6	17	6	17	["-"]	[""]	+input
+951656	975	6	18	6	18	["2"]	[""]	+input
+951949	979	6	19	6	19	["5"]	[""]	+input
+952722	983	6	20	6	20	["/"]	[""]	+input
+953020	987	6	21	6	21	["1"]	[""]	+input
+953293	991	6	22	6	22	["0"]	[""]	+input
+953589	995	6	23	6	23	["0"]	[""]	+input
+954666	1000	6	24	6	24	[")"]	[""]	+input
+959815	1039	6	18	6	18	["("]	[""]	+input
+962348	1062	6	26	6	26	[" "]	[""]	+input
+962400	1065	6	27	6	27	["*"]	[""]	+input
+962692	1070	6	28	6	28	[" "]	[""]	+input
+964206	1074	6	29	6	29	["e"]	[""]	+input
+964343	1077	6	30	6	30	["n"]	[""]	+input
+964695	1082	6	31	6	31	["t"]	[""]	+input
+964946	1086	6	32	6	32	["r"]	[""]	+input
+965385	1090	6	33	6	33	["a"]	[""]	+input
+965713	1094	6	34	6	34	["d"]	[""]	+input
+965909	1098	6	35	6	35	["a"]	[""]	+input
+967973	1101	6	36	6	36	["",""]	[""]	+input
+967973	1102	7	0	7	0	["\t"]	[""]	+input
+975519	1108	7	1	7	1	["p"]	[""]	+input
+975689	1112	7	2	7	2	["r"]	[""]	+input
+975903	1116	7	3	7	3	["i"]	[""]	+input
+976057	1120	7	4	7	4	["n"]	[""]	+input
+976226	1124	7	5	7	5	["t"]	[""]	+input
+977848	1128	7	6	7	6	["r"]	[""]	+input
+978607	1131	7	6	7	7	[""]	["r"]	+delete
+979309	1137	7	6	7	6	["()"]	[""]	+input
+979998	1143	7	7	7	7	["r"]	[""]	+input
+980224	1147	7	8	7	8	["e"]	[""]	+input
+980590	1150	7	8	7	9	[""]	["e"]	+delete
+981120	1155	7	8	7	8	["o"]	[""]	+input
+981390	1159	7	9	7	9	["u"]	[""]	+input
+981609	1163	7	10	7	10	["n"]	[""]	+input
+981837	1167	7	11	7	11	["d"]	[""]	+input
+982671	1172	7	12	7	12	["()"]	[""]	+input
+984881	1179	7	13	7	13	["T"]	[""]	+input
+985580	1183	7	13	7	14	[""]	["T"]	+delete
+986402	1188	7	13	7	13	["o"]	[""]	+input
+986835	1191	7	13	7	14	[""]	["o"]	+delete
+987016	1196	7	13	7	13	["t"]	[""]	+input
+987205	1200	7	14	7	14	["o"]	[""]	+input
+987372	1204	7	15	7	15	["t"]	[""]	+input
+987685	1208	7	16	7	16	["a"]	[""]	+input
+988066	1212	7	17	7	17	["l"]	[""]	+input
+988796	1216	7	18	7	18	[","]	[""]	+input
+989218	1220	7	19	7	19	[" "]	[""]	+input
+989454	1224	7	20	7	20	["2"]	[""]	+input
+1690542	1257	5	3	5	3	["e"]	[""]	+input
+1690841	1261	5	4	5	4	["b"]	[""]	+input
+1691152	1265	5	5	5	5	["t"]	[""]	+input
+1691532	1269	5	6	5	6	["="]	[""]	+input
+1691738	1272	5	6	5	7	[""]	["="]	+delete
+1691918	1276	5	5	5	6	[""]	["t"]	+delete
+1692094	1280	5	4	5	5	[""]	["b"]	+delete
+1692680	1285	5	4	5	4	["n"]	[""]	+input
+1693058	1289	5	5	5	5	["t"]	[""]	+input
+1693318	1293	5	6	5	6	["r"]	[""]	+input
+1693681	1297	5	7	5	7	["a"]	[""]	+input
+1694015	1301	5	8	5	8	["d"]	[""]	+input
+1694418	1305	5	9	5	9	["a"]	[""]	+input
+1725698	1309	5	10	5	10	[" "]	[""]	+input
+1726163	1314	5	11	5	11	["<"]	[""]	+input
+1729002	1319	5	12	5	12	[" "]	[""]	+input
+1729179	1323	5	13	5	13	["0"]	[""]	+input
+1729349	1327	5	14	5	14	[" "]	[""]	+input
+1730150	1331	5	15	5	15	["o"]	[""]	+input
+1730501	1335	5	16	5	16	["r"]	[""]	+input
+1732188	1340	5	17	5	17	["()"]	[""]	+input
+1733569	1345	5	18	5	19	[""]	[")"]	+delete
+1734098	1349	5	18	5	19	[""]	[" "]	+delete
+1742328	1354	5	21	5	47	[""]	[" ==2 and dia ==3 and dia=="]	+delete
+1744420	1358	5	21	5	22	[""]	["5"]	+delete
+1746208	1363	5	21	5	21	[" "]	[""]	+input
+1746892	1368	5	22	5	22	["<"]	[""]	+input
+1748656	1373	5	23	5	23	[" "]	[""]	+input
+1748868	1377	5	24	5	24	["1"]	[""]	+input
+1749556	1381	5	25	5	25	[" "]	[""]	+input
+1750008	1385	5	26	5	26	["o"]	[""]	+input
+1750583	1389	5	27	5	27	["r"]	[""]	+input
+1752463	1393	5	28	5	28	["d"]	[""]	+input
+1752714	1397	5	29	5	29	["i"]	[""]	+input
+1752880	1401	5	30	5	30	["a"]	[""]	+input
+1754668	1404	5	30	5	31	[""]	["a"]	+delete
+1754878	1408	5	29	5	30	[""]	["i"]	+delete
+1755181	1412	5	28	5	29	[""]	["d"]	+delete
+1755639	1417	5	28	5	28	[" "]	[""]	+input
+1756210	1421	5	29	5	29	["d"]	[""]	+input
+1756363	1425	5	30	5	30	["i"]	[""]	+input
+1756525	1429	5	31	5	31	["a"]	[""]	+input
+1756659	1433	5	32	5	32	[" "]	[""]	+input
+1758324	1438	5	33	5	33	[">"]	[""]	+input
+1764234	1443	5	34	5	34	[" "]	[""]	+input
+1765059	1447	5	35	5	35	["7"]	[""]	+input
+1769276	1452	5	36	5	36	["()"]	[""]	+input
+1770876	1457	5	36	5	38	[""]	["()"]	+delete
+1773459	1471	5	36	5	36	["O"]	[""]	+input
+1774331	1475	5	36	5	37	[""]	["O"]	+delete
+1775441	1480	5	36	5	36	[" "]	[""]	+input
+1775846	1484	5	37	5	37	["o"]	[""]	+input
+1776265	1488	5	38	5	38	["r"]	[""]	+input
+1778403	1502	5	36	5	36	[")"]	[""]	+input
+1789774	1518	5	40	5	41	[""]	[")"]	+delete
+1793432	1524	5	40	5	40	["("]	[""]	+input
+1794461	1530	5	41	5	41	["M"]	[""]	+input
+1794965	1534	5	41	5	42	[""]	["M"]	+delete
+1795392	1539	5	41	5	41	["m"]	[""]	+input
+1795981	1543	5	42	5	42	["u"]	[""]	+input
+1796887	1547	5	43	5	43	["s"]	[""]	+input
+1797095	1551	5	44	5	44	["i"]	[""]	+input
+1797354	1555	5	45	5	45	["c"]	[""]	+input
+1797507	1559	5	46	5	46	["a"]	[""]	+input
+1800142	1563	5	47	5	47	[" "]	[""]	+input
+1801281	1568	5	48	5	48	["!"]	[""]	+input
+1803405	1577	5	49	5	49	["+"]	[""]	+input
+1804230	1581	5	49	5	50	[""]	["+"]	+delete
+1804986	1586	5	49	5	49	["-"]	[""]	+input
+1805387	1589	5	49	5	50	[""]	["-"]	+delete
+1806383	1594	5	49	5	49	["="]	[""]	+input
+1808523	1599	5	50	5	50	["\"\""]	[""]	+input
+1811620	1604	5	51	5	52	[""]	["\""]	+delete
+1813245	1610	5	51	5	51	["\""]	[""]	+input
+1815166	1619	5	51	5	51	["S"]	[""]	+input
+1817534	1627	5	53	5	53	[" "]	[""]	+input
+1817865	1631	5	54	5	54	["a"]	[""]	+input
+1818271	1635	5	55	5	55	["n"]	[""]	+input
+1818522	1639	5	56	5	56	["d"]	[""]	+input
+1818749	1643	5	57	5	57	[" "]	[""]	+input
+1819289	1647	5	58	5	58	["m"]	[""]	+input
+1819608	1651	5	59	5	59	["u"]	[""]	+input
+1819846	1655	5	60	5	60	["s"]	[""]	+input
+1819997	1659	5	61	5	61	["i"]	[""]	+input
+1820200	1663	5	62	5	62	["c"]	[""]	+input
+1820397	1667	5	63	5	63	["a"]	[""]	+input
+1823509	1671	5	64	5	64	[" "]	[""]	+input
+1824728	1676	5	65	5	65	["!"]	[""]	+input
+1825547	1681	5	66	5	66	["="]	[""]	+input
+1834349	1691	5	67	5	67	["\"\""]	[""]	+input
+1836135	1712	5	68	5	68	["N"]	[""]	+input
+1840187	1719	5	70	5	70	[")"]	[""]	+input
+1854411	1724	6	1	6	36	[""]	["total = entrada -(25/100) * entrada"]	+delete
+1855028	1728	6	1	7	0	[""]	["",""]	+delete
+1856476	1733	6	1	6	2	[""]	["\t"]	+delete
+1860187	1738	6	7	6	22	[""]	["round(total, 2)"]	+delete
+1865018	1765	6	7	6	7	["\"\""]	[""]	+input
+1866891	1776	6	8	6	8	["E"]	[""]	+input
+1867174	1781	6	9	6	9	["n"]	[""]	+input
+1867848	1785	6	10	6	10	["t"]	[""]	+input
+1868917	1789	6	11	6	11	["r"]	[""]	+input
+1869348	1793	6	12	6	12	["a"]	[""]	+input
+1870049	1797	6	13	6	13	["d"]	[""]	+input
+1870278	1801	6	14	6	14	["a"]	[""]	+input
+1871915	1807	6	15	6	15	[":"]	[""]	+input
+1873628	1812	6	16	6	16	[" "]	[""]	+input
+1885331	1816	6	17	6	17	["e"]	[""]	+input
+1885511	1820	6	18	6	18	["n"]	[""]	+input
+1885846	1824	6	19	6	19	["t"]	[""]	+input
+1886109	1828	6	20	6	20	["r"]	[""]	+input
+1886638	1832	6	21	6	21	["a"]	[""]	+input
+1886947	1836	6	22	6	22	["d"]	[""]	+input
+1887070	1840	6	23	6	23	["a"]	[""]	+input
+1890338	1845	6	24	6	24	["()"]	[""]	+input
+1891399	1850	6	24	6	26	[""]	["()"]	+delete
+1902675	1856	6	24	6	24	["}"]	[""]	+input
+1905656	1886	6	17	6	17	["}"]	[""]	+input
+1906693	1890	6	17	6	18	[""]	["}"]	+delete
+1907740	1896	6	17	6	17	["{"]	[""]	+input
+1913969	1925	6	26	6	26	[","]	[""]	+input
+1914418	1929	6	27	6	27	[" "]	[""]	+input
+1917581	1952	6	28	6	28	["{}"]	[""]	+input
+1919146	1958	6	29	6	29	["d"]	[""]	+input
+1919382	1962	6	30	6	30	["i"]	[""]	+input
+1919533	1966	6	31	6	31	["a"]	[""]	+input
+1922952	1979	6	33	6	33	[","]	[""]	+input
+1923209	1983	6	34	6	34	[" "]	[""]	+input
+1925895	2011	6	35	6	35	["{}"]	[""]	+input
+1927097	2017	6	36	6	36	["m"]	[""]	+input
+1927627	2021	6	37	6	37	["e"]	[""]	+input
+1928179	2024	6	37	6	38	[""]	["e"]	+delete
+1928513	2029	6	37	6	37	["u"]	[""]	+input
+1928744	2033	6	38	6	38	["s"]	[""]	+input
+1928837	2036	6	39	6	39	["i"]	[""]	+input
+1929034	2041	6	40	6	40	["c"]	[""]	+input
+1929177	2044	6	41	6	41	["a"]	[""]	+input
+1944114	2049	6	45	6	45	["",""]	[""]	+input
+1944115	2050	7	0	7	0	["\t"]	[""]	+input
+1945019	2056	7	1	7	1	["p"]	[""]	+input
+1945334	2060	7	2	7	2	["r"]	[""]	+input
+1945467	2064	7	3	7	3	["i"]	[""]	+input
+1945664	2068	7	4	7	4	["n"]	[""]	+input
+1945866	2072	7	5	7	5	["t"]	[""]	+input
+1949222	2123	7	6	7	6	["()"]	[""]	+input
+1949749	2130	7	7	7	7	["\"\""]	[""]	+input
+1955628	2144	7	8	7	8	["D"]	[""]	+input
+1956073	2149	7	9	7	9	["a"]	[""]	+input
+1956772	2153	7	10	7	10	["d"]	[""]	+input
+1956864	2157	7	11	7	11	["o"]	[""]	+input
+1956987	2161	7	12	7	12	["s"]	[""]	+input
+1957153	2165	7	13	7	13	[" "]	[""]	+input
+1957954	2169	7	14	7	14	["i"]	[""]	+input
+1958216	2173	7	15	7	15	["n"]	[""]	+input
+1958545	2177	7	16	7	16	["v"]	[""]	+input
+1958652	2181	7	17	7	17	["a"]	[""]	+input
+1958885	2185	7	18	7	18	["l"]	[""]	+input
+1959576	2189	7	19	7	19	["i"]	[""]	+input
+1959784	2193	7	20	7	20	["d"]	[""]	+input
+1959983	2196	7	21	7	21	["o"]	[""]	+input
+1960635	2201	7	22	7	22	["s"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 1965470
+- raw_log_line: 2217
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if(entrada < 0 or(dia < 1 or dia > 7) or(musica !="S" and musica !="N"):
+	print("Entrada: {entrada}, {dia}, {musica}")
+	print("Dados invalidos")
+```
+Run Output
+```text
+Valor: 75.25
+Valor: 3
+S ou N: s
+```
+
+Edit Segment 3
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1993463	2223	5	17	5	17	[" "]	[""]	+input
+2004797	2227	5	2	5	3	[""]	["("]	+delete
+2006736	2232	5	70	5	71	[""]	[")"]	+delete
+
+Local Run 3
+- event_time_delta_ms: 2011593
+- raw_log_line: 2240
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+ifentrada < 0 or (dia < 1 or dia > 7) or(musica !="S" and musica !="N":
+	print("Entrada: {entrada}, {dia}, {musica}")
+	print("Dados invalidos")
+```
+Run Output
+```text
+File "main.py", line 6
+if(entrada < 0 or(dia < 1 or dia > 7) or(musica !="S" and musica !="N"):
+SyntaxError: invalid syntax
+```
+
+Edit Segment 4
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+2017351	2248	5	70	5	70	[")"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 2021368
+- raw_log_line: 2256
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+ifentrada < 0 or (dia < 1 or dia > 7) or(musica !="S" and musica !="N"):
+	print("Entrada: {entrada}, {dia}, {musica}")
+	print("Dados invalidos")
+```
+Run Output
+```text
+File "main.py", line 6
+ifentrada < 0 or (dia < 1 or dia > 7) or(musica !="S" and musica !="N":
+SyntaxError: invalid syntax
+```
+
+Edit Segment 5
+- raw_change_event_count: 6
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+2028237	2263	5	40	5	40	[" "]	[""]	+input
+2035455	2267	5	73	6	0	[""]	["",""]	+delete
+2036889	2272	5	73	5	74	[""]	["\t"]	+delete
+2038037	2276	5	73	5	73	["",""]	[""]	+input
+2038038	2277	6	0	6	0	["\t"]	[""]	+input
+2042246	2284	5	2	5	2	[" "]	[""]	+input
+
+Local Run 5
+- event_time_delta_ms: 2045332
+- raw_log_line: 2292
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+	print("Entrada: {entrada}, {dia}, {musica}")
+	print("Dados invalidos")
+```
+Run Output
+```text
+File "main.py", line 6
+ifentrada < 0 or (dia < 1 or dia > 7) or(musica !="S" and musica !="N"):
+SyntaxError: invalid syntax
+```
+
+Edit Segment 6
+- raw_change_event_count: 208
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+2088455	2297	7	25	7	25	["",""]	[""]	+input
+2088456	2298	8	0	8	0	["\t"]	[""]	+input
+2089133	2303	8	0	8	1	[""]	["\t"]	+delete
+2089794	2308	8	0	8	0	["e"]	[""]	+input
+2090194	2312	8	1	8	1	["l"]	[""]	+input
+2090454	2316	8	2	8	2	["s"]	[""]	+input
+2090713	2320	8	3	8	3	["e"]	[""]	+input
+2093344	2336	8	4	8	4	[":"]	[""]	+input
+2094211	2340	8	5	8	5	["",""]	[""]	+input
+2094213	2341	9	0	9	0	["\t"]	[""]	+input
+2101941	2347	9	1	9	1	["i"]	[""]	+input
+2102327	2351	9	2	9	2	["f"]	[""]	+input
+2107826	2355	9	3	9	3	[" "]	[""]	+input
+2108992	2359	9	4	9	4	["d"]	[""]	+input
+2109206	2363	9	5	9	5	["i"]	[""]	+input
+2110296	2367	9	6	9	6	["a"]	[""]	+input
+2111855	2371	9	7	9	7	[" "]	[""]	+input
+2112398	2375	9	8	9	8	["i"]	[""]	+input
+2112609	2379	9	9	9	9	["n"]	[""]	+input
+2114629	2384	9	10	9	10	["()"]	[""]	+input
+2116515	2390	9	11	9	11	["2"]	[""]	+input
+2117780	2394	9	12	9	12	[","]	[""]	+input
+2118445	2398	9	13	9	13	[" "]	[""]	+input
+2118975	2402	9	14	9	14	["3"]	[""]	+input
+2119324	2406	9	15	9	15	[" "]	[""]	+input
+2120983	2409	9	15	9	16	[""]	[" "]	+delete
+2123682	2414	9	15	9	15	[","]	[""]	+input
+2124335	2418	9	16	9	16	[" "]	[""]	+input
+2124595	2422	9	17	9	17	["5"]	[""]	+input
+2127072	2430	9	19	9	19	[":"]	[""]	+input
+2128747	2434	9	20	9	20	["",""]	[""]	+input
+2128749	2435	10	0	10	0	["\t\t"]	[""]	+input
+2129730	2441	10	2	10	2	["e"]	[""]	+input
+2129963	2445	10	3	10	3	["n"]	[""]	+input
+2132965	2449	10	4	10	4	["t"]	[""]	+input
+2133176	2453	10	5	10	5	["r"]	[""]	+input
+2133828	2457	10	6	10	6	["a"]	[""]	+input
+2134428	2461	10	7	10	7	["d"]	[""]	+input
+2134642	2465	10	8	10	8	["a"]	[""]	+input
+2136335	2469	10	9	10	9	[" "]	[""]	+input
+2136577	2473	10	10	10	10	["="]	[""]	+input
+2136802	2477	10	11	10	11	[" "]	[""]	+input
+2138197	2481	10	12	10	12	["e"]	[""]	+input
+2138440	2485	10	13	10	13	["n"]	[""]	+input
+2141956	2489	10	14	10	14	["t"]	[""]	+input
+2142218	2493	10	15	10	15	["r"]	[""]	+input
+2142485	2497	10	16	10	16	["a"]	[""]	+input
+2142770	2501	10	17	10	17	["f"]	[""]	+input
+2142951	2505	10	18	10	18	["a"]	[""]	+input
+2143468	2508	10	18	10	19	[""]	["a"]	+delete
+2143699	2512	10	17	10	18	[""]	["f"]	+delete
+2148143	2517	10	17	10	17	["d"]	[""]	+input
+2148281	2521	10	18	10	18	["a"]	[""]	+input
+2150825	2525	10	19	10	19	[" "]	[""]	+input
+2151012	2529	10	20	10	20	["-"]	[""]	+input
+2151158	2533	10	21	10	21	[" "]	[""]	+input
+2154647	2537	10	22	10	22	["2"]	[""]	+input
+2154844	2541	10	23	10	23	["5"]	[""]	+input
+2155095	2545	10	24	10	24	["/"]	[""]	+input
+2155673	2549	10	25	10	25	["1"]	[""]	+input
+2155852	2553	10	26	10	26	["0"]	[""]	+input
+2156505	2557	10	27	10	27	["0"]	[""]	+input
+2158490	2561	10	28	10	28	[" "]	[""]	+input
+2158632	2565	10	29	10	29	["*"]	[""]	+input
+2158822	2569	10	30	10	30	[" "]	[""]	+input
+2159416	2573	10	31	10	31	["e"]	[""]	+input
+2159671	2577	10	32	10	32	["n"]	[""]	+input
+2159936	2581	10	33	10	33	["t"]	[""]	+input
+2160143	2585	10	34	10	34	["r"]	[""]	+input
+2164300	2589	10	35	10	35	["a"]	[""]	+input
+2164507	2593	10	36	10	36	["d"]	[""]	+input
+2164647	2597	10	37	10	37	["a"]	[""]	+input
+2168539	2624	10	28	10	28	[")"]	[""]	+input
+2171088	2651	10	22	10	22	["("]	[""]	+input
+2184524	2656	10	40	10	40	["",""]	[""]	+input
+2184525	2657	11	0	11	0	["\t\t"]	[""]	+input
+2186585	2662	11	1	11	2	[""]	["\t"]	+delete
+2187687	2667	11	1	11	1	["i"]	[""]	+input
+2187966	2671	11	2	11	2	["f"]	[""]	+input
+2190667	2675	11	3	11	3	[" "]	[""]	+input
+2193313	2679	11	4	11	4	["m"]	[""]	+input
+2194076	2683	11	5	11	5	["u"]	[""]	+input
+2194316	2687	11	6	11	6	["s"]	[""]	+input
+2194503	2691	11	7	11	7	["i"]	[""]	+input
+2194779	2695	11	8	11	8	["c"]	[""]	+input
+2194975	2699	11	9	11	9	["a"]	[""]	+input
+2196139	2703	11	10	11	10	[" "]	[""]	+input
+2196803	2707	11	11	11	11	["="]	[""]	+input
+2197064	2711	11	12	11	12	["="]	[""]	+input
+2197325	2715	11	13	11	13	[" "]	[""]	+input
+2198202	2720	11	14	11	14	["\"\""]	[""]	+input
+2199421	2727	11	15	11	15	["S"]	[""]	+input
+2201817	2734	11	17	11	17	["",""]	[""]	+input
+2201818	2735	12	0	12	0	["\t"]	[""]	+input
+2204063	2741	12	1	12	1	["e"]	[""]	+input
+2204283	2745	12	2	12	2	["n"]	[""]	+input
+2204615	2749	12	3	12	3	["t"]	[""]	+input
+2204844	2753	12	4	12	4	["r"]	[""]	+input
+2205290	2757	12	5	12	5	["e"]	[""]	+input
+2206055	2760	12	5	12	6	[""]	["e"]	+delete
+2206229	2765	12	5	12	5	["a"]	[""]	+input
+2206477	2769	12	6	12	6	["d"]	[""]	+input
+2206716	2773	12	7	12	7	["a"]	[""]	+input
+2213569	2777	12	1	12	1	["\t"]	[""]	+input
+2216445	2783	12	9	12	9	[" "]	[""]	+input
+2216575	2787	12	10	12	10	["="]	[""]	+input
+2216676	2791	12	11	12	11	[" "]	[""]	+input
+2218974	2795	12	12	12	12	["e"]	[""]	+input
+2219194	2799	12	13	12	13	["n"]	[""]	+input
+2219484	2803	12	14	12	14	["t"]	[""]	+input
+2219736	2807	12	15	12	15	["r"]	[""]	+input
+2219958	2811	12	16	12	16	["a"]	[""]	+input
+2220215	2815	12	17	12	17	["d"]	[""]	+input
+2220406	2819	12	18	12	18	["a"]	[""]	+input
+2221015	2823	12	19	12	19	[" "]	[""]	+input
+2221202	2827	12	20	12	20	["+"]	[""]	+input
+2222673	2831	12	21	12	21	[" "]	[""]	+input
+2222876	2835	12	22	12	22	["2"]	[""]	+input
+2223162	2839	12	23	12	23	["0"]	[""]	+input
+2224672	2843	12	24	12	24	["."]	[""]	+input
+2225015	2847	12	25	12	25	["0"]	[""]	+input
+2225252	2851	12	26	12	26	["0"]	[""]	+input
+2227555	2854	12	27	12	27	["",""]	[""]	+input
+2227556	2855	13	0	13	0	["\t\t"]	[""]	+input
+2228592	2860	13	1	13	2	[""]	["\t"]	+delete
+2228991	2864	13	0	13	1	[""]	["\t"]	+delete
+2230128	2869	13	0	13	0	["p"]	[""]	+input
+2230342	2873	13	1	13	1	["r"]	[""]	+input
+2230529	2876	13	2	13	2	["i"]	[""]	+input
+2230692	2881	13	3	13	3	["n"]	[""]	+input
+2230852	2885	13	4	13	4	["t"]	[""]	+input
+2231812	2890	13	5	13	5	["()"]	[""]	+input
+2242304	2901	13	6	13	6	["\"\""]	[""]	+input
+2250234	2908	13	7	13	7	["E"]	[""]	+input
+2251053	2913	13	8	13	8	["n"]	[""]	+input
+2251325	2917	13	9	13	9	["t"]	[""]	+input
+2251560	2921	13	10	13	10	["r"]	[""]	+input
+2251858	2925	13	11	13	11	["a"]	[""]	+input
+2252188	2929	13	12	13	12	["d"]	[""]	+input
+2252365	2933	13	13	13	13	["a"]	[""]	+input
+2253998	2937	13	14	13	14	["s"]	[""]	+input
+2254734	2942	13	15	13	15	[":"]	[""]	+input
+2255196	2947	13	16	13	16	[" "]	[""]	+input
+2257684	2968	13	17	13	17	["{}"]	[""]	+input
+2259386	2974	13	18	13	18	["e"]	[""]	+input
+2259619	2978	13	19	13	19	["n"]	[""]	+input
+2259871	2982	13	20	13	20	["t"]	[""]	+input
+2260102	2986	13	21	13	21	["r"]	[""]	+input
+2260317	2990	13	22	13	22	["a"]	[""]	+input
+2260727	2994	13	23	13	23	["d"]	[""]	+input
+2261143	2998	13	24	13	24	["a"]	[""]	+input
+2265109	3005	13	26	13	26	[","]	[""]	+input
+2266309	3009	13	27	13	27	[" "]	[""]	+input
+2267354	3014	13	28	13	28	["{}"]	[""]	+input
+2268227	3020	13	29	13	29	["d"]	[""]	+input
+2268424	3024	13	30	13	30	["i"]	[""]	+input
+2268589	3028	13	31	13	31	["a"]	[""]	+input
+2272374	3035	13	33	13	33	[","]	[""]	+input
+2272556	3039	13	34	13	34	[" "]	[""]	+input
+2276244	3054	13	35	13	35	["{}"]	[""]	+input
+2277842	3060	13	36	13	36	["m"]	[""]	+input
+2278082	3064	13	37	13	37	["u"]	[""]	+input
+2278325	3068	13	38	13	38	["s"]	[""]	+input
+2278475	3071	13	39	13	39	["i"]	[""]	+input
+2278751	3076	13	40	13	40	["c"]	[""]	+input
+2278973	3080	13	41	13	41	["a"]	[""]	+input
+2283655	3092	13	45	13	45	["",""]	[""]	+input
+2284529	3098	14	0	14	0	["p"]	[""]	+input
+2284709	3102	14	1	14	1	["r"]	[""]	+input
+2284924	3106	14	2	14	2	["i"]	[""]	+input
+2285301	3110	14	3	14	3	["t"]	[""]	+input
+2286176	3113	14	3	14	4	[""]	["t"]	+delete
+2286596	3118	14	3	14	3	["n"]	[""]	+input
+2286833	3122	14	4	14	4	["t"]	[""]	+input
+2288487	3127	14	5	14	5	["()"]	[""]	+input
+2291142	3135	14	6	14	6	["\"\""]	[""]	+input
+2293155	3145	14	7	14	7	["T"]	[""]	+input
+2293412	3150	14	8	14	8	["o"]	[""]	+input
+2294347	3154	14	9	14	9	["t"]	[""]	+input
+2294623	3158	14	10	14	10	["a"]	[""]	+input
+2294833	3162	14	11	14	11	["l"]	[""]	+input
+2298882	3169	14	12	14	12	[":"]	[""]	+input
+2300940	3174	14	13	14	13	[" "]	[""]	+input
+2301548	3179	14	14	14	14	["R"]	[""]	+input
+2305719	3185	14	15	14	15	["$"]	[""]	+input
+2323452	3193	14	16	14	16	["()"]	[""]	+input
+2324703	3198	14	16	14	18	[""]	["()"]	+delete
+2325594	3203	14	16	14	16	[","]	[""]	+input
+2325872	3207	14	17	14	17	[" "]	[""]	+input
+2328442	3226	14	18	14	18	["()"]	[""]	+input
+2329262	3232	14	19	14	19	["r"]	[""]	+input
+2329620	3236	14	20	14	20	["o"]	[""]	+input
+2329927	3240	14	21	14	21	["u"]	[""]	+input
+2330131	3244	14	22	14	22	["n"]	[""]	+input
+2330342	3248	14	23	14	23	["d"]	[""]	+input
+2332870	3253	14	24	14	24	["()"]	[""]	+input
+2333415	3259	14	25	14	25	["e"]	[""]	+input
+2333622	3263	14	26	14	26	["n"]	[""]	+input
+2334043	3267	14	27	14	27	["t"]	[""]	+input
+2334365	3271	14	28	14	28	["r"]	[""]	+input
+2335314	3275	14	29	14	29	["a"]	[""]	+input
+2340154	3279	14	18	14	19	[""]	["("]	+delete
+2343434	3284	14	30	14	31	[""]	[")"]	+delete
+2346193	3290	14	29	14	29	["d"]	[""]	+input
+2346353	3293	14	30	14	30	["a"]	[""]	+input
+2347155	3298	14	31	14	31	[","]	[""]	+input
+2348255	3302	14	32	14	32	[" "]	[""]	+input
+2348443	3306	14	33	14	33	["2"]	[""]	+input
+
+Local Run 6
+- event_time_delta_ms: 2369521
+- raw_log_line: 3313
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+	print("Entrada: {entrada}, {dia}, {musica}")
+	print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		entrada = entrada - (25/100) * entrada
+	if musica == "S"
+		entrada = entrada + 20.00
+print("Entradas: {entrada}, {dia}, {musica}")
+print("Total: R$, round(entrada, 2)")
+```
+Run Output
+```text
+Valor: 75.25
+Valor: 3
+S ou N: s
+```
+
+Edit Segment 7
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+2390441	3322	11	17	11	17	[":"]	[""]	+input
+
+Local Run 7
+- event_time_delta_ms: 2393496
+- raw_log_line: 3330
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+	print("Entrada: {entrada}, {dia}, {musica}")
+	print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		entrada = entrada - (25/100) * entrada
+	if musica == "S":
+		entrada = entrada + 20.00
+print("Entradas: {entrada}, {dia}, {musica}")
+print("Total: R$, round(entrada, 2)")
+```
+Run Output
+```text
+File "main.py", line 12
+if musica == "S"
+SyntaxError: invalid syntax
+```
+
+Edit Segment 8
+- raw_change_event_count: 20
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+2425832	3341	13	18	13	42	[""]	["entrada}, {dia}, {musica"]	+delete
+2426968	3345	13	18	13	19	[""]	["}"]	+delete
+2427433	3349	13	17	13	18	[""]	["{"]	+delete
+2427897	3353	13	16	13	17	[""]	[" "]	+delete
+2431487	3360	13	17	13	17	[","]	[""]	+input
+2431786	3364	13	18	13	18	[" "]	[""]	+input
+2433504	3367	13	19	13	20	[""]	[")"]	+delete
+2434586	3371	13	18	13	19	[""]	[" "]	+delete
+2435740	3376	13	18	13	18	["entrada}, {dia}, {musica"]	[""]	paste
+2438169	3381	13	25	13	26	[""]	["}"]	+delete
+2440552	3386	13	31	13	32	[""]	["}"]	+delete
+2441562	3391	13	27	13	28	[""]	["{"]	+delete
+2442910	3396	13	32	13	33	[""]	["{"]	+delete
+2446780	3415	13	38	13	38	[")"]	[""]	+input
+2452487	3426	14	18	14	35	[""]	["round(entrada, 2)"]	+delete
+2454236	3430	14	17	14	18	[""]	[" "]	+delete
+2457517	3436	14	16	14	17	[""]	[","]	+delete
+2459056	3442	14	17	14	17	[","]	[""]	+input
+2459673	3446	14	18	14	18	[" "]	[""]	+input
+2460577	3450	14	19	14	19	["round(entrada, 2)"]	[""]	paste
+
+Local Run 8
+- event_time_delta_ms: 2465695
+- raw_log_line: 3460
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+	print("Entrada: {entrada}, {dia}, {musica}")
+	print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		entrada = entrada - (25/100) * entrada
+	if musica == "S":
+		entrada = entrada + 20.00
+print("Entradas:",entrada, dia, musica)
+print("Total: R$", round(entrada, 2))
+```
+Run Output
+```text
+Valor: 75.25
+Valor: 3
+S ou N: s
+Entradas: {entrada}, {dia}, {musica}
+Total: R$, round(entrada, 2)
+```
+
+Edit Segment 9
+- raw_change_event_count: 12
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+2537188	3469	13	18	13	18	["\""]	[""]	+input
+2539435	3481	13	17	13	17	["\""]	[""]	+input
+2543367	3520	13	27	13	27	["\"\""]	[""]	+input
+2545447	3534	13	28	13	29	[""]	["\""]	+delete
+2546472	3542	13	29	13	29	["'"]	[""]	+input
+2547926	3549	13	30	13	30	["\""]	[""]	+input
+2549773	3553	13	30	13	31	[""]	["\""]	+delete
+2550042	3557	13	29	13	30	[""]	["'"]	+delete
+2551335	3572	13	29	13	29	["\""]	[""]	+input
+2553964	3590	13	34	13	34	["\"\""]	[""]	+input
+2555051	3595	13	35	13	36	[""]	["\""]	+delete
+2556335	3604	13	36	13	36	["\""]	[""]	+input
+
+Local Run 9
+- event_time_delta_ms: 2577603
+- raw_log_line: 3614
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+	print("Entrada: {entrada}, {dia}, {musica}")
+	print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		entrada = entrada - (25/100) * entrada
+	if musica == "S":
+		entrada = entrada + 20.00
+print("Entradas:"","entrada"," dia"," musica)
+print("Total: R$", round(entrada, 2))
+```
+Run Output
+```text
+Valor: 75.25
+Valor: 3
+S ou N: s
+Entradas: 76.4375 3 S
+Total: R$ 76.44
+```
+
+Edit Segment 10
+- raw_change_event_count: 5
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+2610952	3619	13	17	13	18	[""]	["\""]	+delete
+2615022	3623	13	16	13	17	[""]	["\""]	+delete
+2616602	3627	13	16	13	17	[""]	[","]	+delete
+2619126	3635	13	17	13	17	[","]	[""]	+input
+2620442	3639	13	18	13	18	[" "]	[""]	+input
+
+Local Run 10
+- event_time_delta_ms: 2629534
+- raw_log_line: 3646
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+	print("Entrada: {entrada}, {dia}, {musica}")
+	print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		entrada = entrada - (25/100) * entrada
+	if musica == "S":
+		entrada = entrada + 20.00
+print("Entradas:", entrada"," dia"," musica)
+print("Total: R$", round(entrada, 2))
+```
+Run Output
+```text
+File "main.py", line 14
+print("Entradas:"","entrada"," dia"," musica)
+SyntaxError: invalid syntax
+```
+
+Edit Segment 11
+- raw_change_event_count: 9
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+2645856	3651	13	35	13	36	[""]	["\""]	+delete
+2646654	3655	13	34	13	35	[""]	[","]	+delete
+2647228	3659	13	33	13	34	[""]	["\""]	+delete
+2648814	3664	13	28	13	29	[""]	["\""]	+delete
+2649171	3668	13	27	13	28	[""]	[","]	+delete
+2649618	3672	13	26	13	27	[""]	["\""]	+delete
+2650610	3677	13	26	13	26	[","]	[""]	+input
+2652347	3682	13	31	13	31	[" "]	[""]	+input
+2653165	3686	13	32	13	32	[","]	[""]	+input
+
+Local Run 11
+- event_time_delta_ms: 2657458
+- raw_log_line: 3694
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+	print("Entrada: {entrada}, {dia}, {musica}")
+	print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		entrada = entrada - (25/100) * entrada
+	if musica == "S":
+		entrada = entrada + 20.00
+print("Entradas:", entrada, dia , musica)
+print("Total: R$", round(entrada, 2))
+```
+Run Output
+```text
+File "main.py", line 14
+print("Entradas:", entrada"," dia"," musica)
+SyntaxError: invalid syntax
+```
+
+Edit Segment 12
+- raw_change_event_count: 8
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+2682638	3699	6	25	6	26	[""]	["}"]	+delete
+2698553	3704	6	17	6	18	[""]	["{"]	+delete
+2703808	3709	6	30	6	31	[""]	["}"]	+delete
+2705901	3714	6	40	6	41	[""]	["\""]	+delete
+2711959	3722	6	16	6	16	["\""]	[""]	+input
+2715770	3727	6	27	6	28	[""]	["{"]	+delete
+2718176	3732	6	39	6	40	[""]	["}"]	+delete
+2719546	3737	6	32	6	33	[""]	["{"]	+delete
+
+Local Run 12
+- event_time_delta_ms: 2723621
+- raw_log_line: 3749
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+	print("Entrada:" entrada, dia, musica)
+	print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		entrada = entrada - (25/100) * entrada
+	if musica == "S":
+		entrada = entrada + 20.00
+print("Entradas:", entrada, dia , musica)
+print("Total: R$", round(entrada, 2))
+```
+Run Output
+```text
+Valor: 1.0
+Valor: 10
+S ou N: s
+Entrada: {entrada}, {dia}, {musica}
+Dados invalidos
+Entradas: 1.0 10 S
+Total: R$ 1.0
+```
+
+Edit Segment 13
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+2741838	3755	6	17	6	18	[","]	[" "]	+input
+2743894	3759	6	18	6	18	[" "]	[""]	+input
+
+Local Run 13
+- event_time_delta_ms: 2747414
+- raw_log_line: 3768
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+	print("Entrada:", entrada, dia, musica)
+	print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		entrada = entrada - (25/100) * entrada
+	if musica == "S":
+		entrada = entrada + 20.00
+print("Entradas:", entrada, dia , musica)
+print("Total: R$", round(entrada, 2))
+```
+Run Output
+```text
+File "main.py", line 7
+print("Entrada:" entrada, dia, musica)
+SyntaxError: invalid syntax
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 2769033
+- raw_log_line: 3770
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+	print("Entrada:", entrada, dia, musica)
+	print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		entrada = entrada - (25/100) * entrada
+	if musica == "S":
+		entrada = entrada + 20.00
+print("Entradas:", entrada, dia , musica)
+print("Total: R$", round(entrada, 2))
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-01-30T22:20:21.760000
+
+Execution Result
+
+- submitted_at: 2024-01-30 21:25:50
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "70.56\n2\nN"
+    expected: "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92"
+    actual: "Entradas: 70.56 2 N\nTotal: R$ 70.56"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75"
+    actual: "Entradas: 100.75 6 S\nTotal: R$ 100.75"
+  - test_index_0idx: 2 [FAIL]
+    input: "0.00\n9\nS"
+    expected: "Entradas: 0.0 , 9 , S\nDados invalidos"
+    actual: "Dados invalidos\nEntradas: 0.0 9 S\nTotal: R$ 0.0"
+
+Attempt Start Code
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+	print("Entrada:", entrada, dia, musica)
+	print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		entrada = entrada - (25/100) * entrada
+	if musica == "S":
+		entrada = entrada + 20.00
+print("Entradas:", entrada, dia , musica)
+print("Total: R$", round(entrada, 2))
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 3777
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+	print("Entrada:", entrada, dia, musica)
+	print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		entrada = entrada - (25/100) * entrada
+	if musica == "S":
+		entrada = entrada + 20.00
+print("Entradas:", entrada, dia , musica)
+print("Total: R$", round(entrada, 2))
+```
+Run Output
+```text
+Valor: 82.4
+Valor: 7
+S ou N: n
+Entradas: 82.4 7 N
+Total: R$ 82.4
+```
+
+Local Run 2
+- event_time_delta_ms: 90254
+- raw_log_line: 3785
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+	print("Entrada:", entrada, dia, musica)
+	print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		entrada = entrada - (25/100) * entrada
+	if musica == "S":
+		entrada = entrada + 20.00
+print("Entradas:", entrada, dia , musica)
+print("Total: R$", round(entrada, 2))
+```
+Run Output
+```text
+Valor: 1.0
+Valor: 10
+S ou N: S
+Entrada: 1.0 10 S
+Dados invalidos
+Entradas: 1.0 10 S
+Total: R$ 1.0
+```
+
+Edit Segment 1
+- raw_change_event_count: 15
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+159782	3789	6	17	6	18	[""]	[","]	+delete
+180097	3822	6	1	6	39	[""]	["print(\"Entrada:\" entrada, dia, musica)"]	cut
+181135	3826	6	1	7	0	[""]	["",""]	+delete
+276480	3835	9	2	9	9	["d"]	["entrada"]	+input
+276638	3838	9	3	9	3	["e"]	[""]	+input
+276881	3843	9	4	9	4	["s"]	[""]	+input
+277652	3847	9	5	9	5	["c"]	[""]	+input
+277850	3851	9	6	9	6	["o"]	[""]	+input
+278071	3855	9	7	9	7	["n"]	[""]	+input
+278325	3859	9	8	9	8	["t"]	[""]	+input
+278551	3863	9	9	9	9	["o"]	[""]	+input
+303134	3868	11	2	11	9	["t"]	["entrada"]	+input
+303629	3872	11	3	11	3	["a"]	[""]	+input
+303822	3876	11	4	11	4	["x"]	[""]	+input
+303966	3879	11	5	11	5	["a"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 310216
+- raw_log_line: 3889
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+		print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		desconto = entrada - (25/100) * entrada
+	if musica == "S":
+		taxa = entrada + 20.00
+print("Entradas:", entrada, dia , musica)
+print("Total: R$", round(entrada, 2))
+```
+Run Output
+```text
+Valor: 75.25
+Valor: 3
+S ou N: S
+Entradas: 76.4375 3 S
+Total: R$ 76.44
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 327660
+- raw_log_line: 3891
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+		print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		desconto = entrada - (25/100) * entrada
+	if musica == "S":
+		taxa = entrada + 20.00
+print("Entradas:", entrada, dia , musica)
+print("Total: R$", round(entrada, 2))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-01-30T22:26:01.858000
+
+Execution Result
+
+- submitted_at: 2024-01-30 21:40:34
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "70.56\n2\nN"
+    expected: "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75"
+    actual: "Total: R$ 100.75"
+  - test_index_0idx: 2 [FAIL]
+    input: "0.00\n9\nS"
+    expected: "Entradas: 0.0 , 9 , S\nDados invalidos"
+    actual: "Dados invalidos"
+
+Attempt Start Code
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+		print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		desconto = entrada - (25/100) * entrada
+	if musica == "S":
+		taxa = entrada + 20.00
+print("Entradas:", entrada, dia , musica)
+print("Total: R$", round(entrada, 2))
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 3901
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("Valor: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+		print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		desconto = entrada - (25/100) * entrada
+	if musica == "S":
+		taxa = entrada + 20.00
+print("Entradas:", entrada, dia , musica)
+print("Total: R$", round(entrada, 2))
+```
+Run Output
+```text
+Valor: 75.25
+Valor: 3
+S ou N: s
+Entradas: 75.25 3 S
+Total: R$ 75.25
+```
+
+Edit Segment 1
+- raw_change_event_count: 9
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+46286	3907	1	17	1	22	["s"]	["Valor"]	+input
+46466	3911	1	18	1	18	["e"]	[""]	+input
+46688	3915	1	19	1	19	["m"]	[""]	+input
+46837	3919	1	20	1	20	["a"]	[""]	+input
+47991	3923	1	21	1	21	["n"]	[""]	+input
+48125	3927	1	22	1	22	["a"]	[""]	+input
+66432	3930	1	23	1	23	["",""]	[""]	+input
+66434	3931	2	0	2	0	["\t\t\t\t\t "]	[""]	+input
+68801	3937	1	23	2	6	[""]	["","\t\t\t\t\t "]	undo
+
+Local Run 2
+- event_time_delta_ms: 72262
+- raw_log_line: 3946
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("semana: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+		print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		desconto = entrada - (25/100) * entrada
+	if musica == "S":
+		taxa = entrada + 20.00
+print("Entradas:", entrada, dia , musica)
+print("Total: R$", round(entrada, 2))
+```
+Run Output
+```text
+Valor: 1.0
+Valor: 10
+```
+
+Edit Segment 2
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+395461	3955	6	1	6	2	[""]	["\t"]	+delete
+400014	3961	6	0	6	1	[""]	["\t"]	+delete
+
+Local Run 3
+- event_time_delta_ms: 400319
+- raw_log_line: 3970
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("semana: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+print("Dados invalidos")
+else:
+	if dia in(2, 3, 5):
+		desconto = entrada - (25/100) * entrada
+	if musica == "S":
+		taxa = entrada + 20.00
+print("Entradas:", entrada, dia , musica)
+print("Total: R$", round(entrada, 2))
+```
+Run Output
+```text
+Valor: 1.0
+semana: 10
+S ou N: s
+Dados invalidos
+Entradas: 1.0 10 S
+Total: R$ 1.0
+```
+
+Edit Segment 3
+- raw_change_event_count: 21
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+447660	3975	7	4	7	5	[""]	[":"]	+delete
+447904	3979	7	3	7	4	[""]	["e"]	+delete
+448153	3983	7	2	7	3	[""]	["s"]	+delete
+448493	3987	7	1	7	2	[""]	["l"]	+delete
+448939	3991	7	0	7	1	[""]	["e"]	+delete
+449454	3995	6	24	7	0	[""]	["",""]	+delete
+450632	4000	6	24	6	24	["",""]	[""]	+input
+451601	4005	7	0	8	0	[""]	["",""]	+delete
+452092	4010	7	0	7	1	[""]	["\t"]	+delete
+456730	4015	7	0	7	0	["e"]	[""]	+input
+457939	4019	7	1	7	1	["l"]	[""]	+input
+464796	4023	9	2	9	3	[""]	["f"]	+delete
+465492	4027	9	1	9	2	[""]	["i"]	+delete
+465991	4031	9	0	9	1	[""]	["\t"]	+delete
+466999	4036	9	0	9	0	["e"]	[""]	+input
+468135	4040	9	1	9	1	["l"]	[""]	+input
+468352	4044	9	2	9	2	["i"]	[""]	+input
+468828	4048	9	3	9	3	["f"]	[""]	+input
+480013	4056	6	0	6	0	["\t"]	[""]	+input
+483381	4061	11	0	11	0	["\t"]	[""]	+input
+484464	4066	12	0	12	0	["\t"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 506221
+- raw_log_line: 4077
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("semana: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or (dia < 1 or dia > 7) or (musica !="S" and musica !="N"):
+	print("Dados invalidos")
+elif dia in(2, 3, 5):
+		desconto = entrada - (25/100) * entrada
+elif musica == "S":
+		taxa = entrada + 20.00
+	print("Entradas:", entrada, dia , musica)
+	print("Total: R$", round(entrada, 2))
+```
+Run Output
+```text
+Valor: 1.0
+semana: 10
+S ou N: s
+Dados invalidos
+Entradas: 1.0 10 S
+Total: R$ 1.0
+```
+
+Edit Segment 4
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+733459	4083	5	18	5	19	[""]	["("]	+delete
+735069	4088	5	36	5	37	[""]	[")"]	+delete
+736029	4093	5	40	5	41	[""]	["("]	+delete
+738341	4098	5	69	5	70	[""]	[")"]	+delete
+
+Local Run 5
+- event_time_delta_ms: 793907
+- raw_log_line: 4106
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("semana: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or dia < 1 or dia > 7 or musica !="S" and musica !="N":
+	print("Dados invalidos")
+elif dia in(2, 3, 5):
+		desconto = entrada - (25/100) * entrada
+elif musica == "S":
+		taxa = entrada + 20.00
+	print("Entradas:", entrada, dia , musica)
+	print("Total: R$", round(entrada, 2))
+```
+Run Output
+```text
+File "main.py", line 12
+print("Entradas:", entrada, dia , musica)
+IndentationError: unindent does not match any outer indentation level
+```
+
+Edit Segment 5
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+828131	4113	11	42	11	42	[")"]	[""]	+input
+849198	4123	11	1	11	43	[""]	["print(\"Entradas:\", entrada, dia , musica))"]	+delete
+849649	4127	11	1	12	0	[""]	["",""]	+delete
+
+Local Run 6
+- event_time_delta_ms: 854184
+- raw_log_line: 4136
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = float(input("Valor: "))
+dia = int(input("semana: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or dia < 1 or dia > 7 or musica !="S" and musica !="N":
+	print("Dados invalidos")
+elif dia in(2, 3, 5):
+		desconto = entrada - (25/100) * entrada
+elif musica == "S":
+		taxa = entrada + 20.00
+		print("Total: R$", round(entrada, 2))
+```
+Run Output
+```text
+File "main.py", line 12
+print("Entradas:", entrada, dia , musica)
+IndentationError: unindent does not match any outer indentation level
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 871700
+- raw_log_line: 4138
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+entrada = float(input("Valor: "))
+dia = int(input("semana: "))
+musica = input("S ou N: ")
+musica = musica.upper()
+
+if entrada < 0 or dia < 1 or dia > 7 or musica !="S" and musica !="N":
+	print("Dados invalidos")
+elif dia in(2, 3, 5):
+		desconto = entrada - (25/100) * entrada
+elif musica == "S":
+		taxa = entrada + 20.00
+		print("Total: R$", round(entrada, 2))
+```

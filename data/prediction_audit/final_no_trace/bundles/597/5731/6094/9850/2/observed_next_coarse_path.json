@@ -1,0 +1,37 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "597",
+    "assessment_id": "5731",
+    "exercise_id": "6094",
+    "student_id": "9850",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "valor_Mensal_individual = float(input(\"Valor do plano mensal individual: \"))\nqtd_Membros = int(input(\"Quantidade de membros da familia: \"))\n\nif qtd_Membros == 1:\n\tprint(valor_Mensal_individual)\nelif qtd_Membros == 2:\n\tDesconto = ((valor_Mensal_individual * (15/100)) * qtd_Membros)\nelif qtd_Membros == 3:\n\tDesconto = ((valor_Mensal_individual * (25/100)) * qtd_Membros)\nelse: \n\tDesconto = ((valor_Mensal_individual * (35/100)) * qtd_Membros)\n\t\ntotal = (valor_Mensal_individual * qtd_Membros) - Desconto\n\nprint(round(total,2))",
+    "coarse_path_steps": [
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 0,
+        "target_end_line_0idx": 12
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 3,
+        "target_end_line_0idx": 7
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

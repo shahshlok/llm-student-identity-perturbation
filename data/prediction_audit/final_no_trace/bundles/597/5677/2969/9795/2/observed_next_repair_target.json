@@ -1,0 +1,75 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "597",
+    "assessment_id": "5677",
+    "exercise_id": "2969",
+    "student_id": "9795",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "J = int(input(\"quantidade de jogos: \"))\nP = float(input(\"preco do primeiro jogo: \"))\nP2 = float(input(\"preco do segundo jogo: \"))\n\n# Se a qtd = 1, preco = X\n# Return X\n\n# Se a qtd = 2, preco = X1, preco2 = X2 -(0.25 * X2)\n \nif J == 1:\n\tprint(round(P,2))\nelif J ==2:\n\tprint(round(P + (P2 -(0.25 * P2)), 2))",
+    "grade": 67.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      1
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "J = int(input(\"quantidade de jogos: \"))\nP = float(input(\"preco do primeiro jogo: \"))\n\n\nif(J == 1):\n\tprint(round(P,2))\n\nif(J == 2):\n\tP2 = float(input(\"preco do segundo jogo: \"))\n\tprint(round(P + (P2 -(0.25 * P2)), 2))\n\n\n# Se a qtd = 1, preco = X\n# Return X\n\n# Se a qtd = 2, preco = X1, preco2 = X2 -(0.25 * X2)\n\n\t",
+    "grade": 100.0,
+    "pass_count": 3,
+    "failed_test_indices_0idx": [],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": true,
+        "input": "2\n55.50\n100.25",
+        "expected": "130.69",
+        "actual": "130.69"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "1\n72.65",
+        "expected": "72.65",
+        "actual": "72.65"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "2\n99.99\n120.25",
+        "expected": "190.18",
+        "actual": "190.18"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "solved",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 2,
+        "end_line_0idx": 10,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 16,
+        "end_line_0idx": 17,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 11,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 2,
+        "end_line_0idx": 10
+      },
+      {
+        "start_line_0idx": 16,
+        "end_line_0idx": 17
+      }
+    ]
+  }
+}

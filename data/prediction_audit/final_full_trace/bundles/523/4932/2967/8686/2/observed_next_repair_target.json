@@ -1,0 +1,87 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "523",
+    "assessment_id": "4932",
+    "exercise_id": "2967",
+    "student_id": "8686",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "alt = float(input(\"sua altura: \"))\nalt_amg = float(input(\"altura do seu amigo: \"))\nif (alt >= 1.37):\n\tprint(\"Sim\")\n\tprint(alt)\nelse:\n\tif (alt_amg >= 1.37):\n\t\tprint(\"Sim\")\n\t\tprint(alt_amg)\n\telse:\n\t\tif (alt < alt_amg):\n\t\t\tprint(\"Nao\")\n\t\t\tprint(alt_amg)\n\t\telse:\n\t\t\tprint(\"Nao\")\n\t\t\tprint(alt)\n\t\t\t\t",
+    "grade": 0.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "alt = float(input(\"sua altura: \"))\nalt_amg = float(input(\"altura do seu amigo: \"))\n\nif (alt >= 1.37):\n\tprint(\"Sim\")\n\tprint(alt)\nelse:\n\tif (alt_amg > alt):\n\t\tprint(\"Sim\")\n\t\tprint(alt_amg)\n\telse:\n\t\tprint(\"Nao\")\n\t\tprint(alt)",
+    "grade": 0.0,
+    "pass_count": 1,
+    "failed_test_indices_0idx": [
+      0,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "1.25\n1.26",
+        "expected": "Nao\n1.26",
+        "actual": "Sim\n1.26"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "1.20\n1.53",
+        "expected": "Sim\n1.53",
+        "actual": "Sim\n1.53"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "1.85\n1.9",
+        "expected": "Sim\n1.9",
+        "actual": "Sim\n1.85"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "regressed",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 2,
+        "end_line_0idx": 2,
+        "edit_kind": "insert"
+      },
+      {
+        "start_line_0idx": 7,
+        "end_line_0idx": 7,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 11,
+        "end_line_0idx": 12,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 4,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 2,
+        "end_line_0idx": 2
+      },
+      {
+        "start_line_0idx": 7,
+        "end_line_0idx": 7
+      },
+      {
+        "start_line_0idx": 11,
+        "end_line_0idx": 12
+      }
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "563",
+    "assessment_id": "5324",
+    "exercise_id": "1117",
+    "student_id": "9207",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "#Dias da semana com desconto\n\t# segundas, terças e quintas (desconto de 25%)\n\t\npreco_normal = float(input(\"Informe o preco normal de entrada: \"))\ndia_semana = int(input(\"Informe o dia da semana: \"))\nmusica_aovivo = str(input(\"Dia de musica ao vivo? \"))\n\ndomingo = 1\nsegunda = 2\nterca = 3\nquarta = 4\nquinta = 5\nsexta = 6\nsabado = 7\n\nif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == \"s\"):\n\tprint(\"Total: R$\", (round(preco_normal * 0.75 + 20, 2)))\nelif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == \"n\"):\n\tprint(\"Total: R$\", (round(preco_normal * 0.75, 2)))\nelif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == \"s\"):\n\tprint(\"Total: R$\", (round(preco_normal + 20, 2)))\nelif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == \"n\"):\n\tprint(\"Total: R$\", (round(preco_normal, 2))) \nelse:\n\tprint(\"Dados invalidos\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "#Dias da semana com desconto\n\t# segundas, terças e quintas (desconto de 25%)\n\t\npreco_normal = float(input(\"Informe o preco normal de entrada: \"))\ndia_semana = int(input(\"Informe o dia da semana: \"))\nmusica_aovivo = str(input(\"Dia de musica ao vivo? \")).upper()\n\ndomingo = 1\nsegunda = 2\nterca = 3\nquarta = 4\nquinta = 5\nsexta = 6\nsabado = 7\n\nif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == \"s\"):\n\tprint(\"Total: R$\", (round(preco_normal * 0.75 + 20, 2)))\nelif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == \"n\"):\n\tprint(\"Total: R$\", (round(preco_normal * 0.75, 2)))\nelif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == \"s\"):\n\tprint(\"Total: R$\", (round(preco_normal + 20, 2)))\nelif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == \"n\"):\n\tprint(\"Total: R$\", (round(preco_normal, 2))) \nelse:\n\tprint(\"Dados invalidos\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "70.56\n2\nN",
+        "expected": "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92",
+        "actual": "Total: R$ 72.92"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "100.75\n6\nS",
+        "expected": "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75",
+        "actual": "Total: R$ 120.75"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "0.00\n9\nS",
+        "expected": "Entradas: 0.0 , 9 , S\nDados invalidos",
+        "actual": "Dados invalidos"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5
+      }
+    ]
+  }
+}

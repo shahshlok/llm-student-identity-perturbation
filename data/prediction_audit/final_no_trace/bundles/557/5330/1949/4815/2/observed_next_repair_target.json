@@ -1,0 +1,66 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "557",
+    "assessment_id": "5330",
+    "exercise_id": "1949",
+    "student_id": "4815",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "jogador = input()\nloteria = input()\n\nif jogador == loteria:\n\tprint(\"Ganhou R$ 100.000,00\")\nelif jogador[::-1] == loteria:\n\tprint(\"Ganhou R$ 50.000,00\")\nelif (jogador[0] or jogador[1]) in loteria:\n\tprint(\"Ganhou R$ 1.000,00\")\nelse:\n\tprint(\"Perdeu\")",
+    "grade": 0.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      1
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "jogador = input()\nloteria = input()\n\nif jogador == loteria:\n\tprint(\"Ganhou R$ 100.000,00\")\nelif jogador[::-1] == loteria:\n\tprint(\"Ganhou R$ 50.000,00\")\nelif jogador[0] in loteria or jogador[1] in loteria:\n\tprint(\"Ganhou R$ 1.000,00\")\nelse:\n\tprint(\"Perdeu\")",
+    "grade": 100.0,
+    "pass_count": 3,
+    "failed_test_indices_0idx": [],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": true,
+        "input": "55\n55",
+        "expected": "Ganhou R$ 100.000,00",
+        "actual": "Ganhou R$ 100.000,00"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "78\n89",
+        "expected": "Ganhou R$ 1.000,00",
+        "actual": "Ganhou R$ 1.000,00"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "12\n56",
+        "expected": "Perdeu",
+        "actual": "Perdeu"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "solved",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 7,
+        "end_line_0idx": 7,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 7,
+        "end_line_0idx": 7
+      }
+    ]
+  }
+}

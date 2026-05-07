@@ -1,0 +1,69 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "594",
+    "assessment_id": "5746",
+    "exercise_id": "6104",
+    "student_id": "8647",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "from math import *\n\nx = float(input(\"Digite x: \"))\n\nif x <= 0:\n\tconta = 0\n\nelif 0 < x <= 1:\n\tconta = 1\n\nelif 1 < x <= 2:\n\tconta = sqrt(x)\n\nelif x > 2:\n\tconta = sqrt**3(x)\n\t\nprint(round(conta, 2))",
+    "grade": 33.0,
+    "pass_count": 1,
+    "failed_test_indices_0idx": [
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "from math import *\n\nx = float(input(\"Digite x: \"))\n\nif x <= 0:\n\tconta = 0\n\nelif 0 < x <= 1:\n\tconta = 1\n\nelif 1 < x <= 2:\n\tconta = sqrt(x)\n\nelif x > 2:\n\tconta = sqrt**3(x)\n\t\nprint(round(conta, 4))",
+    "grade": 67.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": true,
+        "input": "0.57",
+        "expected": "1",
+        "actual": "1"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "1.99",
+        "expected": "1.4107",
+        "actual": "1.4107"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "2.01",
+        "expected": "1.262",
+        "actual": ""
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "partial_fix",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 16,
+        "end_line_0idx": 16,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 16,
+        "end_line_0idx": 16
+      }
+    ]
+  }
+}

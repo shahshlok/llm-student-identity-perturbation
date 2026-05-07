@@ -1,0 +1,121 @@
+{
+  "custom_id": "525:8656:4887:3711:2",
+  "method": "POST",
+  "url": "/v1/responses",
+  "body": {
+    "model": "gpt-5.4",
+    "input": [
+      {
+        "role": "system",
+        "content": "You are predicting the next submitted attempt by one beginner Python student on CodeBench.\n\nYour job is to predict what THIS student is likely to submit next, not the best or cleanest fix.\n\nImportant rules:\n- Work only from the visible evidence up to and including attempt n.\n- Use the CodeMirror trace as behavioral evidence.\n- The next attempt may still be wrong.\n- Preserve the student's apparent naming, style, and strategy when plausible.\n- Return exactly 3 hypotheses.\n- The hypothesis probabilities must sum to 1.0 exactly.\n- Return only valid JSON matching the provided schema.\n- Do not use markdown, code fences, comments, or prose outside the JSON object.\n"
+      },
+      {
+        "role": "user",
+        "content": "Task: predict this student's next submitted attempt n+1.\n\nHow to read the payload:\n- Attempts are ordered from oldest to newest.\n- The execution result is the authoritative grading result for each submitted attempt.\n- Each attempt includes the exact code buffer at the start of that attempt block.\n- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.\n- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.\n- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.\n- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.\n- `edit_origin` is the raw CodeMirror origin string.\n- Local runs include raw output and the exact code snapshot after the run.\n- Submit anchors include raw feedback and the exact code snapshot at submit.\n- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.\n\nReturn exactly 3 hypotheses.\n\nEach hypothesis must include:\n- a short label\n- a probability\n- the full predicted code for the next submitted attempt\n- a predicted next trajectory with 1 to 8 coarse steps\n\nThe priority order is:\n1. get the next submitted code right\n2. get the rough next trajectory right\n\nFor each predicted trajectory step:\n- use `action_type` from this set only: `edit`, `local_run`, `submit`\n- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code\n- for `local_run` and `submit`, set both target line fields to `-1`\n- repeated `edit` and repeated `local_run` steps are allowed\n- every trajectory must end with `submit`\n- do not try to predict every raw event; this path should stay coarse\n\nDo not invent exercise requirements that are not supported by the visible evidence.\n\nSOURCE\n- class_id: 525\n- assessment_id: 4887\n- assessment_title: Lab 0 – Primeiros passos com o Python\n- exercise_id: 3711\n- student_id: 8656\n- condition: full\n- visible_transition_index_0idx: 2\n- visible_attempt_indices_0idx: [0,1,2]\n- prediction_target_attempt_index_0idx: 3\n- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit\n\nPREDICTION TARGET\n- attempt_index_0idx: 3\n- task: Predict the next submitted attempt after the visible history.\n\nVISIBLE ATTEMPTS\n## Attempt 0\n\n- aligned_submit_index_0idx: 0\n\n- trace_base_timestamp: 2023-08-01T21:01:06.677000\n\nExecution Result\n\n- submitted_at: 2023-08-01 21:06:17\n- grade: 0.0\n- pass_count: 0\n- failed_test_indices_0idx: [0,1]\n- test_outcome: all_fail\n- test_results:\n  - test_index_0idx: 0 [FAIL]\n    input: \"1959\"\n    expected: \"Em 1959 a UFAM completou 50 anos de fundacao.\"\n    actual: \"Em,2022,a UFAM completou, 2022-1909, anos de fundacao.\"\n  - test_index_0idx: 1 [FAIL]\n    input: \"2020\"\n    expected: \"Em 2020 a UFAM completou 111 anos de fundacao.\"\n    actual: \"Em,2022,a UFAM completou, 2022-1909, anos de fundacao.\"\n\nAttempt Start Code\n```python\n\n```\n\nTrace Timeline\n\nEdit Segment 1\n- raw_change_event_count: 110\nTSV columns: event_time_delta_ms\traw_log_line\tfrom_line\tfrom_ch\tto_line\tto_ch\tinserted_text_json\tremoved_text_json\tedit_origin\nevent_time_delta_ms\traw_log_line\tfrom_line\tfrom_ch\tto_line\tto_ch\tinserted_text_json\tremoved_text_json\tedit_origin\n0\t7\t0\t0\t0\t0\t[\"t\"]\t[\"\"]\t+input\n250\t11\t0\t1\t0\t1\t[\"e\"]\t[\"\"]\t+input\n1482\t15\t0\t2\t0\t2\t[\"x\"]\t[\"\"]\t+input\n1637\t18\t0\t3\t0\t3\t[\"r\"]\t[\"\"]\t+input\n3048\t22\t0\t3\t0\t4\t[\"\"]\t[\"r\"]\t+delete\n3214\t27\t0\t3\t0\t3\t[\"t\"]\t[\"\"]\t+input\n3443\t31\t0\t4\t0\t4\t[\"o\"]\t[\"\"]\t+input\n4777\t35\t0\t5\t0\t5\t[\"-\"]\t[\"\"]\t+input\n5822\t38\t0\t5\t0\t6\t[\"\"]\t[\"-\"]\t+delete\n6052\t43\t0\t5\t0\t5\t[\"=\"]\t[\"\"]\t+input\n9115\t47\t0\t6\t0\t6\t[\" \"]\t[\"\"]\t+input\n10711\t52\t0\t7\t0\t7\t[\"\\\"\\\"\"]\t[\"\"]\t+input\n28906\t60\t0\t8\t0\t8\t[\"E\"]\t[\"\"]\t+input\n29375\t66\t0\t9\t0\t9\t[\"m\"]\t[\"\"]\t+input\n39200\t72\t0\t10\t0\t10\t[\"'\"]\t[\"\"]\t+input\n40575\t77\t0\t10\t0\t11\t[\"\"]\t[\"'\"]\t+delete\n45354\t89\t0\t10\t0\t10\t[\",\"]\t[\"\"]\t+input\n143659\t95\t0\t11\t0\t11\t[\"2\"]\t[\"\"]\t+input\n143733\t98\t0\t12\t0\t12\t[\"0\"]\t[\"\"]\t+input\n145156\t103\t0\t13\t0\t13\t[\"2\"]\t[\"\"]\t+input\n145371\t107\t0\t14\t0\t14\t[\"3\"]\t[\"\"]\t+input\n147177\t110\t0\t14\t0\t15\t[\"\"]\t[\"3\"]\t+delete\n147460\t115\t0\t14\t0\t14\t[\"2\"]\t[\"\"]\t+input\n155114\t119\t0\t15\t0\t15\t[\"\\\\\"]\t[\"\"]\t+input\n156304\t122\t0\t15\t0\t16\t[\"\"]\t[\"\\\\\"]\t+delete\n157316\t129\t0\t15\t0\t15\t[\",\"]\t[\"\"]\t+input\n165076\t133\t0\t16\t0\t16\t[\"a\"]\t[\"\"]\t+input\n166915\t137\t0\t17\t0\t17\t[\" \"]\t[\"\"]\t+input\n167852\t143\t0\t18\t0\t18\t[\"U\"]\t[\"\"]\t+input\n168598\t147\t0\t19\t0\t19\t[\"F\"]\t[\"\"]\t+input\n169044\t151\t0\t20\t0\t20\t[\"A\"]\t[\"\"]\t+input\n169277\t155\t0\t21\t0\t21\t[\"M\"]\t[\"\"]\t+input\n169843\t159\t0\t22\t0\t22\t[\" \"]\t[\"\"]\t+input\n172059\t165\t0\t23\t0\t23\t[\"c\"]\t[\"\"]\t+input\n172243\t169\t0\t24\t0\t24\t[\"o\"]\t[\"\"]\t+input\n172525\t173\t0\t25\t0\t25\t[\"m\"]\t[\"\"]\t+input\n172975\t177\t0\t26\t0\t26\t[\"p\"]\t[\"\"]\t+input\n173196\t181\t0\t27\t0\t27\t[\"l\"]\t[\"\"]\t+input\n173547\t185\t0\t28\t0\t28\t[\"e\"]\t[\"\"]\t+input\n174476\t189\t0\t29\t0\t29\t[\"t\"]\t[\"\"]\t+input\n174659\t193\t0\t30\t0\t30\t[\"o\"]\t[\"\"]\t+input\n174928\t197\t0\t31\t0\t31\t[\"u\"]\t[\"\"]\t+input\n177367\t201\t0\t32\t0\t32\t[\",\"]\t[\"\"]\t+input\n178123\t205\t0\t33\t0\t33\t[\" \"]\t[\"\"]\t+input\n186569\t209\t0\t34\t0\t34\t[\"1\"]\t[\"\"]\t+input\n187363\t213\t0\t35\t0\t35\t[\"9\"]\t[\"\"]\t+input\n188005\t217\t0\t36\t0\t36\t[\"0\"]\t[\"\"]\t+input\n188214\t221\t0\t37\t0\t37\t[\"9\"]\t[\"\"]\t+input\n226872\t225\t0\t38\t0\t38\t[\"-\"]\t[\"\"]\t+input\n228505\t229\t0\t39\t0\t39\t[\"2\"]\t[\"\"]\t+input\n228698\t232\t0\t40\t0\t40\t[\"0\"]\t[\"\"]\t+input\n229064\t237\t0\t41\t0\t41\t[\"2\"]\t[\"\"]\t+input\n229246\t241\t0\t42\t0\t42\t[\"3\"]\t[\"\"]\t+input\n235857\t244\t0\t42\t0\t43\t[\"\"]\t[\"3\"]\t+delete\n236080\t248\t0\t41\t0\t42\t[\"\"]\t[\"2\"]\t+delete\n236237\t252\t0\t40\t0\t41\t[\"\"]\t[\"0\"]\t+delete\n236420\t256\t0\t39\t0\t40\t[\"\"]\t[\"2\"]\t+delete\n246151\t262\t0\t37\t0\t38\t[\"\"]\t[\"9\"]\t+delete\n246321\t266\t0\t36\t0\t37\t[\"\"]\t[\"0\"]\t+delete\n246496\t270\t0\t35\t0\t36\t[\"\"]\t[\"9\"]\t+delete\n246854\t274\t0\t34\t0\t35\t[\"\"]\t[\"1\"]\t+delete\n248214\t279\t0\t34\t0\t34\t[\"2\"]\t[\"\"]\t+input\n248505\t283\t0\t35\t0\t35\t[\"0\"]\t[\"\"]\t+input\n249638\t287\t0\t36\t0\t36\t[\"2\"]\t[\"\"]\t+input\n249888\t291\t0\t37\t0\t37\t[\"2\"]\t[\"\"]\t+input\n252317\t296\t0\t39\t0\t39\t[\"1\"]\t[\"\"]\t+input\n252828\t300\t0\t40\t0\t40\t[\"9\"]\t[\"\"]\t+input\n253101\t304\t0\t41\t0\t41\t[\"0\"]\t[\"\"]\t+input\n253359\t308\t0\t42\t0\t42\t[\"9\"]\t[\"\"]\t+input\n258288\t312\t0\t43\t0\t43\t[\",\"]\t[\"\"]\t+input\n258548\t316\t0\t44\t0\t44\t[\" \"]\t[\"\"]\t+input\n259449\t320\t0\t45\t0\t45\t[\"a\"]\t[\"\"]\t+input\n259653\t323\t0\t46\t0\t46\t[\"n\"]\t[\"\"]\t+input\n260095\t328\t0\t47\t0\t47\t[\"o\"]\t[\"\"]\t+input\n260234\t332\t0\t48\t0\t48\t[\"s\"]\t[\"\"]\t+input\n261022\t336\t0\t49\t0\t49\t[\" \"]\t[\"\"]\t+input\n261530\t340\t0\t50\t0\t50\t[\"d\"]\t[\"\"]\t+input\n261815\t344\t0\t51\t0\t51\t[\"e\"]\t[\"\"]\t+input\n262021\t348\t0\t52\t0\t52\t[\" \"]\t[\"\"]\t+input\n262250\t352\t0\t53\t0\t53\t[\"f\"]\t[\"\"]\t+input\n263094\t356\t0\t54\t0\t54\t[\"u\"]\t[\"\"]\t+input\n263395\t360\t0\t55\t0\t55\t[\"n\"]\t[\"\"]\t+input\n264085\t364\t0\t56\t0\t56\t[\"d\"]\t[\"\"]\t+input\n264388\t368\t0\t57\t0\t57\t[\"c\"]\t[\"\"]\t+input\n266213\t371\t0\t57\t0\t58\t[\"\"]\t[\"c\"]\t+delete\n266692\t376\t0\t57\t0\t57\t[\"a\"]\t[\"\"]\t+input\n267002\t380\t0\t58\t0\t58\t[\"c\"]\t[\"\"]\t+input\n267116\t384\t0\t59\t0\t59\t[\"a\"]\t[\"\"]\t+input\n267634\t388\t0\t60\t0\t60\t[\"o\"]\t[\"\"]\t+input\n270426\t392\t0\t61\t0\t61\t[\".\"]\t[\"\"]\t+input\n275597\t398\t0\t63\t0\t63\t[\"\",\"\"]\t[\"\"]\t+input\n276782\t404\t1\t0\t1\t0\t[\"p\"]\t[\"\"]\t+input\n277301\t408\t1\t1\t1\t1\t[\"r\"]\t[\"\"]\t+input\n277497\t412\t1\t2\t1\t2\t[\"i\"]\t[\"\"]\t+input\n277778\t416\t1\t3\t1\t3\t[\"n\"]\t[\"\"]\t+input\n278153\t420\t1\t4\t1\t4\t[\"t\"]\t[\"\"]\t+input\n281255\t425\t1\t5\t1\t5\t[\"()\"]\t[\"\"]\t+input\n283104\t431\t1\t6\t1\t6\t[\"t\"]\t[\"\"]\t+input\n283439\t435\t1\t7\t1\t7\t[\"e\"]\t[\"\"]\t+input\n285729\t439\t1\t8\t1\t8\t[\"s\"]\t[\"\"]\t+input\n285928\t443\t1\t9\t1\t9\t[\"s\"]\t[\"\"]\t+input\n287033\t446\t1\t9\t1\t10\t[\"\"]\t[\"s\"]\t+delete\n287246\t450\t1\t8\t1\t9\t[\"\"]\t[\"s\"]\t+delete\n287414\t455\t1\t8\t1\t8\t[\"x\"]\t[\"\"]\t+input\n288876\t459\t1\t9\t1\t9\t[\"t\"]\t[\"\"]\t+input\n288965\t462\t1\t10\t1\t10\t[\"o\"]\t[\"\"]\t+input\n289053\t466\t1\t11\t1\t11\t[\"i\"]\t[\"\"]\t+input\n289087\t471\t1\t12\t1\t12\t[\"o\"]\t[\"\"]\t+input\n290468\t474\t1\t12\t1\t13\t[\"\"]\t[\"o\"]\t+delete\n290826\t478\t1\t11\t1\t12\t[\"\"]\t[\"i\"]\t+delete\n\nSubmit Anchor 1\n- event_time_delta_ms: 310305\n- raw_log_line: 482\n- feedback: \"Your code did not produce the correct output. Please, correct your code and try again.\"\nCode At This Submit\n```python\ntexto= \"Em,2022,a UFAM completou, 2022-1909, anos de fundacao.\"\nprint(texto)\n```\n\n## Attempt 1\n\n- aligned_submit_index_0idx: 1\n\n- trace_base_timestamp: 2023-08-01T21:06:57.788000\n\nExecution Result\n\n- submitted_at: 2023-08-01 21:07:53\n- grade: 0.0\n- pass_count: 0\n- failed_test_indices_0idx: [0,1]\n- test_outcome: all_fail\n- test_results:\n  - test_index_0idx: 0 [FAIL]\n    input: \"1959\"\n    expected: \"Em 1959 a UFAM completou 50 anos de fundacao.\"\n    actual: \"('Em', 2022, 'a UFAM completou', 113, 'anos de fundacao.')\"\n  - test_index_0idx: 1 [FAIL]\n    input: \"2020\"\n    expected: \"Em 2020 a UFAM completou 111 anos de fundacao.\"\n    actual: \"('Em', 2022, 'a UFAM completou', 113, 'anos de fundacao.')\"\n\nAttempt Start Code\n```python\ntexto= \"Em,2022,a UFAM completou, 2022-1909, anos de fundacao.\"\nprint(texto)\n```\n\nTrace Timeline\n\nEdit Segment 1\n- raw_change_event_count: 18\nTSV columns: event_time_delta_ms\traw_log_line\tfrom_line\tfrom_ch\tto_line\tto_ch\tinserted_text_json\tremoved_text_json\tedit_origin\nevent_time_delta_ms\traw_log_line\tfrom_line\tfrom_ch\tto_line\tto_ch\tinserted_text_json\tremoved_text_json\tedit_origin\n0\t491\t0\t10\t0\t10\t[\"\\\"\"]\t[\"\"]\t+input\n9613\t498\t0\t17\t0\t17\t[\"\\\"\"]\t[\"\"]\t+input\n12342\t504\t0\t34\t0\t34\t[\"'\"]\t[\"\"]\t+input\n14197\t509\t0\t34\t0\t35\t[\"\"]\t[\"'\"]\t+delete\n15371\t514\t0\t34\t0\t34\t[\"'\"]\t[\"\"]\t+input\n18262\t519\t0\t34\t0\t35\t[\"\"]\t[\"'\"]\t+delete\n19342\t524\t0\t34\t0\t34\t[\"'\"]\t[\"\"]\t+input\n20640\t529\t0\t34\t0\t35\t[\"\"]\t[\"'\"]\t+delete\n21410\t535\t0\t34\t0\t34\t[\"\\\"\"]\t[\"\"]\t+input\n25797\t542\t0\t47\t0\t47\t[\"\\\"\\\"\"]\t[\"\"]\t+input\n29381\t547\t0\t47\t0\t49\t[\"\"]\t[\"\\\"\\\"\"]\t+delete\n30746\t552\t0\t47\t0\t47\t[\"''\"]\t[\"\"]\t+input\n34077\t559\t0\t49\t0\t50\t[\"\"]\t[\" \"]\t+delete\n34448\t563\t0\t48\t0\t49\t[\"\"]\t[\"'\"]\t+delete\n34807\t567\t0\t47\t0\t48\t[\"\"]\t[\"'\"]\t+delete\n35830\t572\t0\t47\t0\t47\t[\"'\"]\t[\"\"]\t+input\n37045\t577\t0\t47\t0\t48\t[\"\"]\t[\"'\"]\t+delete\n39454\t587\t0\t47\t0\t47\t[\"\\\"\"]\t[\"\"]\t+input\n\nLocal Run 1\n- event_time_delta_ms: 44943\n- raw_log_line: 592\n- command: \"$ python3 main.py\"\nCode After This Local Run\n```python\ntexto= \"Em\",2022,\"a UFAM completou\", 2022-1909,\"anos de fundacao.\"\nprint(texto)\n```\nRun Output\n```text\nEm,2022,a UFAM completou, 2022-1909, anos de fundacao.\n```\n\nSubmit Anchor 1\n- event_time_delta_ms: 55138\n- raw_log_line: 593\n- feedback: \"Your code did not produce the correct output. Please, correct your code and try again.\"\nCode At This Submit\n```python\ntexto= \"Em\",2022,\"a UFAM completou\", 2022-1909,\"anos de fundacao.\"\nprint(texto)\n```\n\n## Attempt 2\n\n- aligned_submit_index_0idx: 2\n\n- trace_base_timestamp: 2023-08-01T21:08:00.142000\n\nExecution Result\n\n- submitted_at: 2023-08-01 21:08:31\n- grade: 0.0\n- pass_count: 0\n- failed_test_indices_0idx: [0,1]\n- test_outcome: all_fail\n- test_results:\n  - test_index_0idx: 0 [FAIL]\n    input: \"1959\"\n    expected: \"Em 1959 a UFAM completou 50 anos de fundacao.\"\n    actual: \"('Em', 2022, 'a UFAM completou', 113, 'anos de fundacao.')\"\n  - test_index_0idx: 1 [FAIL]\n    input: \"2020\"\n    expected: \"Em 2020 a UFAM completou 111 anos de fundacao.\"\n    actual: \"('Em', 2022, 'a UFAM completou', 113, 'anos de fundacao.')\"\n\nAttempt Start Code\n```python\ntexto= \"Em\",2022,\"a UFAM completou\", 2022-1909,\"anos de fundacao.\"\nprint(texto)\n```\n\nTrace Timeline\n\nEdit Segment 1\n- raw_change_event_count: 2\nTSV columns: event_time_delta_ms\traw_log_line\tfrom_line\tfrom_ch\tto_line\tto_ch\tinserted_text_json\tremoved_text_json\tedit_origin\nevent_time_delta_ms\traw_log_line\tfrom_line\tfrom_ch\tto_line\tto_ch\tinserted_text_json\tremoved_text_json\tedit_origin\n0\t598\t0\t47\t0\t47\t[\" \"]\t[\"\"]\t+input\n7563\t604\t0\t17\t0\t17\t[\" \"]\t[\"\"]\t+input\n\nLocal Run 1\n- event_time_delta_ms: 12867\n- raw_log_line: 608\n- command: \"$ python3 main.py\"\nCode After This Local Run\n```python\ntexto= \"Em\",2022, \"a UFAM completou\", 2022-1909, \"anos de fundacao.\"\nprint(texto)\n```\nRun Output\n```text\n('Em', 2022, 'a UFAM completou', 113, 'anos de fundacao.')\n```\n\nSubmit Anchor 1\n- event_time_delta_ms: 31160\n- raw_log_line: 609\n- feedback: \"Your code did not produce the correct output. Please, correct your code and try again.\"\nCode At This Submit\n```python\ntexto= \"Em\",2022, \"a UFAM completou\", 2022-1909, \"anos de fundacao.\"\nprint(texto)\n```\n"
+      }
+    ],
+    "text": {
+      "format": {
+        "type": "json_schema",
+        "name": "FullTracePredictionResponse",
+        "strict": true,
+        "schema": {
+          "$defs": {
+            "FullTraceHypothesis": {
+              "additionalProperties": false,
+              "properties": {
+                "label": {
+                  "minLength": 1,
+                  "title": "Label",
+                  "type": "string"
+                },
+                "estimated_probability": {
+                  "exclusiveMinimum": 0.0,
+                  "maximum": 1.0,
+                  "title": "Estimated Probability",
+                  "type": "number"
+                },
+                "predicted_next_code": {
+                  "title": "Predicted Next Code",
+                  "type": "string"
+                },
+                "predicted_next_trajectory": {
+                  "items": {
+                    "$ref": "#/$defs/PredictedCoarsePathStep"
+                  },
+                  "maxItems": 8,
+                  "minItems": 1,
+                  "title": "Predicted Next Trajectory",
+                  "type": "array"
+                }
+              },
+              "required": [
+                "label",
+                "estimated_probability",
+                "predicted_next_code",
+                "predicted_next_trajectory"
+              ],
+              "title": "FullTraceHypothesis",
+              "type": "object"
+            },
+            "PredictedCoarsePathStep": {
+              "additionalProperties": false,
+              "properties": {
+                "action_type": {
+                  "enum": [
+                    "edit",
+                    "local_run",
+                    "submit"
+                  ],
+                  "title": "Action Type",
+                  "type": "string"
+                },
+                "target_start_line_0idx": {
+                  "title": "Target Start Line 0Idx",
+                  "type": "integer"
+                },
+                "target_end_line_0idx": {
+                  "title": "Target End Line 0Idx",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "action_type",
+                "target_start_line_0idx",
+                "target_end_line_0idx"
+              ],
+              "title": "PredictedCoarsePathStep",
+              "type": "object"
+            }
+          },
+          "additionalProperties": false,
+          "properties": {
+            "schema_version": {
+              "const": "v6_2_full_trace_prediction_v3",
+              "title": "Schema Version",
+              "type": "string"
+            },
+            "hypotheses": {
+              "items": {
+                "$ref": "#/$defs/FullTraceHypothesis"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "title": "Hypotheses",
+              "type": "array"
+            }
+          },
+          "required": [
+            "schema_version",
+            "hypotheses"
+          ],
+          "title": "FullTracePredictionResponse",
+          "type": "object"
+        }
+      }
+    },
+    "reasoning": {
+      "effort": "xhigh"
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4697",
+    "exercise_id": "1186",
+    "student_id": "7104",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "data = input()\n\ndia = data[:2]\nmes = data[3:5]\nano = data[-4:]\n\nif(mes == \"01\"):\n\tmes = \"janeiro\"\nelif(mes == \"02\"):\n\tmes = \"fevereiro\"\nelif(mes == \"03\"):\n\tmes = \"marco\"\nelif(mes == \"04\"):\n\tmes = \"abril\"\nelif(mes == \"05\"):\n\tmes = \"maio\"\nelif(mes == \"06\"):\n\tmes = \"junho\"\nelif(mes == \"07\"):\n\tmes = \"julho\"\nelif(mes == \"08\"):\n\tmes = \"agosto\"\nelif(mes == \"09\"):\n\tmes = \"setembro\"\nelif(mes == \"10\"):\n\tmes = \"outubro\"\nelif(mes == \"11\"):\n\tmes = \"novembro\"\nelif(mes == \"12\"):\n\tmes = \"dezembro\"\n\t\nprint(dia, \"de\", mes, \"de\" ,ano)",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "data = input()\n\ndia = data[:2]\nmes = data[2:5]\nano = data[-4:]\n\nif(mes == \"01\"):\n\tmes = \"janeiro\"\nelif(mes == \"02\"):\n\tmes = \"fevereiro\"\nelif(mes == \"03\"):\n\tmes = \"marco\"\nelif(mes == \"04\"):\n\tmes = \"abril\"\nelif(mes == \"05\"):\n\tmes = \"maio\"\nelif(mes == \"06\"):\n\tmes = \"junho\"\nelif(mes == \"07\"):\n\tmes = \"julho\"\nelif(mes == \"08\"):\n\tmes = \"agosto\"\nelif(mes == \"09\"):\n\tmes = \"setembro\"\nelif(mes == \"10\"):\n\tmes = \"outubro\"\nelif(mes == \"11\"):\n\tmes = \"novembro\"\nelif(mes == \"12\"):\n\tmes = \"dezembro\"\n\t\nprint(dia, \"de\", mes, \"de\" ,ano)",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "31031980",
+        "expected": "31 de marco de 1980",
+        "actual": "31 de 031 de 1980"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "27071854",
+        "expected": "27 de julho de 1854",
+        "actual": "27 de 071 de 1854"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "22082000",
+        "expected": "22 de agosto de 2000",
+        "actual": "22 de 082 de 2000"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 3,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 3
+      }
+    ]
+  }
+}

@@ -1,0 +1,171 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the authoritative execution result for that submitted attempt.
+- Each attempt includes the submitted code for that attempt.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 597
+- assessment_id: 5677
+- assessment_title: Lab 2: Estrutura Condicional Composta
+- exercise_id: 2969
+- student_id: 9795
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+Execution Result
+
+- submitted_at: 2024-05-21 17:15:43
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "2\n55.50\n100.25"
+    expected: "130.69"
+    actual: "130.69"
+  - test_index_0idx: 1 [FAIL]
+    input: "1\n72.65"
+    expected: "72.65"
+    actual: ""
+  - test_index_0idx: 2 [PASS]
+    input: "2\n99.99\n120.25"
+    expected: "190.18"
+    actual: "190.18"
+
+Submitted Code
+```python
+J = int(input("quantidade de jogos: "))
+P = float(input("preco do primeiro jogo: "))
+P2 = float(input("preco do segundo jogo: "))
+
+# Se a qtd = 1, preco = X
+# Return X
+
+# Se a qtd = 2, preco = X1, preco2 = X2 -(0.25 * X2)
+ 
+if J == 1:
+	print(round(P), 2)
+else:
+	print(round(P + (P2 -(0.25 * P2)), 2))
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+Execution Result
+
+- submitted_at: 2024-05-21 17:16:34
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "2\n55.50\n100.25"
+    expected: "130.69"
+    actual: "130.69"
+  - test_index_0idx: 1 [FAIL]
+    input: "1\n72.65"
+    expected: "72.65"
+    actual: ""
+  - test_index_0idx: 2 [PASS]
+    input: "2\n99.99\n120.25"
+    expected: "190.18"
+    actual: "190.18"
+
+Submitted Code
+```python
+J = int(input("quantidade de jogos: "))
+P = float(input("preco do primeiro jogo: "))
+P2 = float(input("preco do segundo jogo: "))
+
+# Se a qtd = 1, preco = X
+# Return X
+
+# Se a qtd = 2, preco = X1, preco2 = X2 -(0.25 * X2)
+ 
+if J == 1:
+	print(round(P,2))
+else:
+	print(round(P + (P2 -(0.25 * P2)), 2))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+Execution Result
+
+- submitted_at: 2024-05-21 17:17:12
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "2\n55.50\n100.25"
+    expected: "130.69"
+    actual: "130.69"
+  - test_index_0idx: 1 [FAIL]
+    input: "1\n72.65"
+    expected: "72.65"
+    actual: ""
+  - test_index_0idx: 2 [PASS]
+    input: "2\n99.99\n120.25"
+    expected: "190.18"
+    actual: "190.18"
+
+Submitted Code
+```python
+J = int(input("quantidade de jogos: "))
+P = float(input("preco do primeiro jogo: "))
+P2 = float(input("preco do segundo jogo: "))
+
+# Se a qtd = 1, preco = X
+# Return X
+
+# Se a qtd = 2, preco = X1, preco2 = X2 -(0.25 * X2)
+ 
+if J == 1:
+	print(round(P,2))
+elif J ==2:
+	print(round(P + (P2 -(0.25 * P2)), 2))
+```

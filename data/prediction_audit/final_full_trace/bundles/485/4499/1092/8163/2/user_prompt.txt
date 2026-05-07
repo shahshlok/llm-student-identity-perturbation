@@ -1,0 +1,651 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 485
+- assessment_id: 4499
+- assessment_title: Extra 2 - Estrutura Condicional Composta
+- exercise_id: 1092
+- student_id: 8163
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-04-12T13:12:18.892000
+
+Execution Result
+
+- submitted_at: 2023-04-13 13:43:59
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "371"
+    expected: "371\natende"
+    actual: "nao atende"
+  - test_index_0idx: 1 [FAIL]
+    input: "246"
+    expected: "246\nnao atende"
+    actual: "nao atende"
+  - test_index_0idx: 2 [FAIL]
+    input: "579"
+    expected: "579\nnao atende"
+    actual: "nao atende"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 256
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	8	0	0	0	0	["n"]	[""]	+input
+734	12	0	0	0	1	["="]	["n"]	+input
+2334	15	0	0	0	1	[""]	["="]	+delete
+3230	20	0	0	0	0	["n"]	[""]	+input
+4381	24	0	1	0	1	["="]	[""]	+input
+6490	29	0	2	0	2	["\"\""]	[""]	+input
+7492	34	0	2	0	4	[""]	["\"\""]	+delete
+9583	39	0	2	0	2	["f"]	[""]	+input
+9741	43	0	3	0	3	["l"]	[""]	+input
+9892	47	0	4	0	4	["o"]	[""]	+input
+10030	51	0	5	0	5	["a"]	[""]	+input
+11076	54	0	5	0	6	[""]	["a"]	+delete
+11229	58	0	4	0	5	[""]	["o"]	+delete
+11391	62	0	3	0	4	[""]	["l"]	+delete
+11550	66	0	2	0	3	[""]	["f"]	+delete
+12259	71	0	2	0	2	["i"]	[""]	+input
+12430	75	0	3	0	3	["n"]	[""]	+input
+12831	79	0	4	0	4	["t"]	[""]	+input
+15103	84	0	5	0	5	["()"]	[""]	+input
+19378	90	0	6	0	6	["f"]	[""]	+input
+19534	94	0	7	0	7	["l"]	[""]	+input
+19677	98	0	8	0	8	["o"]	[""]	+input
+19825	102	0	9	0	9	["a"]	[""]	+input
+19998	106	0	10	0	10	["t"]	[""]	+input
+21678	111	0	11	0	11	["()"]	[""]	+input
+22703	118	0	12	0	12	["\"\""]	[""]	+input
+25827	127	0	13	0	13	["d"]	[""]	+input
+26973	134	0	14	0	14	["i"]	[""]	+input
+27361	138	0	15	0	15	["g"]	[""]	+input
+27489	142	0	16	0	16	["i"]	[""]	+input
+27809	146	0	17	0	17	["t"]	[""]	+input
+27934	150	0	18	0	18	["e"]	[""]	+input
+28078	154	0	19	0	19	[" "]	[""]	+input
+28494	158	0	20	0	20	["o"]	[""]	+input
+28702	162	0	21	0	21	[" "]	[""]	+input
+29166	166	0	22	0	22	["n"]	[""]	+input
+29410	170	0	23	0	23	["u"]	[""]	+input
+29710	174	0	24	0	24	["m"]	[""]	+input
+29918	178	0	25	0	25	["e"]	[""]	+input
+30351	182	0	26	0	26	["r"]	[""]	+input
+30608	186	0	27	0	27	["o"]	[""]	+input
+32167	191	0	28	0	28	[":"]	[""]	+input
+33427	196	0	29	0	29	[" "]	[""]	+input
+37183	208	0	33	0	33	["",""]	[""]	+input
+85726	216	1	0	1	0	["",""]	[""]	+input
+86609	222	2	0	2	0	["n"]	[""]	+input
+86782	226	2	1	2	1	["u"]	[""]	+input
+86993	230	2	2	2	2	["m"]	[""]	+input
+87118	234	2	3	2	3	["e"]	[""]	+input
+87442	238	2	4	2	4	["i"]	[""]	+input
+87445	241	2	5	2	5	["o"]	[""]	+input
+88259	245	2	5	2	6	[""]	["o"]	+delete
+88576	249	2	4	2	5	[""]	["i"]	+delete
+88765	253	2	3	2	4	[""]	["e"]	+delete
+88958	257	2	2	2	3	[""]	["m"]	+delete
+89149	261	2	1	2	2	[""]	["u"]	+delete
+91902	265	2	0	2	1	[""]	["n"]	+delete
+101966	269	1	0	2	0	[""]	["",""]	+delete
+104302	274	1	0	1	0	["",""]	[""]	+input
+105025	280	2	0	2	0	["p"]	[""]	+input
+105198	284	2	1	2	1	["r"]	[""]	+input
+105295	287	2	2	2	2	["i"]	[""]	+input
+105473	292	2	3	2	3	["n"]	[""]	+input
+105843	296	2	4	2	4	["t"]	[""]	+input
+106142	300	2	5	2	5	[" "]	[""]	+input
+106733	303	2	5	2	6	[""]	[" "]	+delete
+108243	309	2	5	2	5	["()"]	[""]	+input
+108644	315	2	6	2	6	["n"]	[""]	+input
+111443	324	2	8	2	8	["",""]	[""]	+input
+87011895	334	2	7	2	8	[""]	[")"]	+delete
+87012039	338	2	6	2	7	[""]	["n"]	+delete
+87012198	342	2	5	2	6	[""]	["("]	+delete
+87012367	346	2	4	2	5	[""]	["t"]	+delete
+87012548	350	2	3	2	4	[""]	["n"]	+delete
+87012742	354	2	2	2	3	[""]	["i"]	+delete
+87012919	358	2	1	2	2	[""]	["r"]	+delete
+87013078	362	2	0	2	1	[""]	["p"]	+delete
+87017704	367	2	0	2	0	["n"]	[""]	+input
+87257314	373	2	0	2	1	[""]	["n"]	+delete
+87259111	378	2	0	2	0	["x"]	[""]	+input
+87260007	382	2	1	2	1	["1"]	[""]	+input
+87261017	386	2	2	2	2	["="]	[""]	+input
+87266022	390	2	3	2	3	["n"]	[""]	+input
+87268502	394	2	4	2	4	["/"]	[""]	+input
+87268710	398	2	5	2	5	["/"]	[""]	+input
+87269541	402	2	6	2	6	["1"]	[""]	+input
+87270069	406	2	7	2	7	["0"]	[""]	+input
+87271607	410	2	8	2	8	["0"]	[""]	+input
+87271906	414	2	9	2	9	["0"]	[""]	+input
+87273270	417	2	10	2	10	["",""]	[""]	+input
+87343705	423	3	0	3	0	["x"]	[""]	+input
+87344007	427	3	1	3	1	["2"]	[""]	+input
+87345174	431	3	2	3	2	["="]	[""]	+input
+87357816	437	3	3	3	3	["n"]	[""]	+input
+87358385	441	3	4	3	4	["n"]	[""]	+input
+87359713	444	3	4	3	5	[""]	["n"]	+delete
+87361286	449	3	4	3	4	["/"]	[""]	+input
+87361493	453	3	5	3	5	["/"]	[""]	+input
+87361809	457	3	6	3	6	["1"]	[""]	+input
+87362117	461	3	7	3	7	["0"]	[""]	+input
+87362822	465	3	8	3	8	["0"]	[""]	+input
+87365126	470	3	9	3	9	[")"]	[""]	+input
+87368883	496	3	3	3	3	["("]	[""]	+input
+87373686	523	3	11	3	11	["%"]	[""]	+input
+87380981	530	3	12	3	12	["1"]	[""]	+input
+87381201	534	3	13	3	13	["0"]	[""]	+input
+87387122	539	3	14	3	14	["",""]	[""]	+input
+87426033	546	4	0	4	0	["x"]	[""]	+input
+87427063	550	4	1	4	1	["3"]	[""]	+input
+87427510	554	4	2	4	2	["="]	[""]	+input
+87430663	559	4	3	4	3	["()"]	[""]	+input
+87433653	567	4	4	4	4	["n"]	[""]	+input
+87461426	577	4	5	4	5	["/"]	[""]	+input
+87461685	581	4	6	4	6	["/"]	[""]	+input
+87463717	585	4	7	4	7	["1"]	[""]	+input
+87464006	589	4	8	4	8	["0"]	[""]	+input
+87483473	599	4	10	4	10	["%"]	[""]	+input
+87490148	606	4	11	4	11	["1"]	[""]	+input
+87490357	610	4	12	4	12	["0"]	[""]	+input
+87491505	613	4	13	4	13	["",""]	[""]	+input
+87492484	618	5	0	5	0	["",""]	[""]	+input
+87494918	624	6	0	6	0	["i"]	[""]	+input
+87495143	628	6	1	6	1	["f"]	[""]	+input
+87496341	632	6	2	6	2	[" "]	[""]	+input
+87696824	637	6	3	6	3	["x"]	[""]	+input
+87697253	641	6	4	6	4	["1"]	[""]	+input
+87701316	645	6	5	6	5	["="]	[""]	+input
+87701714	648	6	5	6	6	[""]	["="]	+delete
+87703888	653	6	5	6	5	["*"]	[""]	+input
+87704095	657	6	6	6	6	["*"]	[""]	+input
+87704788	661	6	7	6	7	["3"]	[""]	+input
+87707364	665	6	8	6	8	["+"]	[""]	+input
+87708992	669	6	9	6	9	["x"]	[""]	+input
+87709683	673	6	10	6	10	["2"]	[""]	+input
+87711311	677	6	11	6	11	["*"]	[""]	+input
+87711523	681	6	12	6	12	["*"]	[""]	+input
+87712127	685	6	13	6	13	["3"]	[""]	+input
+87712851	689	6	14	6	14	["+"]	[""]	+input
+87714232	693	6	15	6	15	["x"]	[""]	+input
+87715330	697	6	16	6	16	["3"]	[""]	+input
+87716193	701	6	17	6	17	["*"]	[""]	+input
+87716371	705	6	18	6	18	["*"]	[""]	+input
+87718063	709	6	19	6	19	["3"]	[""]	+input
+87722353	712	6	20	6	20	["",""]	[""]	+input
+87730804	769	6	20	6	20	["="]	[""]	+input
+87730963	773	6	21	6	21	["="]	[""]	+input
+87752513	777	6	22	6	22	["x"]	[""]	+input
+87752895	781	6	23	6	23	["1"]	[""]	+input
+87755631	785	6	24	6	24	["x"]	[""]	+input
+87755987	789	6	25	6	25	["2"]	[""]	+input
+87756435	793	6	26	6	26	["x"]	[""]	+input
+87756883	797	6	27	6	27	["3"]	[""]	+input
+87764081	812	6	27	6	28	[""]	["3"]	+delete
+87764338	816	6	26	6	27	[""]	["x"]	+delete
+87764838	819	6	25	6	26	[""]	["2"]	+delete
+87764868	822	6	24	6	25	[""]	["x"]	+delete
+87764898	825	6	23	6	24	[""]	["1"]	+delete
+87764927	828	6	22	6	23	[""]	["x"]	+delete
+87764958	831	6	21	6	22	[""]	["="]	+delete
+87765105	835	6	20	6	21	[""]	["="]	+delete
+87766351	840	6	20	6	20	["="]	[""]	+input
+87766531	844	6	21	6	21	["="]	[""]	+input
+87767795	848	6	22	6	22	["n"]	[""]	+input
+87768579	851	6	23	6	23	["",""]	[""]	+input
+87771280	856	7	0	7	0	["\t"]	[""]	+input
+87772019	861	7	1	7	1	["m"]	[""]	+input
+87772194	865	7	2	7	2	["e"]	[""]	+input
+87772307	869	7	3	7	3	["n"]	[""]	+input
+87772466	873	7	4	7	4	["s"]	[""]	+input
+87772786	877	7	5	7	5	["a"]	[""]	+input
+87773090	881	7	6	7	6	["g"]	[""]	+input
+87773314	885	7	7	7	7	["e"]	[""]	+input
+87773411	889	7	8	7	8	["m"]	[""]	+input
+87774547	893	7	9	7	9	["="]	[""]	+input
+87778468	897	7	10	7	10	["a"]	[""]	+input
+87778887	901	7	11	7	11	["t"]	[""]	+input
+87779186	905	7	12	7	12	["e"]	[""]	+input
+87779267	909	7	13	7	13	["n"]	[""]	+input
+87779523	913	7	14	7	14	["f"]	[""]	+input
+87780177	916	7	14	7	15	[""]	["f"]	+delete
+87780339	920	7	14	7	14	["d"]	[""]	+input
+87780482	924	7	15	7	15	["e"]	[""]	+input
+87781971	930	7	16	7	16	["\"\""]	[""]	+input
+87784452	958	7	10	7	10	["\""]	[""]	+input
+87786478	980	7	18	7	19	[""]	["\""]	+delete
+87787204	984	7	18	7	18	["",""]	[""]	+input
+87787205	985	8	0	8	0	["\t"]	[""]	+input
+87792096	991	8	1	8	1	["p"]	[""]	+input
+87792371	995	8	2	8	2	["r"]	[""]	+input
+87792484	999	8	3	8	3	["i"]	[""]	+input
+87792627	1003	8	4	8	4	["n"]	[""]	+input
+87792898	1007	8	5	8	5	["t"]	[""]	+input
+87794676	1012	8	6	8	6	["()"]	[""]	+input
+87795187	1018	8	7	8	7	["m"]	[""]	+input
+87795347	1022	8	8	8	8	["e"]	[""]	+input
+87795490	1026	8	9	8	9	["n"]	[""]	+input
+87795667	1030	8	10	8	10	["s"]	[""]	+input
+87795891	1034	8	11	8	11	["a"]	[""]	+input
+87796112	1038	8	12	8	12	["g"]	[""]	+input
+87796259	1042	8	13	8	13	["e"]	[""]	+input
+87796355	1045	8	14	8	14	["n"]	[""]	+input
+87797233	1049	8	14	8	15	[""]	["n"]	+delete
+87797507	1054	8	14	8	14	[","]	[""]	+input
+87798641	1057	8	14	8	15	[""]	[","]	+delete
+87799030	1062	8	14	8	14	["m"]	[""]	+input
+87800884	1068	8	16	8	16	["",""]	[""]	+input
+87800885	1069	9	0	9	0	["\t"]	[""]	+input
+87801936	1074	9	0	9	1	[""]	["\t"]	+delete
+87802787	1079	9	0	9	0	["e"]	[""]	+input
+87802931	1083	9	1	9	1	["l"]	[""]	+input
+87803095	1087	9	2	9	2	["s"]	[""]	+input
+87803268	1091	9	3	9	3	["e"]	[""]	+input
+87803380	1095	9	4	9	4	[" "]	[""]	+input
+87805585	1100	9	5	9	5	["",""]	[""]	+input
+87807249	1105	10	0	10	0	["\t"]	[""]	+input
+87808659	1110	10	1	10	1	["p"]	[""]	+input
+87808819	1114	10	2	10	2	["r"]	[""]	+input
+87808948	1118	10	3	10	3	["i"]	[""]	+input
+87809763	1122	10	4	10	4	["n"]	[""]	+input
+87810091	1126	10	5	10	5	["t"]	[""]	+input
+87810801	1129	10	5	10	6	[""]	["t"]	+delete
+87810976	1133	10	4	10	5	[""]	["n"]	+delete
+87811168	1137	10	3	10	4	[""]	["i"]	+delete
+87811313	1141	10	2	10	3	[""]	["r"]	+delete
+87811729	1145	10	1	10	2	[""]	["p"]	+delete
+87812291	1150	10	1	10	1	["m"]	[""]	+input
+87812546	1154	10	2	10	2	["e"]	[""]	+input
+87812675	1158	10	3	10	3	["n"]	[""]	+input
+87812834	1162	10	4	10	4	["s"]	[""]	+input
+87813059	1166	10	5	10	5	["a"]	[""]	+input
+87813313	1170	10	6	10	6	["g"]	[""]	+input
+87813523	1174	10	7	10	7	["e"]	[""]	+input
+87813635	1178	10	8	10	8	["m"]	[""]	+input
+87813891	1182	10	9	10	9	[" "]	[""]	+input
+87814495	1185	10	9	10	10	[""]	[" "]	+delete
+87815191	1190	10	9	10	9	["="]	[""]	+input
+87816307	1194	10	10	10	10	[" "]	[""]	+input
+87823039	1202	10	11	10	11	["\"\""]	[""]	+input
+87824319	1208	10	12	10	12	["nao atende"]	[""]	paste
+87843289	1227	8	1	8	16	[""]	["print(mensagem)"]	cut
+87846062	1231	8	0	8	1	[""]	["\t"]	+delete
+87851265	1235	7	18	8	0	[""]	["",""]	+delete
+88049732	1249	10	0	10	0	["p"]	[""]	+input
+88050002	1253	10	1	10	1	["r"]	[""]	+input
+88050114	1257	10	2	10	2	["i"]	[""]	+input
+88050269	1261	10	3	10	3	["n"]	[""]	+input
+88050547	1265	10	4	10	4	["t"]	[""]	+input
+88051860	1270	10	5	10	5	["()"]	[""]	+input
+88052290	1276	10	6	10	6	["m"]	[""]	+input
+88052658	1280	10	7	10	7	["e"]	[""]	+input
+88052817	1284	10	8	10	8	["n"]	[""]	+input
+88053410	1288	10	9	10	9	["s"]	[""]	+input
+88053630	1292	10	10	10	10	["a"]	[""]	+input
+88053762	1296	10	11	10	11	["g"]	[""]	+input
+88053971	1300	10	12	10	12	["e"]	[""]	+input
+88054051	1304	10	13	10	13	["m"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 88058068
+- raw_log_line: 1312
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n=int(float("digite o numero: "))
+
+x1=n//1000
+x2=(n//100)%10
+x3=(n//10)%10
+
+if x1**3+x2**3+x3**3==n
+	mensagem="atende"
+else 
+	mensagem= "nao atende"
+print(mensagem)
+
+```
+Run Output
+```text
+File "main.py", line 7
+if x1**3+x2**3+x3**3==n
+SyntaxError: invalid syntax
+```
+
+Edit Segment 2
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+88062093	1318	6	23	6	23	[":"]	[""]	+input
+88073889	1328	8	4	8	5	[""]	[" "]	+delete
+88074579	1334	8	4	8	4	[":"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 88276220
+- raw_log_line: 1344
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n=int(float("digite o numero: "))
+
+x1=n//1000
+x2=(n//100)%10
+x3=(n//10)%10
+
+if x1**3+x2**3+x3**3==n:
+	mensagem="atende"
+else:
+	mensagem= "nao atende"
+print(mensagem)
+
+```
+Run Output
+```text
+Traceback (most recent call last):
+File "main.py", line 1, in <module>
+n=int(float("digite o numero: "))
+ValueError: could not convert string to float: 'digite o numero: '
+```
+
+Edit Segment 3
+- raw_change_event_count: 5
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+88284143	1349	0	6	0	11	["i"]	["float"]	+input
+88284403	1353	0	7	0	7	["n"]	[""]	+input
+88285219	1357	0	8	0	8	["p"]	[""]	+input
+88285666	1361	0	9	0	9	["u"]	[""]	+input
+88286029	1365	0	10	0	10	["t"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 88296438
+- raw_log_line: 1372
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n=int(input("digite o numero: "))
+
+x1=n//1000
+x2=(n//100)%10
+x3=(n//10)%10
+
+if x1**3+x2**3+x3**3==n:
+	mensagem="atende"
+else:
+	mensagem= "nao atende"
+print(mensagem)
+
+```
+Run Output
+```text
+digite o numero: 123
+nao atende
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 88301135
+- raw_log_line: 1373
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+n=int(input("digite o numero: "))
+
+x1=n//1000
+x2=(n//100)%10
+x3=(n//10)%10
+
+if x1**3+x2**3+x3**3==n:
+	mensagem="atende"
+else:
+	mensagem= "nao atende"
+print(mensagem)
+
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-04-13T13:44:05.807000
+
+Execution Result
+
+- submitted_at: 2023-04-13 13:44:08
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "371"
+    expected: "371\natende"
+    actual: "nao atende"
+  - test_index_0idx: 1 [FAIL]
+    input: "246"
+    expected: "246\nnao atende"
+    actual: "nao atende"
+  - test_index_0idx: 2 [FAIL]
+    input: "579"
+    expected: "579\nnao atende"
+    actual: "nao atende"
+
+Attempt Start Code
+```python
+n=int(input("digite o numero: "))
+
+x1=n//1000
+x2=(n//100)%10
+x3=(n//10)%10
+
+if x1**3+x2**3+x3**3==n:
+	mensagem="atende"
+else:
+	mensagem= "nao atende"
+print(mensagem)
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 5
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1378	0	2	0	5	["f"]	["int"]	+input
+127	1381	0	3	0	3	["l"]	[""]	+input
+302	1386	0	4	0	4	["o"]	[""]	+input
+409	1390	0	5	0	5	["a"]	[""]	+input
+569	1394	0	6	0	6	["t"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 3208
+- raw_log_line: 1398
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+n=float(input("digite o numero: "))
+
+x1=n//1000
+x2=(n//100)%10
+x3=(n//10)%10
+
+if x1**3+x2**3+x3**3==n:
+	mensagem="atende"
+else:
+	mensagem= "nao atende"
+print(mensagem)
+
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-04-13T13:44:19.288000
+
+Execution Result
+
+- submitted_at: 2023-04-13 13:46:04
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "371"
+    expected: "371\natende"
+    actual: "atende"
+  - test_index_0idx: 1 [FAIL]
+    input: "246"
+    expected: "246\nnao atende"
+    actual: "nao atende"
+  - test_index_0idx: 2 [FAIL]
+    input: "579"
+    expected: "579\nnao atende"
+    actual: "nao atende"
+
+Attempt Start Code
+```python
+n=float(input("digite o numero: "))
+
+x1=n//1000
+x2=(n//100)%10
+x3=(n//10)%10
+
+if x1**3+x2**3+x3**3==n:
+	mensagem="atende"
+else:
+	mensagem= "nao atende"
+print(mensagem)
+
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1403
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n=float(input("digite o numero: "))
+
+x1=n//1000
+x2=(n//100)%10
+x3=(n//10)%10
+
+if x1**3+x2**3+x3**3==n:
+	mensagem="atende"
+else:
+	mensagem= "nao atende"
+print(mensagem)
+
+```
+Run Output
+```text
+digite o numero: 370
+atende
+```
+
+Edit Segment 1
+- raw_change_event_count: 17
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+51652	1409	2	9	2	10	[""]	["0"]	+delete
+57107	1414	3	9	3	10	[""]	["0"]	+delete
+63270	1419	3	9	3	9	["0"]	[""]	+input
+66554	1424	2	9	2	9	["0"]	[""]	+input
+68339	1427	2	9	2	10	[""]	["0"]	+delete
+70100	1432	3	6	3	7	[""]	["/"]	+delete
+70242	1436	3	5	3	6	[""]	["/"]	+delete
+76132	1442	3	5	3	5	["%"]	[""]	+input
+81072	1447	3	10	3	11	[""]	["%"]	+delete
+81703	1452	3	10	3	10	["/"]	[""]	+input
+81861	1456	3	11	3	11	["/"]	[""]	+input
+90639	1460	4	6	4	7	[""]	["/"]	+delete
+90867	1464	4	5	4	6	[""]	["/"]	+delete
+91841	1470	4	5	4	5	["%"]	[""]	+input
+96865	1477	4	12	4	12	["0"]	[""]	+input
+98719	1480	4	12	4	13	[""]	["0"]	+delete
+101875	1497	4	8	4	8	["0"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 105211
+- raw_log_line: 1501
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+n=float(input("digite o numero: "))
+
+x1=n//100
+x2=(n%100)//10
+x3=(n%100)%10
+
+if x1**3+x2**3+x3**3==n:
+	mensagem="atende"
+else:
+	mensagem= "nao atende"
+print(mensagem)
+
+```

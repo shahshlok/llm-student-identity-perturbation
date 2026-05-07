@@ -1,0 +1,77 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "528",
+    "assessment_id": "4981",
+    "exercise_id": "3056",
+    "student_id": "4226",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "a = float(input(\"area: \"))\n\nif a < 10**4:\n\tvalor = a*6 + 100\nelif a < 2*10**4 and a > 10*4:\n\tvalor = a*5.5 + 150\nelif a < 3*10**4 and a > 2*10*4:\n\tvalor = a*5 + 200\nelif a > 3*10**4:\n\tvalor = a*4.5 + 250\nprint(valor)",
+    "grade": 67.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      0
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "a = float(input(\"area: \"))\n\nif a < 10**4:\n\tvalor = a*6 + 100\nelif a < 2*10**4 and a > 10*4:\n\tvalor = a*5.5 + 150\nelif a < 3*10**4 and a > 2*10*4:\n\tvalor = a*5 + 200\nelif a >= 3*10**4:\n\tvalor = a*4.5 + 250\n\t\nprint(valor)",
+    "grade": 67.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      0
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "256.8",
+        "expected": "1640.8",
+        "actual": "1640.8000000000002"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "11",
+        "expected": "166.0",
+        "actual": "166.0"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "9638.75",
+        "expected": "57932.5",
+        "actual": "57932.5"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 8,
+        "end_line_0idx": 8,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 10,
+        "end_line_0idx": 10,
+        "edit_kind": "insert"
+      }
+    ],
+    "changed_line_count_in_next_code": 2,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 8,
+        "end_line_0idx": 8
+      },
+      {
+        "start_line_0idx": 10,
+        "end_line_0idx": 10
+      }
+    ]
+  }
+}

@@ -1,0 +1,220 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 559
+- assessment_id: 5222
+- assessment_title: Lab 0 – Primeiros passos com o Python - 2020
+- exercise_id: 3711
+- student_id: 9309
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-12-19T09:24:45.783000
+
+Execution Result
+
+- submitted_at: 2023-12-19 09:27:25
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em  2009 a UFAM completou -100 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em  2009 a UFAM completou -100 anos de fundacao."
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 13
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	10	0	0	0	0	["print(\"Em \",YYYY,\"a UFAM completou\", YYYY - XXXX, \"anos de fundacao.\")"]	[""]	paste
+71847	22	0	12	0	16	["2"]	["YYYY"]	+input
+72030	26	0	13	0	13	["0"]	[""]	+input
+73352	30	0	14	0	14	["0"]	[""]	+input
+73512	34	0	15	0	15	["9"]	[""]	+input
+134594	41	0	37	0	41	["1"]	["YYYY"]	+input
+136627	45	0	38	0	38	["9"]	[""]	+input
+137698	49	0	39	0	39	["0"]	[""]	+input
+137960	53	0	40	0	40	["9"]	[""]	+input
+142146	60	0	44	0	48	["2"]	["XXXX"]	+input
+142377	64	0	45	0	45	["0"]	[""]	+input
+142514	68	0	46	0	46	["0"]	[""]	+input
+142761	72	0	47	0	47	["9"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 159859
+- raw_log_line: 75
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print("Em ",2009,"a UFAM completou", 1909 - 2009, "anos de fundacao.")
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-12-19T09:27:39.452000
+
+Execution Result
+
+- submitted_at: 2023-12-19 09:27:56
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em  2009 a UFAM completou -100 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em  2009 a UFAM completou -100 anos de fundacao."
+
+Attempt Start Code
+```python
+print("Em ",2009,"a UFAM completou", 1909 - 2009, "anos de fundacao.")
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 77
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em ",2009,"a UFAM completou", 1909 - 2009, "anos de fundacao.")
+```
+Run Output
+```text
+Em  2009 a UFAM completou -100 anos de fundacao.
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 17005
+- raw_log_line: 78
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print("Em ",2009,"a UFAM completou", 1909 - 2009, "anos de fundacao.")
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-12-19T09:28:34.157000
+
+Execution Result
+
+- submitted_at: 2023-12-19 09:28:59
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em 2009 a UFAM completou -100 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em 2009 a UFAM completou -100 anos de fundacao."
+
+Attempt Start Code
+```python
+print("Em ",2009,"a UFAM completou", 1909 - 2009, "anos de fundacao.")
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	83	0	9	0	10	[""]	[" "]	+delete
+
+Local Run 1
+- event_time_delta_ms: 19151
+- raw_log_line: 94
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em",2009,"a UFAM completou", 1909 - 2009, "anos de fundacao.")
+```
+Run Output
+```text
+Em  2009 a UFAM completou -100 anos de fundacao.
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 25167
+- raw_log_line: 95
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print("Em",2009,"a UFAM completou", 1909 - 2009, "anos de fundacao.")
+```

@@ -1,0 +1,1026 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 527
+- assessment_id: 4992
+- assessment_title: Lab 3 - Estrutura Condicional Encadeada
+- exercise_id: 3056
+- student_id: 8766
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-09-05T16:06:21.748000
+
+Execution Result
+
+- submitted_at: 2023-09-05 16:22:04
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "256.8"
+    expected: "1640.8"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "11"
+    expected: "166.0"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "9638.75"
+    expected: "57932.5"
+    actual: ""
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 498
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	15	0	0	0	0	["a"]	[""]	+input
+387	19	0	1	0	1	["r"]	[""]	+input
+643	23	0	2	0	2	["e"]	[""]	+input
+851	27	0	3	0	3	["a"]	[""]	+input
+1555	31	0	4	0	4	[" "]	[""]	+input
+1619	35	0	5	0	5	[" "]	[""]	+input
+2042	39	0	6	0	6	["="]	[""]	+input
+2435	43	0	7	0	7	[" "]	[""]	+input
+5685	47	0	8	0	8	["f"]	[""]	+input
+5844	51	0	9	0	9	["l"]	[""]	+input
+6101	55	0	10	0	10	["o"]	[""]	+input
+6291	59	0	11	0	11	["a"]	[""]	+input
+6534	63	0	12	0	12	["t"]	[""]	+input
+7067	68	0	13	0	13	["()"]	[""]	+input
+7444	74	0	14	0	14	["i"]	[""]	+input
+7652	78	0	15	0	15	["n"]	[""]	+input
+8163	82	0	16	0	16	["p"]	[""]	+input
+8502	86	0	17	0	17	["u"]	[""]	+input
+8755	90	0	18	0	18	["t"]	[""]	+input
+9303	95	0	19	0	19	["()"]	[""]	+input
+9753	102	0	20	0	20	["\"\""]	[""]	+input
+64486	115	0	21	0	21	["D"]	[""]	+input
+64885	121	0	22	0	22	["i"]	[""]	+input
+65188	125	0	23	0	23	["g"]	[""]	+input
+65524	129	0	24	0	24	["i"]	[""]	+input
+66178	133	0	25	0	25	["t"]	[""]	+input
+66340	137	0	26	0	26	["e"]	[""]	+input
+66502	141	0	27	0	27	[" "]	[""]	+input
+67012	145	0	28	0	28	["o"]	[""]	+input
+67140	149	0	29	0	29	[" "]	[""]	+input
+67361	153	0	30	0	30	["v"]	[""]	+input
+67588	157	0	31	0	31	["a"]	[""]	+input
+67780	161	0	32	0	32	["l"]	[""]	+input
+67956	165	0	33	0	33	["o"]	[""]	+input
+68196	169	0	34	0	34	["r"]	[""]	+input
+68401	173	0	35	0	35	[" "]	[""]	+input
+68628	177	0	36	0	36	["d"]	[""]	+input
+68788	181	0	37	0	37	["a"]	[""]	+input
+68948	185	0	38	0	38	[" "]	[""]	+input
+69124	189	0	39	0	39	["a"]	[""]	+input
+69556	193	0	40	0	40	["r"]	[""]	+input
+69780	197	0	41	0	41	["e"]	[""]	+input
+69988	201	0	42	0	42	["a"]	[""]	+input
+70820	206	0	43	0	43	[":"]	[""]	+input
+73125	219	0	47	0	47	["",""]	[""]	+input
+78280	224	0	47	1	0	[""]	["",""]	+delete
+78628	230	0	47	0	47	["i"]	[""]	+input
+78902	234	0	48	0	48	["f"]	[""]	+input
+81267	237	0	48	0	49	[""]	["f"]	+delete
+81426	241	0	47	0	48	[""]	["i"]	+delete
+81763	245	0	47	0	47	["",""]	[""]	+input
+83063	250	1	0	1	0	["",""]	[""]	+input
+84486	256	2	0	2	0	["i"]	[""]	+input
+84996	260	2	1	2	1	["f"]	[""]	+input
+85764	264	2	2	2	2	[" "]	[""]	+input
+86129	268	2	3	2	3	["a"]	[""]	+input
+86596	272	2	4	2	4	["r"]	[""]	+input
+86903	276	2	5	2	5	["e"]	[""]	+input
+87172	280	2	6	2	6	["a"]	[""]	+input
+94533	284	2	7	2	7	[" "]	[""]	+input
+114997	289	2	8	2	8	[">"]	[""]	+input
+118053	294	2	9	2	9	["="]	[""]	+input
+119270	298	2	10	2	10	[" "]	[""]	+input
+119908	302	2	11	2	11	["0"]	[""]	+input
+120102	306	2	12	2	12	[" "]	[""]	+input
+120338	310	2	13	2	13	["a"]	[""]	+input
+120519	314	2	14	2	14	["n"]	[""]	+input
+120756	318	2	15	2	15	["d"]	[""]	+input
+122789	322	2	16	2	16	[" "]	[""]	+input
+123428	326	2	17	2	17	["a"]	[""]	+input
+123842	330	2	18	2	18	["r"]	[""]	+input
+124070	334	2	19	2	19	["e"]	[""]	+input
+124325	338	2	20	2	20	["a"]	[""]	+input
+124597	342	2	21	2	21	[" "]	[""]	+input
+125188	347	2	22	2	22	["<"]	[""]	+input
+127973	352	2	23	2	23	[" "]	[""]	+input
+128405	356	2	24	2	24	["1"]	[""]	+input
+128869	360	2	25	2	25	["0"]	[""]	+input
+129253	364	2	26	2	26	["0"]	[""]	+input
+129637	368	2	27	2	27	["0"]	[""]	+input
+130309	372	2	28	2	28	["0"]	[""]	+input
+134092	377	2	29	2	29	[")"]	[""]	+input
+138120	422	2	17	2	17	["("]	[""]	+input
+140486	446	2	12	2	12	[")"]	[""]	+input
+144853	482	2	3	2	3	["("]	[""]	+input
+149154	550	2	33	2	33	[":"]	[""]	+input
+150452	554	2	34	2	34	["",""]	[""]	+input
+150453	555	3	0	3	0	["\t"]	[""]	+input
+158837	561	3	1	3	1	["p"]	[""]	+input
+159061	565	3	2	3	2	["r"]	[""]	+input
+159334	569	3	3	3	3	["i"]	[""]	+input
+159525	573	3	4	3	4	["n"]	[""]	+input
+159870	577	3	5	3	5	["t"]	[""]	+input
+163179	582	3	6	3	6	["()"]	[""]	+input
+163942	589	3	7	3	7	["\"\""]	[""]	+input
+174040	600	3	9	3	10	[""]	[")"]	+delete
+174179	604	3	8	3	9	[""]	["\""]	+delete
+174323	608	3	7	3	8	[""]	["\""]	+delete
+174707	612	3	6	3	7	[""]	["("]	+delete
+174852	616	3	5	3	6	[""]	["t"]	+delete
+174995	620	3	4	3	5	[""]	["n"]	+delete
+175123	624	3	3	3	4	[""]	["i"]	+delete
+175268	628	3	2	3	3	[""]	["r"]	+delete
+175443	632	3	1	3	2	[""]	["p"]	+delete
+175587	636	3	0	3	1	[""]	["\t"]	+delete
+176550	641	3	0	3	0	[" "]	[""]	+input
+176920	645	3	1	3	1	[" "]	[""]	+input
+177251	648	3	1	3	2	[""]	[" "]	+delete
+177443	652	3	0	3	1	[""]	[" "]	+delete
+177689	656	2	34	3	0	[""]	["",""]	+delete
+178180	661	2	34	2	34	["",""]	[""]	+input
+178180	662	3	0	3	0	["\t"]	[""]	+input
+208726	748	2	26	2	26	["="]	[""]	+input
+279273	800	3	1	3	1	["a"]	[""]	+input
+280916	803	3	1	3	2	[""]	["a"]	+delete
+281734	808	3	1	3	1	["c"]	[""]	+input
+282006	812	3	2	3	2	["u"]	[""]	+input
+282150	816	3	3	3	3	["s"]	[""]	+input
+282455	820	3	4	3	4	["t"]	[""]	+input
+282710	824	3	5	3	5	["o"]	[""]	+input
+283590	828	3	6	3	6	[" "]	[""]	+input
+283734	832	3	7	3	7	["="]	[""]	+input
+284050	836	3	8	3	8	[" "]	[""]	+input
+286212	840	3	9	3	9	["6"]	[""]	+input
+288796	843	3	10	3	10	["",""]	[""]	+input
+288796	844	4	0	4	0	["\t"]	[""]	+input
+290343	850	4	1	4	1	["f"]	[""]	+input
+290518	854	4	2	4	2	["e"]	[""]	+input
+290726	858	4	3	4	3	["r"]	[""]	+input
+291046	862	4	4	4	4	["t"]	[""]	+input
+291305	866	4	5	4	5	["i"]	[""]	+input
+291862	870	4	6	4	6	["l"]	[""]	+input
+292071	874	4	7	4	7	["i"]	[""]	+input
+292806	878	4	8	4	8	["z"]	[""]	+input
+292998	882	4	9	4	9	["a"]	[""]	+input
+293222	886	4	10	4	10	["n"]	[""]	+input
+293510	890	4	11	4	11	["t"]	[""]	+input
+293688	894	4	12	4	12	["e"]	[""]	+input
+295398	898	4	13	4	13	["="]	[""]	+input
+296046	902	4	14	4	14	[" "]	[""]	+input
+297366	906	4	15	4	15	["1"]	[""]	+input
+297655	910	4	16	4	16	["0"]	[""]	+input
+297831	914	4	17	4	17	["0"]	[""]	+input
+298612	917	4	18	4	18	["",""]	[""]	+input
+298613	918	5	0	5	0	["\t"]	[""]	+input
+301031	926	5	1	5	1	["V"]	[""]	+input
+301415	932	5	2	5	2	["a"]	[""]	+input
+301751	936	5	3	5	3	["l"]	[""]	+input
+301943	940	5	4	5	4	["o"]	[""]	+input
+302105	944	5	5	5	5	["r"]	[""]	+input
+302455	948	5	6	5	6	[" "]	[""]	+input
+302711	952	5	7	5	7	["="]	[""]	+input
+302839	956	5	8	5	8	[" "]	[""]	+input
+304598	960	5	9	5	9	["a"]	[""]	+input
+304855	964	5	10	5	10	["r"]	[""]	+input
+305095	968	5	11	5	11	["e"]	[""]	+input
+305431	972	5	12	5	12	["a"]	[""]	+input
+309895	977	5	13	5	13	["*"]	[""]	+input
+311479	982	5	14	5	14	[" "]	[""]	+input
+311735	986	5	15	5	15	["c"]	[""]	+input
+311943	990	5	16	5	16	["u"]	[""]	+input
+312423	994	5	17	5	17	["s"]	[""]	+input
+312615	998	5	18	5	18	["t"]	[""]	+input
+313191	1002	5	19	5	19	["o"]	[""]	+input
+354998	1005	5	20	5	20	["",""]	[""]	+input
+354998	1006	6	0	6	0	["\t"]	[""]	+input
+355975	1012	6	1	6	1	["p"]	[""]	+input
+356211	1016	6	2	6	2	["r"]	[""]	+input
+356439	1020	6	3	6	3	["i"]	[""]	+input
+356679	1024	6	4	6	4	["n"]	[""]	+input
+356999	1028	6	5	6	5	["t"]	[""]	+input
+357564	1033	6	6	6	6	["()"]	[""]	+input
+358231	1040	6	7	6	7	["\"\""]	[""]	+input
+359459	1046	6	8	6	8	["v"]	[""]	+input
+360452	1049	6	8	6	9	[""]	["v"]	+delete
+361047	1056	6	8	6	8	["V"]	[""]	+input
+361447	1062	6	9	6	9	["a"]	[""]	+input
+361783	1066	6	10	6	10	["l"]	[""]	+input
+361975	1070	6	11	6	11	["o"]	[""]	+input
+362231	1074	6	12	6	12	["r"]	[""]	+input
+364012	1083	6	15	6	15	["",""]	[""]	+input
+364012	1084	7	0	7	0	["\t"]	[""]	+input
+365381	1089	7	1	7	1	["",""]	[""]	+input
+365382	1090	8	0	8	0	["\t"]	[""]	+input
+365700	1095	8	0	8	1	[""]	["\t"]	+delete
+366792	1100	8	0	8	0	["e"]	[""]	+input
+367959	1104	8	1	8	1	["l"]	[""]	+input
+368215	1108	8	2	8	2	["i"]	[""]	+input
+368519	1112	8	3	8	3	["f"]	[""]	+input
+371290	1116	8	4	8	4	[" "]	[""]	+input
+372230	1121	8	5	8	5	["()"]	[""]	+input
+372727	1127	8	6	8	6	["a"]	[""]	+input
+373079	1131	8	7	8	7	["r"]	[""]	+input
+373319	1135	8	8	8	8	["e"]	[""]	+input
+373543	1139	8	9	8	9	["a"]	[""]	+input
+429032	1144	8	10	8	10	["<"]	[""]	+input
+430180	1148	8	10	8	11	[""]	["<"]	+delete
+430408	1153	8	10	8	10	[" "]	[""]	+input
+430936	1158	8	11	8	11	["<"]	[""]	+input
+431448	1163	8	12	8	12	["="]	[""]	+input
+432135	1167	8	13	8	13	[" "]	[""]	+input
+432490	1171	8	14	8	14	["2"]	[""]	+input
+432727	1175	8	15	8	15	["0"]	[""]	+input
+432951	1179	8	16	8	16	["0"]	[""]	+input
+433207	1183	8	17	8	17	["0"]	[""]	+input
+443621	1189	8	18	8	19	[""]	[")"]	+delete
+443764	1193	8	17	8	18	[""]	["0"]	+delete
+443909	1197	8	16	8	17	[""]	["0"]	+delete
+444054	1201	8	15	8	16	[""]	["0"]	+delete
+444196	1205	8	14	8	15	[""]	["2"]	+delete
+444340	1209	8	13	8	14	[""]	[" "]	+delete
+444487	1213	8	12	8	13	[""]	["="]	+delete
+444660	1217	8	11	8	12	[""]	["<"]	+delete
+465989	1260	4	17	4	18	[""]	["0"]	+delete
+466131	1264	4	16	4	17	[""]	["0"]	+delete
+466293	1268	4	15	4	16	[""]	["1"]	+delete
+466454	1272	4	14	4	15	[""]	[" "]	+delete
+466581	1276	4	13	4	14	[""]	["="]	+delete
+466709	1280	4	12	4	13	[""]	["e"]	+delete
+467209	1283	4	11	4	12	[""]	["t"]	+delete
+467240	1286	4	10	4	11	[""]	["n"]	+delete
+467271	1289	4	9	4	10	[""]	["a"]	+delete
+467298	1292	4	8	4	9	[""]	["z"]	+delete
+467461	1296	4	7	4	8	[""]	["i"]	+delete
+467961	1299	4	6	4	7	[""]	["l"]	+delete
+467991	1302	4	5	4	6	[""]	["i"]	+delete
+468020	1305	4	4	4	5	[""]	["t"]	+delete
+468051	1308	4	3	4	4	[""]	["r"]	+delete
+468083	1311	4	2	4	3	[""]	["e"]	+delete
+468113	1314	4	1	4	2	[""]	["f"]	+delete
+468421	1318	4	0	4	1	[""]	["\t"]	+delete
+468630	1322	3	10	4	0	[""]	["",""]	+delete
+468789	1327	3	9	3	10	[""]	["6"]	+delete
+469029	1331	3	8	3	9	[""]	[" "]	+delete
+469238	1335	3	7	3	8	[""]	["="]	+delete
+469397	1339	3	6	3	7	[""]	[" "]	+delete
+469557	1343	3	5	3	6	[""]	["o"]	+delete
+469717	1347	3	4	3	5	[""]	["t"]	+delete
+469877	1351	3	3	3	4	[""]	["s"]	+delete
+470063	1355	3	2	3	3	[""]	["u"]	+delete
+470213	1359	3	1	3	2	[""]	["c"]	+delete
+470773	1363	3	0	3	1	[""]	["\t"]	+delete
+471013	1367	2	35	3	0	[""]	["",""]	+delete
+480792	1386	6	11	6	11	[">"]	[""]	+input
+482552	1391	6	12	6	12	["="]	[""]	+input
+483000	1395	6	13	6	13	[" "]	[""]	+input
+483274	1399	6	14	6	14	["1"]	[""]	+input
+483528	1403	6	15	6	15	["0"]	[""]	+input
+483896	1407	6	16	6	16	["0"]	[""]	+input
+484475	1411	6	17	6	17	["0"]	[""]	+input
+484760	1415	6	18	6	18	["0"]	[""]	+input
+486909	1420	6	19	6	19	[")"]	[""]	+input
+487944	1425	6	20	6	20	[" "]	[""]	+input
+488136	1429	6	21	6	21	["a"]	[""]	+input
+488344	1433	6	22	6	22	["n"]	[""]	+input
+488552	1437	6	23	6	23	["d"]	[""]	+input
+490136	1441	6	24	6	24	[" "]	[""]	+input
+490428	1446	6	25	6	25	["()"]	[""]	+input
+491304	1452	6	26	6	26	["a"]	[""]	+input
+491624	1456	6	27	6	27	["e"]	[""]	+input
+492773	1459	6	27	6	28	[""]	["e"]	+delete
+493032	1464	6	27	6	27	["r"]	[""]	+input
+493241	1468	6	28	6	28	["e"]	[""]	+input
+493544	1472	6	29	6	29	["a"]	[""]	+input
+501544	1476	6	30	6	30	[" "]	[""]	+input
+501912	1481	6	31	6	31	["<"]	[""]	+input
+502648	1486	6	32	6	32	["="]	[""]	+input
+504152	1490	6	33	6	33	[" "]	[""]	+input
+504616	1494	6	34	6	34	["2"]	[""]	+input
+505257	1498	6	35	6	35	["0"]	[""]	+input
+505528	1502	6	36	6	36	["0"]	[""]	+input
+505944	1506	6	37	6	37	["0"]	[""]	+input
+506907	1510	6	38	6	38	["0"]	[""]	+input
+512408	1518	6	40	6	40	[":"]	[""]	+input
+513262	1522	6	41	6	41	["",""]	[""]	+input
+513263	1523	7	0	7	0	["\t"]	[""]	+input
+515384	1531	7	1	7	1	["V"]	[""]	+input
+515864	1537	7	2	7	2	["a"]	[""]	+input
+516103	1541	7	3	7	3	["l"]	[""]	+input
+516328	1545	7	4	7	4	["o"]	[""]	+input
+516568	1549	7	5	7	5	["r"]	[""]	+input
+517768	1553	7	6	7	6	[" "]	[""]	+input
+518376	1557	7	7	7	7	["="]	[""]	+input
+518680	1561	7	8	7	8	[" "]	[""]	+input
+520858	1565	7	9	7	9	["a"]	[""]	+input
+521274	1569	7	10	7	10	["r"]	[""]	+input
+521496	1573	7	11	7	11	["e"]	[""]	+input
+521801	1577	7	12	7	12	["a"]	[""]	+input
+522893	1581	7	13	7	13	[" "]	[""]	+input
+523208	1586	7	14	7	14	["*"]	[""]	+input
+524121	1591	7	15	7	15	[" "]	[""]	+input
+525080	1595	7	16	7	16	["c"]	[""]	+input
+525433	1599	7	17	7	17	["u"]	[""]	+input
+525625	1603	7	18	7	18	["s"]	[""]	+input
+525913	1607	7	19	7	19	["t"]	[""]	+input
+526460	1611	7	20	7	20	["o"]	[""]	+input
+542505	1620	7	21	7	21	["",""]	[""]	+input
+542506	1621	8	0	8	0	["\t"]	[""]	+input
+543112	1627	8	1	8	1	["p"]	[""]	+input
+543321	1631	8	2	8	2	["r"]	[""]	+input
+543560	1635	8	3	8	3	["i"]	[""]	+input
+543801	1639	8	4	8	4	["n"]	[""]	+input
+544120	1643	8	5	8	5	["t"]	[""]	+input
+545400	1648	8	6	8	6	["()"]	[""]	+input
+554793	1658	3	20	3	20	[" "]	[""]	+input
+556265	1663	3	21	3	21	["+"]	[""]	+input
+556649	1668	3	22	3	22	[" "]	[""]	+input
+557145	1672	3	23	3	23	["f"]	[""]	+input
+557316	1676	3	24	3	24	["e"]	[""]	+input
+557513	1680	3	25	3	25	["r"]	[""]	+input
+559241	1684	3	26	3	26	["t"]	[""]	+input
+559513	1688	3	27	3	27	["i"]	[""]	+input
+559801	1692	3	28	3	28	["l"]	[""]	+input
+560010	1696	3	29	3	29	["i"]	[""]	+input
+560491	1700	3	30	3	30	["z"]	[""]	+input
+560681	1704	3	31	3	31	["a"]	[""]	+input
+560858	1708	3	32	3	32	["n"]	[""]	+input
+561161	1712	3	33	3	33	["t"]	[""]	+input
+564058	1734	3	34	3	34	["e"]	[""]	+input
+565769	1750	7	21	7	21	[" "]	[""]	+input
+568858	1755	7	22	7	22	["+"]	[""]	+input
+569625	1760	7	23	7	23	[" "]	[""]	+input
+570265	1764	7	24	7	24	["f"]	[""]	+input
+570601	1768	7	25	7	25	["e"]	[""]	+input
+570793	1772	7	26	7	26	["r"]	[""]	+input
+571033	1776	7	27	7	27	["t"]	[""]	+input
+571369	1780	7	28	7	28	["i"]	[""]	+input
+571897	1784	7	29	7	29	["l"]	[""]	+input
+572137	1788	7	30	7	30	["i"]	[""]	+input
+572932	1792	7	31	7	31	["z"]	[""]	+input
+573129	1796	7	32	7	32	["a"]	[""]	+input
+573337	1800	7	33	7	33	["n"]	[""]	+input
+573705	1804	7	34	7	34	["t"]	[""]	+input
+573913	1808	7	35	7	35	["e"]	[""]	+input
+577006	1822	8	7	8	7	["\"\""]	[""]	+input
+578505	1830	8	8	8	8	["V"]	[""]	+input
+578969	1836	8	9	8	9	["a"]	[""]	+input
+579209	1840	8	10	8	10	["l"]	[""]	+input
+579401	1844	8	11	8	11	["o"]	[""]	+input
+579642	1848	8	12	8	12	["r"]	[""]	+input
+582247	1857	8	15	8	15	["",""]	[""]	+input
+582248	1858	9	0	9	0	["\t"]	[""]	+input
+583718	1863	9	0	9	1	[""]	["\t"]	+delete
+585942	1867	9	0	9	0	["",""]	[""]	+input
+585943	1868	10	0	10	0	["\t"]	[""]	+input
+586472	1873	10	0	10	1	[""]	["\t"]	+delete
+587449	1878	10	0	10	0	["e"]	[""]	+input
+587705	1882	10	1	10	1	["l"]	[""]	+input
+587993	1886	10	2	10	2	["i"]	[""]	+input
+588249	1890	10	3	10	3	["f"]	[""]	+input
+589465	1894	10	4	10	4	[" "]	[""]	+input
+589864	1899	10	5	10	5	["()"]	[""]	+input
+592377	1905	10	6	10	6	["a"]	[""]	+input
+592809	1909	10	7	10	7	["r"]	[""]	+input
+593033	1913	10	8	10	8	["e"]	[""]	+input
+593275	1917	10	9	10	9	["a"]	[""]	+input
+594649	1921	10	10	10	10	[" "]	[""]	+input
+595211	1926	10	11	10	11	[">"]	[""]	+input
+598105	1931	10	12	10	12	["="]	[""]	+input
+599577	1935	10	13	10	13	[" "]	[""]	+input
+599924	1939	10	14	10	14	["2"]	[""]	+input
+600201	1943	10	15	10	15	["0"]	[""]	+input
+600377	1947	10	16	10	16	["0"]	[""]	+input
+600537	1951	10	17	10	17	["0"]	[""]	+input
+601113	1955	10	18	10	18	["0"]	[""]	+input
+605850	1962	10	20	10	20	[" "]	[""]	+input
+606075	1966	10	21	10	21	["a"]	[""]	+input
+606249	1970	10	22	10	22	["n"]	[""]	+input
+606408	1974	10	23	10	23	["d"]	[""]	+input
+607202	1978	10	24	10	24	[" "]	[""]	+input
+607641	1983	10	25	10	25	["()"]	[""]	+input
+608459	1989	10	26	10	26	["a"]	[""]	+input
+608777	1993	10	27	10	27	["r"]	[""]	+input
+609033	1997	10	28	10	28	["e"]	[""]	+input
+609337	2001	10	29	10	29	["a"]	[""]	+input
+611049	2005	10	30	10	30	[" "]	[""]	+input
+612201	2010	10	31	10	31	["<"]	[""]	+input
+612858	2015	10	32	10	32	["="]	[""]	+input
+615322	2019	10	33	10	33	[" "]	[""]	+input
+615769	2023	10	34	10	34	["3"]	[""]	+input
+616233	2027	10	35	10	35	["0"]	[""]	+input
+616459	2031	10	36	10	36	["0"]	[""]	+input
+617065	2035	10	37	10	37	["0"]	[""]	+input
+618217	2039	10	38	10	38	["0"]	[""]	+input
+622089	2042	10	38	10	39	[""]	["0"]	+delete
+630346	2074	10	38	10	38	["0"]	[""]	+input
+633447	2083	10	40	10	40	["",""]	[""]	+input
+635143	2088	10	40	11	0	[""]	["",""]	+delete
+636164	2095	10	40	10	40	[":"]	[""]	+input
+636488	2099	10	41	10	41	["",""]	[""]	+input
+636489	2100	11	0	11	0	["\t"]	[""]	+input
+638170	2108	11	1	11	1	["V"]	[""]	+input
+639047	2114	11	2	11	2	["a"]	[""]	+input
+639338	2118	11	3	11	3	["l"]	[""]	+input
+639546	2122	11	4	11	4	["o"]	[""]	+input
+639802	2126	11	5	11	5	["r"]	[""]	+input
+641962	2131	11	6	11	6	[":"]	[""]	+input
+644950	2135	11	6	11	7	[""]	[":"]	+delete
+646682	2140	11	6	11	6	[" "]	[""]	+input
+646827	2144	11	7	11	7	["="]	[""]	+input
+647002	2148	11	8	11	8	[" "]	[""]	+input
+647692	2151	11	8	11	9	[""]	[" "]	+delete
+648757	2156	11	8	11	8	[" "]	[""]	+input
+649546	2160	11	9	11	9	["a"]	[""]	+input
+649866	2164	11	10	11	10	["r"]	[""]	+input
+650043	2168	11	11	11	11	["e"]	[""]	+input
+650394	2172	11	12	11	12	["a"]	[""]	+input
+651882	2177	11	13	11	13	[" "]	[""]	+input
+652330	2181	11	14	11	14	["*"]	[""]	+input
+653514	2186	11	15	11	15	[" "]	[""]	+input
+654202	2190	11	16	11	16	["c"]	[""]	+input
+654666	2194	11	17	11	17	["u"]	[""]	+input
+654876	2198	11	18	11	18	["s"]	[""]	+input
+655066	2202	11	19	11	19	["t"]	[""]	+input
+655562	2206	11	20	11	20	["o"]	[""]	+input
+656330	2210	11	21	11	21	[" "]	[""]	+input
+657450	2215	11	22	11	22	["+"]	[""]	+input
+657754	2220	11	23	11	23	[" "]	[""]	+input
+658218	2224	11	24	11	24	["f"]	[""]	+input
+658467	2228	11	25	11	25	["e"]	[""]	+input
+658666	2232	11	26	11	26	["r"]	[""]	+input
+658877	2236	11	27	11	27	["t"]	[""]	+input
+659194	2240	11	28	11	28	["i"]	[""]	+input
+659530	2244	11	29	11	29	["l"]	[""]	+input
+659818	2248	11	30	11	30	["i"]	[""]	+input
+660170	2252	11	31	11	31	["z"]	[""]	+input
+660346	2256	11	32	11	32	["a"]	[""]	+input
+660565	2260	11	33	11	33	["n"]	[""]	+input
+660906	2264	11	34	11	34	["t"]	[""]	+input
+661066	2268	11	35	11	35	["e"]	[""]	+input
+662344	2271	11	36	11	36	["",""]	[""]	+input
+662345	2272	12	0	12	0	["\t"]	[""]	+input
+664857	2277	12	1	12	1	["",""]	[""]	+input
+664858	2278	13	0	13	0	["\t"]	[""]	+input
+665288	2283	13	0	13	1	[""]	["\t"]	+delete
+666090	2288	13	0	13	0	["e"]	[""]	+input
+666795	2292	13	1	13	1	["l"]	[""]	+input
+666938	2296	13	2	13	2	["s"]	[""]	+input
+667141	2300	13	3	13	3	["e"]	[""]	+input
+667994	2305	13	4	13	4	[":"]	[""]	+input
+680999	2312	13	5	13	5	["",""]	[""]	+input
+681001	2313	14	0	14	0	["\t"]	[""]	+input
+710187	2321	14	1	14	1	["V"]	[""]	+input
+710778	2327	14	2	14	2	["a"]	[""]	+input
+711066	2331	14	3	14	3	["l"]	[""]	+input
+711290	2335	14	4	14	4	["o"]	[""]	+input
+711435	2339	14	5	14	5	["r"]	[""]	+input
+713099	2343	14	6	14	6	[" "]	[""]	+input
+713387	2347	14	7	14	7	["="]	[""]	+input
+713611	2351	14	8	14	8	[" "]	[""]	+input
+714170	2355	14	9	14	9	["a"]	[""]	+input
+714603	2359	14	10	14	10	["r"]	[""]	+input
+714763	2363	14	11	14	11	["e"]	[""]	+input
+715035	2367	14	12	14	12	["a"]	[""]	+input
+716027	2371	14	13	14	13	[" "]	[""]	+input
+716493	2376	14	14	14	14	["*"]	[""]	+input
+716667	2381	14	15	14	15	[" "]	[""]	+input
+717626	2385	14	16	14	16	["c"]	[""]	+input
+717899	2389	14	17	14	17	["u"]	[""]	+input
+718091	2393	14	18	14	18	["s"]	[""]	+input
+718427	2397	14	19	14	19	["t"]	[""]	+input
+718618	2401	14	20	14	20	["o"]	[""]	+input
+718877	2405	14	21	14	21	[" "]	[""]	+input
+719515	2410	14	22	14	22	["+"]	[""]	+input
+719850	2415	14	23	14	23	[" "]	[""]	+input
+720587	2419	14	24	14	24	["f"]	[""]	+input
+720746	2423	14	25	14	25	["e"]	[""]	+input
+720918	2427	14	26	14	26	["r"]	[""]	+input
+721644	2431	14	27	14	27	["t"]	[""]	+input
+721899	2435	14	28	14	28	["i"]	[""]	+input
+722299	2439	14	29	14	29	["l"]	[""]	+input
+722507	2443	14	30	14	30	["i"]	[""]	+input
+722811	2447	14	31	14	31	["z"]	[""]	+input
+722981	2451	14	32	14	32	["a"]	[""]	+input
+723163	2455	14	33	14	33	["n"]	[""]	+input
+723406	2459	14	34	14	34	["t"]	[""]	+input
+723595	2463	14	35	14	35	["e"]	[""]	+input
+735928	2466	14	36	14	36	["",""]	[""]	+input
+735930	2467	15	0	15	0	["\t"]	[""]	+input
+736811	2473	15	1	15	1	["p"]	[""]	+input
+736997	2477	15	2	15	2	["r"]	[""]	+input
+737227	2481	15	3	15	3	["i"]	[""]	+input
+737451	2485	15	4	15	4	["n"]	[""]	+input
+737803	2489	15	5	15	5	["t"]	[""]	+input
+738720	2494	15	6	15	6	["()"]	[""]	+input
+739387	2500	15	7	15	7	["r"]	[""]	+input
+739563	2504	15	8	15	8	["o"]	[""]	+input
+739803	2508	15	9	15	9	["u"]	[""]	+input
+740032	2512	15	10	15	10	["n"]	[""]	+input
+740283	2516	15	11	15	11	["d"]	[""]	+input
+750026	2521	15	12	15	12	["()"]	[""]	+input
+750651	2527	15	13	15	13	["v"]	[""]	+input
+750828	2531	15	14	15	14	["a"]	[""]	+input
+751115	2535	15	15	15	15	["l"]	[""]	+input
+751307	2539	15	16	15	16	["o"]	[""]	+input
+751515	2543	15	17	15	17	["r"]	[""]	+input
+753547	2547	15	18	15	18	[","]	[""]	+input
+754011	2551	15	19	15	19	["2"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 762209
+- raw_log_line: 2559
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+area  = float(input("Digite o valor da area:"))
+
+if (area >= 0) and (area <= 10000):
+	Valor = area* custo + fertilizante
+	print("Valor")
+	
+elif (area >= 10000) and (area <= 20000):
+	Valor = area * custo + fertilizante
+	print("Valor")
+
+elif (area >= 20000) and (area <= 30000):
+	Valor = area * custo + fertilizante
+	
+else:
+	Valor = area * custo + fertilizante
+	print(round(valor,2))
+```
+Run Output
+```text
+Digite o valor da area: 6
+Traceback (most recent call last):
+File "main.py", line 4, in <module>
+Valor = area* custo + fertilizante
+NameError: name 'custo' is not defined
+```
+
+Edit Segment 2
+- raw_change_event_count: 95
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+768636	2564	3	13	3	13	[" "]	[""]	+input
+810168	2574	7	21	7	22	[""]	[" "]	+delete
+810343	2578	7	20	7	21	[""]	["o"]	+delete
+810487	2582	7	19	7	20	[""]	["t"]	+delete
+810647	2586	7	18	7	19	[""]	["s"]	+delete
+810807	2590	7	17	7	18	[""]	["u"]	+delete
+811287	2594	7	16	7	17	[""]	["c"]	+delete
+813227	2599	7	16	7	16	["6"]	[""]	+input
+819351	2650	7	16	7	17	[""]	["6"]	+delete
+819755	2655	7	16	7	16	["5"]	[""]	+input
+820268	2659	7	17	7	17	["."]	[""]	+input
+820699	2663	7	18	7	18	["5"]	[""]	+input
+821307	2667	7	19	7	19	["0"]	[""]	+input
+822397	2671	7	20	7	20	[" "]	[""]	+input
+825783	2707	7	34	7	35	[""]	["e"]	+delete
+825943	2711	7	33	7	34	[""]	["t"]	+delete
+826101	2715	7	32	7	33	[""]	["n"]	+delete
+826278	2719	7	31	7	32	[""]	["a"]	+delete
+826424	2723	7	30	7	31	[""]	["z"]	+delete
+826583	2727	7	29	7	30	[""]	["i"]	+delete
+826743	2731	7	28	7	29	[""]	["l"]	+delete
+826887	2735	7	27	7	28	[""]	["i"]	+delete
+827063	2739	7	26	7	27	[""]	["t"]	+delete
+827207	2743	7	25	7	26	[""]	["r"]	+delete
+827351	2747	7	24	7	25	[""]	["e"]	+delete
+827703	2751	7	23	7	24	[""]	["f"]	+delete
+828283	2756	7	23	7	23	["1"]	[""]	+input
+828894	2760	7	24	7	24	["5"]	[""]	+input
+829131	2764	7	25	7	25	["0"]	[""]	+input
+838807	2827	3	20	3	21	[""]	["o"]	+delete
+838967	2831	3	19	3	20	[""]	["t"]	+delete
+839143	2835	3	18	3	19	[""]	["s"]	+delete
+839956	2839	3	17	3	18	[""]	["u"]	+delete
+840474	2843	3	16	3	17	[""]	["c"]	+delete
+841756	2848	3	16	3	16	["6"]	[""]	+input
+845128	2887	3	31	3	32	[""]	["e"]	+delete
+845304	2891	3	30	3	31	[""]	["t"]	+delete
+845463	2895	3	29	3	30	[""]	["n"]	+delete
+845624	2899	3	28	3	29	[""]	["a"]	+delete
+845800	2903	3	27	3	28	[""]	["z"]	+delete
+845956	2907	3	26	3	27	[""]	["i"]	+delete
+846149	2911	3	25	3	26	[""]	["l"]	+delete
+846311	2915	3	24	3	25	[""]	["i"]	+delete
+846487	2919	3	23	3	24	[""]	["t"]	+delete
+846663	2923	3	22	3	23	[""]	["r"]	+delete
+847016	2927	3	21	3	22	[""]	["e"]	+delete
+847352	2931	3	20	3	21	[""]	["f"]	+delete
+848588	2936	3	20	3	20	["1"]	[""]	+input
+849118	2940	3	21	3	21	["0"]	[""]	+input
+849292	2944	3	22	3	22	["0"]	[""]	+input
+855720	2977	11	20	11	21	[""]	["o"]	+delete
+855880	2981	11	19	11	20	[""]	["t"]	+delete
+856042	2985	11	18	11	19	[""]	["s"]	+delete
+856232	2989	11	17	11	18	[""]	["u"]	+delete
+856632	2993	11	16	11	17	[""]	["c"]	+delete
+858219	2998	11	16	11	16	["5"]	[""]	+input
+862344	3046	11	31	11	32	[""]	["e"]	+delete
+862471	3050	11	30	11	31	[""]	["t"]	+delete
+862616	3054	11	29	11	30	[""]	["n"]	+delete
+862776	3058	11	28	11	29	[""]	["a"]	+delete
+862904	3062	11	27	11	28	[""]	["z"]	+delete
+863080	3066	11	26	11	27	[""]	["i"]	+delete
+863225	3070	11	25	11	26	[""]	["l"]	+delete
+863384	3074	11	24	11	25	[""]	["i"]	+delete
+863544	3078	11	23	11	24	[""]	["t"]	+delete
+863720	3082	11	22	11	23	[""]	["r"]	+delete
+863848	3086	11	21	11	22	[""]	["e"]	+delete
+864042	3090	11	20	11	21	[""]	["f"]	+delete
+864908	3095	11	20	11	20	["2"]	[""]	+input
+865228	3099	11	21	11	21	["0"]	[""]	+input
+865372	3103	11	22	11	22	["0"]	[""]	+input
+869204	3127	14	20	14	21	[""]	["o"]	+delete
+869352	3131	14	19	14	20	[""]	["t"]	+delete
+869480	3135	14	18	14	19	[""]	["s"]	+delete
+869641	3139	14	17	14	18	[""]	["u"]	+delete
+870759	3143	14	16	14	17	[""]	["c"]	+delete
+871724	3148	14	16	14	16	["4"]	[""]	+input
+872284	3152	14	17	14	17	["."]	[""]	+input
+872908	3156	14	18	14	18	["5"]	[""]	+input
+873164	3160	14	19	14	19	["0"]	[""]	+input
+876105	3198	14	34	14	35	[""]	["e"]	+delete
+876605	3201	14	33	14	34	[""]	["t"]	+delete
+876634	3204	14	32	14	33	[""]	["n"]	+delete
+876663	3207	14	31	14	32	[""]	["a"]	+delete
+876841	3211	14	30	14	31	[""]	["z"]	+delete
+877000	3215	14	29	14	30	[""]	["i"]	+delete
+877501	3218	14	28	14	29	[""]	["l"]	+delete
+877532	3221	14	27	14	28	[""]	["i"]	+delete
+877720	3225	14	26	14	27	[""]	["t"]	+delete
+877880	3229	14	25	14	26	[""]	["r"]	+delete
+878025	3233	14	24	14	25	[""]	["e"]	+delete
+878168	3237	14	23	14	24	[""]	["f"]	+delete
+880284	3242	14	23	14	23	["2"]	[""]	+input
+880700	3246	14	24	14	24	["5"]	[""]	+input
+881068	3250	14	25	14	25	["0"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 896231
+- raw_log_line: 3257
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+area  = float(input("Digite o valor da area:"))
+
+if (area >= 0) and (area <= 10000):
+	Valor = area * 6 + 100
+	print("Valor")
+	
+elif (area >= 10000) and (area <= 20000):
+	Valor = area * 5.50 + 150
+	print("Valor")
+
+elif (area >= 20000) and (area <= 30000):
+	Valor = area * 5 + 200
+	
+else:
+	Valor = area * 4.50 + 250
+	print(round(valor,2))
+```
+Run Output
+```text
+Digite o valor da area: 10000
+Valor
+```
+
+Edit Segment 3
+- raw_change_event_count: 32
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+920584	3261	4	14	4	15	[""]	[")"]	+delete
+921084	3264	4	13	4	14	[""]	["\""]	+delete
+921115	3267	4	12	4	13	[""]	["r"]	+delete
+921145	3270	4	11	4	12	[""]	["o"]	+delete
+921173	3273	4	10	4	11	[""]	["l"]	+delete
+921384	3277	4	9	4	10	[""]	["a"]	+delete
+921576	3281	4	8	4	9	[""]	["V"]	+delete
+921720	3285	4	7	4	8	[""]	["\""]	+delete
+921864	3289	4	6	4	7	[""]	["("]	+delete
+922045	3293	4	5	4	6	[""]	["t"]	+delete
+922200	3297	4	4	4	5	[""]	["n"]	+delete
+922679	3301	4	3	4	4	[""]	["i"]	+delete
+922904	3305	4	2	4	3	[""]	["r"]	+delete
+923080	3309	4	1	4	2	[""]	["p"]	+delete
+923258	3313	4	0	4	1	[""]	["\t"]	+delete
+923421	3317	3	23	4	0	[""]	["",""]	+delete
+924875	3323	7	14	7	15	[""]	[")"]	+delete
+925032	3327	7	13	7	14	[""]	["\""]	+delete
+925176	3331	7	12	7	13	[""]	["r"]	+delete
+925336	3335	7	11	7	12	[""]	["o"]	+delete
+925496	3339	7	10	7	11	[""]	["l"]	+delete
+925642	3343	7	9	7	10	[""]	["a"]	+delete
+925800	3347	7	8	7	9	[""]	["V"]	+delete
+925976	3351	7	7	7	8	[""]	["\""]	+delete
+926135	3355	7	6	7	7	[""]	["("]	+delete
+926296	3359	7	5	7	6	[""]	["t"]	+delete
+926458	3363	7	4	7	5	[""]	["n"]	+delete
+926600	3367	7	3	7	4	[""]	["i"]	+delete
+926757	3371	7	2	7	3	[""]	["r"]	+delete
+926926	3375	7	1	7	2	[""]	["p"]	+delete
+927112	3379	7	0	7	1	[""]	["\t"]	+delete
+927496	3383	6	26	7	0	[""]	["",""]	+delete
+
+Local Run 3
+- event_time_delta_ms: 940177
+- raw_log_line: 3389
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+area  = float(input("Digite o valor da area:"))
+
+if (area >= 0) and (area <= 10000):
+	Valor = area * 6 + 100
+	
+elif (area >= 10000) and (area <= 20000):
+	Valor = area * 5.50 + 150
+
+elif (area >= 20000) and (area <= 30000):
+	Valor = area * 5 + 200
+	
+else:
+	Valor = area * 4.50 + 250
+	print(round(valor,2))
+```
+Run Output
+```text
+Digite o valor da area:10000
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 942550
+- raw_log_line: 3390
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+area  = float(input("Digite o valor da area:"))
+
+if (area >= 0) and (area <= 10000):
+	Valor = area * 6 + 100
+	
+elif (area >= 10000) and (area <= 20000):
+	Valor = area * 5.50 + 150
+
+elif (area >= 20000) and (area <= 30000):
+	Valor = area * 5 + 200
+	
+else:
+	Valor = area * 4.50 + 250
+	print(round(valor,2))
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-09-05T16:22:40.268000
+
+Execution Result
+
+- submitted_at: 2023-09-05 16:22:52
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "256.8"
+    expected: "1640.8"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "11"
+    expected: "166.0"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "9638.75"
+    expected: "57932.5"
+    actual: ""
+
+Attempt Start Code
+```python
+area  = float(input("Digite o valor da area:"))
+
+if (area >= 0) and (area <= 10000):
+	Valor = area * 6 + 100
+	
+elif (area >= 10000) and (area <= 20000):
+	Valor = area * 5.50 + 150
+
+elif (area >= 20000) and (area <= 30000):
+	Valor = area * 5 + 200
+	
+else:
+	Valor = area * 4.50 + 250
+	print(round(valor,2))
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 3394
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+area  = float(input("Digite o valor da area:"))
+
+if (area >= 0) and (area <= 10000):
+	Valor = area * 6 + 100
+	
+elif (area >= 10000) and (area <= 20000):
+	Valor = area * 5.50 + 150
+
+elif (area >= 20000) and (area <= 30000):
+	Valor = area * 5 + 200
+	
+else:
+	Valor = area * 4.50 + 250
+	print(round(valor,2))
+```
+Run Output
+```text
+
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 12240
+- raw_log_line: 3395
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+area  = float(input("Digite o valor da area:"))
+
+if (area >= 0) and (area <= 10000):
+	Valor = area * 6 + 100
+	
+elif (area >= 10000) and (area <= 20000):
+	Valor = area * 5.50 + 150
+
+elif (area >= 20000) and (area <= 30000):
+	Valor = area * 5 + 200
+	
+else:
+	Valor = area * 4.50 + 250
+	print(round(valor,2))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-09-05T16:23:38.019000
+
+Execution Result
+
+- submitted_at: 2023-09-05 16:23:40
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "256.8"
+    expected: "1640.8"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "11"
+    expected: "166.0"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "9638.75"
+    expected: "57932.5"
+    actual: ""
+
+Attempt Start Code
+```python
+area  = float(input("Digite o valor da area:"))
+
+if (area >= 0) and (area <= 10000):
+	Valor = area * 6 + 100
+	
+elif (area >= 10000) and (area <= 20000):
+	Valor = area * 5.50 + 150
+
+elif (area >= 20000) and (area <= 30000):
+	Valor = area * 5 + 200
+	
+else:
+	Valor = area * 4.50 + 250
+	print(round(valor,2))
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 3397
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+area  = float(input("Digite o valor da area:"))
+
+if (area >= 0) and (area <= 10000):
+	Valor = area * 6 + 100
+	
+elif (area >= 10000) and (area <= 20000):
+	Valor = area * 5.50 + 150
+
+elif (area >= 20000) and (area <= 30000):
+	Valor = area * 5 + 200
+	
+else:
+	Valor = area * 4.50 + 250
+	print(round(valor,2))
+```
+Run Output
+```text
+Digite o valor da area: 12000.0
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 2382
+- raw_log_line: 3398
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+area  = float(input("Digite o valor da area:"))
+
+if (area >= 0) and (area <= 10000):
+	Valor = area * 6 + 100
+	
+elif (area >= 10000) and (area <= 20000):
+	Valor = area * 5.50 + 150
+
+elif (area >= 20000) and (area <= 30000):
+	Valor = area * 5 + 200
+	
+else:
+	Valor = area * 4.50 + 250
+	print(round(valor,2))
+```

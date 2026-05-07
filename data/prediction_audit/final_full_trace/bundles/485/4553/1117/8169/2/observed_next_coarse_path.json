@@ -1,0 +1,62 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4553",
+    "exercise_id": "1117",
+    "student_id": "8169",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "pr = float(input(\"\"))\nds = int(input(\"\"))\nms = str(input(\"\")).upper()\nif (ds > 7 or ds < 1) or (pr < 0) or (ms != \"S\" or \"N\"):\n\tmsg = \"Dados invalidos\"\nelif (ds == 2 or 3 or 5) and (ms == \"S\"):\n\tpn = pr - (pr * (25/100)) + 20\n\tmsg = (\"Total: R$ \",round(pn,2))\nelif (ds == 2 or 3 or 5) and (ms == \"N\"):\n\tpn = pr - (pr * (25/100)) \n\tmsg = (\"Total: R$ \",round(pn,2))\nelif (ds == 1 or 4 or 6 or 7) and (ms == \"S\"):\n\tpn = pr + 20 \n\tmsg = (\"Total: R$ \",round(pn,2))\nelif (ds == 1 or 4 or 6 or 7) and (ms == \"N\"):\n\tpn = pr \n\tmsg = (\"Total: R$ \",round(pn,2))\nelse:\n\tmsg = \"Dados invalidos\"\nprint (\"Entradas: \", pr,\", \", ds,\", \",ms)\nprint (msg)",
+    "coarse_path_steps": [
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 14,
+        "target_end_line_0idx": 14
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 14,
+        "target_end_line_0idx": 14
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 3,
+        "target_end_line_0idx": 4
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 3,
+        "target_end_line_0idx": 4
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

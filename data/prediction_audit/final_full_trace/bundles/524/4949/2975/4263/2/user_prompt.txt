@@ -1,0 +1,676 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 524
+- assessment_id: 4949
+- assessment_title: Lab 2 - Estrutura Condicional Composta
+- exercise_id: 2975
+- student_id: 4263
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-08-16T19:17:24.214000
+
+Execution Result
+
+- submitted_at: 2023-08-16 19:25:09
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "2\n2\n15.0"
+    expected: "13.0\nSim"
+    actual: "13.0\nsim"
+  - test_index_0idx: 1 [FAIL]
+    input: "1\n2\n8.0"
+    expected: "10.0\nNao"
+    actual: "nao"
+  - test_index_0idx: 2 [FAIL]
+    input: "3\n5\n25.50"
+    expected: "26.5\nNao"
+    actual: "nao"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 194
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	8	0	0	0	0	["a"]	[""]	+input
+302	12	0	1	0	1	[" "]	[""]	+input
+450	16	0	2	0	2	["="]	[""]	+input
+551	20	0	3	0	3	[" "]	[""]	+input
+1983	24	0	4	0	4	["i"]	[""]	+input
+2116	27	0	5	0	5	["n"]	[""]	+input
+2238	32	0	6	0	6	["t"]	[""]	+input
+3039	37	0	7	0	7	["()"]	[""]	+input
+3633	43	0	8	0	8	["i"]	[""]	+input
+3767	47	0	9	0	9	["n"]	[""]	+input
+3983	51	0	10	0	10	["p"]	[""]	+input
+4117	54	0	11	0	11	["u"]	[""]	+input
+4206	58	0	12	0	12	["t"]	[""]	+input
+4967	64	0	13	0	13	["()"]	[""]	+input
+6207	71	0	14	0	14	["\"\""]	[""]	+input
+6884	78	0	15	0	15	["D"]	[""]	+input
+7250	83	0	16	0	16	["i"]	[""]	+input
+7377	87	0	17	0	17	["g"]	[""]	+input
+7470	91	0	18	0	18	["i"]	[""]	+input
+7616	95	0	19	0	19	["t"]	[""]	+input
+7750	98	0	20	0	20	["e"]	[""]	+input
+8016	103	0	21	0	21	[" "]	[""]	+input
+8199	107	0	22	0	22	["a"]	[""]	+input
+8270	110	0	23	0	23	[" "]	[""]	+input
+8466	115	0	24	0	24	["q"]	[""]	+input
+8590	119	0	25	0	25	["u"]	[""]	+input
+8702	123	0	26	0	26	["a"]	[""]	+input
+8800	126	0	27	0	27	["n"]	[""]	+input
+8966	131	0	28	0	28	["t"]	[""]	+input
+9102	135	0	29	0	29	["i"]	[""]	+input
+9333	139	0	30	0	30	["d"]	[""]	+input
+9428	142	0	31	0	31	["a"]	[""]	+input
+9749	147	0	32	0	32	["d"]	[""]	+input
+9815	150	0	33	0	33	["e"]	[""]	+input
+9983	155	0	34	0	34	[" "]	[""]	+input
+10133	159	0	35	0	35	["d"]	[""]	+input
+10183	162	0	36	0	36	["e"]	[""]	+input
+10286	167	0	37	0	37	[" "]	[""]	+input
+10554	171	0	38	0	38	["s"]	[""]	+input
+10702	175	0	39	0	39	["u"]	[""]	+input
+10933	179	0	40	0	40	["c"]	[""]	+input
+11086	183	0	41	0	41	["o"]	[""]	+input
+11134	186	0	42	0	42	["s"]	[""]	+input
+11934	193	0	43	0	43	["."]	[""]	+input
+11999	196	0	44	0	44	[";"]	[""]	+input
+12702	200	0	44	0	45	[""]	[";"]	+delete
+12848	204	0	43	0	44	[""]	["."]	+delete
+13502	210	0	43	0	43	[":"]	[""]	+input
+13632	215	0	44	0	44	[" "]	[""]	+input
+14600	227	0	48	0	48	["",""]	[""]	+input
+15518	233	1	0	1	0	["b"]	[""]	+input
+15799	237	1	1	1	1	[" "]	[""]	+input
+15904	241	1	2	1	2	["="]	[""]	+input
+15999	245	1	3	1	3	[" "]	[""]	+input
+18566	249	1	4	1	4	["i"]	[""]	+input
+18686	252	1	5	1	5	["n"]	[""]	+input
+18750	256	1	6	1	6	["t"]	[""]	+input
+27934	334	1	6	1	7	[""]	["t"]	+delete
+28098	338	1	5	1	6	[""]	["n"]	+delete
+28320	342	1	4	1	5	[""]	["i"]	+delete
+28916	347	1	4	1	4	["int(input(\"Digite a quantidade de sucos: \"))"]	[""]	paste
+33838	370	1	40	1	41	[""]	["c"]	+delete
+34014	374	1	39	1	40	[""]	["u"]	+delete
+34215	378	1	38	1	39	[""]	["s"]	+delete
+34944	383	1	38	1	38	["j"]	[""]	+input
+35054	386	1	39	1	39	["o"]	[""]	+input
+35170	390	1	40	1	40	["g"]	[""]	+input
+36849	397	1	48	1	48	["",""]	[""]	+input
+37598	403	2	0	2	0	["c"]	[""]	+input
+37870	407	2	1	2	1	[" "]	[""]	+input
+38016	411	2	2	2	2	["="]	[""]	+input
+38099	415	2	3	2	3	[" "]	[""]	+input
+38833	419	2	4	2	4	["f"]	[""]	+input
+38965	423	2	5	2	5	["l"]	[""]	+input
+39150	427	2	6	2	6	["o"]	[""]	+input
+39248	431	2	7	2	7	["a"]	[""]	+input
+39470	435	2	8	2	8	["t"]	[""]	+input
+40371	440	2	9	2	9	["()"]	[""]	+input
+40766	446	2	10	2	10	["i"]	[""]	+input
+40904	450	2	11	2	11	["n"]	[""]	+input
+41086	454	2	12	2	12	["p"]	[""]	+input
+41265	457	2	13	2	13	["u"]	[""]	+input
+41315	461	2	14	2	14	["t"]	[""]	+input
+42148	467	2	15	2	15	["()"]	[""]	+input
+42710	474	2	16	2	16	["\"\""]	[""]	+input
+43348	479	2	17	2	17	["D"]	[""]	+input
+44415	486	2	18	2	18	["i"]	[""]	+input
+44582	490	2	19	2	19	["g"]	[""]	+input
+44670	494	2	20	2	20	["i"]	[""]	+input
+44794	498	2	21	2	21	["t"]	[""]	+input
+44965	502	2	22	2	22	["e"]	[""]	+input
+45086	505	2	23	2	23	[" "]	[""]	+input
+45715	510	2	24	2	24	["a"]	[""]	+input
+45903	514	2	25	2	25	[" "]	[""]	+input
+46098	518	2	26	2	26	["v"]	[""]	+input
+46302	522	2	27	2	27	["a"]	[""]	+input
+46533	526	2	28	2	28	["l"]	[""]	+input
+46702	530	2	29	2	29	["o"]	[""]	+input
+46798	534	2	30	2	30	["r"]	[""]	+input
+46931	538	2	31	2	31	[" "]	[""]	+input
+47038	542	2	32	2	32	["a"]	[""]	+input
+47199	546	2	33	2	33	[" "]	[""]	+input
+47354	550	2	34	2	34	["s"]	[""]	+input
+47599	554	2	35	2	35	["e"]	[""]	+input
+47699	557	2	36	2	36	["r"]	[""]	+input
+47799	561	2	37	2	37	[" "]	[""]	+input
+47998	566	2	38	2	38	["p"]	[""]	+input
+48166	570	2	39	2	39	["a"]	[""]	+input
+48415	574	2	40	2	40	["g"]	[""]	+input
+48526	578	2	41	2	41	["o"]	[""]	+input
+49698	583	2	42	2	42	[":"]	[""]	+input
+50115	588	2	43	2	43	[" "]	[""]	+input
+51402	591	2	43	2	44	[""]	[" "]	+delete
+51903	594	2	42	2	43	[""]	[":"]	+delete
+51919	597	2	41	2	42	[""]	["o"]	+delete
+51952	600	2	40	2	41	[""]	["g"]	+delete
+52081	604	2	39	2	40	[""]	["a"]	+delete
+52254	608	2	38	2	39	[""]	["p"]	+delete
+52449	612	2	37	2	38	[""]	[" "]	+delete
+52637	616	2	36	2	37	[""]	["r"]	+delete
+52798	620	2	35	2	36	[""]	["e"]	+delete
+53040	624	2	34	2	35	[""]	["s"]	+delete
+53231	628	2	33	2	34	[""]	[" "]	+delete
+53565	632	2	32	2	33	[""]	["a"]	+delete
+53982	637	2	32	2	32	["d"]	[""]	+input
+54081	641	2	33	2	33	["i"]	[""]	+input
+54238	645	2	34	2	34	["s"]	[""]	+input
+54334	649	2	35	2	35	["p"]	[""]	+input
+54431	652	2	36	2	36	["o"]	[""]	+input
+54686	657	2	37	2	37	["n"]	[""]	+input
+55298	660	2	38	2	38	["´"]	[""]	*compose
+55535	663	2	38	2	39	["í"]	["´"]	*compose
+56081	667	2	39	2	39	["v"]	[""]	+input
+56164	670	2	40	2	40	["e"]	[""]	+input
+56302	674	2	41	2	41	["l"]	[""]	+input
+57135	680	2	42	2	42	[":"]	[""]	+input
+57231	684	2	43	2	43	[" "]	[""]	+input
+58865	697	2	47	2	47	["",""]	[""]	+input
+66322	702	3	0	3	0	["",""]	[""]	+input
+67582	708	4	0	4	0	["i"]	[""]	+input
+67714	712	4	1	4	1	["f"]	[""]	+input
+67950	716	4	2	4	2	[" "]	[""]	+input
+69764	720	4	3	4	3	["c"]	[""]	+input
+98335	724	4	4	4	4	[" "]	[""]	+input
+98530	728	4	5	4	5	["="]	[""]	+input
+98613	731	4	6	4	6	[" "]	[""]	+input
+148766	735	4	6	4	7	[""]	[" "]	+delete
+148944	739	4	5	4	6	[""]	["="]	+delete
+223263	743	4	4	4	5	[""]	[" "]	+delete
+223472	747	4	3	4	4	[""]	["c"]	+delete
+224109	752	4	3	4	3	["a"]	[""]	+input
+225093	757	4	4	4	4	["*"]	[""]	+input
+227522	762	4	5	4	5	["b"]	[""]	+input
+230575	766	4	6	4	6	[" "]	[""]	+input
+231043	771	4	7	4	7	["<"]	[""]	+input
+231824	776	4	8	4	8	[" "]	[""]	+input
+231981	780	4	9	4	9	["c"]	[""]	+input
+233006	785	4	10	4	10	[":"]	[""]	+input
+238797	807	4	11	4	11	["",""]	[""]	+input
+238798	808	5	0	5	0	["\t"]	[""]	+input
+239773	814	5	1	5	1	["p"]	[""]	+input
+240273	818	5	2	5	2	["r"]	[""]	+input
+240373	822	5	3	5	3	["i"]	[""]	+input
+240508	825	5	4	5	4	["n"]	[""]	+input
+240640	829	5	5	5	5	["t"]	[""]	+input
+241600	835	5	6	5	6	["()"]	[""]	+input
+259197	843	4	8	4	8	["="]	[""]	+input
+262706	867	5	1	5	1	["",""]	[""]	+input
+262706	868	6	0	6	0	["\t"]	[""]	+input
+263723	877	5	1	5	1	["t"]	[""]	+input
+263823	881	5	2	5	2	["o"]	[""]	+input
+263909	885	5	3	5	3	["t"]	[""]	+input
+264173	889	5	4	5	4	["a"]	[""]	+input
+264283	892	5	5	5	5	["l"]	[""]	+input
+264812	897	5	6	5	6	[" "]	[""]	+input
+264926	901	5	7	5	7	["="]	[""]	+input
+265039	905	5	8	5	8	[" "]	[""]	+input
+268158	909	5	9	5	9	["a"]	[""]	+input
+269054	914	5	10	5	10	["*"]	[""]	+input
+269873	919	5	11	5	11	["b"]	[""]	+input
+279140	931	6	7	6	7	["r"]	[""]	+input
+279244	935	6	8	6	8	["o"]	[""]	+input
+279372	938	6	9	6	9	["u"]	[""]	+input
+279606	943	6	10	6	10	["n"]	[""]	+input
+279676	946	6	11	6	11	["d"]	[""]	+input
+280428	952	6	12	6	12	["()"]	[""]	+input
+281372	959	6	13	6	13	["\"\""]	[""]	+input
+281708	965	6	14	6	14	["s"]	[""]	+input
+281756	968	6	15	6	15	["i"]	[""]	+input
+281972	973	6	16	6	16	["m"]	[""]	+input
+284077	988	6	20	6	20	["",""]	[""]	+input
+284077	989	7	0	7	0	["\t"]	[""]	+input
+312704	1001	2	38	2	39	[""]	["í"]	+delete
+312821	1006	2	38	2	38	["i"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 314304
+- raw_log_line: 1016
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+a = int(input("Digite a quantidade de sucos: "))
+b = int(input("Digite a quantidade de jogos: "))
+c = float(input("Digite a valor disponivel: "))
+
+if a*b <= c:
+	total = a*b
+	print(round("sim"))
+	
+```
+Run Output
+```text
+Digite a quantidade de sucos: 3
+Digite a quantidade de jogos: 3
+Traceback (most recent call last):
+File "main.py", line 3, in <module>
+c = float(input("Digite a valor dispon\xedvel: "))
+UnicodeEncodeError: 'ascii' codec can't encode character '\xed' in position 21: ordinal not in range(128)
+```
+
+Edit Segment 2
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+325621	1022	6	18	6	18	[","]	[""]	+input
+326492	1026	6	19	6	19	["2"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 328470
+- raw_log_line: 1037
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+a = int(input("Digite a quantidade de sucos: "))
+b = int(input("Digite a quantidade de jogos: "))
+c = float(input("Digite a valor disponivel: "))
+
+if a*b <= c:
+	total = a*b
+	print(round("sim",2))
+	
+```
+Run Output
+```text
+Digite a quantidade de sucos: 3
+Digite a quantidade de jogos: 3
+Digite a valor disponivel: 20
+Traceback (most recent call last):
+File "main.py", line 7, in <module>
+print(round("sim"))
+TypeError: type str doesn't define __round__ method
+```
+
+Edit Segment 3
+- raw_change_event_count: 17
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+342420	1044	6	13	6	18	["t"]	["\"sim\""]	+input
+342540	1048	6	14	6	14	["o"]	[""]	+input
+342636	1052	6	15	6	15	["t"]	[""]	+input
+343004	1056	6	16	6	16	["a"]	[""]	+input
+343136	1059	6	17	6	17	["l"]	[""]	+input
+344837	1075	6	22	6	22	["",""]	[""]	+input
+344837	1076	7	0	7	0	["\t"]	[""]	+input
+345340	1082	7	1	7	1	["p"]	[""]	+input
+345470	1086	7	2	7	2	["r"]	[""]	+input
+345603	1090	7	3	7	3	["i"]	[""]	+input
+345724	1093	7	4	7	4	["n"]	[""]	+input
+345803	1097	7	5	7	5	["t"]	[""]	+input
+346588	1103	7	6	7	6	["()"]	[""]	+input
+347653	1110	7	7	7	7	["\"\""]	[""]	+input
+348140	1116	7	8	7	8	["s"]	[""]	+input
+348236	1119	7	9	7	9	["i"]	[""]	+input
+348419	1123	7	10	7	10	["m"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 356326
+- raw_log_line: 1133
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+a = int(input("Digite a quantidade de sucos: "))
+b = int(input("Digite a quantidade de jogos: "))
+c = float(input("Digite a valor disponivel: "))
+
+if a*b <= c:
+	total = a*b
+	print(round(total,2))
+	print("sim")
+	
+```
+Run Output
+```text
+Digite a quantidade de sucos: 3
+Digite a quantidade de jogos: 3
+Digite a valor disponivel: 20
+sim
+```
+
+Edit Segment 4
+- raw_change_event_count: 29
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+389485	1141	4	4	4	4	["3"]	[""]	+input
+391102	1144	4	4	4	5	[""]	["3"]	+delete
+392619	1152	4	5	4	5	["3"]	[""]	+input
+394172	1157	4	6	4	6	["*"]	[""]	+input
+395233	1161	4	6	4	7	[""]	["*"]	+delete
+396139	1167	4	6	4	6	["+"]	[""]	+input
+397518	1172	4	7	4	7	["3"]	[""]	+input
+398867	1177	4	8	4	8	["*"]	[""]	+input
+405968	1186	5	11	5	11	["3"]	[""]	+input
+408501	1193	5	12	5	12	["+"]	[""]	+input
+410501	1202	5	14	5	14	["*"]	[""]	+input
+410816	1207	5	15	5	15	["3"]	[""]	+input
+426538	1215	1	42	1	43	[""]	["s"]	+delete
+426716	1219	1	41	1	42	[""]	["o"]	+delete
+426883	1223	1	40	1	41	[""]	["g"]	+delete
+427116	1227	1	39	1	40	[""]	["o"]	+delete
+427322	1231	1	38	1	39	[""]	["j"]	+delete
+427787	1236	1	38	1	38	["s"]	[""]	+input
+427918	1239	1	39	1	39	["a"]	[""]	+input
+428033	1243	1	40	1	40	["l"]	[""]	+input
+428404	1248	1	41	1	41	["g"]	[""]	+input
+428500	1252	1	42	1	42	["a"]	[""]	+input
+428683	1256	1	43	1	43	["d"]	[""]	+input
+428832	1260	1	44	1	44	["o"]	[""]	+input
+428932	1263	1	45	1	45	["s"]	[""]	+input
+433667	1269	4	8	4	8	["."]	[""]	+input
+433919	1273	4	9	4	9	["5"]	[""]	+input
+437035	1278	5	16	5	16	["."]	[""]	+input
+437299	1282	5	17	5	17	["5"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 444549
+- raw_log_line: 1292
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+a = int(input("Digite a quantidade de sucos: "))
+b = int(input("Digite a quantidade de salgados: "))
+c = float(input("Digite a valor disponivel: "))
+
+if a*3+3.5*b <= c:
+	total = a*3+b*3.5
+	print(round(total,2))
+	print("sim")
+	
+```
+Run Output
+```text
+Digite a quantidade de sucos: 3
+Digite a quantidade de salgados: 3
+Digite a valor disponivel: 20
+19.5
+sim
+```
+
+Edit Segment 5
+- raw_change_event_count: 27
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+447499	1296	7	13	7	13	["",""]	[""]	+input
+447499	1297	8	0	8	0	["\t"]	[""]	+input
+448465	1302	8	0	8	1	[""]	["\t"]	+delete
+448915	1307	8	0	8	0	["e"]	[""]	+input
+449035	1311	8	1	8	1	["l"]	[""]	+input
+449164	1315	8	2	8	2	["s"]	[""]	+input
+449387	1319	8	3	8	3	["e"]	[""]	+input
+450032	1324	8	4	8	4	[":"]	[""]	+input
+450498	1328	8	5	8	5	["",""]	[""]	+input
+450499	1329	9	0	9	0	["\t"]	[""]	+input
+456516	1335	9	1	9	1	["p"]	[""]	+input
+456636	1339	9	2	9	2	["r"]	[""]	+input
+456781	1343	9	3	9	3	["i"]	[""]	+input
+457035	1347	9	4	9	4	["t"]	[""]	+input
+457565	1350	9	4	9	5	[""]	["t"]	+delete
+457835	1355	9	4	9	4	["n"]	[""]	+input
+457960	1359	9	5	9	5	["t"]	[""]	+input
+458832	1364	9	6	9	6	["()"]	[""]	+input
+459820	1371	9	7	9	7	["\"\""]	[""]	+input
+460115	1377	9	8	9	8	["n"]	[""]	+input
+460382	1380	9	9	9	9	["~"]	[""]	*compose
+460515	1383	9	9	9	10	["ã"]	["~"]	*compose
+460684	1387	9	10	9	10	["o"]	[""]	+input
+461532	1390	9	10	9	11	[""]	["o"]	+delete
+461698	1394	9	9	9	10	[""]	["ã"]	+delete
+462865	1399	9	9	9	9	["a"]	[""]	+input
+462974	1402	9	10	9	10	["o"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 465532
+- raw_log_line: 1407
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+a = int(input("Digite a quantidade de sucos: "))
+b = int(input("Digite a quantidade de salgados: "))
+c = float(input("Digite a valor disponivel: "))
+
+if a*3+3.5*b <= c:
+	total = a*3+b*3.5
+	print(round(total,2))
+	print("sim")
+else:
+	print("nao")
+	
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-08-16T19:25:31.995000
+
+Execution Result
+
+- submitted_at: 2023-08-16 19:25:48
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "2\n2\n15.0"
+    expected: "13.0\nSim"
+    actual: "13.0\nsim"
+  - test_index_0idx: 1 [FAIL]
+    input: "1\n2\n8.0"
+    expected: "10.0\nNao"
+    actual: "10.0\nnao"
+  - test_index_0idx: 2 [FAIL]
+    input: "3\n5\n25.50"
+    expected: "26.5\nNao"
+    actual: "26.5\nnao"
+
+Attempt Start Code
+```python
+a = int(input("Digite a quantidade de sucos: "))
+b = int(input("Digite a quantidade de salgados: "))
+c = float(input("Digite a valor disponivel: "))
+
+if a*3+3.5*b <= c:
+	total = a*3+b*3.5
+	print(round(total,2))
+	print("sim")
+else:
+	print("nao")
+	
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1424	8	5	8	5	["",""]	[""]	+input
+0	1425	9	0	9	0	["\t"]	[""]	+input
+668	1431	9	1	9	1	["total = a*3+b*3.5","\tprint(round(total,2))"]	[""]	paste
+
+Submit Anchor 1
+- event_time_delta_ms: 16065
+- raw_log_line: 1438
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+a = int(input("Digite a quantidade de sucos: "))
+b = int(input("Digite a quantidade de salgados: "))
+c = float(input("Digite a valor disponivel: "))
+
+if a*3+3.5*b <= c:
+	total = a*3+b*3.5
+	print(round(total,2))
+	print("sim")
+else:
+	total = a*3+b*3.5
+	print(round(total,2))
+	print("nao")
+	
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-08-16T19:26:10.810000
+
+Execution Result
+
+- submitted_at: 2023-08-16 19:26:30
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "2\n2\n15.0"
+    expected: "13.0\nSim"
+    actual: "13.0\nsim"
+  - test_index_0idx: 1 [FAIL]
+    input: "1\n2\n8.0"
+    expected: "10.0\nNao"
+    actual: "10.0\nnao"
+  - test_index_0idx: 2 [FAIL]
+    input: "3\n5\n25.50"
+    expected: "26.5\nNao"
+    actual: "26.5\nnao"
+
+Attempt Start Code
+```python
+a = int(input("Digite a quantidade de sucos: "))
+b = int(input("Digite a quantidade de salgados: "))
+c = float(input("Digite a valor disponivel: "))
+
+if a*3+3.5*b <= c:
+	total = a*3+b*3.5
+	print(round(total,2))
+	print("sim")
+else:
+	total = a*3+b*3.5
+	print(round(total,2))
+	print("nao")
+	
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1449
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+a = int(input("Digite a quantidade de sucos: "))
+b = int(input("Digite a quantidade de salgados: "))
+c = float(input("Digite a valor disponivel: "))
+
+if a*3+3.5*b <= c:
+	total = a*3+b*3.5
+	print(round(total,2))
+	print("sim")
+else:
+	total = a*3+b*3.5
+	print(round(total,2))
+	print("nao")
+	
+```
+Run Output
+```text
+Digite a quantidade de sucos: 0
+Digite a quantidade de salgados: 5
+Digite a valor disponivel: 12.6
+17.5
+nao
+```
+
+Edit Segment 1
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+10817	1457	4	6	4	6	[" "]	[""]	+input
+13421	1464	4	8	4	8	[" "]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 20032
+- raw_log_line: 1468
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+a = int(input("Digite a quantidade de sucos: "))
+b = int(input("Digite a quantidade de salgados: "))
+c = float(input("Digite a valor disponivel: "))
+
+if a*3 + 3.5*b <= c:
+	total = a*3+b*3.5
+	print(round(total,2))
+	print("sim")
+else:
+	total = a*3+b*3.5
+	print(round(total,2))
+	print("nao")
+	
+```

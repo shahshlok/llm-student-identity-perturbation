@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "594",
+    "assessment_id": "5687",
+    "exercise_id": "6714",
+    "student_id": "9686",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "a = input(\"Voce quer o comum ou vip?\")\nt = int(input(\"Digite o valor do emprestimo\"))\nla = 0.08/12\nle = 0.12/12\ncc = t*la\nvv = t*le\nif a.upper == \"C\":\n\tPc =  (cc)/1-(1+la)**-24\nelse:\n\tPc =(vv)/1-(1+le)**-24\nprint(round(Pc,2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "a = input(\"Voce quer o comum ou vip?\")\nt = int(input(\"Digite o valor do emprestimo\"))\nla = 0.08/24\nle = 0.12/24\ncc = t*la\nvv = t*le\nif a.upper == \"C\":\n\tPc =  (cc)/1-(1+la)**-24\nelse:\n\tPc =(vv)/1-(1+le)**-24\nprint(round(Pc,2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "C\n11245",
+        "expected": "529.34",
+        "actual": "55.34"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "V\n54000",
+        "expected": "2442.27",
+        "actual": "269.11"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "C\n32450",
+        "expected": "1527.53",
+        "actual": "161.36"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 2,
+        "end_line_0idx": 3,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 2,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 2,
+        "end_line_0idx": 3
+      }
+    ]
+  }
+}

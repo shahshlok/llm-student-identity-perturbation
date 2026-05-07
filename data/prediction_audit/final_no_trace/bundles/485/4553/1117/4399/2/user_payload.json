@@ -1,0 +1,143 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4553",
+    "assessment_title": "Lab 3 - Estrutura Condicional Encadeada",
+    "exercise_id": "1117",
+    "student_id": "4399",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2022-2/485/users/4399/executions/4553_1117.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2022-2/485/users/4399/codemirror/4553_1117.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-04-25 14:49:27",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "70.56\n2\nN",
+            "expected": "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "100.75\n6\nS",
+            "expected": "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75",
+            "actual": "Entradas:  100.75 6 S"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "0.00\n9\nS",
+            "expected": "Entradas: 0.0 , 9 , S\nDados invalidos",
+            "actual": "Entradas:  0.0 9 S\nDados invalidos"
+          }
+        ]
+      },
+      "submitted_code": "preco_normal = float(input())\ndia_semana = int(input())\nmusica_ao_vivo = str(input())\n\nif dia_semana == 2 or dia_semana == 3 or dia_semana == 5:\n\ttotal = preco_normal - (25/100) * preco_normal\n\tif musica_ao_vivo == 'S':\n\t\ttotal = total + 20\n\t\tprint(\"Entradas: \", preco_normal, dia_semana, musica_ao_vivo)\n\t\tprint(\"Total\", round(total, 2))\nelif dia_semana > 7 or dia_semana < 1:\n\tprint(\"Entradas: \", preco_normal, dia_semana, musica_ao_vivo)\n\tprint(\"Dados invalidos\")\nelse:\n\tprint(\"Entradas: \", preco_normal, dia_semana, musica_ao_vivo)\n\tprint(\"Total\", round(total, 2))"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-04-25 15:10:16",
+        "grade": 33.0,
+        "pass_count": 1,
+        "failed_test_indices_0idx": [
+          0,
+          1
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "70.56\n2\nN",
+            "expected": "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "100.75\n6\nS",
+            "expected": "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75",
+            "actual": "Entradas: 100.75 , 6 , S\nTotal:  100.75"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": true,
+            "input": "0.00\n9\nS",
+            "expected": "Entradas: 0.0 , 9 , S\nDados invalidos",
+            "actual": "Entradas: 0.0 , 9 , S\nDados invalidos"
+          }
+        ]
+      },
+      "submitted_code": "preco_normal = float(input())\ndia_semana = int(input())\nmusica_ao_vivo = str(input())\n\nif dia_semana == 2 or dia_semana == 3 or dia_semana == 5:\n\ttotal = preco_normal - (25/100) * preco_normal\n\tif musica_ao_vivo == 'S':\n\t\ttotal = total + 20\n\t\tprint(\"Entradas: {} , {} , {}\".format(round(preco_normal, 2), dia_semana, musica_ao_vivo))\n\t\tprint(\"Total\", round(total, 2))\nelif dia_semana > 7 or dia_semana < 1:\n\tprint(\"Entradas: {} , {} , {}\".format(round(preco_normal, 2), dia_semana, musica_ao_vivo))\n\tprint(\"Dados invalidos\")\nelse:\n\tprint(\"Entradas: {} , {} , {}\".format(round(preco_normal, 2), dia_semana, musica_ao_vivo))\n\tprint(\"Total: \", round(preco_normal, 2))"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-04-25 15:10:28",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "70.56\n2\nN",
+            "expected": "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "100.75\n6\nS",
+            "expected": "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75",
+            "actual": "Entradas: 100.75, 6, S\nTotal:  100.75"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "0.00\n9\nS",
+            "expected": "Entradas: 0.0 , 9 , S\nDados invalidos",
+            "actual": "Entradas: 0.0, 9, S\nDados invalidos"
+          }
+        ]
+      },
+      "submitted_code": "preco_normal = float(input())\ndia_semana = int(input())\nmusica_ao_vivo = str(input())\n\nif dia_semana == 2 or dia_semana == 3 or dia_semana == 5:\n\ttotal = preco_normal - (25/100) * preco_normal\n\tif musica_ao_vivo == 'S':\n\t\ttotal = total + 20\n\t\tprint(\"Entradas: {}, {}, {}\".format(round(preco_normal, 2), dia_semana, musica_ao_vivo))\n\t\tprint(\"Total\", round(total, 2))\nelif dia_semana > 7 or dia_semana < 1:\n\tprint(\"Entradas: {}, {}, {}\".format(round(preco_normal, 2), dia_semana, musica_ao_vivo))\n\tprint(\"Dados invalidos\")\nelse:\n\tprint(\"Entradas: {}, {}, {}\".format(round(preco_normal, 2), dia_semana, musica_ao_vivo))\n\tprint(\"Total: \", round(preco_normal, 2))"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

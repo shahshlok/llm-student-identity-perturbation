@@ -1,0 +1,78 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "557",
+    "assessment_id": "5278",
+    "exercise_id": "1395",
+    "student_id": "6141",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "\n\nvalor = float(input(\"Digite o valor das vendas: \"))\n\nif valor <= 1000:\n\tprint(valor*0.05)\nelse:\n\tprint(round(1000*0.05 + (valor-1000)*0.1), 2)",
+    "grade": 0.0,
+    "pass_count": 1,
+    "failed_test_indices_0idx": [
+      0,
+      1
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "\n\nvalor = float(input(\"Digite o valor das vendas: \"))\nmais = 1000*0.05 + (valor-1000)*0.1\nif valor <= 1000:\n\tprint(valor*0.05)\nelse:\n\tprint(round(mais, 2))",
+    "grade": 0.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      0
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "995.58",
+        "expected": "49.78",
+        "actual": "49.779"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "4500.86",
+        "expected": "400.09",
+        "actual": "400.09"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "100",
+        "expected": "5.0",
+        "actual": "5.0"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "partial_fix",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 3,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 7,
+        "end_line_0idx": 7,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 2,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 3
+      },
+      {
+        "start_line_0idx": 7,
+        "end_line_0idx": 7
+      }
+    ]
+  }
+}

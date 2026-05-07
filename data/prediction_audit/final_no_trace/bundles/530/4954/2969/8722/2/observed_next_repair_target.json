@@ -1,0 +1,98 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "530",
+    "assessment_id": "4954",
+    "exercise_id": "2969",
+    "student_id": "8722",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "qt_jogos = float(input(\"Qual a quantidade de jogos? \"))\n\npreco1 = float(input(\"Qual o valor do primeiro jogo? \"))\n\nif ( qt_jogos >= 2 ):\n\tpreco2 = float(input(\"Qual o valor do segundo jogo? \"))\n\tpreco2 = preco2 - (preco2 * 25/100)\n\tvalortotal = preco1 + preco2\n\tround(valortotal,1)\n\tprint(valortotal)\n\nelse:\n\tprint(round(preco1),2)",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "qt_jogos = int(input(\"Qual a quantidade de jogos? \"))\n\npreco = float(input(\"Qual o valor do primeiro jogo? \"))\n\nif ( qt_jogos >= 2 ):\n\tpreco2 = float(input(\"Qual o valor do segundo jogo? \"))\n\tpreco2 = preco2 - (preco2 * 25/100)\n\tvalortotal = preco + preco2\n\tprint(valortotal)\n\nelse:\n\tprint(preco)",
+    "grade": 33.0,
+    "pass_count": 1,
+    "failed_test_indices_0idx": [
+      0,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "2\n55.50\n100.25",
+        "expected": "130.69",
+        "actual": "130.6875"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "1\n72.65",
+        "expected": "72.65",
+        "actual": "72.65"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "2\n99.99\n120.25",
+        "expected": "190.18",
+        "actual": "190.1775"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "partial_fix",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 0,
+        "end_line_0idx": 0,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 2,
+        "end_line_0idx": 2,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 7,
+        "end_line_0idx": 7,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 11,
+        "end_line_0idx": 11,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 4,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 0,
+        "end_line_0idx": 0
+      },
+      {
+        "start_line_0idx": 2,
+        "end_line_0idx": 2
+      },
+      {
+        "start_line_0idx": 7,
+        "end_line_0idx": 7
+      },
+      {
+        "start_line_0idx": 11,
+        "end_line_0idx": 11
+      }
+    ]
+  }
+}

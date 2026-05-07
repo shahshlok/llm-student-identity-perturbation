@@ -1,0 +1,716 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 494
+- assessment_id: 4377
+- assessment_title: Lab 0 - Primeiros passos com o Python
+- exercise_id: 3711
+- student_id: 6132
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-04-05T09:11:50.108000
+
+Execution Result
+
+- submitted_at: 2023-04-12 16:38:53
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em 2009 a UFAM completou 100 anos de fundacao.\nEm 2020 UFAM completou 111 anos de fundacao.\nEm 1985 a UFAM completou 76 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em 2009 a UFAM completou 100 anos de fundacao.\nEm 2020 UFAM completou 111 anos de fundacao.\nEm 1985 a UFAM completou 76 anos de fundacao."
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 274
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	8	0	0	0	0	["t"]	[""]	+input
+126	12	0	1	0	1	["e"]	[""]	+input
+399	16	0	2	0	2	["x"]	[""]	+input
+703	20	0	3	0	3	["t"]	[""]	+input
+919	24	0	4	0	4	["o"]	[""]	+input
+1943	28	0	5	0	5	[" "]	[""]	+input
+2168	32	0	6	0	6	["="]	[""]	+input
+2542	36	0	7	0	7	[" "]	[""]	+input
+3641	41	0	8	0	8	["\"\""]	[""]	+input
+5511	49	0	9	0	9	["E"]	[""]	+input
+5927	54	0	10	0	10	["m"]	[""]	+input
+11423	59	0	11	0	11	[" "]	[""]	+input
+11728	63	0	12	0	12	["2"]	[""]	+input
+11959	67	0	13	0	13	["0"]	[""]	+input
+12343	71	0	14	0	14	["0"]	[""]	+input
+12591	75	0	15	0	15	["9"]	[""]	+input
+14071	79	0	16	0	16	[","]	[""]	+input
+14350	83	0	17	0	17	[" "]	[""]	+input
+15543	87	0	18	0	18	["a"]	[""]	+input
+16672	91	0	19	0	19	[" "]	[""]	+input
+16990	97	0	20	0	20	["U"]	[""]	+input
+18911	105	0	21	0	21	["F"]	[""]	+input
+19159	109	0	22	0	22	["A"]	[""]	+input
+19303	112	0	23	0	23	["M"]	[""]	+input
+19537	117	0	24	0	24	[" "]	[""]	+input
+20079	123	0	25	0	25	["c"]	[""]	+input
+20199	126	0	26	0	26	["o"]	[""]	+input
+20359	131	0	27	0	27	["m"]	[""]	+input
+20607	135	0	28	0	28	["p"]	[""]	+input
+20920	139	0	29	0	29	["l"]	[""]	+input
+21047	142	0	30	0	30	["e"]	[""]	+input
+21223	147	0	31	0	31	["t"]	[""]	+input
+21343	150	0	32	0	32	["o"]	[""]	+input
+21527	155	0	33	0	33	["u"]	[""]	+input
+28166	158	0	33	0	34	[""]	["u"]	+delete
+28680	161	0	32	0	33	[""]	["o"]	+delete
+28711	164	0	31	0	32	[""]	["t"]	+delete
+28744	167	0	30	0	31	[""]	["e"]	+delete
+28774	170	0	29	0	30	[""]	["l"]	+delete
+28806	173	0	28	0	29	[""]	["p"]	+delete
+28837	176	0	27	0	28	[""]	["m"]	+delete
+28867	179	0	26	0	27	[""]	["o"]	+delete
+28899	182	0	25	0	26	[""]	["c"]	+delete
+28931	185	0	24	0	25	[""]	[" "]	+delete
+28963	188	0	23	0	24	[""]	["M"]	+delete
+28995	191	0	22	0	23	[""]	["A"]	+delete
+29044	194	0	21	0	22	[""]	["F"]	+delete
+29254	198	0	20	0	21	[""]	["U"]	+delete
+29486	202	0	19	0	20	[""]	[" "]	+delete
+29663	206	0	18	0	19	[""]	["a"]	+delete
+29838	210	0	17	0	18	[""]	[" "]	+delete
+30014	214	0	16	0	17	[""]	[","]	+delete
+30775	219	0	16	0	16	[" "]	[""]	+input
+31343	223	0	17	0	17	["a"]	[""]	+input
+31551	227	0	18	0	18	[" "]	[""]	+input
+32975	233	0	19	0	19	["U"]	[""]	+input
+34184	241	0	20	0	20	["F"]	[""]	+input
+34391	245	0	21	0	21	["A"]	[""]	+input
+34535	248	0	22	0	22	["M"]	[""]	+input
+35070	255	0	23	0	23	[" "]	[""]	+input
+35352	259	0	24	0	24	["c"]	[""]	+input
+35430	262	0	25	0	25	["o"]	[""]	+input
+35663	267	0	26	0	26	["m"]	[""]	+input
+35831	271	0	27	0	27	["p"]	[""]	+input
+36103	275	0	28	0	28	["l"]	[""]	+input
+36223	278	0	29	0	29	["e"]	[""]	+input
+36407	282	0	30	0	30	["t"]	[""]	+input
+36520	286	0	31	0	31	["o"]	[""]	+input
+36743	291	0	32	0	32	["u"]	[""]	+input
+37759	295	0	33	0	33	[" "]	[""]	+input
+38759	299	0	34	0	34	["1"]	[""]	+input
+38991	303	0	35	0	35	["0"]	[""]	+input
+39176	307	0	36	0	36	["0"]	[""]	+input
+39583	311	0	37	0	37	[" "]	[""]	+input
+39719	315	0	38	0	38	["a"]	[""]	+input
+39863	318	0	39	0	39	["n"]	[""]	+input
+40023	323	0	40	0	40	["o"]	[""]	+input
+40679	327	0	41	0	41	["s"]	[""]	+input
+40976	331	0	42	0	42	[" "]	[""]	+input
+41046	334	0	43	0	43	["d"]	[""]	+input
+41169	338	0	44	0	44	["e"]	[""]	+input
+41319	342	0	45	0	45	[" "]	[""]	+input
+41631	347	0	46	0	46	["f"]	[""]	+input
+41782	351	0	47	0	47	["u"]	[""]	+input
+41959	355	0	48	0	48	["n"]	[""]	+input
+42408	359	0	49	0	49	["d"]	[""]	+input
+42535	362	0	50	0	50	["a"]	[""]	+input
+43593	367	0	51	0	51	["a"]	[""]	+input
+44006	370	0	51	0	52	[""]	["a"]	+delete
+44223	375	0	51	0	51	["c"]	[""]	+input
+44431	379	0	52	0	52	["a"]	[""]	+input
+44761	383	0	53	0	53	["o"]	[""]	+input
+46047	387	0	54	0	54	["."]	[""]	+input
+57271	392	0	5	0	5	["1"]	[""]	+input
+59415	396	0	57	0	57	["",""]	[""]	+input
+60775	402	1	0	1	0	["p"]	[""]	+input
+60966	406	1	1	1	1	["r"]	[""]	+input
+61095	409	1	2	1	2	["i"]	[""]	+input
+61239	414	1	3	1	3	["n"]	[""]	+input
+61295	417	1	4	1	4	["t"]	[""]	+input
+62415	423	1	5	1	5	["()"]	[""]	+input
+63231	429	1	6	1	6	["e"]	[""]	+input
+64910	432	1	6	1	7	[""]	["e"]	+delete
+65567	437	1	6	1	6	["t"]	[""]	+input
+65702	441	1	7	1	7	["e"]	[""]	+input
+65990	445	1	8	1	8	["x"]	[""]	+input
+66327	449	1	9	1	9	["t"]	[""]	+input
+66447	452	1	10	1	10	["o"]	[""]	+input
+67055	457	1	11	1	11	["1"]	[""]	+input
+68831	463	1	13	1	13	["",""]	[""]	+input
+69599	469	2	0	2	0	["t"]	[""]	+input
+69694	473	2	1	2	1	["e"]	[""]	+input
+70399	477	2	2	2	2	["x"]	[""]	+input
+70703	481	2	3	2	3	["t"]	[""]	+input
+70920	484	2	4	2	4	["o"]	[""]	+input
+71727	489	2	5	2	5	["2"]	[""]	+input
+72823	493	2	6	2	6	[" "]	[""]	+input
+73415	497	2	7	2	7	["="]	[""]	+input
+74119	501	2	8	2	8	[" "]	[""]	+input
+74391	506	2	9	2	9	["\"\""]	[""]	+input
+75911	514	2	10	2	10	["E"]	[""]	+input
+76351	520	2	11	2	11	["m"]	[""]	+input
+78151	524	2	12	2	12	[" "]	[""]	+input
+78967	528	2	13	2	13	["2"]	[""]	+input
+79248	532	2	14	2	14	["0"]	[""]	+input
+79479	536	2	15	2	15	["2"]	[""]	+input
+79696	540	2	16	2	16	["0"]	[""]	+input
+80431	544	2	17	2	17	[" "]	[""]	+input
+80735	550	2	18	2	18	[" "]	[""]	+input
+81215	556	2	19	2	19	["u"]	[""]	+input
+81351	560	2	20	2	20	["f"]	[""]	+input
+81632	564	2	21	2	21	["a"]	[""]	+input
+81822	568	2	22	2	22	["m"]	[""]	+input
+82182	571	2	22	2	23	[""]	["m"]	+delete
+82366	575	2	21	2	22	[""]	["a"]	+delete
+82534	579	2	20	2	21	[""]	["f"]	+delete
+82782	583	2	19	2	20	[""]	["u"]	+delete
+82990	587	2	18	2	19	[""]	[" "]	+delete
+84930	594	2	18	2	18	["U"]	[""]	+input
+85136	598	2	19	2	19	["F"]	[""]	+input
+85279	602	2	20	2	20	["A"]	[""]	+input
+85447	605	2	21	2	21	["M"]	[""]	+input
+85983	612	2	22	2	22	[" "]	[""]	+input
+86199	616	2	23	2	23	["c"]	[""]	+input
+86352	620	2	24	2	24	["o"]	[""]	+input
+86616	624	2	25	2	25	["m"]	[""]	+input
+86871	628	2	26	2	26	["p"]	[""]	+input
+87183	632	2	27	2	27	["l"]	[""]	+input
+87193	635	2	28	2	28	["ç"]	[""]	+input
+87207	638	2	29	2	29	["e"]	[""]	+input
+87415	644	2	30	2	30	["t"]	[""]	+input
+87830	647	2	30	2	31	[""]	["t"]	+delete
+87998	651	2	29	2	30	[""]	["e"]	+delete
+88158	655	2	28	2	29	[""]	["ç"]	+delete
+88351	660	2	28	2	28	["e"]	[""]	+input
+88535	664	2	29	2	29	["t"]	[""]	+input
+88679	667	2	30	2	30	["o"]	[""]	+input
+88847	672	2	31	2	31	["u"]	[""]	+input
+89727	676	2	32	2	32	[" "]	[""]	+input
+90527	680	2	33	2	33	["1"]	[""]	+input
+90711	684	2	34	2	34	["1"]	[""]	+input
+90887	688	2	35	2	35	["1"]	[""]	+input
+91399	692	2	36	2	36	[" "]	[""]	+input
+91583	696	2	37	2	37	["a"]	[""]	+input
+91719	699	2	38	2	38	["n"]	[""]	+input
+92063	704	2	39	2	39	["s"]	[""]	+input
+92375	707	2	39	2	40	[""]	["s"]	+delete
+92951	712	2	39	2	39	["o"]	[""]	+input
+93119	716	2	40	2	40	["s"]	[""]	+input
+93295	720	2	41	2	41	[" "]	[""]	+input
+93432	724	2	42	2	42	["d"]	[""]	+input
+93544	727	2	43	2	43	["e"]	[""]	+input
+93679	731	2	44	2	44	[" "]	[""]	+input
+94223	736	2	45	2	45	["f"]	[""]	+input
+94415	740	2	46	2	46	["u"]	[""]	+input
+94577	744	2	47	2	47	["n"]	[""]	+input
+94713	748	2	48	2	48	["d"]	[""]	+input
+94945	752	2	49	2	49	["a"]	[""]	+input
+95167	756	2	50	2	50	["c"]	[""]	+input
+95345	760	2	51	2	51	["a"]	[""]	+input
+95455	763	2	52	2	52	["o"]	[""]	+input
+98065	768	2	53	2	53	["."]	[""]	+input
+100655	774	2	55	2	55	["",""]	[""]	+input
+101639	780	3	0	3	0	["p"]	[""]	+input
+101927	784	3	1	3	1	["r"]	[""]	+input
+102089	788	3	2	3	2	["i"]	[""]	+input
+102223	791	3	3	3	3	["n"]	[""]	+input
+102343	795	3	4	3	4	["t"]	[""]	+input
+103554	801	3	5	3	5	["()"]	[""]	+input
+103887	807	3	6	3	6	["t"]	[""]	+input
+104039	811	3	7	3	7	["e"]	[""]	+input
+104392	815	3	8	3	8	["x"]	[""]	+input
+104527	819	3	9	3	9	["t"]	[""]	+input
+105184	823	3	10	3	10	["o"]	[""]	+input
+105551	827	3	11	3	11	["2"]	[""]	+input
+112631	831	3	13	3	13	["",""]	[""]	+input
+114719	837	4	0	4	0	["t"]	[""]	+input
+114823	841	4	1	4	1	["e"]	[""]	+input
+115207	845	4	2	4	2	["x"]	[""]	+input
+115455	849	4	3	4	3	["t"]	[""]	+input
+115665	853	4	4	4	4	["o"]	[""]	+input
+116088	857	4	5	4	5	[" "]	[""]	+input
+116895	860	4	5	4	6	[""]	[" "]	+delete
+117143	865	4	5	4	5	["3"]	[""]	+input
+118127	869	4	6	4	6	[" "]	[""]	+input
+118327	873	4	7	4	7	["="]	[""]	+input
+122056	877	4	8	4	8	[" "]	[""]	+input
+129664	882	4	9	4	9	["\"\""]	[""]	+input
+130898	890	4	10	4	10	["E"]	[""]	+input
+131298	896	4	11	4	11	["m"]	[""]	+input
+131464	900	4	12	4	12	[" "]	[""]	+input
+133007	904	4	13	4	13	["1"]	[""]	+input
+134352	908	4	14	4	14	["9"]	[""]	+input
+134641	912	4	15	4	15	["8"]	[""]	+input
+134847	916	4	16	4	16	["5"]	[""]	+input
+135456	920	4	17	4	17	[" "]	[""]	+input
+135663	924	4	18	4	18	["a"]	[""]	+input
+135807	928	4	19	4	19	[" "]	[""]	+input
+137031	934	4	20	4	20	["U"]	[""]	+input
+137191	937	4	21	4	21	["F"]	[""]	+input
+137375	942	4	22	4	22	["A"]	[""]	+input
+137679	946	4	23	4	23	["M"]	[""]	+input
+138279	952	4	24	4	24	[" "]	[""]	+input
+138735	956	4	25	4	25	["c"]	[""]	+input
+138999	960	4	26	4	26	["o"]	[""]	+input
+139223	964	4	27	4	27	["m"]	[""]	+input
+139479	968	4	28	4	28	["p"]	[""]	+input
+139690	972	4	29	4	29	["l"]	[""]	+input
+139767	975	4	30	4	30	["e"]	[""]	+input
+139983	980	4	31	4	31	["t"]	[""]	+input
+140031	983	4	32	4	32	["o"]	[""]	+input
+140295	988	4	33	4	33	["u"]	[""]	+input
+140575	992	4	34	4	34	[" "]	[""]	+input
+141945	996	4	35	4	35	[" "]	[""]	+input
+144039	999	4	35	4	36	[""]	[" "]	+delete
+144968	1004	4	35	4	35	["7"]	[""]	+input
+145272	1008	4	36	4	36	["6"]	[""]	+input
+145791	1012	4	37	4	37	[" "]	[""]	+input
+146102	1016	4	38	4	38	["a"]	[""]	+input
+146255	1019	4	39	4	39	["n"]	[""]	+input
+146696	1024	4	40	4	40	["o"]	[""]	+input
+146929	1028	4	41	4	41	["s"]	[""]	+input
+147200	1032	4	42	4	42	[" "]	[""]	+input
+147358	1036	4	43	4	43	["d"]	[""]	+input
+147448	1039	4	44	4	44	["e"]	[""]	+input
+147710	1044	4	45	4	45	[" "]	[""]	+input
+148287	1048	4	46	4	46	["f"]	[""]	+input
+148495	1052	4	47	4	47	["u"]	[""]	+input
+148774	1056	4	48	4	48	["n"]	[""]	+input
+148934	1060	4	49	4	49	["d"]	[""]	+input
+149054	1064	4	50	4	50	["a"]	[""]	+input
+149927	1068	4	51	4	51	["c"]	[""]	+input
+150103	1072	4	52	4	52	["a"]	[""]	+input
+150727	1076	4	53	4	53	["o"]	[""]	+input
+151607	1080	4	54	4	54	["."]	[""]	+input
+153359	1086	4	56	4	56	["",""]	[""]	+input
+154615	1092	5	0	5	0	["p"]	[""]	+input
+154830	1096	5	1	5	1	["r"]	[""]	+input
+154910	1099	5	2	5	2	["i"]	[""]	+input
+155207	1104	5	3	5	3	["n"]	[""]	+input
+155335	1107	5	4	5	4	["t"]	[""]	+input
+156967	1113	5	5	5	5	["()"]	[""]	+input
+157446	1119	5	6	5	6	["t"]	[""]	+input
+157542	1122	5	7	5	7	["e"]	[""]	+input
+158655	1127	5	8	5	8	["x"]	[""]	+input
+159096	1131	5	9	5	9	["r"]	[""]	+input
+159103	1134	5	10	5	10	["t"]	[""]	+input
+159159	1137	5	11	5	11	["o"]	[""]	+input
+160287	1142	5	11	5	12	[""]	["o"]	+delete
+160414	1146	5	10	5	11	[""]	["t"]	+delete
+160966	1150	5	9	5	10	[""]	["r"]	+delete
+161102	1155	5	9	5	9	["t"]	[""]	+input
+161322	1159	5	10	5	10	["o"]	[""]	+input
+162183	1163	5	11	5	11	["3"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 631623124
+- raw_log_line: 1173
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+texto1 = "Em 2009 a UFAM completou 100 anos de fundacao."
+print(texto1)
+texto2 = "Em 2020 UFAM completou 111 anos de fundacao."
+print(texto2)
+texto3 = "Em 1985 a UFAM completou 76 anos de fundacao."
+print(texto3)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-04-12T16:38:58.460000
+
+Execution Result
+
+- submitted_at: 2023-04-12 16:41:30
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em 2009 a UFAM completou 100 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em 2009 a UFAM completou 100 anos de fundacao."
+
+Attempt Start Code
+```python
+texto1 = "Em 2009 a UFAM completou 100 anos de fundacao."
+print(texto1)
+texto2 = "Em 2020 UFAM completou 111 anos de fundacao."
+print(texto2)
+texto3 = "Em 1985 a UFAM completou 76 anos de fundacao."
+print(texto3)
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1177
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+texto1 = "Em 2009 a UFAM completou 100 anos de fundacao."
+print(texto1)
+texto2 = "Em 2020 UFAM completou 111 anos de fundacao."
+print(texto2)
+texto3 = "Em 1985 a UFAM completou 76 anos de fundacao."
+print(texto3)
+```
+Run Output
+```text
+Em 2009 a UFAM completou 100 anos de fundacao.
+Em 2020 UFAM completou 111 anos de fundacao.
+Em 1985 a UFAM completou 76 anos de fundacao.
+```
+
+Edit Segment 1
+- raw_change_event_count: 173
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+58596	1181	1	13	5	13	[""]	["","texto2 = \"Em 2020 UFAM completou 111 anos de fundacao.\"","print(texto2)","texto3 = \"Em 1985 a UFAM completou 76 anos de fundacao.\"","print(texto3)"]	+delete
+59162	1186	1	12	1	13	[""]	[")"]	+delete
+59400	1190	1	11	1	12	[""]	["1"]	+delete
+59891	1193	1	10	1	11	[""]	["o"]	+delete
+59924	1196	1	9	1	10	[""]	["t"]	+delete
+59947	1199	1	8	1	9	[""]	["x"]	+delete
+59978	1202	1	7	1	8	[""]	["e"]	+delete
+60007	1205	1	6	1	7	[""]	["t"]	+delete
+60155	1209	1	5	1	6	[""]	["("]	+delete
+60379	1213	1	4	1	5	[""]	["t"]	+delete
+60641	1217	1	3	1	4	[""]	["n"]	+delete
+60874	1221	1	2	1	3	[""]	["i"]	+delete
+61178	1225	1	1	1	2	[""]	["r"]	+delete
+61679	1228	1	0	1	1	[""]	["p"]	+delete
+61710	1231	0	57	1	0	[""]	["",""]	+delete
+61740	1235	0	56	0	57	[""]	["\""]	+delete
+61773	1238	0	55	0	56	[""]	["."]	+delete
+61821	1241	0	54	0	55	[""]	["o"]	+delete
+61841	1244	0	53	0	54	[""]	["a"]	+delete
+61860	1247	0	52	0	53	[""]	["c"]	+delete
+61891	1250	0	51	0	52	[""]	["a"]	+delete
+61937	1253	0	50	0	51	[""]	["d"]	+delete
+61957	1256	0	49	0	50	[""]	["n"]	+delete
+61981	1259	0	48	0	49	[""]	["u"]	+delete
+62012	1262	0	47	0	48	[""]	["f"]	+delete
+62041	1265	0	46	0	47	[""]	[" "]	+delete
+62074	1268	0	45	0	46	[""]	["e"]	+delete
+62107	1271	0	44	0	45	[""]	["d"]	+delete
+62134	1274	0	43	0	44	[""]	[" "]	+delete
+62164	1277	0	42	0	43	[""]	["s"]	+delete
+62190	1280	0	41	0	42	[""]	["o"]	+delete
+62223	1283	0	40	0	41	[""]	["n"]	+delete
+62272	1286	0	39	0	40	[""]	["a"]	+delete
+62291	1289	0	38	0	39	[""]	[" "]	+delete
+62314	1292	0	37	0	38	[""]	["0"]	+delete
+62342	1295	0	36	0	37	[""]	["0"]	+delete
+62373	1298	0	35	0	36	[""]	["1"]	+delete
+62422	1301	0	34	0	35	[""]	[" "]	+delete
+62442	1304	0	33	0	34	[""]	["u"]	+delete
+62463	1307	0	32	0	33	[""]	["o"]	+delete
+62496	1310	0	31	0	32	[""]	["t"]	+delete
+62528	1313	0	30	0	31	[""]	["e"]	+delete
+62555	1316	0	29	0	30	[""]	["l"]	+delete
+62586	1319	0	28	0	29	[""]	["p"]	+delete
+62614	1322	0	27	0	28	[""]	["m"]	+delete
+62645	1325	0	26	0	27	[""]	["o"]	+delete
+62675	1328	0	25	0	26	[""]	["c"]	+delete
+62705	1331	0	24	0	25	[""]	[" "]	+delete
+62738	1334	0	23	0	24	[""]	["M"]	+delete
+62768	1337	0	22	0	23	[""]	["A"]	+delete
+62802	1340	0	21	0	22	[""]	["F"]	+delete
+62826	1343	0	20	0	21	[""]	["U"]	+delete
+62857	1346	0	19	0	20	[""]	[" "]	+delete
+62905	1349	0	18	0	19	[""]	["a"]	+delete
+62925	1352	0	17	0	18	[""]	[" "]	+delete
+62948	1355	0	16	0	17	[""]	["9"]	+delete
+62977	1358	0	15	0	16	[""]	["0"]	+delete
+63010	1361	0	14	0	15	[""]	["0"]	+delete
+63042	1364	0	13	0	14	[""]	["2"]	+delete
+63071	1367	0	12	0	13	[""]	[" "]	+delete
+63097	1370	0	11	0	12	[""]	["m"]	+delete
+63128	1373	0	10	0	11	[""]	["E"]	+delete
+63172	1376	0	9	0	10	[""]	["\""]	+delete
+63193	1379	0	8	0	9	[""]	[" "]	+delete
+63222	1382	0	7	0	8	[""]	["="]	+delete
+63248	1385	0	6	0	7	[""]	[" "]	+delete
+63280	1388	0	5	0	6	[""]	["1"]	+delete
+63319	1391	0	4	0	5	[""]	["o"]	+delete
+63339	1394	0	3	0	4	[""]	["t"]	+delete
+63372	1397	0	2	0	3	[""]	["x"]	+delete
+63399	1400	0	1	0	2	[""]	["e"]	+delete
+63437	1403	0	0	0	1	[""]	["t"]	+delete
+65483	1424	0	0	0	0	["p"]	[""]	+input
+65684	1428	0	1	0	1	["r"]	[""]	+input
+65823	1432	0	2	0	2	["i"]	[""]	+input
+65996	1436	0	3	0	3	["n"]	[""]	+input
+66156	1440	0	4	0	4	["t"]	[""]	+input
+67277	1445	0	5	0	5	["()"]	[""]	+input
+69441	1452	0	6	0	6	["\"\""]	[""]	+input
+71900	1460	0	7	0	7	["E"]	[""]	+input
+73307	1466	0	8	0	8	["m"]	[""]	+input
+80642	1473	0	10	0	10	[","]	[""]	+input
+81372	1477	0	11	0	11	[" "]	[""]	+input
+88092	1481	0	12	0	12	["2"]	[""]	+input
+88396	1485	0	13	0	13	["0"]	[""]	+input
+88717	1489	0	14	0	14	["0"]	[""]	+input
+89180	1493	0	15	0	15	["9"]	[""]	+input
+92525	1497	0	16	0	16	[","]	[""]	+input
+92763	1501	0	17	0	17	[" "]	[""]	+input
+93548	1508	0	18	0	18	["\"\""]	[""]	+input
+95356	1514	0	19	0	19	["A"]	[""]	+input
+95740	1518	0	20	0	20	[" "]	[""]	+input
+96315	1524	0	21	0	21	["u"]	[""]	+input
+96510	1528	0	22	0	22	["f"]	[""]	+input
+96750	1532	0	23	0	23	["a"]	[""]	+input
+96907	1536	0	24	0	24	["m"]	[""]	+input
+98086	1539	0	24	0	25	[""]	["m"]	+delete
+98287	1543	0	23	0	24	[""]	["a"]	+delete
+98490	1547	0	22	0	23	[""]	["f"]	+delete
+98673	1551	0	21	0	22	[""]	["u"]	+delete
+98874	1555	0	20	0	21	[""]	[" "]	+delete
+99057	1559	0	19	0	20	[""]	["A"]	+delete
+99164	1564	0	19	0	19	["a"]	[""]	+input
+99948	1568	0	20	0	20	[" "]	[""]	+input
+100524	1574	0	21	0	21	["U"]	[""]	+input
+100657	1578	0	22	0	22	["F"]	[""]	+input
+100891	1582	0	23	0	23	["A"]	[""]	+input
+101147	1586	0	24	0	24	["M"]	[""]	+input
+102779	1590	0	25	0	25	[" "]	[""]	+input
+103291	1594	0	26	0	26	["C"]	[""]	+input
+103483	1598	0	27	0	27	["O"]	[""]	+input
+104089	1602	0	28	0	28	["M"]	[""]	+input
+104371	1606	0	29	0	29	["P"]	[""]	+input
+104510	1610	0	30	0	30	["L"]	[""]	+input
+104788	1614	0	31	0	31	["E"]	[""]	+input
+105072	1618	0	32	0	32	["T"]	[""]	+input
+105227	1622	0	33	0	33	["O"]	[""]	+input
+105756	1626	0	34	0	34	["U"]	[""]	+input
+107104	1631	0	34	0	35	[""]	["U"]	+delete
+107324	1635	0	33	0	34	[""]	["O"]	+delete
+107482	1639	0	32	0	33	[""]	["T"]	+delete
+107674	1643	0	31	0	32	[""]	["E"]	+delete
+107838	1647	0	30	0	31	[""]	["L"]	+delete
+108042	1651	0	29	0	30	[""]	["P"]	+delete
+108240	1655	0	28	0	29	[""]	["M"]	+delete
+108466	1659	0	27	0	28	[""]	["O"]	+delete
+108874	1663	0	26	0	27	[""]	["C"]	+delete
+109292	1668	0	26	0	26	["c"]	[""]	+input
+109422	1672	0	27	0	27	["o"]	[""]	+input
+109579	1676	0	28	0	28	["m"]	[""]	+input
+109840	1680	0	29	0	29	["p"]	[""]	+input
+109964	1684	0	30	0	30	["l"]	[""]	+input
+110107	1688	0	31	0	31	["e"]	[""]	+input
+110347	1692	0	32	0	32	["t"]	[""]	+input
+110459	1696	0	33	0	33	["o"]	[""]	+input
+110699	1700	0	34	0	34	["u"]	[""]	+input
+115243	1707	0	36	0	36	[","]	[""]	+input
+115516	1711	0	37	0	37	[" "]	[""]	+input
+127253	1715	0	38	0	38	["1"]	[""]	+input
+127579	1719	0	39	0	39	["0"]	[""]	+input
+127841	1723	0	40	0	40	["0"]	[""]	+input
+132283	1727	0	41	0	41	[","]	[""]	+input
+132507	1731	0	42	0	42	[" "]	[""]	+input
+132750	1735	0	43	0	43	["a"]	[""]	+input
+132869	1739	0	44	0	44	["n"]	[""]	+input
+133211	1743	0	45	0	45	["o"]	[""]	+input
+133475	1747	0	46	0	46	["s"]	[""]	+input
+133962	1750	0	46	0	47	[""]	["s"]	+delete
+134219	1754	0	45	0	46	[""]	["o"]	+delete
+134362	1758	0	44	0	45	[""]	["n"]	+delete
+134698	1762	0	43	0	44	[""]	["a"]	+delete
+135900	1768	0	43	0	43	["\"\""]	[""]	+input
+137194	1774	0	44	0	44	["a"]	[""]	+input
+137274	1778	0	45	0	45	["n"]	[""]	+input
+137483	1782	0	46	0	46	["o"]	[""]	+input
+137756	1786	0	47	0	47	["s"]	[""]	+input
+138122	1790	0	48	0	48	[" "]	[""]	+input
+138331	1794	0	49	0	49	["d"]	[""]	+input
+138702	1798	0	50	0	50	["e"]	[""]	+input
+138940	1802	0	51	0	51	[" "]	[""]	+input
+139327	1806	0	52	0	52	["f"]	[""]	+input
+139531	1810	0	53	0	53	["u"]	[""]	+input
+139661	1814	0	54	0	54	["n"]	[""]	+input
+140258	1818	0	55	0	55	["d"]	[""]	+input
+140395	1822	0	56	0	56	["a"]	[""]	+input
+141483	1826	0	57	0	57	["ç"]	[""]	+input
+141633	1830	0	58	0	58	["a"]	[""]	+input
+142139	1833	0	58	0	59	[""]	["a"]	+delete
+142394	1837	0	57	0	58	[""]	["ç"]	+delete
+143499	1842	0	57	0	57	["c"]	[""]	+input
+143713	1846	0	58	0	58	["a"]	[""]	+input
+143883	1850	0	59	0	59	["o"]	[""]	+input
+146378	1854	0	60	0	60	["."]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 151673
+- raw_log_line: 1859
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print("Em", 2009, "a UFAM completou", 100, "anos de fundacao.")
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-04-12T16:41:35.501000
+
+Execution Result
+
+- submitted_at: 2023-04-12 16:42:37
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em 2009 a UFAM completou 100 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em 2009 a UFAM completou 100 anos de fundacao."
+
+Attempt Start Code
+```python
+print("Em", 2009, "a UFAM completou", 100, "anos de fundacao.")
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 37
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1863	0	0	0	0	["",""]	[""]	+input
+7076	1872	0	0	0	0	["Y"]	[""]	+input
+7258	1876	0	1	0	1	["Y"]	[""]	+input
+7467	1880	0	2	0	2	["Y"]	[""]	+input
+7983	1884	0	3	0	3	["Y"]	[""]	+input
+10300	1888	0	4	0	4	[" "]	[""]	+input
+10748	1892	0	5	0	5	["="]	[""]	+input
+11483	1896	0	6	0	6	[" "]	[""]	+input
+20433	1900	0	7	0	7	["2"]	[""]	+input
+20618	1904	0	8	0	8	["0"]	[""]	+input
+21034	1908	0	9	0	9	["0"]	[""]	+input
+21326	1912	0	10	0	10	["3"]	[""]	+input
+22398	1915	0	10	0	11	[""]	["3"]	+delete
+22906	1920	0	10	0	10	["9"]	[""]	+input
+23642	1923	0	11	0	11	["",""]	[""]	+input
+26335	1929	1	0	1	0	["X"]	[""]	+input
+26586	1933	1	1	1	1	["X"]	[""]	+input
+26814	1937	1	2	1	2	["X"]	[""]	+input
+27208	1941	1	3	1	3	["X"]	[""]	+input
+36382	1945	1	4	1	4	[" "]	[""]	+input
+37274	1949	1	5	1	5	["="]	[""]	+input
+37722	1953	1	6	1	6	[" "]	[""]	+input
+38186	1957	1	7	1	7	["1"]	[""]	+input
+38442	1961	1	8	1	8	["9"]	[""]	+input
+38896	1965	1	9	1	9	["0"]	[""]	+input
+39216	1969	1	10	1	10	["9"]	[""]	+input
+47501	1974	2	38	2	41	["Y"]	["100"]	+input
+47771	1978	2	39	2	39	["Y"]	[""]	+input
+47982	1982	2	40	2	40	["Y"]	[""]	+input
+48815	1986	2	41	2	41	["Y"]	[""]	+input
+50284	1990	2	42	2	42	[" "]	[""]	+input
+50474	1994	2	43	2	43	["-"]	[""]	+input
+51050	1998	2	44	2	44	[" "]	[""]	+input
+51339	2002	2	45	2	45	["X"]	[""]	+input
+51565	2006	2	46	2	46	["X"]	[""]	+input
+51777	2010	2	47	2	47	["X"]	[""]	+input
+53307	2014	2	48	2	48	["X"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 56991
+- raw_log_line: 2019
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+YYYY = 2009
+XXXX = 1909
+print("Em", 2009, "a UFAM completou", YYYY - XXXX, "anos de fundacao.")
+```
+Run Output
+```text
+Em 2009 a UFAM completou 100 anos de fundacao.
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 62200
+- raw_log_line: 2021
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+YYYY = 2009
+XXXX = 1909
+print("Em", 2009, "a UFAM completou", YYYY - XXXX, "anos de fundacao.")
+```

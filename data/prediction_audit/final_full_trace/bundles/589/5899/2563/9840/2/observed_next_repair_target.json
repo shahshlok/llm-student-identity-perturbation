@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "589",
+    "assessment_id": "5899",
+    "exercise_id": "2563",
+    "student_id": "9840",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "from numpy import*\nv=eval(input(\"manda ver:\"))\n\n\nwhile size(v)>1:\n\tc=0\n\tfor i in v:\n\t\tif i>=5.0 and i<=7.0:\n\t\t\tc=c+1\n\tprint(c)\n\n\tv= eval(input(\"manda ver:\"))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "from numpy import*\nv=eval(input(\"manda ver:\"))\n\n\nwhile size(v)>1:\n\tc=0\n\tfor i in v:\n\t\tif i>=5 and i<=7:\n\t\t\tc=c+1\n\tprint(c)\n\n\tv= eval(input(\"manda ver:\"))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "[6.3,6.4,6.0,6.9,5.5,5.2]\n[4.5,3.8,7.8,4.8,9.6,9.2,8.7,2.3,2.9]\n[5.6,4.7,3.8,7.5,8.2,8.4,7.1,6.9,6.7]\n[1.1,3.1,2.7,7.8,6.7,4.6,4.9,7.0]\n[1]",
+        "expected": "6\n0\n3\n1",
+        "actual": "6\n0\n3\n2"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "[5.1,5.2,5.4,5.3,5.7,5.8,6.1,5.6,5.5,5.9,6.2]\n[2.7,6.8,4.7,5.7,3.5,6.6,7.0,5.4]\n[8.7,8.6,8.9,8.6,7.5,7.2,6.9,7.4,7.2]\n[1]",
+        "expected": "11\n4\n1",
+        "actual": "11\n5\n1"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "[8.5,7.5,6.8,6.9,7.0,5.6,5.8,6.3]\n[7.3,7.1,7.0,6.8,6.0,5.0]\n[1]",
+        "expected": "5\n3",
+        "actual": "6\n4"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 7,
+        "end_line_0idx": 7,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 7,
+        "end_line_0idx": 7
+      }
+    ]
+  }
+}

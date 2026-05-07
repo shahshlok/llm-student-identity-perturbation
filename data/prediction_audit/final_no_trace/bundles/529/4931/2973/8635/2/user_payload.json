@@ -1,0 +1,144 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "529",
+    "assessment_id": "4931",
+    "assessment_title": "Lab 2 - Estrutura Condicional Composta",
+    "exercise_id": "2973",
+    "student_id": "8635",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/529/users/8635/executions/4931_2973.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/529/users/8635/codemirror/4931_2973.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-08-21 14:48:40",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n60\n120",
+            "expected": "7202\nOK",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n41\n109",
+            "expected": "4470\nOK",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "3\n120\n60",
+            "expected": "7203\nACIMA",
+            "actual": "21600"
+          }
+        ]
+      },
+      "submitted_code": "s_o = int(input(\"posicao inicial do objeto:\"))\nv = int(input(\"velocidade do objeto:\"))\nt = int(input(\"tempo de deslocamento:\"))\n\ns = s_o * v * t\n\nif(v >=100):\n\tprint(s)\n\tmsg = \"ACIMA\"\n\nelse:\n\tmsg = \"SIM\""
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-08-21 15:47:07",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n60\n120",
+            "expected": "7202\nOK",
+            "actual": "14400"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n41\n109",
+            "expected": "4470\nOK",
+            "actual": "4469"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "3\n120\n60",
+            "expected": "7203\nACIMA",
+            "actual": "21600"
+          }
+        ]
+      },
+      "submitted_code": "s = int(input(\"posicao inicial do objeto:\"))\nv = int(input(\"velocidade do objeto:\"))\nt = int(input(\"tempo de deslocamento:\"))\n\ns = s * v * t\nprint(s)\nif(v >=100):\n\t\n\tmsg = \"ACIMA\"\n\nelse:\n\tmsg = \"OK\""
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-08-21 15:48:15",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n60\n120",
+            "expected": "7202\nOK",
+            "actual": "2"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n41\n109",
+            "expected": "4470\nOK",
+            "actual": "1"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "3\n120\n60",
+            "expected": "7203\nACIMA",
+            "actual": "3"
+          }
+        ]
+      },
+      "submitted_code": "s = int(input(\"posicao inicial do objeto:\"))\nv = int(input(\"velocidade do objeto:\"))\nt = int(input(\"tempo de deslocamento:\"))\n\nvalor = s * v * t\nprint(s)\nif(v >=100):\n\t\n\tmsg = \"ACIMA\"\n\nelse:\n\tmsg = \"OK\""
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

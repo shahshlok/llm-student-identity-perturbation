@@ -1,0 +1,37 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "563",
+    "assessment_id": "5324",
+    "exercise_id": "1117",
+    "student_id": "9217",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "preco = float(input(\"Digite o preco normal da entrada (em reais): \"))\ndia = int(input(\"Digite o dia da semana: \"))\nmusica = str(input(\"E dia de musica ao vivo? (S ou N): \")).upper()\n\nif preco >=0 and dia >=1 and musica == \"S\" or \"N\":\n\t\n\tif dia == 2 or dia == 3 or dia == 5:\n\t\ttotal = preco - preco * (25/100)\n\t\n\telse:\n\t\ttotal = preco\n\t\n\tif musica == \"S\":\n\t\ttotal = total + 20 \n\telse:\n\t\ttotal = total\n\t\t\n\t\tprint(\"Entradas: \", preco, \", \", dia, \", \", musica)\n\t\tprint(\"Total: R$\", round(total, 2))\n\t\nelse:\n\tprint(\"Entradas: \", preco, \", \", dia, \", \", musica)\n\tprint(\"Dados invalidos\")\n",
+    "coarse_path_steps": [
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 17,
+        "target_end_line_0idx": 18
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

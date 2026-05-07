@@ -1,0 +1,144 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "590",
+    "assessment_id": "5894",
+    "assessment_title": "Lista 6 - Exercícios em Sala",
+    "exercise_id": "7040",
+    "student_id": "9811",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2024-1/590/users/9811/executions/5894_7040.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2024-1/590/users/9811/codemirror/5894_7040.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2024-07-16 18:28:46",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "10",
+            "expected": "0 2 4 6 8 10 \n10 9 8 7 6 5 4 3 2 1 0 ",
+            "actual": "0246810\n109876543210"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "15",
+            "expected": "0 2 4 6 8 10 12 14 \n15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 ",
+            "actual": "02468101214\n1514131211109876543210"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "4",
+            "expected": "0 2 4 \n4 3 2 1 0",
+            "actual": "024\n43210"
+          }
+        ]
+      },
+      "submitted_code": "n = int(input(\":\"))\n\nfor i in range(0, (n+1), 2):\n\tprint(i, end=\"\")\n\t\nprint()\n\t\nfor i in range(n, -1, -1):\n\tprint(i, end=\"\")"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2024-07-16 18:29:14",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "10",
+            "expected": "0 2 4 6 8 10 \n10 9 8 7 6 5 4 3 2 1 0 ",
+            "actual": "024681010\n109876543210"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "15",
+            "expected": "0 2 4 6 8 10 12 14 \n15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 ",
+            "actual": "0246810121414\n1514131211109876543210"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "4",
+            "expected": "0 2 4 \n4 3 2 1 0",
+            "actual": "0244\n43210"
+          }
+        ]
+      },
+      "submitted_code": "n = int(input(\":\"))\n\nfor i in range(0, (n+1), 2):\n\tprint(i, end=\"\")\n\t\nprint(i)\n\t\nfor i in range(n, -1, -1):\n\tprint(i, end=\"\")"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2024-07-16 18:29:38",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "10",
+            "expected": "0 2 4 6 8 10 \n10 9 8 7 6 5 4 3 2 1 0 ",
+            "actual": "0i2i4i6i8i10i10\n10i9i8i7i6i5i4i3i2i1i0i"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "15",
+            "expected": "0 2 4 6 8 10 12 14 \n15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 ",
+            "actual": "0i2i4i6i8i10i12i14i14\n15i14i13i12i11i10i9i8i7i6i5i4i3i2i1i0i"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "4",
+            "expected": "0 2 4 \n4 3 2 1 0",
+            "actual": "0i2i4i4\n4i3i2i1i0i"
+          }
+        ]
+      },
+      "submitted_code": "n = int(input(\":\"))\n\nfor i in range(0, (n+1), 2):\n\tprint(i, end=\"i\")\n\t\nprint(i)\n\t\nfor i in range(n, -1, -1):\n\tprint(i, end=\"i\")"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

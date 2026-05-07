@@ -1,0 +1,144 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "525",
+    "assessment_id": "4926",
+    "assessment_title": "Lab 2 - Estrutura Condicional Composta",
+    "exercise_id": "2975",
+    "student_id": "8809",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/525/users/8809/executions/4926_2975.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/525/users/8809/codemirror/4926_2975.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-08-16 17:33:00",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n2\n15.0",
+            "expected": "13.0\nSim",
+            "actual": "sim 13.0"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n2\n8.0",
+            "expected": "10.0\nNao",
+            "actual": "nao"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "3\n5\n25.50",
+            "expected": "26.5\nNao",
+            "actual": "nao"
+          }
+        ]
+      },
+      "submitted_code": "suco=int(input(\"quantidade de suco: \"))\nsalgado=int(input(\"quantidade de salgado: \"))\nvalor=float(input(\"quantidade de dinheiro: \"))\nsuco2=suco*3\nsalgado2=salgado*3.5\ntotal=suco2+salgado2\ntotal2=valor-total\nif total2 >= 0:\n\tprint(\"sim\",total)\nelse:\n\tprint(\"nao\")"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-08-16 17:34:03",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n2\n15.0",
+            "expected": "13.0\nSim",
+            "actual": "sim 13.0"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n2\n8.0",
+            "expected": "10.0\nNao",
+            "actual": "nao 10.0"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "3\n5\n25.50",
+            "expected": "26.5\nNao",
+            "actual": "nao 26.5"
+          }
+        ]
+      },
+      "submitted_code": "suco=int(input(\"quantidade de suco: \"))\nsalgado=int(input(\"quantidade de salgado: \"))\nvalor=float(input(\"quantidade de dinheiro: \"))\nsuco2=suco*3\nsalgado2=salgado*3.5\ntotal=suco2+salgado2\ntotal2=valor-total\nif total2 >= 0:\n\tprint(\"sim\",total)\nelse:\n\tprint(\"nao\",total)"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-08-16 17:34:53",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n2\n15.0",
+            "expected": "13.0\nSim",
+            "actual": "13.0 sim"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n2\n8.0",
+            "expected": "10.0\nNao",
+            "actual": "10.0 nao"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "3\n5\n25.50",
+            "expected": "26.5\nNao",
+            "actual": "26.5 nao"
+          }
+        ]
+      },
+      "submitted_code": "suco=int(input(\"quantidade de suco: \"))\nsalgado=int(input(\"quantidade de salgado: \"))\nvalor=float(input(\"quantidade de dinheiro: \"))\nsuco2=suco*3\nsalgado2=salgado*3.5\ntotal=suco2+salgado2\ntotal2=valor-total\nif total2 >= 0:\n\tprint(total,\"sim\")\nelse:\n\tprint(total,\"nao\")"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

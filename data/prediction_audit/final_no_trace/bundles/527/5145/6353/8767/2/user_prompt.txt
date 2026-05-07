@@ -1,0 +1,150 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the authoritative execution result for that submitted attempt.
+- Each attempt includes the submitted code for that attempt.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 527
+- assessment_id: 5145
+- assessment_title: Lab 6 - Repetição por Contagem (for)
+- exercise_id: 6353
+- student_id: 8767
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+Execution Result
+
+- submitted_at: 2023-10-19 17:34:24
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "10"
+    expected: "10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "15"
+    expected: " 15\n14\n13\n12\n11\n10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "4"
+    expected: "4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: ""
+
+Submitted Code
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,1,1):
+	print(i)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+Execution Result
+
+- submitted_at: 2023-10-19 17:39:47
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "10"
+    expected: "10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "15"
+    expected: " 15\n14\n13\n12\n11\n10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "4"
+    expected: "4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: ""
+
+Submitted Code
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,-1,-1):
+	if c == 0 :
+		print(i)
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+Execution Result
+
+- submitted_at: 2023-10-19 17:49:41
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "10"
+    expected: "10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: "10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim de contagem regressiva!"
+  - test_index_0idx: 1 [FAIL]
+    input: "15"
+    expected: " 15\n14\n13\n12\n11\n10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: "15\n14\n13\n12\n11\n10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim de contagem regressiva!"
+  - test_index_0idx: 2 [FAIL]
+    input: "4"
+    expected: "4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: "4\n3\n2\n1\n0\nFim de contagem regressiva!"
+
+Submitted Code
+```python
+
+c = int(input(""))
+
+for i in range(c,-1,-1):
+	print(i)
+	if 0 == i :
+		print("Fim de contagem regressiva!")
+```

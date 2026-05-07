@@ -1,0 +1,54 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "594",
+    "assessment_id": "5610",
+    "exercise_id": "1330",
+    "student_id": "9677",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "print (250/6)\nprint (125/3)\nprint (41+2/3)\nprint (41+6/9)",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "print (250/6)\nprint (125/3)\nprint (41+2/3)\nprint (41+6/9)\nprint (250/6)\nprint (250/6)",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "xxx",
+        "expected": "41.67",
+        "actual": "41.666666666666664\n41.666666666666664\n41.666666666666664\n41.666666666666664\n41.666666666666664\n41.666666666666664"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 4,
+        "end_line_0idx": 5,
+        "edit_kind": "insert"
+      }
+    ],
+    "changed_line_count_in_next_code": 2,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 4,
+        "end_line_0idx": 5
+      }
+    ]
+  }
+}

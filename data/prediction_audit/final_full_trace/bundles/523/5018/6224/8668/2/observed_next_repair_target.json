@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "523",
+    "assessment_id": "5018",
+    "exercise_id": "6224",
+    "student_id": "8668",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "nota = float(input(\"notas dos alunos: \"))\n\naprovados = 0 \nreprovados = 0\nmaior_nota = -1\nmenor_nota = 11\n\nwhile True:\n\tnota = float(input(\"notas dos alunos: \"))\n\tif nota < 0:\n\t\tbreak\n\tif nota >= 5.0:\n\t\taprovados += 1\n\telse:\n\t\treprovados += 1\n\tif nota > maior_nota:\n\t\tmaior_nota = nota\n\tif nota < menor_nota:\n\t\tmenor_nota = nota\n\t\t\nprint(aprovados, \"alunos passaram\")\nprint(reprovados, \"alunos ficaram abaixo da media\")\nprint(\"maior nota:\", round(maior_nota, 2))\nprint(\"menor nota:\", round(menor_nota, 2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "nota = float(input(\"notas dos alunos: \"))\n\naprovados = 0 \nreprovados = 0\nmaior_nota = -1\nmenor_nota = 11\n\nwhile True:\n\tnota = float(input(\"notas dos alunos: \"))\n\tif nota < 0:\n\t\tbreak\n\tif nota >= 5.0:\n\t\taprovados += 1\n\telse:\n\t\treprovados += 1\n\tif nota > maior_nota:\n\t\tmaior_nota = nota\n\tif nota < menor_nota:\n\t\tmenor_nota = nota\n\t\t\nprint(aprovados, \"alunos passaram\")\nprint(reprovados, \"alunos ficaram abaixo da media\")\nprint(\"Maior nota:\", round(maior_nota, 2))\nprint(\"Menor nota:\", round(menor_nota, 2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "8.5\n10.0\n7.0\n5.5\n4.5\n-1",
+        "expected": "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 4.5",
+        "actual": "notas dos alunos: notas dos alunos: notas dos alunos: notas dos alunos: notas dos alunos: notas dos alunos: 3 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 4.5"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "9.0\n5.0\n6.0\n-1",
+        "expected": "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 9.0\nMenor nota: 5.0",
+        "actual": "notas dos alunos: notas dos alunos: notas dos alunos: notas dos alunos: 2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 6.0\nMenor nota: 5.0"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "10.0\n8.5\n-1",
+        "expected": "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 8.5",
+        "actual": "notas dos alunos: notas dos alunos: notas dos alunos: 1 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 8.5\nMenor nota: 8.5"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 22,
+        "end_line_0idx": 23,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 2,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 22,
+        "end_line_0idx": 23
+      }
+    ]
+  }
+}

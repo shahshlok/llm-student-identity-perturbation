@@ -1,0 +1,622 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 563
+- assessment_id: 5288
+- assessment_title: Lab 2: Estrutura Condicional Composta
+- exercise_id: 2969
+- student_id: 9209
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-01-09T15:39:22.865000
+
+Execution Result
+
+- submitted_at: 2024-01-09 15:43:49
+- grade: 33.0
+- pass_count: 1
+- failed_test_indices_0idx: [0,2]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "2\n55.50\n100.25"
+    expected: "130.69"
+    actual: "80.5625"
+  - test_index_0idx: 1 [PASS]
+    input: "1\n72.65"
+    expected: "72.65"
+    actual: "72.65"
+  - test_index_0idx: 2 [FAIL]
+    input: "2\n99.99\n120.25"
+    expected: "190.18"
+    actual: "130.0525"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 351
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	11	0	0	0	0	["q"]	[""]	+input
+110	15	0	1	0	1	["u"]	[""]	+input
+208	19	0	2	0	2	["a"]	[""]	+input
+317	23	0	3	0	3	["n"]	[""]	+input
+429	27	0	4	0	4	["t"]	[""]	+input
+527	31	0	5	0	5	["i"]	[""]	+input
+868	35	0	6	0	6	["d"]	[""]	+input
+992	39	0	7	0	7	["a"]	[""]	+input
+1085	42	0	8	0	8	["d"]	[""]	+input
+1280	47	0	9	0	9	["e"]	[""]	+input
+1773	51	0	10	0	10	[" "]	[""]	+input
+1952	55	0	11	0	11	["="]	[""]	+input
+2270	59	0	12	0	12	[" "]	[""]	+input
+4550	64	0	13	0	13	["*"]	[""]	+input
+4946	68	0	13	0	14	[""]	["*"]	+delete
+5198	74	0	13	0	13	["_"]	[""]	+input
+5771	78	0	13	0	14	[""]	["_"]	+delete
+6348	83	0	13	0	13	["i"]	[""]	+input
+6444	86	0	14	0	14	["n"]	[""]	+input
+6527	91	0	15	0	15	["t"]	[""]	+input
+7238	96	0	16	0	16	["()"]	[""]	+input
+8287	102	0	17	0	17	["i"]	[""]	+input
+8405	106	0	18	0	18	["n"]	[""]	+input
+8537	110	0	19	0	19	["p"]	[""]	+input
+8780	114	0	20	0	20	["u"]	[""]	+input
+9228	118	0	21	0	21	["t"]	[""]	+input
+9728	123	0	22	0	22	["()"]	[""]	+input
+11388	130	0	23	0	23	["\"\""]	[""]	+input
+12670	137	0	24	0	24	["Q"]	[""]	+input
+13232	142	0	25	0	25	["n"]	[""]	+input
+13682	145	0	25	0	26	[""]	["n"]	+delete
+13871	150	0	25	0	25	["u"]	[""]	+input
+14049	154	0	26	0	26	["a"]	[""]	+input
+14156	158	0	27	0	27	["n"]	[""]	+input
+14303	162	0	28	0	28	["t"]	[""]	+input
+14499	166	0	29	0	29	["i"]	[""]	+input
+14671	170	0	30	0	30	["d"]	[""]	+input
+14866	174	0	31	0	31	["a"]	[""]	+input
+14910	177	0	32	0	32	["d"]	[""]	+input
+15118	182	0	33	0	33	["e"]	[""]	+input
+15285	186	0	34	0	34	[" "]	[""]	+input
+15404	190	0	35	0	35	["d"]	[""]	+input
+15567	194	0	36	0	36	["e"]	[""]	+input
+15684	198	0	37	0	37	[" "]	[""]	+input
+15855	202	0	38	0	38	["j"]	[""]	+input
+15901	205	0	39	0	39	["o"]	[""]	+input
+15996	210	0	40	0	40	["g"]	[""]	+input
+16103	214	0	41	0	41	["o"]	[""]	+input
+16176	218	0	42	0	42	["s"]	[""]	+input
+17439	223	0	43	0	43	[":"]	[""]	+input
+17902	228	0	44	0	44	[" "]	[""]	+input
+20621	243	0	48	0	48	["",""]	[""]	+input
+31955	249	1	0	1	0	["i"]	[""]	+input
+32152	253	1	1	1	1	["f"]	[""]	+input
+37636	256	1	1	1	2	[""]	["f"]	+delete
+37821	260	1	0	1	1	[""]	["i"]	+delete
+38718	265	1	0	1	0	["p"]	[""]	+input
+39483	268	1	0	1	1	[""]	["p"]	+delete
+59819	273	1	0	1	0	["i"]	[""]	+input
+59916	277	1	1	1	1	["f"]	[""]	+input
+63566	281	1	2	1	2	[" "]	[""]	+input
+66654	285	1	3	1	3	["="]	[""]	+input
+66867	289	1	4	1	4	["="]	[""]	+input
+67868	292	1	4	1	5	[""]	["="]	+delete
+68064	296	1	3	1	4	[""]	["="]	+delete
+68221	300	1	2	1	3	[""]	[" "]	+delete
+68396	305	1	2	1	2	["q"]	[""]	+input
+68520	309	1	3	1	3	["u"]	[""]	+input
+68619	313	1	4	1	4	["a"]	[""]	+input
+68731	317	1	5	1	5	["n"]	[""]	+input
+68880	321	1	6	1	6	["t"]	[""]	+input
+68968	325	1	7	1	7	["i"]	[""]	+input
+69100	329	1	8	1	8	["d"]	[""]	+input
+69546	333	1	0	1	9	[""]	["ifquantid"]	+delete
+70349	339	1	0	1	0	["i"]	[""]	+input
+70414	343	1	1	1	1	["f"]	[""]	+input
+70537	347	1	2	1	2	[" "]	[""]	+input
+70930	351	1	3	1	3	["q"]	[""]	+input
+70987	355	1	4	1	4	["u"]	[""]	+input
+71116	359	1	5	1	5	["a"]	[""]	+input
+71195	363	1	6	1	6	["n"]	[""]	+input
+71315	367	1	7	1	7	["t"]	[""]	+input
+71388	371	1	8	1	8	["i"]	[""]	+input
+71500	375	1	9	1	9	["d"]	[""]	+input
+71632	379	1	10	1	10	["a"]	[""]	+input
+71726	382	1	11	1	11	["d"]	[""]	+input
+71996	387	1	12	1	12	["e"]	[""]	+input
+72750	391	1	13	1	13	[" "]	[""]	+input
+72967	395	1	14	1	14	["-"]	[""]	+input
+73250	399	1	15	1	15	["-"]	[""]	+input
+73595	402	1	15	1	16	[""]	["-"]	+delete
+73728	406	1	14	1	15	[""]	["-"]	+delete
+73900	411	1	14	1	14	["="]	[""]	+input
+74100	415	1	15	1	15	["="]	[""]	+input
+74496	419	1	16	1	16	[" "]	[""]	+input
+75182	423	1	17	1	17	["2"]	[""]	+input
+81069	428	1	18	1	18	[":"]	[""]	+input
+81503	432	1	19	1	19	["",""]	[""]	+input
+81503	433	2	0	2	0	["\t"]	[""]	+input
+93338	439	2	1	2	1	["i"]	[""]	+input
+93419	442	2	2	2	2	["n"]	[""]	+input
+93531	447	2	3	2	3	["p"]	[""]	+input
+93730	451	2	4	2	4	["u"]	[""]	+input
+93984	455	2	5	2	5	["t"]	[""]	+input
+94836	460	2	6	2	6	["()"]	[""]	+input
+96079	465	2	6	2	8	[""]	["()"]	+delete
+96412	469	2	5	2	6	[""]	["t"]	+delete
+96605	473	2	4	2	5	[""]	["u"]	+delete
+96763	477	2	3	2	4	[""]	["p"]	+delete
+96911	481	2	2	2	3	[""]	["n"]	+delete
+97099	485	2	1	2	2	[""]	["i"]	+delete
+98096	490	2	1	2	1	["p"]	[""]	+input
+98203	494	2	2	2	2	["r"]	[""]	+input
+98348	498	2	3	2	3	["e"]	[""]	+input
+100780	502	2	4	2	4	["c"]	[""]	+input
+100844	505	2	5	2	5	["o"]	[""]	+input
+101567	510	2	6	2	6	["1"]	[""]	+input
+102092	514	2	7	2	7	[" "]	[""]	+input
+102620	517	2	7	2	8	[""]	[" "]	+delete
+103279	522	2	7	2	7	[" "]	[""]	+input
+103451	526	2	8	2	8	["="]	[""]	+input
+103930	530	2	9	2	9	[" "]	[""]	+input
+107696	534	2	10	2	10	["i"]	[""]	+input
+107786	538	2	11	2	11	["n"]	[""]	+input
+109035	541	2	11	2	12	[""]	["n"]	+delete
+109199	545	2	10	2	11	[""]	["i"]	+delete
+109404	550	2	10	2	10	["f"]	[""]	+input
+109548	554	2	11	2	11	["l"]	[""]	+input
+109747	558	2	12	2	12	["o"]	[""]	+input
+109819	562	2	13	2	13	["a"]	[""]	+input
+110112	566	2	14	2	14	["t"]	[""]	+input
+110817	571	2	15	2	15	["()"]	[""]	+input
+111419	577	2	16	2	16	["i"]	[""]	+input
+111532	581	2	17	2	17	["n"]	[""]	+input
+111636	585	2	18	2	18	["p"]	[""]	+input
+111822	589	2	19	2	19	["t"]	[""]	+input
+111953	593	2	20	2	20	["u"]	[""]	+input
+112461	596	2	20	2	21	[""]	["u"]	+delete
+112621	600	2	19	2	20	[""]	["t"]	+delete
+112830	605	2	19	2	19	["u"]	[""]	+input
+112990	609	2	20	2	20	["t"]	[""]	+input
+113404	614	2	21	2	21	["()"]	[""]	+input
+114301	621	2	22	2	22	["\"\""]	[""]	+input
+116640	628	2	23	2	23	["V"]	[""]	+input
+116882	633	2	24	2	24	["a"]	[""]	+input
+117132	637	2	25	2	25	["l"]	[""]	+input
+117357	641	2	26	2	26	["o"]	[""]	+input
+117451	645	2	27	2	27	["r"]	[""]	+input
+117630	649	2	28	2	28	[" "]	[""]	+input
+117788	653	2	29	2	29	["d"]	[""]	+input
+117866	657	2	30	2	30	["o"]	[""]	+input
+117988	661	2	31	2	31	[" "]	[""]	+input
+118205	665	2	32	2	32	["p"]	[""]	+input
+118348	669	2	33	2	33	["r"]	[""]	+input
+118427	673	2	34	2	34	["i"]	[""]	+input
+118561	677	2	35	2	35	["m"]	[""]	+input
+118682	681	2	36	2	36	["e"]	[""]	+input
+118803	685	2	37	2	37	["i"]	[""]	+input
+118944	689	2	38	2	38	["r"]	[""]	+input
+118988	693	2	39	2	39	["o"]	[""]	+input
+119133	697	2	40	2	40	[" "]	[""]	+input
+119326	701	2	41	2	41	["j"]	[""]	+input
+119372	704	2	42	2	42	["o"]	[""]	+input
+119467	709	2	43	2	43	["g"]	[""]	+input
+119546	713	2	44	2	44	["o"]	[""]	+input
+120186	718	2	45	2	45	[":"]	[""]	+input
+120480	723	2	46	2	46	[" "]	[""]	+input
+124012	728	2	50	2	50	["",""]	[""]	+input
+124013	729	3	0	3	0	["\t"]	[""]	+input
+125372	735	3	1	3	1	["p"]	[""]	+input
+125483	739	3	2	3	2	["r"]	[""]	+input
+125547	742	3	3	3	3	["e"]	[""]	+input
+126169	746	3	3	3	4	[""]	["e"]	+delete
+126390	750	3	2	3	3	[""]	["r"]	+delete
+126567	754	3	1	3	2	[""]	["p"]	+delete
+127835	759	3	1	3	1	["p"]	[""]	+input
+127947	763	3	2	3	2	["r"]	[""]	+input
+127996	766	3	3	3	3	["e"]	[""]	+input
+128650	771	3	4	3	4	["c"]	[""]	+input
+128737	775	3	5	3	5	["o"]	[""]	+input
+129418	779	3	6	3	6	["2"]	[""]	+input
+129916	783	3	7	3	7	[" "]	[""]	+input
+130114	787	3	8	3	8	["-"]	[""]	+input
+130380	791	3	9	3	9	[" "]	[""]	+input
+130845	794	3	9	3	10	[""]	[" "]	+delete
+131004	798	3	8	3	9	[""]	["-"]	+delete
+131180	803	3	8	3	8	["="]	[""]	+input
+131551	807	3	9	3	9	[" "]	[""]	+input
+131949	811	3	10	3	10	["f"]	[""]	+input
+132026	815	3	11	3	11	["l"]	[""]	+input
+132220	819	3	12	3	12	["o"]	[""]	+input
+132266	823	3	13	3	13	["a"]	[""]	+input
+132444	827	3	14	3	14	["t"]	[""]	+input
+133066	832	3	15	3	15	["()"]	[""]	+input
+133615	838	3	16	3	16	["i"]	[""]	+input
+133783	842	3	17	3	17	["n"]	[""]	+input
+133819	845	3	18	3	18	["p"]	[""]	+input
+133995	850	3	19	3	19	["t"]	[""]	+input
+134109	854	3	20	3	20	["u"]	[""]	+input
+134461	859	3	21	3	21	["()"]	[""]	+input
+135345	866	3	22	3	22	["\"\""]	[""]	+input
+136346	873	3	23	3	23	["V"]	[""]	+input
+136572	878	3	24	3	24	["a"]	[""]	+input
+137020	882	3	25	3	25	["l"]	[""]	+input
+137202	886	3	26	3	26	["o"]	[""]	+input
+137291	890	3	27	3	27	["r"]	[""]	+input
+137450	894	3	28	3	28	[" "]	[""]	+input
+137771	898	3	29	3	29	["d"]	[""]	+input
+137850	902	3	30	3	30	["o"]	[""]	+input
+137953	906	3	31	3	31	[" "]	[""]	+input
+138984	910	3	32	3	32	["s"]	[""]	+input
+139163	914	3	33	3	33	["e"]	[""]	+input
+139679	918	3	34	3	34	["g"]	[""]	+input
+139756	922	3	35	3	35	["u"]	[""]	+input
+139917	926	3	36	3	36	["n"]	[""]	+input
+140010	930	3	37	3	37	["d"]	[""]	+input
+140084	934	3	38	3	38	["o"]	[""]	+input
+140205	938	3	39	3	39	[" "]	[""]	+input
+142334	942	3	40	3	40	["o"]	[""]	+input
+142442	946	3	41	3	41	["g"]	[""]	+input
+142550	950	3	42	3	42	["o"]	[""]	+input
+143068	953	3	42	3	43	[""]	["o"]	+delete
+143250	957	3	41	3	42	[""]	["g"]	+delete
+143402	961	3	40	3	41	[""]	["o"]	+delete
+143583	966	3	40	3	40	["j"]	[""]	+input
+143642	969	3	41	3	41	["o"]	[""]	+input
+143772	974	3	42	3	42	["g"]	[""]	+input
+143866	978	3	43	3	43	["o"]	[""]	+input
+144985	983	3	44	3	44	[":"]	[""]	+input
+147137	988	3	45	3	45	[" "]	[""]	+input
+149647	1000	3	49	3	49	["",""]	[""]	+input
+149647	1001	4	0	4	0	["\t"]	[""]	+input
+164133	1088	3	20	3	21	[""]	["u"]	+delete
+165681	1096	3	19	3	19	["u"]	[""]	+input
+170284	1109	4	0	4	0	["e"]	[""]	+input
+170748	1113	4	1	4	1	["l"]	[""]	+input
+171036	1117	4	2	4	2	["s"]	[""]	+input
+171230	1121	4	3	4	3	["e"]	[""]	+input
+171731	1126	4	4	4	4	[":"]	[""]	+input
+172221	1130	4	5	4	5	["",""]	[""]	+input
+173616	1136	5	1	5	1	["p"]	[""]	+input
+173752	1140	5	2	5	2	["r"]	[""]	+input
+173786	1143	5	3	5	3	["e"]	[""]	+input
+174798	1148	5	4	5	4	["c"]	[""]	+input
+174868	1151	5	5	5	5	["o"]	[""]	+input
+176608	1156	5	6	5	6	["1"]	[""]	+input
+177947	1160	5	7	5	7	["-"]	[""]	+input
+178394	1163	5	7	5	8	[""]	["-"]	+delete
+178602	1168	5	7	5	7	["="]	[""]	+input
+178985	1171	5	7	5	8	[""]	["="]	+delete
+179179	1176	5	7	5	7	[" "]	[""]	+input
+179278	1180	5	8	5	8	["="]	[""]	+input
+179850	1184	5	9	5	9	[" "]	[""]	+input
+180764	1188	5	10	5	10	["f"]	[""]	+input
+180845	1192	5	11	5	11	["l"]	[""]	+input
+181036	1196	5	12	5	12	["o"]	[""]	+input
+181163	1200	5	13	5	13	["a"]	[""]	+input
+181564	1204	5	14	5	14	["t"]	[""]	+input
+182155	1209	5	15	5	15	["I"]	[""]	+input
+182747	1213	5	15	5	16	[""]	["I"]	+delete
+188254	1228	5	1	5	15	["preco1 = float(input(\"Valor do primeiro jogo: \"))"]	["preco1 = float"]	paste
+200013	1238	5	32	5	41	[""]	["primeiro "]	+delete
+203249	1243	5	41	5	41	["",""]	[""]	+input
+203250	1244	6	0	6	0	["\t"]	[""]	+input
+204972	1250	6	1	6	1	["v"]	[""]	+input
+205852	1253	6	1	6	2	[""]	["v"]	+delete
+206044	1258	6	1	6	1	["f"]	[""]	+input
+206126	1262	6	2	6	2	["i"]	[""]	+input
+206253	1266	6	3	6	3	["n"]	[""]	+input
+206402	1270	6	4	6	4	["a"]	[""]	+input
+206489	1274	6	5	6	5	["l"]	[""]	+input
+209248	1277	6	5	6	6	[""]	["l"]	+delete
+209616	1281	6	4	6	5	[""]	["a"]	+delete
+209802	1285	6	3	6	4	[""]	["n"]	+delete
+210001	1289	6	2	6	3	[""]	["i"]	+delete
+210166	1293	6	1	6	2	[""]	["f"]	+delete
+210386	1298	6	1	6	1	["v"]	[""]	+input
+210928	1302	6	2	6	2	["f"]	[""]	+input
+211002	1306	6	3	6	3	["i"]	[""]	+input
+211166	1310	6	4	6	4	["n"]	[""]	+input
+211225	1313	6	5	6	5	["a"]	[""]	+input
+211360	1318	6	6	6	6	["l"]	[""]	+input
+211898	1322	6	7	6	7	[" "]	[""]	+input
+212827	1325	6	7	6	8	[""]	[" "]	+delete
+213350	1330	6	7	6	7	[" "]	[""]	+input
+213579	1334	6	8	6	8	["-"]	[""]	+input
+214009	1337	6	8	6	9	[""]	["-"]	+delete
+214203	1342	6	8	6	8	["="]	[""]	+input
+214667	1346	6	9	6	9	[" "]	[""]	+input
+215851	1350	6	10	6	10	["p"]	[""]	+input
+215962	1354	6	11	6	11	["r"]	[""]	+input
+216038	1357	6	12	6	12	["e"]	[""]	+input
+217698	1362	6	13	6	13	["o"]	[""]	+input
+218217	1365	6	13	6	14	[""]	["o"]	+delete
+218350	1370	6	13	6	13	["c"]	[""]	+input
+218426	1374	6	14	6	14	["o"]	[""]	+input
+218881	1378	6	15	6	15	["1"]	[""]	+input
+220836	1381	6	16	6	16	["",""]	[""]	+input
+220837	1382	7	0	7	0	["\t"]	[""]	+input
+221240	1387	7	0	7	1	[""]	["\t"]	+delete
+221796	1392	7	0	7	0	["p"]	[""]	+input
+221935	1396	7	1	7	1	["r"]	[""]	+input
+222008	1400	7	2	7	2	["i"]	[""]	+input
+222073	1403	7	3	7	3	["n"]	[""]	+input
+224986	1408	7	4	7	4	["t"]	[""]	+input
+225642	1413	7	5	7	5	["()"]	[""]	+input
+226577	1419	7	6	7	6	["v"]	[""]	+input
+226778	1423	7	7	7	7	["f"]	[""]	+input
+226908	1427	7	8	7	8	["i"]	[""]	+input
+227017	1431	7	9	7	9	["n"]	[""]	+input
+227145	1435	7	10	7	10	["a"]	[""]	+input
+227258	1439	7	11	7	11	["l"]	[""]	+input
+230398	1444	3	49	3	49	["",""]	[""]	+input
+230399	1445	4	0	4	0	["\t"]	[""]	+input
+232108	1451	4	1	4	1	["v"]	[""]	+input
+232414	1455	4	2	4	2	["f"]	[""]	+input
+232535	1459	4	3	4	3	["i"]	[""]	+input
+232637	1463	4	4	4	4	["n"]	[""]	+input
+232762	1467	4	5	4	5	["a"]	[""]	+input
+232874	1471	4	6	4	6	["l"]	[""]	+input
+233263	1475	4	7	4	7	[" "]	[""]	+input
+233483	1479	4	8	4	8	["-"]	[""]	+input
+234042	1482	4	8	4	9	[""]	["-"]	+delete
+234267	1487	4	8	4	8	["="]	[""]	+input
+236232	1491	4	9	4	9	[" "]	[""]	+input
+236527	1495	4	10	4	10	["p"]	[""]	+input
+236638	1499	4	11	4	11	["r"]	[""]	+input
+236681	1502	4	12	4	12	["e"]	[""]	+input
+237163	1507	4	13	4	13	["c"]	[""]	+input
+237286	1511	4	14	4	14	["o"]	[""]	+input
+237626	1515	4	15	4	15	["1"]	[""]	+input
+238233	1519	4	16	4	16	[" "]	[""]	+input
+238577	1524	4	17	4	17	["_"]	[""]	+input
+239112	1528	4	17	4	18	[""]	["_"]	+delete
+239342	1534	4	17	4	17	[")"]	[""]	+input
+239946	1538	4	17	4	18	[""]	[")"]	+delete
+240203	1544	4	17	4	17	["()"]	[""]	+input
+240865	1549	4	17	4	19	[""]	["()"]	+delete
+242736	1555	4	17	4	17	["+"]	[""]	+input
+243425	1560	4	18	4	18	[" "]	[""]	+input
+243900	1564	4	19	4	19	["p"]	[""]	+input
+243977	1567	4	20	4	20	["r"]	[""]	+input
+244057	1571	4	21	4	21	["e"]	[""]	+input
+244379	1576	4	22	4	22	["c"]	[""]	+input
+244493	1580	4	23	4	23	["o"]	[""]	+input
+245295	1584	4	24	4	24	["2"]	[""]	+input
+249305	1589	4	25	4	25	["*"]	[""]	+input
+249929	1594	4	26	4	26	["0"]	[""]	+input
+250935	1598	4	27	4	27	["."]	[""]	+input
+251947	1602	4	28	4	28	["2"]	[""]	+input
+252312	1606	4	29	4	29	["5"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 266776
+- raw_log_line: 1612
+- feedback: "You're almost there! Your code is 33% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+quantidade = int(input("Quantidade de jogos: "))
+if quantidade == 2:
+	preco1 = float(input("Valor do primeiro jogo: "))
+	preco2 = float(input("Valor do segundo jogo: "))
+	vfinal = preco1 + preco2*0.25
+else:
+	preco1 = float(input("Valor do jogo: "))
+	vfinal = preco1
+print(vfinal)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-01-09T15:44:23.821000
+
+Execution Result
+
+- submitted_at: 2024-01-09 15:44:35
+- grade: 33.0
+- pass_count: 1
+- failed_test_indices_0idx: [0,2]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "2\n55.50\n100.25"
+    expected: "130.69"
+    actual: "80.56"
+  - test_index_0idx: 1 [PASS]
+    input: "1\n72.65"
+    expected: "72.65"
+    actual: "72.65"
+  - test_index_0idx: 2 [FAIL]
+    input: "2\n99.99\n120.25"
+    expected: "190.18"
+    actual: "130.05"
+
+Attempt Start Code
+```python
+quantidade = int(input("Quantidade de jogos: "))
+if quantidade == 2:
+	preco1 = float(input("Valor do primeiro jogo: "))
+	preco2 = float(input("Valor do segundo jogo: "))
+	vfinal = preco1 + preco2*0.25
+else:
+	preco1 = float(input("Valor do jogo: "))
+	vfinal = preco1
+print(vfinal)
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 9
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1620	8	6	8	6	["r"]	[""]	+input
+69	1623	8	7	8	7	["o"]	[""]	+input
+123	1627	8	8	8	8	["u"]	[""]	+input
+385	1632	8	9	8	9	["n"]	[""]	+input
+1679	1638	8	10	8	10	["d"]	[""]	+input
+2865	1643	8	11	8	11	["("]	[""]	+input
+5918	1662	8	18	8	18	[","]	[""]	+input
+6756	1666	8	19	8	19	["2"]	[""]	+input
+9440	1677	8	21	8	21	[")"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 11732
+- raw_log_line: 1682
+- feedback: "You're almost there! Your code is 33% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+quantidade = int(input("Quantidade de jogos: "))
+if quantidade == 2:
+	preco1 = float(input("Valor do primeiro jogo: "))
+	preco2 = float(input("Valor do segundo jogo: "))
+	vfinal = preco1 + preco2*0.25
+else:
+	preco1 = float(input("Valor do jogo: "))
+	vfinal = preco1
+print(round(vfinal,2))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-01-09T15:45:22.410000
+
+Execution Result
+
+- submitted_at: 2024-01-09 15:46:08
+- grade: 33.0
+- pass_count: 1
+- failed_test_indices_0idx: [0,2]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "2\n55.50\n100.25"
+    expected: "130.69"
+    actual: "80.56"
+  - test_index_0idx: 1 [PASS]
+    input: "1\n72.65"
+    expected: "72.65"
+    actual: "72.65"
+  - test_index_0idx: 2 [FAIL]
+    input: "2\n99.99\n120.25"
+    expected: "190.18"
+    actual: "130.05"
+
+Attempt Start Code
+```python
+quantidade = int(input("Quantidade de jogos: "))
+if quantidade == 2:
+	preco1 = float(input("Valor do primeiro jogo: "))
+	preco2 = float(input("Valor do segundo jogo: "))
+	vfinal = preco1 + preco2*0.25
+else:
+	preco1 = float(input("Valor do jogo: "))
+	vfinal = preco1
+print(round(vfinal,2))
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1687
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+quantidade = int(input("Quantidade de jogos: "))
+if quantidade == 2:
+	preco1 = float(input("Valor do primeiro jogo: "))
+	preco2 = float(input("Valor do segundo jogo: "))
+	vfinal = preco1 + preco2*0.25
+else:
+	preco1 = float(input("Valor do jogo: "))
+	vfinal = preco1
+print(round(vfinal,2))
+```
+Run Output
+```text
+Quantidade de jogos: 1
+Valor do jogo: 100.50
+100.5
+```
+
+Edit Segment 1
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+37565	1694	4	19	4	19	["("]	[""]	+input
+41520	1735	4	31	4	31	[")"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 46264
+- raw_log_line: 1741
+- feedback: "You're almost there! Your code is 33% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+quantidade = int(input("Quantidade de jogos: "))
+if quantidade == 2:
+	preco1 = float(input("Valor do primeiro jogo: "))
+	preco2 = float(input("Valor do segundo jogo: "))
+	vfinal = preco1 + (preco2*0.25)
+else:
+	preco1 = float(input("Valor do jogo: "))
+	vfinal = preco1
+print(round(vfinal,2))
+```

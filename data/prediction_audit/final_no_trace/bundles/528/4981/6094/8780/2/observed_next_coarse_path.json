@@ -1,0 +1,52 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "528",
+    "assessment_id": "4981",
+    "exercise_id": "6094",
+    "student_id": "8780",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "#Entrada\n\nplano = float(input(\"Digite o valor do plano: \"))\nmembros = int(input(\"Digite o numero de membros da familia: \"))\n\n#Expressão e Saída\n\nif membros == 1:\n\tprint(round(plano, 2))\nelif membros == 2:\n\tdesc = plano * membros * 15 / 100\n\tvalor_desc = plano * membros - desc\n\tprint(round(valor_desc, 2))\nelif membros == 3:\n\tdesc = plano * membros * 25 / 100\n\tvalor_desc = plano * membros - desc\n\tprint(round(valor_desc, 2))\nelse:\n\tdesc = plano * membros * 35 / 100\n\tvalor_desc = plano * membros - desc\n\tprint(round(valor_desc, 2))",
+    "coarse_path_steps": [
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 8,
+        "target_end_line_0idx": 8
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 8,
+        "target_end_line_0idx": 8
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 8,
+        "target_end_line_0idx": 8
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

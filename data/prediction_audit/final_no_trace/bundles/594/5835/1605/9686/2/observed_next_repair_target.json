@@ -1,0 +1,80 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "594",
+    "assessment_id": "5835",
+    "exercise_id": "1605",
+    "student_id": "9686",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "from numpy import *\ni = 0\ns = 200\na = array(eval(input(\"a\")))\nif len(a) == 4:\n\twhile i <= 4:\n\t\tif a[i] == 1:\n\t\t\ts = s*4\n\t\telif a[i] == 2:\n\t\t\ts = s*2\n\t\telif a[i] == 3:\n\t\t\ts = s\n\t\telif a[i] == 4:\n\t\t\ts = s/2\n\t\ti = i + 1\nprint(round(s, 2))\n\t",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "from numpy import *\ni = 0\ns = 200\na = array(eval(input(\"a\")))\nif len(a) == 4:\n\twhile i < 4:\n\t\tif a[i] == 1:\n\t\t\ts = s*4\n\t\telif a[i] == 2:\n\t\t\ts = s*2\n\t\telif a[i] == 3:\n\t\t\ts = s\n\t\telif a[i] == 4:\n\t\t\ts = s/2\n\t\ti = i + 1\nprint(round(s, 1))\n\t",
+    "grade": 67.0,
+    "pass_count": 1,
+    "failed_test_indices_0idx": [
+      0,
+      1
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "[3,2,2,2,4,4]",
+        "expected": "400.0",
+        "actual": "200"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "[3,2,2,2]",
+        "expected": "1600.0",
+        "actual": "1600"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "[2,2,4,4]",
+        "expected": "200.0",
+        "actual": "200.0"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "partial_fix",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 15,
+        "end_line_0idx": 15,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 2,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5
+      },
+      {
+        "start_line_0idx": 15,
+        "end_line_0idx": 15
+      }
+    ]
+  }
+}

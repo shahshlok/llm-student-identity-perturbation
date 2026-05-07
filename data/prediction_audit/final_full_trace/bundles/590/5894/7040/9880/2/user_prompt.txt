@@ -1,0 +1,610 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 590
+- assessment_id: 5894
+- assessment_title: Lista 6 - Exercícios em Sala
+- exercise_id: 7040
+- student_id: 9880
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-07-16T19:23:21.847000
+
+Execution Result
+
+- submitted_at: 2024-07-16 18:34:29
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "10"
+    expected: "0 2 4 6 8 10 \n10 9 8 7 6 5 4 3 2 1 0 "
+    actual: "0\n2\n4\n6\n8\n10\n0\n2\n4\n6\n8\n10"
+  - test_index_0idx: 1 [FAIL]
+    input: "15"
+    expected: "0 2 4 6 8 10 12 14 \n15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 "
+    actual: "0\n2\n4\n6\n8\n10\n12\n14\n0\n2\n4\n6\n8\n10\n12\n14"
+  - test_index_0idx: 2 [FAIL]
+    input: "4"
+    expected: "0 2 4 \n4 3 2 1 0"
+    actual: "0\n2\n4\n0\n2\n4"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 68
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["f"]	[""]	+input
+128	11	0	1	0	1	["o"]	[""]	+input
+437	15	0	2	0	2	["r"]	[""]	+input
+1047	19	0	3	0	3	[" "]	[""]	+input
+2047	23	0	4	0	4	["i"]	[""]	+input
+2326	27	0	5	0	5	[" "]	[""]	+input
+3109	31	0	6	0	6	["i"]	[""]	+input
+3343	35	0	7	0	7	["n"]	[""]	+input
+3986	39	0	8	0	8	[" "]	[""]	+input
+29612	43	0	0	0	0	["",""]	[""]	+input
+29916	48	1	0	1	0	["",""]	[""]	+input
+33736	80	0	0	0	0	["I"]	[""]	+input
+33991	85	0	1	0	1	["n"]	[""]	+input
+34608	88	0	1	0	2	[""]	["n"]	+delete
+34767	92	0	0	0	1	[""]	["I"]	+delete
+37119	98	0	0	0	0	["N"]	[""]	+input
+37407	103	0	1	0	1	[" "]	[""]	+input
+37724	107	0	2	0	2	["="]	[""]	+input
+37837	111	0	3	0	3	[" "]	[""]	+input
+41606	134	0	4	0	4	["i"]	[""]	+input
+41804	138	0	5	0	5	["n"]	[""]	+input
+42929	142	0	6	0	6	["p"]	[""]	+input
+43348	146	0	7	0	7	["u"]	[""]	+input
+43673	150	0	8	0	8	["t"]	[""]	+input
+44814	154	0	9	0	9	[" "]	[""]	+input
+48802	157	0	9	0	10	[""]	[" "]	+delete
+50061	176	0	9	0	9	["()"]	[""]	+input
+51610	203	0	10	0	10	["\"\""]	[""]	+input
+66960	210	0	11	0	11	["I"]	[""]	+input
+67212	215	0	12	0	12	["n"]	[""]	+input
+67504	219	0	13	0	13	["s"]	[""]	+input
+67650	223	0	14	0	14	["i"]	[""]	+input
+68010	227	0	15	0	15	["r"]	[""]	+input
+68134	231	0	16	0	16	["a"]	[""]	+input
+68318	235	0	17	0	17	[" "]	[""]	+input
+70088	239	0	18	0	18	["o"]	[""]	+input
+70483	243	0	19	0	19	[" "]	[""]	+input
+70869	247	0	20	0	20	["v"]	[""]	+input
+71125	251	0	21	0	21	["a"]	[""]	+input
+71284	255	0	22	0	22	["l"]	[""]	+input
+71462	259	0	23	0	23	["o"]	[""]	+input
+71604	263	0	24	0	24	["r"]	[""]	+input
+71752	267	0	25	0	25	[" "]	[""]	+input
+71867	271	0	26	0	26	["d"]	[""]	+input
+72025	275	0	27	0	27	["e"]	[""]	+input
+72105	278	0	28	0	28	[" "]	[""]	+input
+72649	284	0	29	0	29	["N"]	[""]	+input
+75688	290	0	30	0	30	[":"]	[""]	+input
+76049	295	0	31	0	31	[" "]	[""]	+input
+122061	300	2	9	2	9	["r"]	[""]	+input
+122741	304	2	10	2	10	["a"]	[""]	+input
+122914	308	2	11	2	11	["n"]	[""]	+input
+123552	312	2	12	2	12	["g"]	[""]	+input
+124089	316	2	13	2	13	["e"]	[""]	+input
+126380	321	2	14	2	14	["()"]	[""]	+input
+132772	327	2	15	2	15	["0"]	[""]	+input
+133368	331	2	16	2	16	[","]	[""]	+input
+133607	335	2	17	2	17	[" "]	[""]	+input
+134849	340	2	18	2	18	["N"]	[""]	+input
+137497	345	2	20	2	20	["",""]	[""]	+input
+138807	351	3	0	3	0	["p"]	[""]	+input
+139619	355	3	1	3	1	["r"]	[""]	+input
+139724	359	3	2	3	2	["i"]	[""]	+input
+139939	363	3	3	3	3	["n"]	[""]	+input
+140149	367	3	4	3	4	["t"]	[""]	+input
+141914	372	3	5	3	5	["()"]	[""]	+input
+142684	379	3	6	3	6	["N"]	[""]	+input
+242112	395	3	6	3	7	["i"]	["N"]	+input
+
+Local Run 1
+- event_time_delta_ms: 244940
+- raw_log_line: 401
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+N = input("Insira o valor de N: ")
+
+for i in range(0, N)
+print(i)
+```
+Run Output
+```text
+File "main.py", line 3
+for i in range(0, N)
+SyntaxError: invalid syntax
+```
+
+Edit Segment 2
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+314409	406	2	19	2	19	[","]	[""]	+input
+314623	410	2	20	2	20	[" "]	[""]	+input
+315181	414	2	21	2	21	["2"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 319009
+- raw_log_line: 420
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+N = input("Insira o valor de N: ")
+
+for i in range(0, N, 2)
+print(i)
+```
+Run Output
+```text
+File "main.py", line 3
+for i in range(0, N)
+SyntaxError: invalid syntax
+```
+
+Edit Segment 3
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+330597	425	2	19	2	19	["-"]	[""]	+input
+331297	429	2	20	2	20	["1"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 334941
+- raw_log_line: 435
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+N = input("Insira o valor de N: ")
+
+for i in range(0, N-1, 2)
+print(i)
+```
+Run Output
+```text
+File "main.py", line 3
+for i in range(0, N, 2)
+SyntaxError: invalid syntax
+```
+
+Edit Segment 4
+- raw_change_event_count: 112
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+341447	439	0	0	3	8	[""]	["N = input(\"Insira o valor de N: \")","","for i in range(0, N-1, 2)","print(i)"]	+delete
+388476	446	0	0	0	0	["f"]	[""]	+input
+388641	450	0	1	0	1	["r"]	[""]	+input
+388746	453	0	2	0	2	["o"]	[""]	+input
+389139	458	0	3	0	3	[" "]	[""]	+input
+389548	461	0	3	0	4	[""]	[" "]	+delete
+390500	466	0	3	0	3	["m"]	[""]	+input
+390696	470	0	4	0	4	[" "]	[""]	+input
+391431	474	0	5	0	5	["n"]	[""]	+input
+391665	478	0	6	0	6	["u"]	[""]	+input
+391892	482	0	7	0	7	["m"]	[""]	+input
+392230	486	0	8	0	8	["p"]	[""]	+input
+392700	490	0	9	0	9	["y"]	[""]	+input
+392954	494	0	10	0	10	[" "]	[""]	+input
+394225	498	0	11	0	11	["i"]	[""]	+input
+394438	502	0	12	0	12	["m"]	[""]	+input
+394685	506	0	13	0	13	["p"]	[""]	+input
+394886	510	0	14	0	14	["o"]	[""]	+input
+395347	514	0	15	0	15	["r"]	[""]	+input
+395582	518	0	16	0	16	["t"]	[""]	+input
+397333	522	0	17	0	17	[" "]	[""]	+input
+397932	527	0	18	0	18	["*"]	[""]	+input
+398804	531	0	19	0	19	["",""]	[""]	+input
+399222	536	1	0	1	0	["",""]	[""]	+input
+401563	543	2	0	2	0	["N"]	[""]	+input
+401800	548	2	1	2	1	[" "]	[""]	+input
+402016	552	2	2	2	2	["="]	[""]	+input
+402123	556	2	3	2	3	[" "]	[""]	+input
+405250	560	2	4	2	4	["i"]	[""]	+input
+405482	564	2	5	2	5	["n"]	[""]	+input
+406808	568	2	6	2	6	["t"]	[""]	+input
+408165	573	2	7	2	7	["()"]	[""]	+input
+408685	579	2	8	2	8	["i"]	[""]	+input
+408898	583	2	9	2	9	["n"]	[""]	+input
+409116	587	2	10	2	10	["p"]	[""]	+input
+409510	591	2	11	2	11	["u"]	[""]	+input
+409735	595	2	12	2	12	["t"]	[""]	+input
+411174	600	2	13	2	13	["()"]	[""]	+input
+421814	607	2	14	2	14	["\"\""]	[""]	+input
+422604	614	2	15	2	15	["I"]	[""]	+input
+422822	619	2	16	2	16	["n"]	[""]	+input
+423432	623	2	17	2	17	["s"]	[""]	+input
+423651	627	2	18	2	18	["i"]	[""]	+input
+423919	631	2	19	2	19	["r"]	[""]	+input
+424178	635	2	20	2	20	["a"]	[""]	+input
+424334	639	2	21	2	21	[" "]	[""]	+input
+431610	643	2	22	2	22	["o"]	[""]	+input
+431738	646	2	23	2	23	[" "]	[""]	+input
+432527	651	2	24	2	24	["n"]	[""]	+input
+432770	655	2	25	2	25	["u"]	[""]	+input
+435100	658	2	25	2	26	[""]	["u"]	+delete
+435266	662	2	24	2	25	[""]	["n"]	+delete
+435468	666	2	23	2	24	[""]	[" "]	+delete
+436397	671	2	23	2	23	[" "]	[""]	+input
+436677	675	2	24	2	24	["v"]	[""]	+input
+436932	679	2	25	2	25	["a"]	[""]	+input
+437091	683	2	26	2	26	["l"]	[""]	+input
+437320	687	2	27	2	27	["o"]	[""]	+input
+437469	691	2	28	2	28	["r"]	[""]	+input
+437474	694	2	29	2	29	[" "]	[""]	+input
+437745	699	2	30	2	30	["o"]	[""]	+input
+437899	703	2	31	2	31	[" "]	[""]	+input
+438265	706	2	31	2	32	[""]	[" "]	+delete
+438415	710	2	30	2	31	[""]	["o"]	+delete
+438904	715	2	30	2	30	["d"]	[""]	+input
+439080	719	2	31	2	31	["e"]	[""]	+input
+439136	722	2	32	2	32	[" "]	[""]	+input
+439700	728	2	33	2	33	["N"]	[""]	+input
+440185	732	2	34	2	34	[":"]	[""]	+input
+440530	736	2	35	2	35	[" "]	[""]	+input
+443447	741	2	39	2	39	["",""]	[""]	+input
+443924	746	3	0	3	0	["",""]	[""]	+input
+475601	752	4	0	4	0	["f"]	[""]	+input
+475803	756	4	1	4	1	["o"]	[""]	+input
+475890	760	4	2	4	2	["r"]	[""]	+input
+476120	764	4	3	4	3	[" "]	[""]	+input
+476764	768	4	4	4	4	["i"]	[""]	+input
+477040	772	4	5	4	5	[" "]	[""]	+input
+483234	776	4	6	4	6	["i"]	[""]	+input
+483443	780	4	7	4	7	["n"]	[""]	+input
+483927	784	4	8	4	8	[" "]	[""]	+input
+485058	788	4	9	4	9	["r"]	[""]	+input
+485273	792	4	10	4	10	["a"]	[""]	+input
+485479	796	4	11	4	11	["n"]	[""]	+input
+486034	800	4	12	4	12	["g"]	[""]	+input
+486307	804	4	13	4	13	["e"]	[""]	+input
+488124	809	4	14	4	14	["()"]	[""]	+input
+492168	818	4	15	4	15	["N"]	[""]	+input
+493824	824	4	16	4	16	["+"]	[""]	+input
+494497	829	4	17	4	17	["1"]	[""]	+input
+504014	833	4	19	4	19	["",""]	[""]	+input
+505406	839	5	0	5	0	["p"]	[""]	+input
+505783	843	5	1	5	1	["r"]	[""]	+input
+506633	847	5	2	5	2	["i"]	[""]	+input
+507365	851	5	3	5	3	["n"]	[""]	+input
+507718	855	5	4	5	4	["t"]	[""]	+input
+508796	860	5	5	5	5	["()"]	[""]	+input
+510647	866	5	6	5	6	["i"]	[""]	+input
+523561	872	4	19	4	19	["",""]	[""]	+input
+524879	878	5	0	5	0	["i"]	[""]	+input
+525272	882	5	1	5	1	["f"]	[""]	+input
+532149	886	5	0	5	0	["\t"]	[""]	+input
+533769	892	5	3	5	3	[" "]	[""]	+input
+536008	896	5	4	5	4	["i"]	[""]	+input
+539842	940	5	5	5	5	["%"]	[""]	+input
+540343	945	5	6	5	6	["2"]	[""]	+input
+542130	949	5	7	5	7	[" "]	[""]	+input
+542901	953	5	8	5	8	["="]	[""]	+input
+543042	957	5	9	5	9	["="]	[""]	+input
+543499	961	5	10	5	10	[" "]	[""]	+input
+544459	965	5	11	5	11	["0"]	[""]	+input
+545044	970	5	12	5	12	[":"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 553213
+- raw_log_line: 977
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+from numpy import *
+
+N = int(input("Insira o valor de N: "))
+
+for i in range(N+1)
+	if i%2 == 0:
+print(i)
+```
+Run Output
+```text
+File "main.py", line 5
+for i in range(N+1)
+SyntaxError: invalid syntax
+```
+
+Edit Segment 5
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+564327	983	4	19	4	19	[":"]	[""]	+input
+
+Local Run 5
+- event_time_delta_ms: 568775
+- raw_log_line: 990
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+from numpy import *
+
+N = int(input("Insira o valor de N: "))
+
+for i in range(N+1):
+	if i%2 == 0:
+print(i)
+```
+Run Output
+```text
+File "main.py", line 7
+print(i)
+IndentationError: expected an indented block
+```
+
+Edit Segment 6
+- raw_change_event_count: 17
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+578604	994	6	0	6	0	["\t"]	[""]	+input
+578848	998	6	1	6	1	["\t"]	[""]	+input
+633962	1030	6	10	6	10	["",""]	[""]	+input
+633962	1031	7	0	7	0	["\t\t"]	[""]	+input
+634727	1036	7	1	7	2	[""]	["\t"]	+delete
+634914	1040	7	0	7	1	[""]	["\t"]	+delete
+635265	1044	7	0	7	0	["",""]	[""]	+input
+635266	1045	8	0	8	0	["\t\t"]	[""]	+input
+636038	1050	8	1	8	2	[""]	["\t"]	+delete
+636221	1054	8	0	8	1	[""]	["\t"]	+delete
+637083	1059	8	0	8	0	["for i in range(N+1):","\tif i%2 == 0:","\t\tprint(i)"]	[""]	paste
+647885	1066	8	15	8	15	["0"]	[""]	+input
+648599	1070	8	16	8	16	[","]	[""]	+input
+648906	1074	8	17	8	17	[" "]	[""]	+input
+652053	1079	8	21	8	21	[","]	[""]	+input
+652260	1083	8	22	8	22	[" "]	[""]	+input
+652944	1087	8	23	8	23	["2"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 664059
+- raw_log_line: 1090
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+from numpy import *
+
+N = int(input("Insira o valor de N: "))
+
+for i in range(N+1):
+	if i%2 == 0:
+		print(i)
+
+for i in range(0, N+1, 2):
+	if i%2 == 0:
+		print(i)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-07-16T19:34:30.248000
+
+Execution Result
+
+- submitted_at: 2024-07-16 18:34:38
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "10"
+    expected: "0 2 4 6 8 10 \n10 9 8 7 6 5 4 3 2 1 0 "
+    actual: "0\n2\n4\n6\n8\n10"
+  - test_index_0idx: 1 [FAIL]
+    input: "15"
+    expected: "0 2 4 6 8 10 12 14 \n15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 "
+    actual: "0\n2\n4\n6\n8\n10\n12\n14"
+  - test_index_0idx: 2 [FAIL]
+    input: "4"
+    expected: "0 2 4 \n4 3 2 1 0"
+    actual: "0\n2\n4"
+
+Attempt Start Code
+```python
+from numpy import *
+
+N = int(input("Insira o valor de N: "))
+
+for i in range(N+1):
+	if i%2 == 0:
+		print(i)
+
+for i in range(0, N+1, 2):
+	if i%2 == 0:
+		print(i)
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1096	8	23	8	23	["-"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 4738
+- raw_log_line: 1099
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+from numpy import *
+
+N = int(input("Insira o valor de N: "))
+
+for i in range(N+1):
+	if i%2 == 0:
+		print(i)
+
+for i in range(0, N+1, -2):
+	if i%2 == 0:
+		print(i)
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-07-16T19:34:38.509000
+
+Execution Result
+
+- submitted_at: 2024-07-16 18:35:39
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "10"
+    expected: "0 2 4 6 8 10 \n10 9 8 7 6 5 4 3 2 1 0 "
+    actual: "0\n2\n4\n6\n8\n10\n10\n8\n6\n4\n2\n0"
+  - test_index_0idx: 1 [FAIL]
+    input: "15"
+    expected: "0 2 4 6 8 10 12 14 \n15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0 "
+    actual: "0\n2\n4\n6\n8\n10\n12\n14\n14\n12\n10\n8\n6\n4\n2\n0"
+  - test_index_0idx: 2 [FAIL]
+    input: "4"
+    expected: "0 2 4 \n4 3 2 1 0"
+    actual: "0\n2\n4\n4\n2\n0"
+
+Attempt Start Code
+```python
+from numpy import *
+
+N = int(input("Insira o valor de N: "))
+
+for i in range(N+1):
+	if i%2 == 0:
+		print(i)
+
+for i in range(0, N+1, -2):
+	if i%2 == 0:
+		print(i)
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1101
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+from numpy import *
+
+N = int(input("Insira o valor de N: "))
+
+for i in range(N+1):
+	if i%2 == 0:
+		print(i)
+
+for i in range(0, N+1, -2):
+	if i%2 == 0:
+		print(i)
+```
+Run Output
+```text
+Insira o valor de N: 10
+```
+
+Edit Segment 1
+- raw_change_event_count: 15
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+38194	1107	8	15	8	25	["n"]	["0, N+1, -2"]	+input
+39200	1110	8	15	8	16	[""]	["n"]	+delete
+40079	1116	8	15	8	15	["N"]	[""]	+input
+41202	1121	8	16	8	16	[","]	[""]	+input
+41522	1125	8	17	8	17	[" "]	[""]	+input
+45929	1129	8	18	8	18	["-"]	[""]	+input
+46184	1133	8	19	8	19	["a"]	[""]	+input
+46909	1136	8	19	8	20	[""]	["a"]	+delete
+48417	1141	8	19	8	19	["1"]	[""]	+input
+48937	1145	8	20	8	20	[","]	[""]	+input
+49162	1149	8	21	8	21	[" "]	[""]	+input
+50143	1153	8	22	8	22	["-"]	[""]	+input
+50455	1157	8	23	8	23	["a"]	[""]	+input
+51503	1160	8	23	8	24	[""]	["a"]	+delete
+52296	1165	8	23	8	23	["1"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 57245
+- raw_log_line: 1168
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+from numpy import *
+
+N = int(input("Insira o valor de N: "))
+
+for i in range(N+1):
+	if i%2 == 0:
+		print(i)
+
+for i in range(N, -1, -1):
+	if i%2 == 0:
+		print(i)
+```

@@ -1,0 +1,1372 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 485
+- assessment_id: 4553
+- assessment_title: Lab 3 - Estrutura Condicional Encadeada
+- exercise_id: 1117
+- student_id: 6612
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-04-26T09:45:29.239000
+
+Execution Result
+
+- submitted_at: 2023-04-26 10:07:23
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "70.56\n2\nN"
+    expected: "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92"
+    actual: "Entrdas:  70.56  ,  2  ,  N\nValor a pagar: R$ 72.92\nValor a pagar: R$ 52.92"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75"
+    actual: "Entrdas:  100.75  ,  6  ,  S\nValor a pagar: R$ 95.56\nValor a pagar: R$ 120.75"
+  - test_index_0idx: 2 [FAIL]
+    input: "0.00\n9\nS"
+    expected: "Entradas: 0.0 , 9 , S\nDados invalidos"
+    actual: "Entrdas:  0.0  ,  9  ,  S\nDados invalidos"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 579
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	11	0	0	0	0	["p"]	[""]	+input
+61	15	0	1	0	1	["r"]	[""]	+input
+1068	19	0	2	0	2	["c"]	[""]	+input
+2131	23	0	3	0	3	[" "]	[""]	+input
+2268	27	0	4	0	4	["="]	[""]	+input
+4213	31	0	5	0	5	[" "]	[""]	+input
+5014	35	0	6	0	6	["f"]	[""]	+input
+5136	39	0	7	0	7	["l"]	[""]	+input
+5281	43	0	8	0	8	["o"]	[""]	+input
+5424	47	0	9	0	9	["a"]	[""]	+input
+5631	51	0	10	0	10	["t"]	[""]	+input
+5888	55	0	11	0	11	[" "]	[""]	+input
+6531	58	0	11	0	12	[""]	[" "]	+delete
+7000	64	0	11	0	11	["()"]	[""]	+input
+7952	70	0	12	0	12	["i"]	[""]	+input
+8400	74	0	13	0	13	["n"]	[""]	+input
+8548	78	0	14	0	14	["p"]	[""]	+input
+8848	82	0	15	0	15	["u"]	[""]	+input
+9120	86	0	16	0	16	["t"]	[""]	+input
+10222	91	0	17	0	17	["()"]	[""]	+input
+15230	99	0	18	0	18	["''"]	[""]	+input
+17873	105	0	18	0	20	[""]	["''"]	+delete
+19092	111	0	18	0	18	["\"\""]	[""]	+input
+20657	118	0	19	0	19	["P"]	[""]	+input
+21808	123	0	20	0	20	["r"]	[""]	+input
+21919	127	0	21	0	21	["e"]	[""]	+input
+22286	131	0	22	0	22	["c"]	[""]	+input
+23244	134	0	22	0	23	[""]	["c"]	+delete
+23904	139	0	22	0	22	["o"]	[""]	+input
+24016	143	0	23	0	23	[" "]	[""]	+input
+24497	148	0	24	0	24	[":"]	[""]	+input
+25362	152	0	24	0	25	[""]	[":"]	+delete
+25485	156	0	23	0	24	[""]	[" "]	+delete
+25983	162	0	23	0	23	[":"]	[""]	+input
+26108	167	0	24	0	24	[" "]	[""]	+input
+28223	179	0	28	0	28	["",""]	[""]	+input
+29798	185	1	0	1	0	["d"]	[""]	+input
+29935	189	1	1	1	1	["i"]	[""]	+input
+31456	193	1	2	1	2	["a"]	[""]	+input
+32481	197	1	3	1	3	[" "]	[""]	+input
+32672	201	1	4	1	4	["="]	[""]	+input
+32881	205	1	5	1	5	[" "]	[""]	+input
+34272	209	1	6	1	6	["i"]	[""]	+input
+34431	213	1	7	1	7	["n"]	[""]	+input
+38493	219	1	8	1	8	["t"]	[""]	+input
+39500	224	1	9	1	9	["()"]	[""]	+input
+40531	230	1	10	1	10	["i"]	[""]	+input
+40623	234	1	11	1	11	["n"]	[""]	+input
+41184	238	1	12	1	12	["p"]	[""]	+input
+41281	242	1	13	1	13	["y"]	[""]	+input
+42286	245	1	13	1	14	[""]	["y"]	+delete
+42704	250	1	13	1	13	["u"]	[""]	+input
+42799	254	1	14	1	14	["t"]	[""]	+input
+44151	259	1	15	1	15	["()"]	[""]	+input
+45921	266	1	16	1	16	["\"\""]	[""]	+input
+46974	273	1	17	1	17	["D"]	[""]	+input
+47423	278	1	18	1	18	["i"]	[""]	+input
+47486	282	1	19	1	19	["a"]	[""]	+input
+48335	287	1	20	1	20	[":"]	[""]	+input
+48656	292	1	21	1	21	[" "]	[""]	+input
+52371	304	1	25	1	25	["",""]	[""]	+input
+52595	309	2	0	2	0	["",""]	[""]	+input
+57721	318	2	0	2	0	["m"]	[""]	+input
+57823	322	2	1	2	1	["s"]	[""]	+input
+57998	326	2	2	2	2	["u"]	[""]	+input
+59054	329	2	2	2	3	[""]	["u"]	+delete
+59197	333	2	1	2	2	[""]	["s"]	+delete
+59440	338	2	1	2	1	["s"]	[""]	+input
+60173	341	2	1	2	2	[""]	["s"]	+delete
+60581	346	2	1	2	1	["u"]	[""]	+input
+60621	350	2	2	2	2	["s"]	[""]	+input
+63846	353	2	2	2	3	[""]	["s"]	+delete
+63917	358	2	2	2	2	["c"]	[""]	+input
+64978	361	2	2	2	3	[""]	["c"]	+delete
+66949	366	2	2	2	2	["s"]	[""]	+input
+67084	370	2	3	2	3	["i"]	[""]	+input
+67248	374	2	4	2	4	["c"]	[""]	+input
+67719	378	2	5	2	5	[" "]	[""]	+input
+68531	382	2	6	2	6	["="]	[""]	+input
+68639	386	2	7	2	7	[" "]	[""]	+input
+69380	389	2	7	2	8	[""]	[" "]	+delete
+69534	393	2	6	2	7	[""]	["="]	+delete
+69661	397	2	5	2	6	[""]	[" "]	+delete
+69790	401	2	4	2	5	[""]	["c"]	+delete
+70947	406	2	4	2	4	["c"]	[""]	+input
+71103	410	2	5	2	5	[" "]	[""]	+input
+71682	414	2	6	2	6	["l"]	[""]	+input
+72575	417	2	6	2	7	[""]	["l"]	+delete
+72912	421	2	5	2	6	[""]	[" "]	+delete
+73856	426	2	5	2	5	[" "]	[""]	+input
+74164	430	2	6	2	6	["="]	[""]	+input
+74319	434	2	7	2	7	[" "]	[""]	+input
+77271	439	2	8	2	8	["\"\""]	[""]	+input
+80290	446	2	9	2	9	["A"]	[""]	+input
+80955	450	2	9	2	10	[""]	["A"]	+delete
+81180	454	2	8	2	10	[""]	["\"\""]	+delete
+82417	459	2	8	2	8	["s"]	[""]	+input
+82607	463	2	9	2	9	["t"]	[""]	+input
+82767	467	2	10	2	10	["r"]	[""]	+input
+83665	472	2	11	2	11	["()"]	[""]	+input
+87625	481	2	12	2	12	["\"\""]	[""]	+input
+88561	486	2	12	2	14	[""]	["\"\""]	+delete
+90368	493	2	12	2	12	["i"]	[""]	+input
+90583	497	2	13	2	13	["n"]	[""]	+input
+91381	501	2	14	2	14	["p"]	[""]	+input
+91469	505	2	15	2	15	["u"]	[""]	+input
+92123	510	2	16	2	16	["()"]	[""]	+input
+96156	522	2	15	2	15	["t"]	[""]	+input
+96942	525	2	15	2	16	[""]	["t"]	+delete
+97471	533	2	16	2	16	["t"]	[""]	+input
+100022	553	2	18	2	18	["\"\""]	[""]	+input
+103015	559	2	19	2	19	["m"]	[""]	+input
+103087	563	2	20	2	20	["i"]	[""]	+input
+104446	566	2	20	2	21	[""]	["i"]	+delete
+104560	570	2	19	2	20	[""]	["m"]	+delete
+105503	576	2	19	2	19	["M"]	[""]	+input
+106214	581	2	20	2	20	["u"]	[""]	+input
+106815	585	2	21	2	21	["s"]	[""]	+input
+106981	589	2	22	2	22	["i"]	[""]	+input
+107327	593	2	23	2	23	["c"]	[""]	+input
+107535	597	2	24	2	24	[" "]	[""]	+input
+108399	602	2	25	2	25	["L"]	[""]	+input
+108732	607	2	26	2	26	["i"]	[""]	+input
+109039	611	2	27	2	27	["v"]	[""]	+input
+109151	614	2	28	2	28	["e"]	[""]	+input
+112236	619	2	29	2	29	[" "]	[""]	+input
+114449	624	2	30	2	30	["()"]	[""]	+input
+115615	631	2	31	2	31	["S"]	[""]	+input
+118284	637	2	32	2	32	["?"]	[""]	+input
+119397	643	2	33	2	33	["M"]	[""]	+input
+120113	647	2	33	2	34	[""]	["M"]	+delete
+121276	651	2	32	2	33	[""]	["?"]	+delete
+122994	656	2	32	2	32	["/"]	[""]	+input
+124083	660	2	33	2	33	["n"]	[""]	+input
+125422	663	2	33	2	34	[""]	["n"]	+delete
+125867	669	2	33	2	33	["N"]	[""]	+input
+133569	678	2	38	2	38	["."]	[""]	+input
+134063	682	2	39	2	39	["u"]	[""]	+input
+134607	686	2	40	2	40	["p"]	[""]	+input
+134730	690	2	41	2	41	["p"]	[""]	+input
+134863	694	2	42	2	42	["e"]	[""]	+input
+135038	697	2	43	2	43	["r"]	[""]	+input
+136066	703	2	44	2	44	["()"]	[""]	+input
+138483	714	3	0	3	0	["",""]	[""]	+input
+141051	720	4	0	4	0	["p"]	[""]	+input
+141134	724	4	1	4	1	["r"]	[""]	+input
+141264	728	4	2	4	2	["i"]	[""]	+input
+141535	732	4	3	4	3	["n"]	[""]	+input
+141612	736	4	4	4	4	["t"]	[""]	+input
+146209	741	4	5	4	5	[" "]	[""]	+input
+147581	744	4	5	4	6	[""]	[" "]	+delete
+148640	750	4	5	4	5	["()"]	[""]	+input
+150284	757	4	6	4	6	["E"]	[""]	+input
+150730	762	4	7	4	7	["n"]	[""]	+input
+151006	766	4	8	4	8	["t"]	[""]	+input
+151150	770	4	9	4	9	["r"]	[""]	+input
+152047	774	4	10	4	10	["d"]	[""]	+input
+152223	778	4	11	4	11	["a"]	[""]	+input
+152497	781	4	12	4	12	["s"]	[""]	+input
+157245	790	4	6	4	6	["\""]	[""]	+input
+162645	817	4	14	4	14	[":"]	[""]	+input
+162862	822	4	15	4	15	[" "]	[""]	+input
+164400	827	4	16	4	16	["\""]	[""]	+input
+166463	832	4	17	4	17	["p"]	[""]	+input
+166622	836	4	18	4	18	["r"]	[""]	+input
+167998	840	4	19	4	19	["c"]	[""]	+input
+177152	859	4	17	4	17	[" "]	[""]	+input
+178812	862	4	17	4	18	[""]	[" "]	+delete
+178980	867	4	17	4	17	[","]	[""]	+input
+179347	871	4	18	4	18	[" "]	[""]	+input
+184179	874	4	18	4	19	[""]	[" "]	+delete
+188906	888	4	21	4	21	[","]	[""]	+input
+190284	892	4	22	4	22	[" "]	[""]	+input
+192293	897	4	23	4	23	["\"\""]	[""]	+input
+195450	903	4	24	4	24	[" "]	[""]	+input
+195950	907	4	25	4	25	[","]	[""]	+input
+196347	911	4	26	4	26	[" "]	[""]	+input
+214969	920	4	28	4	28	[","]	[""]	+input
+215166	924	4	29	4	29	[" "]	[""]	+input
+216096	928	4	30	4	30	["d"]	[""]	+input
+216301	932	4	31	4	31	["i"]	[""]	+input
+216546	936	4	32	4	32	["a"]	[""]	+input
+219381	940	4	33	4	33	[","]	[""]	+input
+223901	955	4	29	4	30	[""]	[" "]	+delete
+225086	972	4	33	4	33	[" "]	[""]	+input
+233316	975	4	33	4	34	[""]	[" "]	+delete
+236256	981	4	33	4	33	["\"\""]	[""]	+input
+238062	987	4	34	4	34	[" "]	[""]	+input
+238478	991	4	35	4	35	[","]	[""]	+input
+238685	995	4	36	4	36	[" "]	[""]	+input
+242134	1002	4	38	4	38	[","]	[""]	+input
+247381	1006	4	39	4	39	["m"]	[""]	+input
+247678	1010	4	40	4	40	["u"]	[""]	+input
+247775	1014	4	41	4	41	["s"]	[""]	+input
+247916	1018	4	42	4	42	["i"]	[""]	+input
+248145	1022	4	43	4	43	["c"]	[""]	+input
+252620	1026	4	45	4	45	["",""]	[""]	+input
+252730	1031	5	0	5	0	["",""]	[""]	+input
+254077	1037	6	0	6	0	["i"]	[""]	+input
+254160	1041	6	1	6	1	["f"]	[""]	+input
+254504	1045	6	2	6	2	[" "]	[""]	+input
+255693	1048	6	2	6	3	[""]	[" "]	+delete
+256478	1054	6	2	6	2	["()"]	[""]	+input
+257899	1060	6	3	6	3	[" "]	[""]	+input
+258544	1064	6	4	6	4	["p"]	[""]	+input
+258668	1068	6	5	6	5	["r"]	[""]	+input
+259119	1072	6	6	6	6	["c"]	[""]	+input
+263100	1084	6	3	6	4	[""]	[" "]	+delete
+264479	1092	6	2	6	2	[" "]	[""]	+input
+267713	1108	6	7	6	7	[" "]	[""]	+input
+269133	1113	6	8	6	8	[">"]	[""]	+input
+269288	1118	6	9	6	9	[" "]	[""]	+input
+270313	1121	6	9	6	10	[""]	[" "]	+delete
+270477	1126	6	9	6	9	["="]	[""]	+input
+270578	1130	6	10	6	10	[" "]	[""]	+input
+271361	1134	6	11	6	11	["0"]	[""]	+input
+282963	1140	6	13	6	13	[" "]	[""]	+input
+283068	1144	6	14	6	14	["a"]	[""]	+input
+283261	1148	6	15	6	15	["n"]	[""]	+input
+283452	1152	6	16	6	16	["d"]	[""]	+input
+284413	1156	6	17	6	17	[" "]	[""]	+input
+285263	1161	6	18	6	18	["()"]	[""]	+input
+286776	1167	6	19	6	19	["d"]	[""]	+input
+286911	1171	6	20	6	20	["i"]	[""]	+input
+287036	1175	6	21	6	21	["a"]	[""]	+input
+290867	1180	6	22	6	22	[">"]	[""]	+input
+294435	1185	6	23	6	23	["="]	[""]	+input
+295980	1189	6	24	6	24	["1"]	[""]	+input
+304399	1194	6	22	6	22	[" "]	[""]	+input
+305053	1199	6	25	6	25	[" "]	[""]	+input
+307100	1204	6	28	6	28	[" "]	[""]	+input
+307677	1208	6	29	6	29	["a"]	[""]	+input
+307868	1212	6	30	6	30	["n"]	[""]	+input
+308077	1216	6	31	6	31	["d"]	[""]	+input
+309596	1220	6	32	6	32	[" "]	[""]	+input
+310118	1225	6	33	6	33	["()"]	[""]	+input
+311548	1231	6	34	6	34	["d"]	[""]	+input
+313260	1235	6	35	6	35	["i"]	[""]	+input
+313376	1239	6	36	6	36	["a"]	[""]	+input
+314194	1244	6	37	6	37	["<"]	[""]	+input
+314844	1249	6	38	6	38	["="]	[""]	+input
+315933	1253	6	39	6	39	["7"]	[""]	+input
+317964	1263	6	41	6	41	[" "]	[""]	+input
+318812	1267	6	42	6	42	["a"]	[""]	+input
+318927	1271	6	43	6	43	["n"]	[""]	+input
+319068	1275	6	44	6	44	["d"]	[""]	+input
+323233	1279	6	45	6	45	[" "]	[""]	+input
+324194	1283	6	46	6	46	["m"]	[""]	+input
+324364	1287	6	47	6	47	["u"]	[""]	+input
+324552	1291	6	48	6	48	["s"]	[""]	+input
+324780	1295	6	49	6	49	["i"]	[""]	+input
+325020	1299	6	50	6	50	["c"]	[""]	+input
+327779	1305	6	51	6	51	[" "]	[""]	+input
+328144	1309	6	52	6	52	["="]	[""]	+input
+328252	1313	6	53	6	53	["="]	[""]	+input
+328412	1317	6	54	6	54	[" "]	[""]	+input
+329314	1322	6	55	6	55	["\"\""]	[""]	+input
+329979	1329	6	56	6	56	["S"]	[""]	+input
+334846	1340	6	58	6	58	[" "]	[""]	+input
+335996	1344	6	59	6	59	["o"]	[""]	+input
+336380	1348	6	60	6	60	["r"]	[""]	+input
+337628	1352	6	61	6	61	[" "]	[""]	+input
+338702	1357	6	62	6	62	["()"]	[""]	+input
+339436	1363	6	63	6	63	["m"]	[""]	+input
+339580	1367	6	64	6	64	["u"]	[""]	+input
+339745	1371	6	65	6	65	["s"]	[""]	+input
+339884	1375	6	66	6	66	["i"]	[""]	+input
+340061	1379	6	67	6	67	["c"]	[""]	+input
+341597	1383	6	68	6	68	[" "]	[""]	+input
+343294	1387	6	69	6	69	["="]	[""]	+input
+343404	1391	6	70	6	70	["="]	[""]	+input
+343548	1395	6	71	6	71	[" "]	[""]	+input
+344954	1400	6	72	6	72	["\"\""]	[""]	+input
+345581	1407	6	73	6	73	["N"]	[""]	+input
+348752	1414	6	46	6	46	["("]	[""]	+input
+352228	1456	6	59	6	59	[")"]	[""]	+input
+356197	1462	6	78	6	78	[" "]	[""]	+input
+357035	1467	6	78	6	79	[""]	[" "]	+delete
+357729	1473	6	78	6	78	[":"]	[""]	+input
+357913	1477	6	79	6	79	["",""]	[""]	+input
+357913	1478	7	0	7	0	["\t"]	[""]	+input
+383605	1484	7	1	7	1	["p"]	[""]	+input
+385247	1489	7	2	7	2	["_"]	[""]	+input
+386145	1494	7	3	7	3	["f"]	[""]	+input
+386285	1498	7	4	7	4	["i"]	[""]	+input
+386463	1502	7	5	7	5	["m"]	[""]	+input
+387150	1506	7	6	7	6	[" "]	[""]	+input
+388251	1510	7	7	7	7	["="]	[""]	+input
+388398	1514	7	8	7	8	[" "]	[""]	+input
+392942	1518	7	9	7	9	["p"]	[""]	+input
+394430	1522	7	10	7	10	["c"]	[""]	+input
+394563	1526	7	11	7	11	["r"]	[""]	+input
+395517	1529	7	11	7	12	[""]	["r"]	+delete
+395627	1533	7	10	7	11	[""]	["c"]	+delete
+396431	1538	7	10	7	10	["r"]	[""]	+input
+396529	1542	7	11	7	11	["c"]	[""]	+input
+396947	1546	7	12	7	12	[" "]	[""]	+input
+399810	1551	7	13	7	13	["+"]	[""]	+input
+399982	1556	7	14	7	14	[" "]	[""]	+input
+400637	1559	7	14	7	15	[""]	[" "]	+delete
+400777	1563	7	13	7	14	[""]	["+"]	+delete
+401471	1569	7	13	7	13	["*"]	[""]	+input
+401807	1574	7	14	7	14	[" "]	[""]	+input
+404737	1578	7	15	7	15	["0"]	[""]	+input
+404996	1582	7	16	7	16	["."]	[""]	+input
+405581	1586	7	17	7	17	["7"]	[""]	+input
+406334	1590	7	18	7	18	["5"]	[""]	+input
+409287	1594	7	19	7	19	[" "]	[""]	+input
+411098	1599	7	20	7	20	["+"]	[""]	+input
+411216	1604	7	21	7	21	[" "]	[""]	+input
+411983	1608	7	22	7	22	["2"]	[""]	+input
+412154	1612	7	23	7	23	["0"]	[""]	+input
+413766	1615	7	24	7	24	["",""]	[""]	+input
+413766	1616	8	0	8	0	["\t"]	[""]	+input
+415952	1622	8	1	8	1	["p"]	[""]	+input
+416096	1626	8	2	8	2	["r"]	[""]	+input
+416303	1630	8	3	8	3	["i"]	[""]	+input
+416530	1634	8	4	8	4	["n"]	[""]	+input
+416637	1638	8	5	8	5	["t"]	[""]	+input
+417716	1643	8	6	8	6	["()"]	[""]	+input
+419014	1650	8	7	8	7	["V"]	[""]	+input
+419887	1655	8	8	8	8	["a"]	[""]	+input
+420351	1659	8	9	8	9	["l"]	[""]	+input
+420509	1663	8	10	8	10	["o"]	[""]	+input
+420606	1667	8	11	8	11	["r"]	[""]	+input
+422639	1671	8	12	8	12	[" "]	[""]	+input
+423530	1675	8	13	8	13	["a"]	[""]	+input
+423807	1679	8	14	8	14	[" "]	[""]	+input
+424117	1683	8	15	8	15	["p"]	[""]	+input
+424490	1687	8	16	8	16	["g"]	[""]	+input
+425396	1690	8	16	8	17	[""]	["g"]	+delete
+426011	1695	8	16	8	16	["a"]	[""]	+input
+426286	1699	8	17	8	17	["g"]	[""]	+input
+426442	1703	8	18	8	18	["r"]	[""]	+input
+426548	1707	8	19	8	19	["a"]	[""]	+input
+427500	1710	8	19	8	20	[""]	["a"]	+delete
+427612	1714	8	18	8	19	[""]	["r"]	+delete
+427730	1719	8	18	8	18	["a"]	[""]	+input
+427898	1722	8	19	8	19	["r"]	[""]	+input
+431799	1730	8	20	8	20	[":"]	[""]	+input
+432074	1735	8	21	8	21	[" "]	[""]	+input
+433984	1740	8	22	8	22	["R"]	[""]	+input
+434843	1744	8	23	8	23	["$"]	[""]	+input
+439209	1750	8	24	8	24	["\"\""]	[""]	+input
+440701	1755	8	24	8	26	[""]	["\"\""]	+delete
+444520	1806	8	7	8	7	["\""]	[""]	+input
+447801	1851	8	25	8	25	["\""]	[""]	+input
+458837	1865	8	26	8	26	[","]	[""]	+input
+459035	1869	8	27	8	27	[" "]	[""]	+input
+460624	1873	8	28	8	28	["o"]	[""]	+input
+460704	1877	8	29	8	29	["r"]	[""]	+input
+460919	1881	8	30	8	30	["u"]	[""]	+input
+461232	1885	8	31	8	31	["n"]	[""]	+input
+461312	1889	8	32	8	32	["d"]	[""]	+input
+464163	1892	8	32	8	33	[""]	["d"]	+delete
+464317	1896	8	31	8	32	[""]	["n"]	+delete
+464397	1900	8	30	8	31	[""]	["u"]	+delete
+464545	1904	8	29	8	30	[""]	["r"]	+delete
+464653	1908	8	28	8	29	[""]	["o"]	+delete
+465585	1913	8	28	8	28	["r"]	[""]	+input
+465808	1917	8	29	8	29	["o"]	[""]	+input
+466255	1921	8	30	8	30	["u"]	[""]	+input
+466532	1925	8	31	8	31	["n"]	[""]	+input
+466688	1929	8	32	8	32	["d"]	[""]	+input
+472169	1934	8	33	8	33	["()"]	[""]	+input
+474753	1940	8	34	8	34	["p"]	[""]	+input
+475298	1945	8	35	8	35	["_"]	[""]	+input
+476001	1950	8	36	8	36	["f"]	[""]	+input
+476150	1954	8	37	8	37	["i"]	[""]	+input
+476337	1958	8	38	8	38	["m"]	[""]	+input
+479788	1962	8	39	8	39	[","]	[""]	+input
+480048	1966	8	40	8	40	[" "]	[""]	+input
+480901	1970	8	41	8	41	["2"]	[""]	+input
+491667	1984	8	44	8	44	["",""]	[""]	+input
+491668	1985	9	0	9	0	["\t"]	[""]	+input
+492127	1990	9	1	9	1	["",""]	[""]	+input
+492128	1991	10	0	10	0	["\t"]	[""]	+input
+495416	1997	10	1	10	1	["e"]	[""]	+input
+495612	2001	10	2	10	2	["l"]	[""]	+input
+495809	2005	10	3	10	3	["i"]	[""]	+input
+496092	2009	10	4	10	4	["f"]	[""]	+input
+510586	2020	10	5	10	5	[" "]	[""]	+input
+511750	2024	10	6	10	6	["(prc >= 0) and (dia >= 1) and (dia<=7) and (music == \"S\") or (music == \"N\")"]	[""]	paste
+521853	2029	10	14	10	15	[""]	["0"]	+delete
+522430	2033	10	13	10	14	[""]	[" "]	+delete
+522686	2037	10	12	10	13	[""]	["="]	+delete
+522830	2041	10	11	10	12	[""]	[">"]	+delete
+522927	2045	10	10	10	11	[""]	[" "]	+delete
+523070	2049	10	9	10	10	[""]	["c"]	+delete
+523246	2053	10	8	10	9	[""]	["r"]	+delete
+523518	2057	10	7	10	8	[""]	["p"]	+delete
+525170	2062	10	7	10	7	["m"]	[""]	+input
+525426	2066	10	8	10	8	["u"]	[""]	+input
+525532	2070	10	9	10	9	["s"]	[""]	+input
+527283	2074	10	10	10	10	["i"]	[""]	+input
+527400	2078	10	11	10	11	["c"]	[""]	+input
+532156	2082	10	12	10	12	[" "]	[""]	+input
+533300	2086	10	13	10	13	["="]	[""]	+input
+533431	2090	10	14	10	14	["="]	[""]	+input
+533517	2094	10	15	10	15	[" "]	[""]	+input
+535165	2099	10	16	10	16	["\"\""]	[""]	+input
+536239	2106	10	17	10	17	["S"]	[""]	+input
+543293	2152	10	31	10	32	[""]	["="]	+delete
+543757	2156	10	30	10	31	[""]	[">"]	+delete
+544786	2161	10	30	10	30	["="]	[""]	+input
+544918	2165	10	31	10	31	["="]	[""]	+input
+551318	2170	10	46	10	46	[" "]	[""]	+input
+554239	2183	10	44	10	44	[" "]	[""]	+input
+556401	2187	10	38	10	39	[""]	["d"]	+delete
+556513	2191	10	37	10	38	[""]	["n"]	+delete
+556913	2195	10	36	10	37	[""]	["a"]	+delete
+557700	2200	10	36	10	36	["o"]	[""]	+input
+557822	2204	10	37	10	37	["r"]	[""]	+input
+565012	2213	10	47	10	48	[""]	["7"]	+delete
+565858	2218	10	47	10	47	["4"]	[""]	+input
+568238	2224	10	44	10	45	[""]	["<"]	+delete
+568541	2229	10	44	10	44	["="]	[""]	+input
+583872	2243	10	55	10	67	[""]	["music == \"S\""]	+delete
+584419	2248	10	55	10	55	["dia == 4"]	[""]	paste
+585872	2252	10	62	10	63	[""]	["4"]	+delete
+587619	2257	10	62	10	62	["6"]	[""]	+input
+593266	2261	10	69	10	81	[""]	["music == \"N\""]	+delete
+595001	2266	10	69	10	69	["dia == 4"]	[""]	paste
+596400	2270	10	76	10	77	[""]	["4"]	+delete
+597107	2275	10	76	10	76	["7"]	[""]	+input
+601682	2279	10	52	10	53	[""]	["d"]	+delete
+601807	2283	10	51	10	52	[""]	["n"]	+delete
+601932	2287	10	50	10	51	[""]	["a"]	+delete
+602739	2292	10	50	10	50	["o"]	[""]	+input
+602911	2296	10	51	10	51	["r"]	[""]	+input
+611588	2300	10	77	10	77	["",""]	[""]	+input
+611590	2301	11	0	11	0	["\t"]	[""]	+input
+611679	2306	11	1	11	1	["",""]	[""]	+input
+611680	2307	12	0	12	0	["\t"]	[""]	+input
+614676	2316	11	1	11	1	["p"]	[""]	+input
+614735	2320	11	2	11	2	["f"]	[""]	+input
+617553	2325	7	5	7	6	[""]	["m"]	+delete
+617797	2329	7	4	7	5	[""]	["i"]	+delete
+620464	2335	8	38	8	39	[""]	["m"]	+delete
+620703	2339	8	37	8	38	[""]	["i"]	+delete
+623302	2346	11	2	11	2	["_"]	[""]	+input
+625784	2353	11	4	11	4	[" "]	[""]	+input
+626257	2357	11	5	11	5	["="]	[""]	+input
+626387	2361	11	6	11	6	[" "]	[""]	+input
+629303	2365	11	7	11	7	["p"]	[""]	+input
+629418	2369	11	8	11	8	["r"]	[""]	+input
+629827	2373	11	9	11	9	["c"]	[""]	+input
+630084	2377	11	10	11	10	[" "]	[""]	+input
+630984	2382	11	11	11	11	["+"]	[""]	+input
+631169	2387	11	12	11	12	[" "]	[""]	+input
+631971	2391	11	13	11	13	["2"]	[""]	+input
+632134	2395	11	14	11	14	["0"]	[""]	+input
+634258	2399	11	15	11	15	["",""]	[""]	+input
+634259	2400	12	0	12	0	["\t"]	[""]	+input
+663001	2413	11	15	11	15	["",""]	[""]	+input
+663003	2414	12	0	12	0	["\t"]	[""]	+input
+663117	2419	12	1	12	1	["",""]	[""]	+input
+663117	2420	13	0	13	0	["\t"]	[""]	+input
+664029	2425	13	1	13	1	["",""]	[""]	+input
+664029	2426	14	0	14	0	["\t"]	[""]	+input
+665319	2432	14	1	14	1	["elif (music == \"S\") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7)","\tp_f = prc + 20"]	[""]	paste
+673069	2439	14	17	14	18	[""]	["S"]	+delete
+673301	2444	14	17	14	17	["n"]	[""]	+input
+674240	2447	14	17	14	18	[""]	["n"]	+delete
+675517	2453	14	17	14	17	["N"]	[""]	+input
+681221	2458	14	33	14	34	[""]	["1"]	+delete
+681719	2463	14	33	14	33	["2"]	[""]	+input
+686375	2467	14	47	14	48	[""]	["4"]	+delete
+686998	2472	14	47	14	47	["3"]	[""]	+input
+696246	2476	14	61	14	62	[""]	["6"]	+delete
+697108	2481	14	61	14	61	["5"]	[""]	+input
+700721	2485	14	63	14	77	[""]	[" or (dia == 7)"]	+delete
+701801	2491	14	63	14	63	[":"]	[""]	+input
+705470	2496	15	0	15	1	[""]	["\t"]	+delete
+705634	2500	15	0	15	0	["",""]	[""]	+input
+705636	2501	16	0	16	0	["\t\t"]	[""]	+input
+706719	2506	16	1	16	2	[""]	["\t"]	+delete
+707072	2510	16	0	16	1	[""]	["\t"]	+delete
+707185	2514	15	0	16	0	[""]	["",""]	+delete
+707600	2519	14	64	15	0	[""]	["",""]	+delete
+708317	2524	14	64	14	64	["",""]	[""]	+input
+708317	2525	15	0	15	0	["\t\t"]	[""]	+input
+710833	2531	11	0	11	1	[""]	["\t"]	+delete
+711385	2535	10	77	11	0	[""]	["",""]	+delete
+712643	2542	10	77	10	77	[":"]	[""]	+input
+712867	2546	10	78	10	78	["",""]	[""]	+input
+712869	2547	11	0	11	0	["\t\t"]	[""]	+input
+721942	2553	15	15	15	16	[""]	["0"]	+delete
+722064	2557	15	14	15	15	[""]	["2"]	+delete
+722197	2561	15	13	15	14	[""]	[" "]	+delete
+722287	2565	15	12	15	13	[""]	["+"]	+delete
+723335	2571	15	12	15	12	["*"]	[""]	+input
+723533	2576	15	13	15	13	[" "]	[""]	+input
+724243	2580	15	14	15	14	["0"]	[""]	+input
+724435	2584	15	15	15	15	["."]	[""]	+input
+724788	2588	15	16	15	16	["7"]	[""]	+input
+724983	2592	15	17	15	17	["5"]	[""]	+input
+726898	2595	15	18	15	18	["",""]	[""]	+input
+726900	2596	16	0	16	0	["\t\t"]	[""]	+input
+727041	2601	16	2	16	2	["",""]	[""]	+input
+727042	2602	17	0	17	0	["\t\t"]	[""]	+input
+743204	2616	15	18	15	18	["",""]	[""]	+input
+743206	2617	16	0	16	0	["\t\t"]	[""]	+input
+743601	2622	16	2	16	2	["",""]	[""]	+input
+743602	2623	17	0	17	0	["\t\t"]	[""]	+input
+743935	2628	17	2	17	2	["",""]	[""]	+input
+743936	2629	18	0	18	0	["\t\t"]	[""]	+input
+745436	2634	18	1	18	2	[""]	["\t"]	+delete
+746356	2639	18	1	18	1	["elif (music == \"S\") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):"]	[""]	paste
+749374	2644	18	17	18	18	[""]	["S"]	+delete
+750052	2650	18	17	18	17	["N"]	[""]	+input
+766557	2662	12	0	12	1	[""]	["\t"]	+delete
+766916	2666	11	16	12	0	[""]	["",""]	+delete
+767522	2671	11	16	11	16	["",""]	[""]	+input
+767524	2672	12	0	12	0	["\t\t"]	[""]	+input
+768468	2678	12	2	12	2	["print(\"Valor a pagar: R$\", round(p_f, 2))"]	[""]	paste
+771268	2683	16	1	16	2	[""]	["\t"]	+delete
+771552	2687	16	0	16	1	[""]	["\t"]	+delete
+771889	2691	15	18	16	0	[""]	["",""]	+delete
+772370	2696	15	18	15	18	["",""]	[""]	+input
+772371	2697	16	0	16	0	["\t\t"]	[""]	+input
+773236	2703	16	2	16	2	["print(\"Valor a pagar: R$\", round(p_f, 2))"]	[""]	paste
+780789	2710	19	2	19	2	["print(\"Valor a pagar: R$\", round(p_f, 2))"]	[""]	paste
+784568	2715	19	37	19	38	[""]	["f"]	+delete
+785136	2719	19	36	19	37	[""]	["_"]	+delete
+787572	2724	19	36	19	36	["r"]	[""]	+input
+787876	2728	19	37	19	37	["c"]	[""]	+input
+794606	2732	19	43	19	43	["",""]	[""]	+input
+794608	2733	20	0	20	0	["\t\t"]	[""]	+input
+794753	2738	20	2	20	2	["",""]	[""]	+input
+794754	2739	21	0	21	0	["\t\t"]	[""]	+input
+795472	2744	21	1	21	2	[""]	["\t"]	+delete
+796125	2748	21	0	21	1	[""]	["\t"]	+delete
+798308	2753	21	0	21	0	["p"]	[""]	+input
+798804	2757	21	1	21	1	["r"]	[""]	+input
+798990	2761	21	2	21	2	["i"]	[""]	+input
+799187	2765	21	3	21	3	["n"]	[""]	+input
+799350	2769	21	4	21	4	["t"]	[""]	+input
+800386	2774	21	5	21	5	["()"]	[""]	+input
+802082	2779	21	5	21	7	[""]	["()"]	+delete
+802449	2783	21	4	21	5	[""]	["t"]	+delete
+802580	2787	21	3	21	4	[""]	["n"]	+delete
+802720	2791	21	2	21	3	[""]	["i"]	+delete
+802848	2795	21	1	21	2	[""]	["r"]	+delete
+803200	2799	21	0	21	1	[""]	["p"]	+delete
+803940	2804	21	0	21	0	["e"]	[""]	+input
+804101	2808	21	1	21	1	["l"]	[""]	+input
+804240	2812	21	2	21	2	["s"]	[""]	+input
+804435	2816	21	3	21	3	["e"]	[""]	+input
+805368	2821	21	4	21	4	[":"]	[""]	+input
+805619	2825	21	5	21	5	["",""]	[""]	+input
+805621	2826	22	0	22	0	["\t"]	[""]	+input
+807508	2832	22	1	22	1	["p"]	[""]	+input
+807908	2836	22	2	22	2	["r"]	[""]	+input
+808077	2840	22	3	22	3	["i"]	[""]	+input
+808276	2844	22	4	22	4	["n"]	[""]	+input
+808388	2848	22	5	22	5	["t"]	[""]	+input
+809320	2853	22	6	22	6	["()"]	[""]	+input
+811854	2860	22	7	22	7	["\"\""]	[""]	+input
+812708	2867	22	8	22	8	["D"]	[""]	+input
+813302	2872	22	9	22	9	["a"]	[""]	+input
+813745	2876	22	10	22	10	["d"]	[""]	+input
+813940	2880	22	11	22	11	["o"]	[""]	+input
+814052	2884	22	12	22	12	["s"]	[""]	+input
+814324	2888	22	13	22	13	[" "]	[""]	+input
+816229	2892	22	14	22	14	["i"]	[""]	+input
+816372	2896	22	15	22	15	["n"]	[""]	+input
+816756	2900	22	16	22	16	["v"]	[""]	+input
+816869	2904	22	17	22	17	["a"]	[""]	+input
+817334	2908	22	18	22	18	["l"]	[""]	+input
+817524	2912	22	19	22	19	["i"]	[""]	+input
+820633	2916	22	20	22	20	["d"]	[""]	+input
+820772	2920	22	21	22	21	["o"]	[""]	+input
+820935	2924	22	22	22	22	["s"]	[""]	+input
+877764	2932	10	5	10	6	[""]	[" "]	+delete
+882684	2940	10	0	10	1	[""]	["\t"]	+delete
+883073	2944	9	1	10	0	[""]	["",""]	+delete
+883683	2949	9	1	9	1	["",""]	[""]	+input
+883685	2950	10	0	10	0	["\t"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 890388
+- raw_log_line: 2960
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+prc = float(input("Preo: "))
+dia = int(input("Dia: "))
+music = str(input("Music Live (S/N)")).upper()
+
+print("Entrdas: ",prc, " , ",dia," , ",music)
+
+if (prc >= 0) and (dia >= 1) and (dia<=7) and (music == "S") or (music == "N"):
+	p_f = prc * 0.75 + 20
+	print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif(music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		p_f = prc + 20
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif (music == "N") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+		
+	elif (music == "N") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		print("Valor a pagar: R$", round(prc, 2))
+		
+else:
+	print("Dados invalidos")
+		
+	
+	
+```
+Run Output
+```text
+File "main.py", line 11
+elif(music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+SyntaxError: invalid syntax
+```
+
+Edit Segment 2
+- raw_change_event_count: 6
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+897354	2965	6	39	6	39	[" "]	[""]	+input
+898756	2971	6	37	6	37	[" "]	[""]	+input
+1023504	2977	2	11	2	12	[""]	["("]	+delete
+1023646	2981	2	10	2	11	[""]	["r"]	+delete
+1024139	2985	2	9	2	10	[""]	["t"]	+delete
+1024523	2989	2	8	2	9	[""]	["s"]	+delete
+
+Local Run 2
+- event_time_delta_ms: 1028516
+- raw_log_line: 2998
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+prc = float(input("Preo: "))
+dia = int(input("Dia: "))
+music = input("Music Live (S/N)")).upper()
+
+print("Entrdas: ",prc, " , ",dia," , ",music)
+
+if (prc >= 0) and (dia >= 1) and (dia <= 7) and (music == "S") or (music == "N"):
+	p_f = prc * 0.75 + 20
+	print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif(music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		p_f = prc + 20
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif (music == "N") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+		
+	elif (music == "N") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		print("Valor a pagar: R$", round(prc, 2))
+		
+else:
+	print("Dados invalidos")
+		
+	
+	
+```
+Run Output
+```text
+File "main.py", line 3
+music = input("Music Live (S/N)")).upper()
+SyntaxError: invalid syntax
+```
+
+Edit Segment 3
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1032897	3002	2	33	2	34	[""]	[")"]	+delete
+
+Local Run 3
+- event_time_delta_ms: 1036411
+- raw_log_line: 3011
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+prc = float(input("Preo: "))
+dia = int(input("Dia: "))
+music = input("Music Live (S/N)").upper()
+
+print("Entrdas: ",prc, " , ",dia," , ",music)
+
+if (prc >= 0) and (dia >= 1) and (dia <= 7) and (music == "S") or (music == "N"):
+	p_f = prc * 0.75 + 20
+	print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif(music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		p_f = prc + 20
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif (music == "N") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+		
+	elif (music == "N") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		print("Valor a pagar: R$", round(prc, 2))
+		
+else:
+	print("Dados invalidos")
+		
+	
+	
+```
+Run Output
+```text
+File "main.py", line 11
+elif(music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+SyntaxError: invalid syntax
+```
+
+Edit Segment 4
+- raw_change_event_count: 10
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1044755	3019	2	31	2	31	[":"]	[""]	+input
+1045553	3024	2	32	2	32	[" "]	[""]	+input
+1051197	3030	2	31	2	31	[" "]	[""]	+input
+1053204	3035	2	32	2	32	["°"]	[""]	+input
+1054283	3039	2	32	2	33	[""]	["°"]	+delete
+1054883	3046	2	32	2	32	["/"]	[""]	+input
+1055058	3051	2	33	2	33	["?"]	[""]	+input
+1055746	3055	2	33	2	34	[""]	["?"]	+delete
+1055870	3059	2	32	2	33	[""]	["/"]	+delete
+1056516	3065	2	32	2	32	["?"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 1062473
+- raw_log_line: 3074
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+prc = float(input("Preo: "))
+dia = int(input("Dia: "))
+music = input("Music Live (S/N) ?: ").upper()
+
+print("Entrdas: ",prc, " , ",dia," , ",music)
+
+if (prc >= 0) and (dia >= 1) and (dia <= 7) and (music == "S") or (music == "N"):
+	p_f = prc * 0.75 + 20
+	print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif(music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		p_f = prc + 20
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif (music == "N") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+		
+	elif (music == "N") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		print("Valor a pagar: R$", round(prc, 2))
+		
+else:
+	print("Dados invalidos")
+		
+	
+	
+```
+Run Output
+```text
+File "main.py", line 11
+elif(music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+SyntaxError: invalid syntax
+```
+
+Edit Segment 5
+- raw_change_event_count: 10
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1086031	3078	25	0	25	1	[""]	["\t"]	+delete
+1086253	3082	24	1	25	0	[""]	["",""]	+delete
+1086347	3087	24	0	24	1	[""]	["\t"]	+delete
+1086479	3091	23	2	24	0	[""]	["",""]	+delete
+1086795	3096	23	1	23	2	[""]	["\t"]	+delete
+1087146	3100	23	0	23	1	[""]	["\t"]	+delete
+1087295	3104	22	25	23	0	[""]	["",""]	+delete
+1157186	3113	10	5	10	5	[" "]	[""]	+input
+1168138	3123	10	6	10	6	["("]	[""]	+input
+1174950	3137	10	78	10	78	[")"]	[""]	+input
+
+Local Run 5
+- event_time_delta_ms: 1176296
+- raw_log_line: 3145
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+prc = float(input("Preo: "))
+dia = int(input("Dia: "))
+music = input("Music Live (S/N) ?: ").upper()
+
+print("Entrdas: ",prc, " , ",dia," , ",music)
+
+if (prc >= 0) and (dia >= 1) and (dia <= 7) and (music == "S") or (music == "N"):
+	p_f = prc * 0.75 + 20
+	print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif ((music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7)):
+		p_f = prc + 20
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif (music == "N") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+		
+	elif (music == "N") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		print("Valor a pagar: R$", round(prc, 2))
+		
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+File "main.py", line 11
+elif (music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+SyntaxError: invalid syntax
+```
+
+Edit Segment 6
+- raw_change_event_count: 33
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1181823	3150	10	7	10	8	[""]	["("]	+delete
+1183836	3155	10	76	10	77	[""]	[")"]	+delete
+1195347	3161	5	0	6	0	[""]	["",""]	+delete
+1195945	3166	5	0	5	0	["",""]	[""]	+input
+1199134	3183	7	0	7	1	[""]	["\t"]	+delete
+1199502	3187	6	81	7	0	[""]	["",""]	+delete
+1200367	3192	6	81	6	81	["",""]	[""]	+input
+1200369	3193	7	0	7	0	["\t"]	[""]	+input
+1202077	3201	8	0	8	1	[""]	["\t"]	+delete
+1202478	3205	7	22	8	0	[""]	["",""]	+delete
+1203069	3210	7	22	7	22	["",""]	[""]	+input
+1203071	3211	8	0	8	0	["\t"]	[""]	+input
+1232932	3227	8	42	8	42	["",""]	[""]	+input
+1232934	3228	9	0	9	0	["\t"]	[""]	+input
+1233885	3233	9	1	9	1	["",""]	[""]	+input
+1233887	3234	10	0	10	0	["\t"]	[""]	+input
+1236900	3243	9	1	9	1	["i"]	[""]	+input
+1236995	3247	9	2	9	2	["f"]	[""]	+input
+1245491	3250	9	2	9	3	[""]	["f"]	+delete
+1245777	3254	9	1	9	2	[""]	["i"]	+delete
+1246024	3258	9	0	9	1	[""]	["\t"]	+delete
+1246237	3262	8	42	9	0	[""]	["",""]	+delete
+1246751	3267	8	42	8	42	["",""]	[""]	+input
+1246753	3268	9	0	9	0	["\t"]	[""]	+input
+1246928	3273	9	1	9	1	["",""]	[""]	+input
+1246930	3274	10	0	10	0	["\t"]	[""]	+input
+1248304	3280	10	1	10	1	["elif (music == \"N\") and (dia == 2) or (dia == 3) or (dia == 5):","\t\tp_f = prc * 0.75","\t\tprint(\"Valor a pagar: R$\", round(p_f, 2))"]	[""]	paste
+1252962	3287	10	2	10	3	[""]	["l"]	+delete
+1253432	3291	10	1	10	2	[""]	["e"]	+delete
+1259021	3298	10	15	10	16	[""]	["N"]	+delete
+1261161	3303	10	15	10	15	["s"]	[""]	+input
+1261611	3306	10	15	10	16	[""]	["s"]	+delete
+1262128	3312	10	15	10	15	["S"]	[""]	+input
+
+Local Run 6
+- event_time_delta_ms: 1278513
+- raw_log_line: 3320
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+prc = float(input("Preo: "))
+dia = int(input("Dia: "))
+music = input("Music Live (S/N) ?: ").upper()
+
+print("Entrdas: ",prc, " , ",dia," , ",music)
+
+if (prc >= 0) and (dia >= 1) and (dia <= 7) and (music == "S") or (music == "N"):
+	p_f = prc * 0.75 + 20
+	print("Valor a pagar: R$", round(p_f, 2))
+	
+	if (music == "S") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	
+	elif (music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		p_f = prc + 20
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif (music == "N") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+		
+	elif (music == "N") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		print("Valor a pagar: R$", round(prc, 2))
+		
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+File "main.py", line 11
+elif ((music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7)):
+SyntaxError: invalid syntax
+```
+
+Edit Segment 7
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1287505	3327	0	22	0	22	["c"]	[""]	+input
+
+Local Run 7
+- event_time_delta_ms: 1298378
+- raw_log_line: 3338
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+prc = float(input("Preco: "))
+dia = int(input("Dia: "))
+music = input("Music Live (S/N) ?: ").upper()
+
+print("Entrdas: ",prc, " , ",dia," , ",music)
+
+if (prc >= 0) and (dia >= 1) and (dia <= 7) and (music == "S") or (music == "N"):
+	p_f = prc * 0.75 + 20
+	print("Valor a pagar: R$", round(p_f, 2))
+	
+	if (music == "S") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	
+	elif (music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		p_f = prc + 20
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif (music == "N") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+		
+	elif (music == "N") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		print("Valor a pagar: R$", round(prc, 2))
+		
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+Preco: 75.25
+Dia: 3
+Music Live (S/N) ?: s
+Entrdas:  75.25  ,  3  ,  S
+Valor a pagar: R$ 76.44
+Valor a pagar: R$ 56.44
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 1314477
+- raw_log_line: 3339
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+prc = float(input("Preco: "))
+dia = int(input("Dia: "))
+music = input("Music Live (S/N) ?: ").upper()
+
+print("Entrdas: ",prc, " , ",dia," , ",music)
+
+if (prc >= 0) and (dia >= 1) and (dia <= 7) and (music == "S") or (music == "N"):
+	p_f = prc * 0.75 + 20
+	print("Valor a pagar: R$", round(p_f, 2))
+	
+	if (music == "S") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	
+	elif (music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		p_f = prc + 20
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif (music == "N") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+		
+	elif (music == "N") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		print("Valor a pagar: R$", round(prc, 2))
+		
+else:
+	print("Dados invalidos")
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-04-26T10:07:54.467000
+
+Execution Result
+
+- submitted_at: 2023-04-26 10:08:13
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "70.56\n2\nN"
+    expected: "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92"
+    actual: "Entrdas:  70.56  ,  2  ,  N\nValor a pagar: R$ 52.92"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75"
+    actual: "Entrdas:  100.75  ,  6  ,  S\nValor a pagar: R$ 120.75"
+  - test_index_0idx: 2 [FAIL]
+    input: "0.00\n9\nS"
+    expected: "Entradas: 0.0 , 9 , S\nDados invalidos"
+    actual: "Entrdas:  0.0  ,  9  ,  S\nDados invalidos"
+
+Attempt Start Code
+```python
+prc = float(input("Preco: "))
+dia = int(input("Dia: "))
+music = input("Music Live (S/N) ?: ").upper()
+
+print("Entrdas: ",prc, " , ",dia," , ",music)
+
+if (prc >= 0) and (dia >= 1) and (dia <= 7) and (music == "S") or (music == "N"):
+	p_f = prc * 0.75 + 20
+	print("Valor a pagar: R$", round(p_f, 2))
+	
+	if (music == "S") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	
+	elif (music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		p_f = prc + 20
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif (music == "N") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+		
+	elif (music == "N") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		print("Valor a pagar: R$", round(prc, 2))
+		
+else:
+	print("Dados invalidos")
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 11
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	3345	7	1	7	22	[""]	["p_f = prc * 0.75 + 20"]	+delete
+383	3349	7	0	7	1	[""]	["\t"]	+delete
+816	3353	6	81	7	0	[""]	["",""]	+delete
+5184	3359	7	0	7	42	[""]	["\tprint(\"Valor a pagar: R$\", round(p_f, 2))"]	+delete
+9472	3364	9	0	9	1	[""]	["\t"]	+delete
+9733	3368	8	1	9	0	[""]	["",""]	+delete
+10097	3373	8	0	8	1	[""]	["\t"]	+delete
+10302	3377	7	0	8	0	[""]	["",""]	+delete
+10687	3382	6	81	7	0	[""]	["",""]	+delete
+11522	3387	6	81	6	81	["",""]	[""]	+input
+11524	3388	7	0	7	0	["\t"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 19080
+- raw_log_line: 3395
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+prc = float(input("Preco: "))
+dia = int(input("Dia: "))
+music = input("Music Live (S/N) ?: ").upper()
+
+print("Entrdas: ",prc, " , ",dia," , ",music)
+
+if (prc >= 0) and (dia >= 1) and (dia <= 7) and (music == "S") or (music == "N"):
+	if (music == "S") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	
+	elif (music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		p_f = prc + 20
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif (music == "N") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+		
+	elif (music == "N") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		print("Valor a pagar: R$", round(prc, 2))
+		
+else:
+	print("Dados invalidos")
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-04-26T10:08:13.755000
+
+Execution Result
+
+- submitted_at: 2023-04-26 10:09:27
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "70.56\n2\nN"
+    expected: "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92"
+    actual: "Entrdas:  70.56  ,  2  ,  N\nValor a pagar: R$ 52.92"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75"
+    actual: "Entrdas:  100.75  ,  6  ,  S\nValor a pagar: R$ 120.75"
+  - test_index_0idx: 2 [FAIL]
+    input: "0.00\n9\nS"
+    expected: "Entradas: 0.0 , 9 , S\nDados invalidos"
+    actual: "Entrdas:  0.0  ,  9  ,  S\nDados invalidos"
+
+Attempt Start Code
+```python
+prc = float(input("Preco: "))
+dia = int(input("Dia: "))
+music = input("Music Live (S/N) ?: ").upper()
+
+print("Entrdas: ",prc, " , ",dia," , ",music)
+
+if (prc >= 0) and (dia >= 1) and (dia <= 7) and (music == "S") or (music == "N"):
+	if (music == "S") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	
+	elif (music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		p_f = prc + 20
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif (music == "N") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+		
+	elif (music == "N") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		print("Valor a pagar: R$", round(prc, 2))
+		
+else:
+	print("Dados invalidos")
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 3396
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+prc = float(input("Preco: "))
+dia = int(input("Dia: "))
+music = input("Music Live (S/N) ?: ").upper()
+
+print("Entrdas: ",prc, " , ",dia," , ",music)
+
+if (prc >= 0) and (dia >= 1) and (dia <= 7) and (music == "S") or (music == "N"):
+	if (music == "S") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	
+	elif (music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		p_f = prc + 20
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif (music == "N") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+		
+	elif (music == "N") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		print("Valor a pagar: R$", round(prc, 2))
+		
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+
+```
+
+Edit Segment 1
+- raw_change_event_count: 10
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+25740	3405	8	18	8	18	[" "]	[""]	+input
+26292	3410	8	19	8	19	["+"]	[""]	+input
+26568	3415	8	20	8	20	[" "]	[""]	+input
+27267	3419	8	21	8	21	["2"]	[""]	+input
+27402	3423	8	22	8	22	["0"]	[""]	+input
+53525	3434	2	8	2	8	["s"]	[""]	+input
+53705	3438	2	9	2	9	["t"]	[""]	+input
+53818	3442	2	10	2	10	["r"]	[""]	+input
+55198	3447	2	11	2	11	["("]	[""]	+input
+62049	3518	2	41	2	41	[")"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 66101
+- raw_log_line: 3524
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+prc = float(input("Preco: "))
+dia = int(input("Dia: "))
+music = str(input("Music Live (S/N) ?: ")).upper()
+
+print("Entrdas: ",prc, " , ",dia," , ",music)
+
+if (prc >= 0) and (dia >= 1) and (dia <= 7) and (music == "S") or (music == "N"):
+	if (music == "S") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75 + 20
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	
+	elif (music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		p_f = prc + 20
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif (music == "N") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+		
+	elif (music == "N") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		print("Valor a pagar: R$", round(prc, 2))
+		
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 74160
+- raw_log_line: 3525
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+prc = float(input("Preco: "))
+dia = int(input("Dia: "))
+music = str(input("Music Live (S/N) ?: ")).upper()
+
+print("Entrdas: ",prc, " , ",dia," , ",music)
+
+if (prc >= 0) and (dia >= 1) and (dia <= 7) and (music == "S") or (music == "N"):
+	if (music == "S") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75 + 20
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	
+	elif (music == "S") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		p_f = prc + 20
+		print("Valor a pagar: R$", round(p_f, 2))
+	
+	elif (music == "N") and (dia == 2) or (dia == 3) or (dia == 5):
+		p_f = prc * 0.75
+		print("Valor a pagar: R$", round(p_f, 2))
+		
+	elif (music == "N") and (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):
+		print("Valor a pagar: R$", round(prc, 2))
+		
+else:
+	print("Dados invalidos")
+```

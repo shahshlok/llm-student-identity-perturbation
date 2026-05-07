@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "597",
+    "assessment_id": "5616",
+    "exercise_id": "3711",
+    "student_id": "9801",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "#X = 2024\n#Y = 1902\n#print(round(X-Y) )\nprint (\"Em \",2024,\"a UFAM completou\", 2024 - 1909, \"anos de fundacao.\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "X = 2024\nY = 1909\n#print(round(X-Y) )\nprint (\"Em \",X,\"a UFAM completou\", X - Y, \"anos de fundacao.\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "1959",
+        "expected": "Em 1959 a UFAM completou 50 anos de fundacao.",
+        "actual": "Em  2024 a UFAM completou 115 anos de fundacao."
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "2020",
+        "expected": "Em 2020 a UFAM completou 111 anos de fundacao.",
+        "actual": "Em  2024 a UFAM completou 115 anos de fundacao."
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 0,
+        "end_line_0idx": 1,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 3,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 3,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 0,
+        "end_line_0idx": 1
+      },
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 3
+      }
+    ]
+  }
+}

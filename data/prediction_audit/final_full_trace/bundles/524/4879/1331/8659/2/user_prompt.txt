@@ -1,0 +1,318 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 524
+- assessment_id: 4879
+- assessment_title: Lab 0 – Primeiros passos com o Python
+- exercise_id: 1331
+- student_id: 8659
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-07-26T19:00:24.312000
+
+Execution Result
+
+- submitted_at: 2023-07-26 19:03:38
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "50"
+    expected: "16\n2"
+    actual: "2"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 91
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["t"]	[""]	+input
+211	11	0	1	0	1	["o"]	[""]	+input
+518	15	0	2	0	2	["t"]	[""]	+input
+812	19	0	3	0	3	["a"]	[""]	+input
+1077	23	0	4	0	4	["l"]	[""]	+input
+2826	28	0	5	0	5	["+"]	[""]	+input
+3942	32	0	5	0	6	[""]	["+"]	+delete
+4219	37	0	5	0	5	["="]	[""]	+input
+16999	41	0	6	0	6	[" "]	[""]	+input
+18719	45	0	7	0	7	["5"]	[""]	+input
+19010	49	0	8	0	8	["0"]	[""]	+input
+19400	53	0	9	0	9	["/"]	[""]	+input
+21210	57	0	10	0	10	["3"]	[""]	+input
+22795	64	0	10	0	10	[" "]	[""]	+input
+23483	71	0	10	0	10	[" "]	[""]	+input
+25273	80	0	10	0	11	[""]	[" "]	+delete
+26365	91	0	8	0	8	[" "]	[""]	+input
+27923	94	0	8	0	9	[""]	[" "]	+delete
+28632	102	0	9	0	9	[" "]	[""]	+input
+49920	121	0	11	0	11	["/"]	[""]	+input
+91341	139	0	13	0	14	[""]	["3"]	+delete
+91544	143	0	12	0	13	[""]	[" "]	+delete
+91728	147	0	11	0	12	[""]	["/"]	+delete
+91895	151	0	10	0	11	[""]	["/"]	+delete
+92049	155	0	9	0	10	[""]	[" "]	+delete
+92227	159	0	8	0	9	[""]	["0"]	+delete
+92396	163	0	7	0	8	[""]	["5"]	+delete
+92529	167	0	6	0	7	[""]	[" "]	+delete
+92675	171	0	5	0	6	[""]	["="]	+delete
+92833	175	0	4	0	5	[""]	["l"]	+delete
+92981	179	0	3	0	4	[""]	["a"]	+delete
+93141	183	0	2	0	3	[""]	["t"]	+delete
+93282	187	0	1	0	2	[""]	["o"]	+delete
+93457	191	0	0	0	1	[""]	["t"]	+delete
+98914	196	0	0	0	0	["t"]	[""]	+input
+99395	200	0	1	0	1	["o"]	[""]	+input
+99716	204	0	2	0	2	["t"]	[""]	+input
+99861	208	0	3	0	3	["a"]	[""]	+input
+100152	212	0	4	0	4	["l"]	[""]	+input
+100868	216	0	5	0	5	[" "]	[""]	+input
+101526	220	0	6	0	6	["="]	[""]	+input
+103388	224	0	7	0	7	[" "]	[""]	+input
+104419	228	0	8	0	8	["5"]	[""]	+input
+104627	232	0	9	0	9	["0"]	[""]	+input
+105846	235	0	10	0	10	["",""]	[""]	+input
+107538	240	0	10	1	0	[""]	["",""]	+delete
+108535	246	0	10	0	10	[" "]	[""]	+input
+108899	250	0	11	0	11	["/"]	[""]	+input
+109059	254	0	12	0	12	["/"]	[""]	+input
+113361	258	0	13	0	13	["c"]	[""]	+input
+114259	261	0	13	0	14	[""]	["c"]	+delete
+114471	266	0	13	0	13	[" "]	[""]	+input
+115045	270	0	14	0	14	["3"]	[""]	+input
+116120	273	0	15	0	15	["",""]	[""]	+input
+139512	334	0	0	1	0	[""]	["total = 50 // 3",""]	+delete
+141671	346	0	0	0	0	["t"]	[""]	+input
+141911	350	0	1	0	1	["o"]	[""]	+input
+142226	354	0	2	0	2	["t"]	[""]	+input
+142565	358	0	3	0	3	["a"]	[""]	+input
+142825	362	0	4	0	4	["l"]	[""]	+input
+143314	366	0	5	0	5	[" "]	[""]	+input
+143519	370	0	6	0	6	["="]	[""]	+input
+143634	374	0	7	0	7	[" "]	[""]	+input
+146823	378	0	8	0	8	["9"]	[""]	+input
+147541	382	0	9	0	9	[" "]	[""]	+input
+150713	387	0	10	0	10	["%"]	[""]	+input
+152517	392	0	11	0	11	[" "]	[""]	+input
+154420	400	0	11	0	12	[""]	[" "]	+delete
+155337	405	0	11	0	11	[" "]	[""]	+input
+156483	409	0	12	0	12	["4"]	[""]	+input
+161334	412	0	13	0	13	["",""]	[""]	+input
+162655	418	1	0	1	0	["p"]	[""]	+input
+162804	422	1	1	1	1	["r"]	[""]	+input
+163058	426	1	2	1	2	["i"]	[""]	+input
+163362	430	1	3	1	3	["n"]	[""]	+input
+163698	434	1	4	1	4	["t"]	[""]	+input
+165015	439	1	5	1	5	["()"]	[""]	+input
+166406	445	1	6	1	6	["t"]	[""]	+input
+166635	449	1	7	1	7	["o"]	[""]	+input
+166932	453	1	8	1	8	["t"]	[""]	+input
+167170	457	1	9	1	9	["a"]	[""]	+input
+167414	461	1	10	1	10	["l"]	[""]	+input
+186885	473	0	11	0	12	[""]	[" "]	+delete
+187040	477	0	10	0	11	[""]	["%"]	+delete
+188106	482	0	10	0	10	["/"]	[""]	+input
+188410	486	0	11	0	11	[" "]	[""]	+input
+188668	490	0	12	0	12	["/"]	[""]	+input
+189982	493	0	12	0	13	[""]	["/"]	+delete
+191595	497	0	11	0	12	[""]	[" "]	+delete
+192067	502	0	11	0	11	["/"]	[""]	+input
+192232	506	0	12	0	12	[" "]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 194549
+- raw_log_line: 510
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+total = 9 // 4
+print(total)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-07-26T19:03:45.343000
+
+Execution Result
+
+- submitted_at: 2023-07-26 19:03:45
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "50"
+    expected: "16\n2"
+    actual: "2"
+
+Attempt Start Code
+```python
+total = 9 // 4
+print(total)
+```
+
+Trace Timeline
+
+Submit Anchor 1
+- event_time_delta_ms: 0
+- raw_log_line: 513
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+total = 9 // 4
+print(total)
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-07-26T19:03:55.163000
+
+Execution Result
+
+- submitted_at: 2023-07-26 19:05:09
+- grade: 100.0
+- pass_count: 0
+- failed_test_indices_0idx: [0]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "50"
+    expected: "16\n2"
+    actual: "16 2"
+
+Attempt Start Code
+```python
+total = 9 // 4
+print(total)
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 53
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	524	0	13	0	14	[""]	["4"]	+delete
+190	528	0	12	0	13	[""]	[" "]	+delete
+366	532	0	11	0	12	[""]	["/"]	+delete
+558	536	0	10	0	11	[""]	["/"]	+delete
+720	540	0	9	0	10	[""]	[" "]	+delete
+1141	544	0	8	0	9	[""]	["9"]	+delete
+8071	549	0	8	0	8	["5"]	[""]	+input
+8304	553	0	9	0	9	["0"]	[""]	+input
+8847	557	0	10	0	10	[" "]	[""]	+input
+9107	561	0	11	0	11	["/"]	[""]	+input
+9248	565	0	12	0	12	["/"]	[""]	+input
+9616	569	0	13	0	13	["3"]	[""]	+input
+11759	575	0	13	0	13	["",""]	[""]	+input
+12815	580	0	13	1	0	[""]	["",""]	+delete
+13568	586	0	13	0	13	[" "]	[""]	+input
+19203	643	0	15	0	15	["",""]	[""]	+input
+24475	649	1	0	1	0	["r"]	[""]	+input
+24590	653	1	1	1	1	["e"]	[""]	+input
+25232	657	1	2	1	2	["s"]	[""]	+input
+25572	661	1	3	1	3	["t"]	[""]	+input
+25696	665	1	4	1	4	["a"]	[""]	+input
+26512	669	1	5	1	5	["n"]	[""]	+input
+26831	673	1	6	1	6	["t"]	[""]	+input
+26928	677	1	7	1	7	["e"]	[""]	+input
+27187	681	1	8	1	8	[" "]	[""]	+input
+32467	685	1	9	1	9	[" "]	[""]	+input
+32692	689	1	10	1	10	["="]	[""]	+input
+33731	692	1	10	1	11	[""]	["="]	+delete
+33920	696	1	9	1	10	[""]	[" "]	+delete
+34149	701	1	9	1	9	["="]	[""]	+input
+34934	705	1	10	1	10	[" "]	[""]	+input
+41143	709	1	11	1	11	["5"]	[""]	+input
+41650	713	1	12	1	12	["0"]	[""]	+input
+43247	717	1	13	1	13	[" "]	[""]	+input
+45022	722	1	14	1	14	["%"]	[""]	+input
+46990	727	1	15	1	15	[" "]	[""]	+input
+47163	731	1	16	1	16	["3"]	[""]	+input
+55912	734	1	17	1	17	["",""]	[""]	+input
+60512	739	1	17	2	0	[""]	["",""]	+delete
+63974	751	2	11	2	11	[","]	[""]	+input
+64159	755	2	12	2	12	[" "]	[""]	+input
+67282	759	2	13	2	13	["r"]	[""]	+input
+67393	763	2	14	2	14	["e"]	[""]	+input
+67617	767	2	15	2	15	["s"]	[""]	+input
+67809	771	2	16	2	16	["t"]	[""]	+input
+68022	775	2	17	2	17	["r"]	[""]	+input
+68159	779	2	18	2	18	["a"]	[""]	+input
+68846	782	2	18	2	19	[""]	["a"]	+delete
+70295	786	2	17	2	18	[""]	["r"]	+delete
+70465	791	2	17	2	17	["a"]	[""]	+input
+70990	795	2	18	2	18	["n"]	[""]	+input
+71233	799	2	19	2	19	["t"]	[""]	+input
+71444	803	2	20	2	20	["e"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 74757
+- raw_log_line: 807
+- feedback: "Congratulations, your code is correct!"
+Code At This Submit
+```python
+total = 50 // 3
+restante = 50 % 3
+print(total, restante)
+```

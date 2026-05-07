@@ -1,0 +1,32 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "558",
+    "assessment_id": "5320",
+    "exercise_id": "1117",
+    "student_id": "8944",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "preco = float(input(\"Insira entrada: \"))\ndia = int(input(\"Insira o dia: \"))\nmus = input(\"Tem musica ao vivo (S) sim (N) nao: \").upper()\n\ntotal = 0\n\nif preco < 0 or dia < 1 or dia > 7 or not (mus == 'S' or mus == 'N'):\n\tprint(\"Entradas: \", round(preco, 2), ',', dia, ',' ,mus)\n\tprint(\"Dados invalidos\")\nelse:\n\t#print(\"ok)\n\tif mus == 'S':\n\t\tif dia == 2 or dia == 3 or dia == 5:\n\t\t\ttotal = preco * .75 + 20\n\t\telse:\n\t\t\ttotal = preco + 20.\n\telse:\n\t\tif dia == 2 or dia == 3 or dia == 5:\n\t\t\ttotal = preco * .75\n\t\telse:\n\t\t\ttotal = preco \n\t\tprint(\"Entradas: \", round(preco, 2), ',' , dia, ',' , mus)\n\t\tprint(\"Total: R$\", round(total, 2))\n\t\t\t",
+    "coarse_path_steps": [
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 7,
+        "target_end_line_0idx": 7
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

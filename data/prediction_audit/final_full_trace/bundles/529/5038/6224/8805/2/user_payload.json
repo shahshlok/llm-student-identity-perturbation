@@ -1,0 +1,438 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "529",
+    "assessment_id": "5038",
+    "assessment_title": "Lab 4 – Repetição por Condição (while)",
+    "exercise_id": "6224",
+    "student_id": "8805",
+    "condition": "full",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/529/users/8805/executions/5038_6224.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/529/users/8805/codemirror/5038_6224.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-09-25 14:41:05",
+        "grade": 100.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "8.5\n10.0\n7.0\n5.5\n4.5\n-1",
+            "expected": "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 4.5",
+            "actual": "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota:  10.0\nMenor nota:  4.5"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "9.0\n5.0\n6.0\n-1",
+            "expected": "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 9.0\nMenor nota: 5.0",
+            "actual": "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota:  9.0\nMenor nota:  5.0"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "10.0\n8.5\n-1",
+            "expected": "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 8.5",
+            "actual": "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota:  10.0\nMenor nota:  8.5"
+          }
+        ]
+      },
+      "trace": {
+        "attempt_start_code": "",
+        "items": [
+          {
+            "item_type": "edit_segment",
+            "change_event_count": 3,
+            "changes": [
+              {
+                "event_type": "change",
+                "timestamp": "2023-09-25T14:29:31.097000",
+                "line_number": 7,
+                "from": {
+                  "line": 0,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 0
+                },
+                "text": [
+                  "nota  = float(input(\"Sua nota: \"))",
+                  "",
+                  "apr = 0",
+                  "media = 0",
+                  "maior = -1",
+                  "menor = 11",
+                  "",
+                  "while (nota >= 0):",
+                  "\tif(nota >=5.0):",
+                  "\t\tapr = apr + 1",
+                  "\telse:",
+                  "\t\tmedia = media + 1",
+                  "\tif (nota >maior):",
+                  "\t\tmaior = nota",
+                  "\tif(nota < menor):",
+                  "\t\tmenor = nota",
+                  "\tnota  = float(input(\"Sua nota: \"))",
+                  "print(apr, \"alunos passaram\")",
+                  "print(media, \"alunos ficaram abaixo da media\")",
+                  "print(\"Maior nota: \",round(maior,2))",
+                  "print(\"Menor nota: \",round(menor,2))"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "paste"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-09-25T14:30:50.897000",
+                "line_number": 17,
+                "from": {
+                  "line": 8,
+                  "ch": 11
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 11
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-09-25T14:30:54.788000",
+                "line_number": 23,
+                "from": {
+                  "line": 12,
+                  "ch": 11
+                },
+                "to": {
+                  "line": 12,
+                  "ch": 11
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              }
+            ]
+          },
+          {
+            "item_type": "saida_testar",
+            "timestamp": "2023-09-25T14:40:38.691000",
+            "line_number": 40,
+            "command": "$ python3 main.py",
+            "output_lines": [
+              "Sua nota: 4.5",
+              "Sua nota: 6",
+              "Sua nota: 3",
+              "Sua nota: -1",
+              "1 alunos passaram",
+              "2 alunos ficaram abaixo da media",
+              "Maior nota:  6.0",
+              "Menor nota:  3.0"
+            ],
+            "code_after_anchor": "nota  = float(input(\"Sua nota: \"))\n\napr = 0\nmedia = 0\nmaior = -1\nmenor = 11\n\nwhile (nota >= 0):\n\tif(nota >= 5.0):\n\t\tapr = apr + 1\n\telse:\n\t\tmedia = media + 1\n\tif (nota > maior):\n\t\tmaior = nota\n\tif(nota < menor):\n\t\tmenor = nota\n\tnota  = float(input(\"Sua nota: \"))\nprint(apr, \"alunos passaram\")\nprint(media, \"alunos ficaram abaixo da media\")\nprint(\"Maior nota: \",round(maior,2))\nprint(\"Menor nota: \",round(menor,2))"
+          },
+          {
+            "item_type": "edit_segment",
+            "change_event_count": 2,
+            "changes": [
+              {
+                "event_type": "change",
+                "timestamp": "2023-09-25T14:41:00.511000",
+                "line_number": 44,
+                "from": {
+                  "line": 5,
+                  "ch": 9
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 10
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "1"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-09-25T14:41:00.776000",
+                "line_number": 49,
+                "from": {
+                  "line": 5,
+                  "ch": 9
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 9
+                },
+                "text": [
+                  "0"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              }
+            ]
+          },
+          {
+            "item_type": "submit",
+            "timestamp": "2023-09-25T14:41:05.071000",
+            "line_number": 52,
+            "feedback": "Congratulations, your code is correct!",
+            "code_after_anchor": "nota  = float(input(\"Sua nota: \"))\n\napr = 0\nmedia = 0\nmaior = -1\nmenor = 10\n\nwhile (nota >= 0):\n\tif(nota >= 5.0):\n\t\tapr = apr + 1\n\telse:\n\t\tmedia = media + 1\n\tif (nota > maior):\n\t\tmaior = nota\n\tif(nota < menor):\n\t\tmenor = nota\n\tnota  = float(input(\"Sua nota: \"))\nprint(apr, \"alunos passaram\")\nprint(media, \"alunos ficaram abaixo da media\")\nprint(\"Maior nota: \",round(maior,2))\nprint(\"Menor nota: \",round(menor,2))"
+          }
+        ]
+      }
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-09-25 14:41:18",
+        "grade": 100.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "8.5\n10.0\n7.0\n5.5\n4.5\n-1",
+            "expected": "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 4.5",
+            "actual": "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota:  10.0\nMenor nota:  4.5"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "9.0\n5.0\n6.0\n-1",
+            "expected": "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 9.0\nMenor nota: 5.0",
+            "actual": "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota:  9.0\nMenor nota:  5.0"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "10.0\n8.5\n-1",
+            "expected": "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 8.5",
+            "actual": "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota:  10.0\nMenor nota:  8.5"
+          }
+        ]
+      },
+      "trace": {
+        "attempt_start_code": "nota  = float(input(\"Sua nota: \"))\n\napr = 0\nmedia = 0\nmaior = -1\nmenor = 10\n\nwhile (nota >= 0):\n\tif(nota >= 5.0):\n\t\tapr = apr + 1\n\telse:\n\t\tmedia = media + 1\n\tif (nota > maior):\n\t\tmaior = nota\n\tif(nota < menor):\n\t\tmenor = nota\n\tnota  = float(input(\"Sua nota: \"))\nprint(apr, \"alunos passaram\")\nprint(media, \"alunos ficaram abaixo da media\")\nprint(\"Maior nota: \",round(maior,2))\nprint(\"Menor nota: \",round(menor,2))",
+        "items": [
+          {
+            "item_type": "edit_segment",
+            "change_event_count": 3,
+            "changes": [
+              {
+                "event_type": "change",
+                "timestamp": "2023-09-25T14:41:14.889000",
+                "line_number": 56,
+                "from": {
+                  "line": 4,
+                  "ch": 9
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 10
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "1"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-09-25T14:41:15.015000",
+                "line_number": 60,
+                "from": {
+                  "line": 4,
+                  "ch": 8
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 9
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "-"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-09-25T14:41:15.308000",
+                "line_number": 65,
+                "from": {
+                  "line": 4,
+                  "ch": 8
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 8
+                },
+                "text": [
+                  "0"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              }
+            ]
+          },
+          {
+            "item_type": "submit",
+            "timestamp": "2023-09-25T14:41:18.219000",
+            "line_number": 68,
+            "feedback": "Congratulations, your code is correct!",
+            "code_after_anchor": "nota  = float(input(\"Sua nota: \"))\n\napr = 0\nmedia = 0\nmaior = 0\nmenor = 10\n\nwhile (nota >= 0):\n\tif(nota >= 5.0):\n\t\tapr = apr + 1\n\telse:\n\t\tmedia = media + 1\n\tif (nota > maior):\n\t\tmaior = nota\n\tif(nota < menor):\n\t\tmenor = nota\n\tnota  = float(input(\"Sua nota: \"))\nprint(apr, \"alunos passaram\")\nprint(media, \"alunos ficaram abaixo da media\")\nprint(\"Maior nota: \",round(maior,2))\nprint(\"Menor nota: \",round(menor,2))"
+          }
+        ]
+      }
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-09-25 14:41:29",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "8.5\n10.0\n7.0\n5.5\n4.5\n-1",
+            "expected": "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 4.5",
+            "actual": "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota:  10.0\nMenor nota:  0"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "9.0\n5.0\n6.0\n-1",
+            "expected": "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 9.0\nMenor nota: 5.0",
+            "actual": "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota:  9.0\nMenor nota:  0"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "10.0\n8.5\n-1",
+            "expected": "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 8.5",
+            "actual": "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota:  10.0\nMenor nota:  0"
+          }
+        ]
+      },
+      "trace": {
+        "attempt_start_code": "nota  = float(input(\"Sua nota: \"))\n\napr = 0\nmedia = 0\nmaior = 0\nmenor = 10\n\nwhile (nota >= 0):\n\tif(nota >= 5.0):\n\t\tapr = apr + 1\n\telse:\n\t\tmedia = media + 1\n\tif (nota > maior):\n\t\tmaior = nota\n\tif(nota < menor):\n\t\tmenor = nota\n\tnota  = float(input(\"Sua nota: \"))\nprint(apr, \"alunos passaram\")\nprint(media, \"alunos ficaram abaixo da media\")\nprint(\"Maior nota: \",round(maior,2))\nprint(\"Menor nota: \",round(menor,2))",
+        "items": [
+          {
+            "item_type": "edit_segment",
+            "change_event_count": 2,
+            "changes": [
+              {
+                "event_type": "change",
+                "timestamp": "2023-09-25T14:41:25.213000",
+                "line_number": 72,
+                "from": {
+                  "line": 5,
+                  "ch": 8
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 10
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "10"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-09-25T14:41:25.485000",
+                "line_number": 77,
+                "from": {
+                  "line": 5,
+                  "ch": 8
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 8
+                },
+                "text": [
+                  "0"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              }
+            ]
+          },
+          {
+            "item_type": "submit",
+            "timestamp": "2023-09-25T14:41:29.955000",
+            "line_number": 80,
+            "feedback": "Your code did not produce the correct output. Please, correct your code and try again.",
+            "code_after_anchor": "nota  = float(input(\"Sua nota: \"))\n\napr = 0\nmedia = 0\nmaior = 0\nmenor = 0\n\nwhile (nota >= 0):\n\tif(nota >= 5.0):\n\t\tapr = apr + 1\n\telse:\n\t\tmedia = media + 1\n\tif (nota > maior):\n\t\tmaior = nota\n\tif(nota < menor):\n\t\tmenor = nota\n\tnota  = float(input(\"Sua nota: \"))\nprint(apr, \"alunos passaram\")\nprint(media, \"alunos ficaram abaixo da media\")\nprint(\"Maior nota: \",round(maior,2))\nprint(\"Menor nota: \",round(menor,2))"
+          }
+        ]
+      }
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

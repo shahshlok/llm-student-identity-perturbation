@@ -1,0 +1,144 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "527",
+    "assessment_id": "5145",
+    "assessment_title": "Lab 6 - Repetição por Contagem (for)",
+    "exercise_id": "6353",
+    "student_id": "8767",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/527/users/8767/executions/5145_6353.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/527/users/8767/codemirror/5145_6353.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-10-19 17:34:24",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "10",
+            "expected": "10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "15",
+            "expected": " 15\n14\n13\n12\n11\n10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "4",
+            "expected": "4\n3\n2\n1\n0\nFim da contagem regressiva!",
+            "actual": ""
+          }
+        ]
+      },
+      "submitted_code": "#from numpy import*\nc = int(input(\"Fim da contagem regressiva!\"))\n\nfor i in range(c,1,1):\n\tprint(i)"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-10-19 17:39:47",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "10",
+            "expected": "10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "15",
+            "expected": " 15\n14\n13\n12\n11\n10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "4",
+            "expected": "4\n3\n2\n1\n0\nFim da contagem regressiva!",
+            "actual": ""
+          }
+        ]
+      },
+      "submitted_code": "#from numpy import*\nc = int(input(\"Fim da contagem regressiva!\"))\n\nfor i in range(c,-1,-1):\n\tif c == 0 :\n\t\tprint(i)"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-10-19 17:49:41",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "10",
+            "expected": "10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!",
+            "actual": "10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim de contagem regressiva!"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "15",
+            "expected": " 15\n14\n13\n12\n11\n10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!",
+            "actual": "15\n14\n13\n12\n11\n10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim de contagem regressiva!"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "4",
+            "expected": "4\n3\n2\n1\n0\nFim da contagem regressiva!",
+            "actual": "4\n3\n2\n1\n0\nFim de contagem regressiva!"
+          }
+        ]
+      },
+      "submitted_code": "\nc = int(input(\"\"))\n\nfor i in range(c,-1,-1):\n\tprint(i)\n\tif 0 == i :\n\t\tprint(\"Fim de contagem regressiva!\")"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

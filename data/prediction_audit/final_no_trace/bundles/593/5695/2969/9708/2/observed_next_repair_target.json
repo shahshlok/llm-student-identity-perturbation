@@ -1,0 +1,68 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "593",
+    "assessment_id": "5695",
+    "exercise_id": "2969",
+    "student_id": "9708",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "Jogos = int(input(\"digite a quantidadede Jogos: \"))\nP_Jogo = float(input(\"digite o valor do P_Jogo: \"))\nif Jogos == \"2\":\n\tvalor = P_Jogo\n\tprint(round(valor, 2))\nelse:\n\tS_Jogo = float(input(\"digite o valor de S_Jogo: \"))\n\tvalor = (P_Jogo)+(S_Jogo-(S_Jogo*25/100))\n\tprint(round(valor, 2))",
+    "grade": 67.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      1
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "Jogos = int(input(\"digite a quantidadede Jogos: \"))\nP_Jogo = float(input(\"digite o valor do P_Jogo: \"))\nif Jogos == \"1\":\n\tvalor = P_Jogo\n\tprint(round(valor, 2))\nelse:\n\tS_Jogo = float(input(\"digite o valor de S_Jogo: \"))\n\tvalor = (P_Jogo)+(S_Jogo-(S_Jogo*25/100))\n\tprint(round(valor, 2))",
+    "grade": 67.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      1
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": true,
+        "input": "2\n55.50\n100.25",
+        "expected": "130.69",
+        "actual": "130.69"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "1\n72.65",
+        "expected": "72.65",
+        "actual": ""
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "2\n99.99\n120.25",
+        "expected": "190.18",
+        "actual": "190.18"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 2,
+        "end_line_0idx": 2,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 2,
+        "end_line_0idx": 2
+      }
+    ]
+  }
+}

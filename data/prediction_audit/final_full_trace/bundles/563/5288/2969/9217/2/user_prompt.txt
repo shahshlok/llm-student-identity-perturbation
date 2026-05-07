@@ -1,0 +1,1697 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 563
+- assessment_id: 5288
+- assessment_title: Lab 2: Estrutura Condicional Composta
+- exercise_id: 2969
+- student_id: 9217
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-01-11T14:06:55.252000
+
+Execution Result
+
+- submitted_at: 2024-01-11 14:20:59
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "2\n55.50\n100.25"
+    expected: "130.69"
+    actual: "131"
+  - test_index_0idx: 1 [FAIL]
+    input: "1\n72.65"
+    expected: "72.65"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "2\n99.99\n120.25"
+    expected: "190.18"
+    actual: "195"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 193
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	8	0	0	0	0	["q"]	[""]	+input
+282	12	0	1	0	1	["t"]	[""]	+input
+651	16	0	2	0	2	["d"]	[""]	+input
+1181	21	0	3	0	3	["_"]	[""]	+input
+1663	26	0	4	0	4	["j"]	[""]	+input
+1834	30	0	5	0	5	["o"]	[""]	+input
+1964	34	0	6	0	6	["g"]	[""]	+input
+2081	38	0	7	0	7	["o"]	[""]	+input
+2221	42	0	8	0	8	["s"]	[""]	+input
+4049	46	0	9	0	9	[" "]	[""]	+input
+4218	50	0	10	0	10	["="]	[""]	+input
+4330	54	0	11	0	11	[" "]	[""]	+input
+14532	60	0	12	0	12	["i"]	[""]	+input
+14650	64	0	13	0	13	["n"]	[""]	+input
+14813	68	0	14	0	14	["t"]	[""]	+input
+16731	73	0	15	0	15	["()"]	[""]	+input
+16954	79	0	16	0	16	["i"]	[""]	+input
+17097	83	0	17	0	17	["n"]	[""]	+input
+17296	87	0	18	0	18	["p"]	[""]	+input
+17513	91	0	19	0	19	["u"]	[""]	+input
+17696	95	0	20	0	20	["t"]	[""]	+input
+20498	100	0	21	0	21	["()"]	[""]	+input
+20650	105	0	22	0	22	["\"\""]	[""]	+input
+21873	113	0	23	0	23	["q"]	[""]	+input
+22030	117	0	24	0	24	["u"]	[""]	+input
+22153	121	0	25	0	25	["a"]	[""]	+input
+22185	124	0	26	0	26	["n"]	[""]	+input
+22412	129	0	27	0	27	["t"]	[""]	+input
+22569	133	0	28	0	28	["i"]	[""]	+input
+22697	137	0	29	0	29	["d"]	[""]	+input
+22830	141	0	30	0	30	["a"]	[""]	+input
+22980	145	0	31	0	31	["d"]	[""]	+input
+23097	148	0	32	0	32	["e"]	[""]	+input
+23280	153	0	33	0	33	[" "]	[""]	+input
+23496	157	0	34	0	34	["d"]	[""]	+input
+23530	160	0	35	0	35	["e"]	[""]	+input
+23680	165	0	36	0	36	[" "]	[""]	+input
+25354	170	0	37	0	37	["J"]	[""]	+input
+25529	175	0	38	0	38	["o"]	[""]	+input
+25646	179	0	39	0	39	["g"]	[""]	+input
+25785	183	0	40	0	40	["o"]	[""]	+input
+25913	187	0	41	0	41	["s"]	[""]	+input
+28463	191	0	23	0	24	[""]	["q"]	+delete
+28831	197	0	23	0	23	["Q"]	[""]	+input
+32480	204	0	42	0	42	[":"]	[""]	+input
+32763	209	0	43	0	43	[" "]	[""]	+input
+38897	231	0	47	0	47	["",""]	[""]	+input
+43196	239	1	0	1	0	["p"]	[""]	+input
+43295	243	1	1	1	1	["r"]	[""]	+input
+43449	247	1	2	1	2	["i"]	[""]	+input
+43529	251	1	3	1	3	["c"]	[""]	+input
+43646	254	1	4	1	4	["e"]	[""]	+input
+44682	260	1	5	1	5	["()"]	[""]	+input
+45914	265	1	5	1	7	[""]	["()"]	+delete
+47114	270	1	5	1	5	["-"]	[""]	+input
+47311	274	1	6	1	6	[" "]	[""]	+input
+47448	278	1	7	1	7	["-"]	[""]	+input
+47712	281	1	7	1	8	[""]	["-"]	+delete
+47897	285	1	6	1	7	[""]	[" "]	+delete
+48078	289	1	5	1	6	[""]	["-"]	+delete
+48812	294	1	5	1	5	[" "]	[""]	+input
+48914	298	1	6	1	6	["="]	[""]	+input
+49004	302	1	7	1	7	[" "]	[""]	+input
+174314	306	1	8	1	8	["f"]	[""]	+input
+174424	310	1	9	1	9	["l"]	[""]	+input
+174590	314	1	10	1	10	["o"]	[""]	+input
+174696	318	1	11	1	11	["a"]	[""]	+input
+174857	322	1	12	1	12	["t"]	[""]	+input
+175774	327	1	13	1	13	["()"]	[""]	+input
+176024	333	1	14	1	14	["i"]	[""]	+input
+176173	337	1	15	1	15	["n"]	[""]	+input
+176344	341	1	16	1	16	["p"]	[""]	+input
+176540	345	1	17	1	17	["u"]	[""]	+input
+176696	349	1	18	1	18	["t"]	[""]	+input
+177307	354	1	19	1	19	["()"]	[""]	+input
+178037	361	1	20	1	20	["\"\""]	[""]	+input
+181441	368	1	21	1	21	["P"]	[""]	+input
+181624	373	1	22	1	22	["r"]	[""]	+input
+181823	377	1	23	1	23	["e"]	[""]	+input
+182424	381	1	24	1	24	["ç"]	[""]	+input
+182640	385	1	25	1	25	["o"]	[""]	+input
+182712	389	1	26	1	26	[" "]	[""]	+input
+182940	393	1	27	1	27	["d"]	[""]	+input
+183128	397	1	28	1	28	["o"]	[""]	+input
+183273	401	1	29	1	29	[" "]	[""]	+input
+183880	405	1	30	1	30	["j"]	[""]	+input
+184073	409	1	31	1	31	["o"]	[""]	+input
+184290	413	1	32	1	32	["g"]	[""]	+input
+184392	417	1	33	1	33	["o"]	[""]	+input
+186681	424	1	34	1	34	[":"]	[""]	+input
+186972	429	1	35	1	35	[" "]	[""]	+input
+195773	444	1	39	1	39	["",""]	[""]	+input
+197929	451	2	0	2	0	["P"]	[""]	+input
+198089	456	2	1	2	1	["r"]	[""]	+input
+198223	460	2	2	2	2	["i"]	[""]	+input
+198312	464	2	3	2	3	["c"]	[""]	+input
+198424	467	2	4	2	4	["e"]	[""]	+input
+201306	485	2	0	2	1	[""]	["P"]	+delete
+202008	490	2	0	2	0	["o"]	[""]	+input
+202939	493	2	0	2	1	[""]	["o"]	+delete
+203160	498	2	0	2	0	["p"]	[""]	+input
+206100	504	2	5	2	5	["_"]	[""]	+input
+207022	509	2	6	2	6	["2"]	[""]	+input
+209290	513	2	7	2	7	[" "]	[""]	+input
+210122	517	2	8	2	8	["-"]	[""]	+input
+210256	521	2	9	2	9	[" "]	[""]	+input
+210672	524	2	9	2	10	[""]	[" "]	+delete
+210855	528	2	8	2	9	[""]	["-"]	+delete
+212273	533	2	8	2	8	["="]	[""]	+input
+212440	537	2	9	2	9	[" "]	[""]	+input
+216473	548	2	10	2	10	["v"]	[""]	+input
+217609	554	2	10	2	11	[""]	["v"]	+delete
+217766	557	2	10	2	10	["float(input(\"Preço do jogo: \"))"]	[""]	paste
+222489	564	1	34	1	34	[" "]	[""]	+input
+222655	567	1	35	1	35	["1"]	[""]	+input
+223921	573	2	36	2	36	[" "]	[""]	+input
+224042	576	2	37	2	37	["2"]	[""]	+input
+449351	581	2	43	2	43	["",""]	[""]	+input
+489662	587	3	0	3	0	["",""]	[""]	+input
+529064	593	4	0	4	0	["i"]	[""]	+input
+529143	596	4	1	4	1	["f"]	[""]	+input
+530360	601	4	2	4	2	[" "]	[""]	+input
+532136	605	4	3	4	3	["q"]	[""]	+input
+532278	609	4	4	4	4	["t"]	[""]	+input
+532492	613	4	5	4	5	["d"]	[""]	+input
+532998	617	4	6	4	6	[" "]	[""]	+input
+533445	620	4	6	4	7	[""]	[" "]	+delete
+533814	626	4	6	4	6	["_"]	[""]	+input
+534443	631	4	7	4	7	["j"]	[""]	+input
+534598	635	4	8	4	8	["o"]	[""]	+input
+534747	639	4	9	4	9	["g"]	[""]	+input
+534843	643	4	10	4	10	["o"]	[""]	+input
+534966	647	4	11	4	11	["s"]	[""]	+input
+536443	651	4	12	4	12	[" "]	[""]	+input
+536630	655	4	13	4	13	["="]	[""]	+input
+536792	659	4	14	4	14	["="]	[""]	+input
+539660	663	4	15	4	15	[" "]	[""]	+input
+540026	667	4	16	4	16	["2"]	[""]	+input
+542076	672	4	17	4	17	[":"]	[""]	+input
+542662	676	4	18	4	18	["",""]	[""]	+input
+542662	677	5	0	5	0	["\t"]	[""]	+input
+548111	683	5	1	5	1	["p"]	[""]	+input
+548230	687	5	2	5	2	["r"]	[""]	+input
+548342	691	5	3	5	3	["i"]	[""]	+input
+548509	694	5	4	5	4	["n"]	[""]	+input
+548581	698	5	5	5	5	["t"]	[""]	+input
+550231	704	5	6	5	6	["()"]	[""]	+input
+550793	710	5	7	5	7	["r"]	[""]	+input
+550982	714	5	8	5	8	["o"]	[""]	+input
+551259	718	5	9	5	9	["u"]	[""]	+input
+551382	722	5	10	5	10	["n"]	[""]	+input
+551574	726	5	11	5	11	["d"]	[""]	+input
+552582	731	5	12	5	12	["()"]	[""]	+input
+555709	737	5	13	5	13	["p"]	[""]	+input
+555910	741	5	14	5	14	["r"]	[""]	+input
+556165	745	5	15	5	15	["i"]	[""]	+input
+556630	749	5	16	5	16	["c"]	[""]	+input
+556808	752	5	17	5	17	["e"]	[""]	+input
+561479	757	5	18	5	18	[" "]	[""]	+input
+561642	761	5	19	5	19	["="]	[""]	+input
+561765	765	5	20	5	20	[" "]	[""]	+input
+562441	768	5	20	5	21	[""]	[" "]	+delete
+562581	772	5	19	5	20	[""]	["="]	+delete
+563291	778	5	19	5	19	["+"]	[""]	+input
+563461	783	5	20	5	20	[" "]	[""]	+input
+564341	787	5	21	5	21	["p"]	[""]	+input
+564491	791	5	22	5	22	["r"]	[""]	+input
+564758	795	5	23	5	23	["i"]	[""]	+input
+564908	799	5	24	5	24	["c"]	[""]	+input
+565029	802	5	25	5	25	["e"]	[""]	+input
+565641	808	5	26	5	26	["_"]	[""]	+input
+566541	813	5	27	5	27	["2"]	[""]	+input
+572375	822	1	5	1	5	["_"]	[""]	+input
+572758	827	1	6	1	6	["1"]	[""]	+input
+575724	833	5	18	5	18	["_"]	[""]	+input
+575925	838	5	19	5	19	["1"]	[""]	+input
+583958	850	5	31	5	31	[" "]	[""]	+input
+588076	902	5	13	5	13	["("]	[""]	+input
+594973	909	5	32	5	32	[")"]	[""]	+input
+596140	913	5	33	5	34	[""]	[" "]	+delete
+597773	927	5	32	5	32	[" "]	[""]	+input
+604192	931	5	33	5	33	["-"]	[""]	+input
+604373	935	5	34	5	34	[" "]	[""]	+input
+606326	939	5	35	5	35	["2"]	[""]	+input
+606744	943	5	36	5	36	["5"]	[""]	+input
+607079	947	5	37	5	37	["/"]	[""]	+input
+607373	951	5	38	5	38	["1"]	[""]	+input
+607590	955	5	39	5	39	["0"]	[""]	+input
+607744	959	5	40	5	40	["0"]	[""]	+input
+649909	967	1	6	1	7	[""]	["1"]	+delete
+650088	972	1	6	1	6	["1"]	[""]	+input
+655672	976	1	37	1	38	[""]	["1"]	+delete
+655821	981	1	37	1	37	["1"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 657972
+- raw_log_line: 990
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preço do jogo 1: "))
+price_2 = float(input("Preço do jogo 2: "))
+
+if qtd_jogos == 2:
+	print(round((price_1 + price_2) - 25/100))
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Traceback (most recent call last):
+File "main.py", line 2, in <module>
+price_1 = float(input("Pre\xe7o do jogo 1: "))
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe7' in position 3: ordinal not in range(128)
+```
+
+Edit Segment 2
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+670661	995	1	26	1	27	[""]	["ç"]	+delete
+671671	1000	1	26	1	26	["c"]	[""]	+input
+673541	1004	2	26	2	27	[""]	["ç"]	+delete
+673670	1009	2	26	2	26	["c"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 676354
+- raw_log_line: 1014
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+	print(round((price_1 + price_2) - 25/100))
+```
+Run Output
+```text
+
+```
+
+Edit Segment 3
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+697004	1021	5	35	5	35	["("]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 702427
+- raw_log_line: 1053
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+	print(round((price_1 + price_2) - (25/100))
+```
+Run Output
+```text
+File "main.py", line 7
+SyntaxError: unexpected EOF while parsing
+```
+
+Edit Segment 4
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+707819	1058	5	35	5	36	[""]	["("]	undo
+708068	1062	2	26	2	27	[""]	["c"]	undo
+711804	1068	2	26	2	26	["c"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 721987
+- raw_log_line: 1078
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+	print(round((price_1 + price_2) - 25/100))
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 50
+Preco do jogo 2: 100
+150
+```
+
+Edit Segment 5
+- raw_change_event_count: 28
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+727835	1085	5	35	5	35	["("]	[""]	+input
+733189	1119	5	44	5	44	["",""]	[""]	+input
+733189	1120	6	0	6	0	["\t\t\t"]	[""]	+input
+734004	1125	6	2	6	3	[""]	["\t"]	+delete
+734308	1129	6	1	6	2	[""]	["\t"]	+delete
+734567	1133	6	0	6	1	[""]	["\t"]	+delete
+735493	1138	6	0	6	0	["e"]	[""]	+input
+735620	1142	6	1	6	1	["l"]	[""]	+input
+735692	1145	6	2	6	2	["s"]	[""]	+input
+735818	1149	6	3	6	3	["e"]	[""]	+input
+737385	1155	6	4	6	4	[":"]	[""]	+input
+738022	1160	6	5	6	5	[" "]	[""]	+input
+738902	1164	6	6	6	6	["p"]	[""]	+input
+739015	1167	6	7	6	7	["r"]	[""]	+input
+739156	1172	6	8	6	8	["i"]	[""]	+input
+739285	1176	6	9	6	9	["n"]	[""]	+input
+739803	1180	6	10	6	10	["t"]	[""]	+input
+740890	1185	6	11	6	11	["()"]	[""]	+input
+742437	1191	6	12	6	12	["p"]	[""]	+input
+742551	1195	6	13	6	13	["r"]	[""]	+input
+742719	1199	6	14	6	14	["i"]	[""]	+input
+742852	1203	6	15	6	15	["c"]	[""]	+input
+743001	1206	6	16	6	16	["e"]	[""]	+input
+744153	1212	6	17	6	17	["_"]	[""]	+input
+744536	1217	6	18	6	18	["1"]	[""]	+input
+779834	1239	4	0	6	20	["if qtd_jogos == 2:","    print(round((price_1 + price_2) - (25/100)))","else:","    print(price_1)"]	["if qtd_jogos == 2:","\tprint(round((price_1 + price_2) - (25/100))","else: print(price_1)"]	paste
+784021	1245	5	48	5	48	["",""]	[""]	+input
+784022	1246	6	0	6	0	["\t\t"]	[""]	+input
+
+Local Run 5
+- event_time_delta_ms: 786319
+- raw_log_line: 1255
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+    print(round((price_1 + price_2) - (25/100)))
+		
+else:
+    print(price_1)
+```
+Run Output
+```text
+File "main.py", line 7
+else: print(price_1)
+SyntaxError: invalid syntax
+```
+
+Edit Segment 6
+- raw_change_event_count: 6
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+828419	1261	5	45	5	45	[" "]	[""]	+input
+828548	1265	5	46	5	46	["*"]	[""]	+input
+828682	1269	5	47	5	47	[" "]	[""]	+input
+829236	1273	5	48	5	48	["1"]	[""]	+input
+829447	1277	5	49	5	49	["0"]	[""]	+input
+829636	1281	5	50	5	50	["0"]	[""]	+input
+
+Local Run 6
+- event_time_delta_ms: 832219
+- raw_log_line: 1289
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+    print(round((price_1 + price_2) - (25/100 * 100)))
+		
+else:
+    print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 50
+Preco do jogo 2: 100
+150
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 843934
+- raw_log_line: 1291
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+    print(round((price_1 + price_2) - (25/100 * 100)))
+		
+else:
+    print(price_1)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-01-11T14:24:27.809000
+
+Execution Result
+
+- submitted_at: 2024-01-11 14:31:52
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "2\n55.50\n100.25"
+    expected: "130.69"
+    actual: "117 2"
+  - test_index_0idx: 1 [FAIL]
+    input: "1\n72.65"
+    expected: "72.65"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "2\n99.99\n120.25"
+    expected: "190.18"
+    actual: "165 2"
+
+Attempt Start Code
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+    print(round((price_1 + price_2) - (25/100 * 100)))
+		
+else:
+    print(price_1)
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 12
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1300	5	35	5	54	[""]	[" - (25/100 * 100)))"]	+delete
+50168	1311	5	35	5	35	[" "]	[""]	+input
+51448	1315	5	36	5	36	["*"]	[""]	+input
+52230	1319	5	37	5	37	[" "]	[""]	+input
+54031	1323	5	38	5	38	["2"]	[""]	+input
+54296	1327	5	39	5	39	["5"]	[""]	+input
+55163	1331	5	40	5	40	["/"]	[""]	+input
+55431	1335	5	41	5	41	["1"]	[""]	+input
+55650	1339	5	42	5	42	["0"]	[""]	+input
+55781	1343	5	43	5	43	["0"]	[""]	+input
+56815	1348	5	44	5	44	[")"]	[""]	+input
+59414	1375	5	38	5	38	["("]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 64830
+- raw_log_line: 1384
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+    print(round((price_1 + price_2) * (25/100)
+		
+else:
+    print(price_1)
+```
+Run Output
+```text
+File "main.py", line 8
+else:
+SyntaxError: invalid syntax
+```
+
+Edit Segment 2
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+87163	1400	4	0	8	18	["if qtd_jogos == 2:","    print(round((price_1 + price_2) * (25/100)))","else:","    print(price_1)"]	["if qtd_jogos == 2:","    print(round((price_1 + price_2) * (25/100)","\t\t","else:","    print(price_1)"]	paste
+
+Local Run 2
+- event_time_delta_ms: 94751
+- raw_log_line: 1410
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+    print(round((price_1 + price_2) * (25/100)))
+else:
+    print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 50
+Preco do jogo 2: 100
+```
+
+Edit Segment 3
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+114245	1415	5	38	5	39	[""]	["("]	+delete
+115627	1420	5	43	5	44	[""]	["0"]	+delete
+117204	1425	5	43	5	43	["0"]	[""]	+input
+118312	1428	5	44	5	45	[""]	[")"]	+delete
+
+Local Run 3
+- event_time_delta_ms: 128727
+- raw_log_line: 1437
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+    print(round((price_1 + price_2) * 25/100))
+else:
+    print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 0
+Preco do jogo 2: 20
+```
+
+Local Run 4
+- event_time_delta_ms: 132802
+- raw_log_line: 1440
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+    print(round((price_1 + price_2) * 25/100))
+else:
+    print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 10
+Preco do jogo 1: 20
+```
+
+Edit Segment 4
+- raw_change_event_count: 87
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+159143	1445	3	0	3	0	[" "]	[""]	+input
+159309	1449	3	1	3	1	["s"]	[""]	+input
+159412	1453	3	2	3	2	["o"]	[""]	+input
+159525	1456	3	3	3	3	["m"]	[""]	+input
+159675	1461	3	4	3	4	["a"]	[""]	+input
+159796	1465	3	5	3	5	[" "]	[""]	+input
+160564	1468	3	5	3	6	[""]	[" "]	+delete
+160774	1472	3	4	3	5	[""]	["a"]	+delete
+160950	1476	3	3	3	4	[""]	["m"]	+delete
+161128	1480	3	2	3	3	[""]	["o"]	+delete
+161290	1484	3	1	3	2	[""]	["s"]	+delete
+161460	1488	3	0	3	1	[""]	[" "]	+delete
+162009	1493	3	0	3	0	["s"]	[""]	+input
+162129	1497	3	1	3	1	["o"]	[""]	+input
+162212	1500	3	2	3	2	["m"]	[""]	+input
+162342	1505	3	3	3	3	["a"]	[""]	+input
+162775	1509	3	4	3	4	[" "]	[""]	+input
+162875	1513	3	5	3	5	["="]	[""]	+input
+163012	1517	3	6	3	6	[" "]	[""]	+input
+186301	1521	3	7	3	7	["o"]	[""]	+input
+186374	1524	3	8	3	8	["r"]	[""]	+input
+186541	1529	3	9	3	9	["i"]	[""]	+input
+186841	1533	3	10	3	10	["c"]	[""]	+input
+186925	1537	3	11	3	11	["e"]	[""]	+input
+187476	1540	3	11	3	12	[""]	["e"]	+delete
+187690	1544	3	10	3	11	[""]	["c"]	+delete
+187828	1548	3	9	3	10	[""]	["i"]	+delete
+188007	1552	3	8	3	9	[""]	["r"]	+delete
+188292	1556	3	7	3	8	[""]	["o"]	+delete
+188708	1561	3	7	3	7	["p"]	[""]	+input
+188841	1565	3	8	3	8	["r"]	[""]	+input
+188980	1569	3	9	3	9	["i"]	[""]	+input
+189060	1572	3	10	3	10	["c"]	[""]	+input
+189208	1576	3	11	3	11	["e"]	[""]	+input
+197013	1582	3	12	3	12	["_"]	[""]	+input
+197256	1587	3	13	3	13	["1"]	[""]	+input
+198212	1591	3	14	3	14	[" "]	[""]	+input
+199341	1595	3	15	3	15	["+"]	[""]	+input
+199558	1599	3	16	3	16	[" "]	[""]	+input
+200180	1603	3	17	3	17	["p"]	[""]	+input
+200364	1607	3	18	3	18	["r"]	[""]	+input
+200557	1611	3	19	3	19	["i"]	[""]	+input
+200710	1615	3	20	3	20	["c"]	[""]	+input
+200873	1618	3	21	3	21	["e"]	[""]	+input
+202041	1624	3	22	3	22	["_"]	[""]	+input
+202390	1629	3	23	3	23	["2"]	[""]	+input
+211756	1635	5	16	5	45	[""]	["(price_1 + price_2) * 25/100)"]	+delete
+215128	1642	5	17	5	17	[")"]	[""]	+input
+216907	1653	5	16	5	16	[" "]	[""]	+input
+217860	1656	5	16	5	17	[""]	[" "]	+delete
+223757	1661	5	16	5	16	["p"]	[""]	+input
+223943	1664	5	17	5	17	["r"]	[""]	+input
+224006	1668	5	18	5	18	["i"]	[""]	+input
+224072	1672	5	19	5	19	["n"]	[""]	+input
+224244	1677	5	20	5	20	["t"]	[""]	+input
+225940	1680	5	20	5	21	[""]	["t"]	+delete
+226155	1684	5	19	5	20	[""]	["n"]	+delete
+226291	1688	5	18	5	19	[""]	["i"]	+delete
+226472	1692	5	17	5	18	[""]	["r"]	+delete
+226627	1696	5	16	5	17	[""]	["p"]	+delete
+227290	1701	5	16	5	16	["p"]	[""]	+input
+227395	1705	5	17	5	17	["r"]	[""]	+input
+227508	1709	5	18	5	18	["i"]	[""]	+input
+228132	1712	5	18	5	19	[""]	["i"]	+delete
+228422	1716	5	17	5	18	[""]	["r"]	+delete
+228645	1720	5	16	5	17	[""]	["p"]	+delete
+228996	1725	5	16	5	16	["s"]	[""]	+input
+229131	1729	5	17	5	17	["o"]	[""]	+input
+229273	1733	5	18	5	18	["m"]	[""]	+input
+229476	1737	5	19	5	19	["a"]	[""]	+input
+230276	1741	5	20	5	20	[" "]	[""]	+input
+230456	1745	5	21	5	21	["-"]	[""]	+input
+230596	1749	5	22	5	22	[" "]	[""]	+input
+231077	1753	5	23	5	23	["s"]	[""]	+input
+231288	1757	5	24	5	24	["o"]	[""]	+input
+231396	1761	5	25	5	25	["m"]	[""]	+input
+231639	1765	5	26	5	26	["a"]	[""]	+input
+234141	1769	5	27	5	27	[" "]	[""]	+input
+235060	1773	5	28	5	28	["*"]	[""]	+input
+235340	1777	5	29	5	29	[" "]	[""]	+input
+237157	1782	5	30	5	30	["()"]	[""]	+input
+238128	1788	5	31	5	31	["2"]	[""]	+input
+238324	1792	5	32	5	32	["5"]	[""]	+input
+238922	1796	5	33	5	33	["/"]	[""]	+input
+239305	1800	5	34	5	34	["1"]	[""]	+input
+239578	1804	5	35	5	35	["0"]	[""]	+input
+239759	1808	5	36	5	36	["0"]	[""]	+input
+
+Local Run 5
+- event_time_delta_ms: 246827
+- raw_log_line: 1815
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+soma = price_1 + price_2
+if qtd_jogos == 2:
+    print(round(soma - soma * (25/100)))
+else:
+    print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 10
+Preco do jogo 2: 20
+```
+
+Edit Segment 5
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+268060	1821	5	39	5	39	[","]	[""]	+input
+268772	1825	5	40	5	40	[" "]	[""]	+input
+268888	1829	5	41	5	41	["2"]	[""]	+input
+
+Local Run 6
+- event_time_delta_ms: 270910
+- raw_log_line: 1836
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+soma = price_1 + price_2
+if qtd_jogos == 2:
+    print(round(soma - soma * (25/100)), 2)
+else:
+    print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 10
+Preco do jogo 2: 20
+```
+
+Edit Segment 6
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+304756	1841	3	24	3	24	["",""]	[""]	+input
+
+Local Run 7
+- event_time_delta_ms: 436981
+- raw_log_line: 1855
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+soma = price_1 + price_2
+
+if qtd_jogos == 2:
+    print(round(soma - soma * (25/100)), 2)
+else:
+    print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 10
+Preco do jogo 2: 20
+22 2
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 445150
+- raw_log_line: 1857
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+soma = price_1 + price_2
+
+if qtd_jogos == 2:
+    print(round(soma - soma * (25/100)), 2)
+else:
+    print(price_1)
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-01-11T14:32:09.444000
+
+Execution Result
+
+- submitted_at: 2024-01-11 14:48:45
+- grade: 33.0
+- pass_count: 1
+- failed_test_indices_0idx: [0,2]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "2\n55.50\n100.25"
+    expected: "130.69"
+    actual: "30.44"
+  - test_index_0idx: 1 [PASS]
+    input: "1\n72.65"
+    expected: "72.65"
+    actual: "72.65"
+  - test_index_0idx: 2 [FAIL]
+    input: "2\n99.99\n120.25"
+    expected: "190.18"
+    actual: "69.93"
+
+Attempt Start Code
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+soma = price_1 + price_2
+
+if qtd_jogos == 2:
+    print(round(soma - soma * (25/100)), 2)
+else:
+    print(price_1)
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 29
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1863	6	4	6	4	["#"]	[""]	+input
+1745	1868	6	44	6	44	["",""]	[""]	+input
+1745	1869	7	0	7	0	["\t\t"]	[""]	+input
+2096	1875	7	2	7	2	["p"]	[""]	+input
+2278	1879	7	3	7	3	["r"]	[""]	+input
+2384	1883	7	4	7	4	["i"]	[""]	+input
+2563	1886	7	5	7	5	["n"]	[""]	+input
+2645	1890	7	6	7	6	["t"]	[""]	+input
+3632	1896	7	7	7	7	["()"]	[""]	+input
+3861	1902	7	8	7	8	["s"]	[""]	+input
+4025	1906	7	9	7	9	["o"]	[""]	+input
+4712	1910	7	10	7	10	["a"]	[""]	+input
+5663	1913	7	10	7	11	[""]	["a"]	+delete
+5952	1918	7	10	7	10	["m"]	[""]	+input
+6178	1922	7	11	7	11	["a"]	[""]	+input
+7078	1926	7	12	7	12	["-"]	[""]	+input
+7311	1930	7	13	7	13	["s"]	[""]	+input
+7461	1934	7	14	7	14	["o"]	[""]	+input
+7600	1937	7	15	7	15	["m"]	[""]	+input
+7728	1942	7	16	7	16	["a"]	[""]	+input
+8416	1946	7	17	7	17	[" "]	[""]	+input
+9812	1950	7	18	7	18	["*"]	[""]	+input
+10912	1955	7	19	7	19	["()"]	[""]	+input
+11929	1961	7	20	7	20	["2"]	[""]	+input
+12129	1965	7	21	7	21	["5"]	[""]	+input
+12512	1969	7	22	7	22	["/"]	[""]	+input
+13012	1973	7	23	7	23	["1"]	[""]	+input
+13236	1977	7	24	7	24	["0"]	[""]	+input
+13378	1981	7	25	7	25	["0"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 27427
+- raw_log_line: 1990
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+soma = price_1 + price_2
+
+if qtd_jogos == 2:
+    #print(round(soma - soma * (25/100)), 2)
+		print(soma-soma *(25/100))
+else:
+    print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 10
+Preco do jogo 2: 20
+22.5
+```
+
+Edit Segment 2
+- raw_change_event_count: 21
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+108876	1995	7	19	7	19	[" "]	[""]	+input
+109875	2000	7	8	7	8	[" "]	[""]	+input
+112257	2005	7	14	7	14	[" "]	[""]	+input
+112962	2010	7	13	7	13	[" "]	[""]	+input
+124442	2019	5	0	5	0	["$"]	[""]	+input
+126290	2023	5	0	5	1	[""]	["$"]	+delete
+126523	2029	5	0	5	0	["#"]	[""]	+input
+127724	2036	7	1	7	1	["#"]	[""]	+input
+128479	2043	8	0	8	0	["#"]	[""]	+input
+128977	2050	9	1	9	1	["#"]	[""]	+input
+130341	2056	4	0	4	0	["p"]	[""]	+input
+130423	2060	4	1	4	1	["r"]	[""]	+input
+130575	2064	4	2	4	2	["i"]	[""]	+input
+130673	2067	4	3	4	3	["n"]	[""]	+input
+130789	2072	4	4	4	4	["t"]	[""]	+input
+131556	2076	4	5	4	5	["s"]	[""]	+input
+131639	2079	4	6	4	6	["o"]	[""]	+input
+131759	2083	4	7	4	7	["m"]	[""]	+input
+131894	2087	4	8	4	8	["a"]	[""]	+input
+134741	2105	4	5	4	5	["("]	[""]	+input
+138207	2131	4	10	4	10	[")"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 145393
+- raw_log_line: 2141
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+soma = price_1 + price_2
+print(soma)
+#if qtd_jogos == 2:
+    #print(round(soma - soma * (25/100)), 2)
+	#	print( soma - soma * (25/100))
+#else:
+ #   print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 10
+Preco do jogo 2: 20
+30.0
+```
+
+Edit Segment 3
+- raw_change_event_count: 12
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+150289	2146	4	10	4	11	[""]	[")"]	undo
+150655	2150	4	5	4	6	[""]	["("]	undo
+151022	2154	4	0	4	9	[""]	["printsoma"]	undo
+151572	2158	9	1	9	2	[""]	["#"]	undo
+152405	2162	8	0	8	1	[""]	["#"]	undo
+152943	2166	7	1	7	2	[""]	["#"]	undo
+153358	2170	5	0	5	1	[""]	["#"]	undo
+154078	2174	5	0	5	0	["$"]	[""]	undo
+154672	2178	5	0	5	1	[""]	["$"]	undo
+219375	2189	7	16	7	16	["("]	[""]	+input
+236271	2207	8	0	8	0	["#"]	[""]	+input
+240436	2214	9	4	9	4	["#"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 243402
+- raw_log_line: 2222
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+soma = price_1 + price_2
+
+if qtd_jogos == 2:
+    #print(round(soma - soma * (25/100)), 2)
+		print( soma - (soma * (25/100))
+#else:
+    #print(price_1)
+```
+Run Output
+```text
+File "main.py", line 11
+SyntaxError: unexpected EOF while parsing
+```
+
+Edit Segment 4
+- raw_change_event_count: 46
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+249410	2227	9	4	9	5	[""]	["#"]	undo
+249758	2231	8	0	8	1	[""]	["#"]	undo
+278006	2249	5	0	9	18	["if qtd_jogos == 2:","    # print(round(soma - soma * (25/100), 2))","    print(round(soma - (soma * (25/100)), 2))","else:","    print(price_1)"]	["if qtd_jogos == 2:","    #print(round(soma - soma * (25/100)), 2)","\t\tprint( soma - (soma * (25/100))","else:","    print(price_1)"]	paste
+315005	2260	7	23	7	24	[""]	["("]	+delete
+317299	2266	7	43	7	44	[""]	[")"]	+delete
+322166	2272	7	43	7	43	[")"]	[""]	+input
+324749	2277	7	37	7	38	[""]	[")"]	+delete
+329806	2283	7	4	7	9	["p"]	["print"]	+input
+329951	2287	7	5	7	5	["r"]	[""]	+input
+330065	2290	7	6	7	6	["i"]	[""]	+input
+330181	2294	7	7	7	7	["n"]	[""]	+input
+330270	2298	7	8	7	8	["t"]	[""]	+input
+334860	2303	6	5	6	6	[""]	[" "]	+delete
+335248	2307	6	4	6	5	[""]	["#"]	+delete
+339453	2312	7	0	7	9	[""]	["    print"]	+delete
+340019	2316	6	43	7	0	[""]	["",""]	+delete
+340881	2321	6	43	6	43	["",""]	[""]	+input
+340881	2322	7	0	7	0	["\t\t"]	[""]	+input
+342686	2328	7	2	7	2	["p"]	[""]	+input
+342831	2331	7	3	7	3	["i"]	[""]	+input
+342864	2334	7	4	7	4	["r"]	[""]	+input
+343021	2339	7	5	7	5	["n"]	[""]	+input
+343182	2344	7	6	7	6	["t"]	[""]	+input
+343664	2347	7	6	7	7	[""]	["t"]	+delete
+343852	2351	7	5	7	6	[""]	["n"]	+delete
+344018	2355	7	4	7	5	[""]	["r"]	+delete
+344214	2359	7	3	7	4	[""]	["i"]	+delete
+344848	2364	7	3	7	3	["r"]	[""]	+input
+344982	2368	7	4	7	4	["i"]	[""]	+input
+345118	2371	7	5	7	5	["n"]	[""]	+input
+345182	2375	7	6	7	6	["t"]	[""]	+input
+348564	2403	6	4	6	4	["\t"]	[""]	+input
+349021	2407	6	4	6	5	[""]	["\t"]	+delete
+349284	2411	6	3	6	4	[""]	[" "]	+delete
+349501	2415	6	2	6	3	[""]	[" "]	+delete
+349697	2419	6	1	6	2	[""]	[" "]	+delete
+349933	2423	6	0	6	1	[""]	[" "]	+delete
+350562	2427	6	0	6	0	["\t"]	[""]	+input
+352981	2437	7	1	7	2	[""]	["\t"]	+delete
+353347	2441	7	0	7	1	[""]	["\t"]	+delete
+353796	2445	7	0	7	0	["\t"]	[""]	+input
+356814	2450	9	3	9	4	[""]	[" "]	+delete
+357213	2454	9	2	9	3	[""]	[" "]	+delete
+357581	2458	9	1	9	2	[""]	[" "]	+delete
+357869	2462	9	0	9	1	[""]	[" "]	+delete
+358430	2466	9	0	9	0	["\t"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 361131
+- raw_log_line: 2475
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+soma = price_1 + price_2
+
+if qtd_jogos == 2:
+	print(round(soma - soma * (25/100), 2))
+	print(round(soma - soma * (25/100), 2))
+else:
+	print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 10
+Preco do jogo 2: 20
+22.5
+```
+
+Edit Segment 5
+- raw_change_event_count: 35
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+371413	2480	7	1	7	40	[""]	["print(round(soma - soma * (25/100), 2))"]	+delete
+372997	2484	7	0	7	1	[""]	["\t"]	+delete
+373581	2488	6	40	7	0	[""]	["",""]	+delete
+419695	2495	3	0	3	0	["\t"]	[""]	+input
+420959	2499	3	0	3	1	[""]	["\t"]	+delete
+421685	2505	3	0	3	0	["#"]	[""]	+input
+424286	2511	6	13	6	17	["p"]	["soma"]	+input
+424462	2515	6	14	6	14	["r"]	[""]	+input
+424596	2519	6	15	6	15	["i"]	[""]	+input
+424701	2522	6	16	6	16	["n"]	[""]	+input
+424979	2527	6	17	6	17	["c"]	[""]	+input
+425149	2530	6	18	6	18	["e"]	[""]	+input
+426546	2538	6	19	6	19	["_"]	[""]	+input
+426894	2543	6	20	6	20	["2"]	[""]	+input
+430145	2549	6	24	6	28	["P"]	["soma"]	+input
+430285	2553	6	25	6	25	["R"]	[""]	+input
+430464	2558	6	26	6	26	["i"]	[""]	+input
+430575	2562	6	27	6	27	["c"]	[""]	+input
+430704	2565	6	28	6	28	["e"]	[""]	+input
+431344	2569	6	28	6	29	[""]	["e"]	+delete
+431516	2573	6	27	6	28	[""]	["c"]	+delete
+431677	2577	6	26	6	27	[""]	["i"]	+delete
+431844	2581	6	25	6	26	[""]	["R"]	+delete
+432929	2586	6	25	6	25	["r"]	[""]	+input
+433085	2590	6	26	6	26	["i"]	[""]	+input
+433229	2594	6	27	6	27	["c"]	[""]	+input
+433378	2597	6	28	6	28	["e"]	[""]	+input
+438333	2607	6	29	6	29	["_"]	[""]	+input
+438797	2612	6	30	6	30	["2"]	[""]	+input
+441277	2616	6	24	6	25	[""]	["P"]	+delete
+443885	2621	6	24	6	24	["p"]	[""]	+input
+451828	2627	6	13	6	13	["("]	[""]	+input
+459534	2634	6	43	6	43	[")"]	[""]	+input
+462877	2639	6	44	6	44	["+"]	[""]	+input
+463112	2643	6	45	6	45	["2"]	[""]	+input
+
+Local Run 5
+- event_time_delta_ms: 471309
+- raw_log_line: 2655
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+#soma = price_1 + price_2
+
+if qtd_jogos == 2:
+	print(round((prince_2 - price_2 * (25/100))+2, 2))
+else:
+	print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 10
+Preco do jogo 2: 20
+Traceback (most recent call last):
+File "main.py", line 7, in <module>
+print(round((prince_2 - price_2 * (25/100))+2, 2))
+NameError: name 'prince_2' is not defined
+```
+
+Edit Segment 6
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+474716	2659	6	17	6	18	[""]	["n"]	+delete
+
+Local Run 6
+- event_time_delta_ms: 481395
+- raw_log_line: 2671
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+#soma = price_1 + price_2
+
+if qtd_jogos == 2:
+	print(round((price_2 - price_2 * (25/100))+2, 2))
+else:
+	print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 10
+Preco do jogo 2: 20
+17.0
+```
+
+Edit Segment 7
+- raw_change_event_count: 80
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+489093	2674	6	24	6	31	[""]	["price_2"]	+delete
+491459	2679	6	14	6	21	[""]	["price_2"]	+delete
+495212	2685	6	21	6	36	[""]	["25/100))+2, 2))"]	+delete
+495630	2689	6	20	6	21	[""]	["("]	+delete
+495874	2693	6	19	6	20	[""]	[" "]	+delete
+496043	2697	6	18	6	19	[""]	["*"]	+delete
+496224	2701	6	17	6	18	[""]	[" "]	+delete
+496411	2705	6	16	6	17	[""]	[" "]	+delete
+496608	2709	6	15	6	16	[""]	["-"]	+delete
+496795	2713	6	14	6	15	[""]	[" "]	+delete
+497006	2717	6	13	6	14	[""]	["("]	+delete
+498676	2723	6	13	6	13	[")"]	[""]	+input
+501742	2732	6	13	6	13	["()"]	[""]	+input
+502908	2737	6	13	6	15	[""]	["()"]	+delete
+505505	2742	6	13	6	13	[" "]	[""]	+input
+510397	2753	6	15	6	15	[")"]	[""]	+input
+517581	2767	6	13	6	13	["p"]	[""]	+input
+517874	2771	6	14	6	14	["r"]	[""]	+input
+518012	2775	6	15	6	15	["i"]	[""]	+input
+518141	2779	6	16	6	16	["c"]	[""]	+input
+518258	2782	6	17	6	17	["e"]	[""]	+input
+519197	2788	6	18	6	18	["_"]	[""]	+input
+519549	2793	6	19	6	19	["1"]	[""]	+input
+520559	2797	6	20	6	20	[" "]	[""]	+input
+520975	2801	6	21	6	21	["="]	[""]	+input
+521212	2805	6	22	6	22	[" "]	[""]	+input
+521907	2808	6	22	6	23	[""]	[" "]	+delete
+522091	2812	6	21	6	22	[""]	["="]	+delete
+522908	2818	6	21	6	21	["+"]	[""]	+input
+523458	2823	6	22	6	22	[" "]	[""]	+input
+523874	2827	6	23	6	23	["p"]	[""]	+input
+524060	2831	6	24	6	24	["r"]	[""]	+input
+524191	2835	6	25	6	25	["i"]	[""]	+input
+524324	2839	6	26	6	26	["c"]	[""]	+input
+524428	2842	6	27	6	27	["e"]	[""]	+input
+525212	2848	6	28	6	28	["_"]	[""]	+input
+525692	2853	6	29	6	29	["2"]	[""]	+input
+532797	2857	6	30	6	30	[" "]	[""]	+input
+535775	2861	6	31	6	31	["*"]	[""]	+input
+539965	2865	6	32	6	32	[" "]	[""]	+input
+540924	2870	6	33	6	33	["()"]	[""]	+input
+542308	2876	6	34	6	34	["2"]	[""]	+input
+542492	2880	6	35	6	35	["5"]	[""]	+input
+542723	2884	6	36	6	36	["/"]	[""]	+input
+542994	2888	6	37	6	37	["1"]	[""]	+input
+543180	2892	6	38	6	38	["0"]	[""]	+input
+543340	2896	6	39	6	39	["0"]	[""]	+input
+581956	2922	6	41	6	41	[","]	[""]	+input
+583056	2926	6	42	6	42	[" "]	[""]	+input
+583122	2929	6	43	6	43	["2"]	[""]	+input
+587922	2967	6	30	6	30	[" "]	[""]	+input
+588412	2971	6	31	6	31	["-"]	[""]	+input
+588907	2975	6	32	6	32	[" "]	[""]	+input
+590460	2979	6	33	6	33	["p"]	[""]	+input
+590639	2983	6	34	6	34	["r"]	[""]	+input
+590755	2987	6	35	6	35	["i"]	[""]	+input
+590955	2991	6	36	6	36	["e"]	[""]	+input
+591437	2994	6	36	6	37	[""]	["e"]	+delete
+591759	2999	6	36	6	36	["c"]	[""]	+input
+591888	3002	6	37	6	37	["e"]	[""]	+input
+592555	3006	6	37	6	38	[""]	["e"]	+delete
+593772	3011	6	37	6	37	["e"]	[""]	+input
+594860	3016	6	38	6	38	["_"]	[""]	+input
+595227	3021	6	39	6	39	["1"]	[""]	+input
+599027	3025	6	40	6	40	[" "]	[""]	+input
+600557	3029	6	41	6	41	["+"]	[""]	+input
+600827	3033	6	42	6	42	[" "]	[""]	+input
+601906	3037	6	43	6	43	["p"]	[""]	+input
+602155	3041	6	44	6	44	["r"]	[""]	+input
+602321	3045	6	45	6	45	["r"]	[""]	+input
+602994	3048	6	45	6	46	[""]	["r"]	+delete
+604140	3053	6	45	6	45	["i"]	[""]	+input
+604254	3057	6	46	6	46	["c"]	[""]	+input
+604354	3060	6	47	6	47	["e"]	[""]	+input
+604974	3066	6	48	6	48	["_"]	[""]	+input
+605371	3071	6	49	6	49	["2"]	[""]	+input
+610812	3077	6	13	6	13	["("]	[""]	+input
+613244	3084	6	31	6	31	[")"]	[""]	+input
+615438	3091	6	35	6	35	["("]	[""]	+input
+618772	3098	6	53	6	53	[")"]	[""]	+input
+
+Local Run 7
+- event_time_delta_ms: 621041
+- raw_log_line: 3106
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+#soma = price_1 + price_2
+
+if qtd_jogos == 2:
+	print(round((price_1 + price_2) - (price_1 + price_2) * (25/100), 2 ))
+else:
+	print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 10
+Preco do jogo 2: 20
+```
+
+Edit Segment 8
+- raw_change_event_count: 18
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+628155	3112	6	53	6	54	[""]	[")"]	undo
+628619	3116	6	35	6	36	[""]	["("]	undo
+629102	3120	6	31	6	32	[""]	[")"]	undo
+629569	3124	6	13	6	14	[""]	["("]	undo
+630106	3128	6	45	6	50	[""]	["ice_2"]	undo
+630385	3132	6	45	6	45	["r"]	[""]	undo
+630826	3136	6	41	6	46	[""]	["+ prr"]	undo
+631242	3140	6	40	6	41	[""]	[" "]	undo
+631586	3144	6	37	6	40	[""]	["e_1"]	undo
+631936	3148	6	37	6	37	["e"]	[""]	undo
+632303	3152	6	36	6	38	[""]	["ce"]	undo
+632652	3156	6	36	6	36	["e"]	[""]	undo
+632987	3160	6	33	6	37	[""]	["prie"]	undo
+633754	3164	6	30	6	33	[""]	[" - "]	undo
+644155	3170	3	1	3	25	[""]	["soma = price_1 + price_2"]	+delete
+644719	3174	3	0	3	1	[""]	["#"]	+delete
+645402	3178	2	43	3	0	[""]	["",""]	+delete
+655037	3190	5	34	5	34	["-"]	[""]	+input
+
+Local Run 8
+- event_time_delta_ms: 657402
+- raw_log_line: 3198
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+	print(round(price_1 + price_2 * (-25/100), 2 ))
+else:
+	print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 10
+Preco do jogo 2: 20
+22.5
+```
+
+Edit Segment 9
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+666751	3203	5	34	5	35	[""]	["-"]	+delete
+670538	3208	5	34	5	35	[""]	["2"]	+delete
+671307	3213	5	34	5	34	["3"]	[""]	+input
+
+Local Run 9
+- event_time_delta_ms: 673405
+- raw_log_line: 3221
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+	print(round(price_1 + price_2 * (35/100), 2 ))
+else:
+	print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 10
+Preco do jogo 2: 20
+5.0
+```
+
+Edit Segment 10
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+678401	3226	5	34	5	35	[""]	["3"]	+delete
+679602	3231	5	34	5	34	["1"]	[""]	+input
+
+Local Run 10
+- event_time_delta_ms: 681371
+- raw_log_line: 3239
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+	print(round(price_1 + price_2 * (15/100), 2 ))
+else:
+	print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 10
+Preco do jogo 2: 20
+17.0
+```
+
+Edit Segment 11
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+686058	3244	5	34	5	35	[""]	["1"]	+delete
+686718	3249	5	34	5	34	["2"]	[""]	+input
+
+Local Run 11
+- event_time_delta_ms: 693267
+- raw_log_line: 3258
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+	print(round(price_1 + price_2 * (25/100), 2 ))
+else:
+	print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 10
+Preco do jogo 2: 20
+15.0
+```
+
+Local Run 12
+- event_time_delta_ms: 715450
+- raw_log_line: 3259
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+	print(round(price_1 + price_2 * (25/100), 2 ))
+else:
+	print(price_1)
+```
+Run Output
+```text
+
+```
+
+Edit Segment 12
+- raw_change_event_count: 29
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+741760	3263	1	43	1	43	["",""]	[""]	+input
+742098	3268	2	0	2	0	["",""]	[""]	+input
+743467	3274	3	0	3	0	["i"]	[""]	+input
+743581	3278	3	1	3	1	["f"]	[""]	+input
+753052	3282	3	2	3	2	[" "]	[""]	+input
+754907	3286	3	3	3	3	["q"]	[""]	+input
+755082	3290	3	4	3	4	["t"]	[""]	+input
+755264	3294	3	5	3	5	["d"]	[""]	+input
+756065	3299	3	6	3	6	["_"]	[""]	+input
+756666	3304	3	7	3	7	["j"]	[""]	+input
+756849	3308	3	8	3	8	["o"]	[""]	+input
+756970	3312	3	9	3	9	["g"]	[""]	+input
+757131	3316	3	10	3	10	["o"]	[""]	+input
+757315	3320	3	11	3	11	["s"]	[""]	+input
+759098	3324	3	12	3	12	[" "]	[""]	+input
+760683	3328	3	13	3	13	["="]	[""]	+input
+760848	3332	3	14	3	14	["="]	[""]	+input
+762171	3336	3	15	3	15	[" "]	[""]	+input
+762538	3340	3	16	3	16	["1"]	[""]	+input
+764020	3345	3	17	3	17	[":"]	[""]	+input
+765965	3349	3	18	3	18	["",""]	[""]	+input
+765965	3350	4	0	4	0	["\t"]	[""]	+input
+768519	3355	4	0	4	1	[""]	["\t"]	+delete
+769214	3359	3	18	4	0	[""]	["",""]	+delete
+775097	3365	4	0	4	0	["\t"]	[""]	+input
+782882	3370	4	44	4	44	["",""]	[""]	+input
+782882	3371	5	0	5	0	["\t"]	[""]	+input
+784498	3376	5	0	5	1	[""]	["\t"]	+delete
+784780	3380	4	44	5	0	[""]	["",""]	+delete
+
+Local Run 13
+- event_time_delta_ms: 787380
+- raw_log_line: 3390
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+
+if qtd_jogos == 1:
+	price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+	print(round(price_1 + price_2 * (25/100), 2 ))
+else:
+	print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 1
+Preco do jogo 1: 50
+Preco do jogo 2: 0
+50.0
+```
+
+Edit Segment 13
+- raw_change_event_count: 6
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+828078	3400	3	0	3	18	[""]	["if qtd_jogos == 1:"]	+delete
+828601	3404	2	0	3	0	[""]	["",""]	+delete
+838729	3410	3	0	3	1	[""]	["\t"]	+delete
+909913	3421	5	18	5	18	["",""]	[""]	+input
+909913	3422	6	0	6	0	["\t"]	[""]	+input
+910972	3428	6	1	6	1	["price_2 = float(input(\"Preco do jogo 2: \"))"]	[""]	paste
+
+Local Run 14
+- event_time_delta_ms: 913443
+- raw_log_line: 3437
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+	price_2 = float(input("Preco do jogo 2: "))
+	print(round(price_1 + price_2 * (25/100), 2 ))
+else:
+	print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 1
+Preco do jogo 1: 50
+Preco do jogo 2: 2
+50.0
+```
+
+Local Run 15
+- event_time_delta_ms: 915497
+- raw_log_line: 3441
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+
+price_2 = float(input("Preco do jogo 2: "))
+
+if qtd_jogos == 2:
+	price_2 = float(input("Preco do jogo 2: "))
+	print(round(price_1 + price_2 * (25/100), 2 ))
+else:
+	print(price_1)
+```
+Run Output
+```text
+
+```
+
+Edit Segment 14
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+916511	3445	3	0	4	0	[""]	["price_2 = float(input(\"Preco do jogo 2: \"))",""]	+delete
+916825	3450	2	0	3	0	[""]	["",""]	+delete
+
+Local Run 16
+- event_time_delta_ms: 919308
+- raw_log_line: 3456
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+
+if qtd_jogos == 2:
+	price_2 = float(input("Preco do jogo 2: "))
+	print(round(price_1 + price_2 * (25/100), 2 ))
+else:
+	print(price_1)
+```
+Run Output
+```text
+
+```
+
+Local Run 17
+- event_time_delta_ms: 933144
+- raw_log_line: 3461
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+
+if qtd_jogos == 2:
+	price_2 = float(input("Preco do jogo 2: "))
+	print(round(price_1 + price_2 * (25/100), 2 ))
+else:
+	print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 1
+Preco do jogo 1: 50
+50.0
+```
+
+Edit Segment 15
+- raw_change_event_count: 6
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+946681	3467	5	47	5	47	["",""]	[""]	+input
+946681	3468	6	0	6	0	["\t"]	[""]	+input
+947560	3473	6	0	6	1	[""]	["\t"]	+delete
+947959	3477	5	47	6	0	[""]	["",""]	+delete
+950425	3484	5	47	5	47	["",""]	[""]	+input
+981408	3491	5	33	5	33	["-"]	[""]	+input
+
+Local Run 18
+- event_time_delta_ms: 993288
+- raw_log_line: 3500
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+
+if qtd_jogos == 2:
+	price_2 = float(input("Preco do jogo 2: "))
+	print(round(price_1 + price_2 * -(25/100), 2 ))
+
+else:
+	print(price_1)
+```
+Run Output
+```text
+Quantidade de Jogos: 2
+Preco do jogo 1: 50
+Preco do jogo 2: 100
+25.0
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 996292
+- raw_log_line: 3501
+- feedback: "You're almost there! Your code is 33% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+qtd_jogos = int(input("Quantidade de Jogos: "))
+price_1 = float(input("Preco do jogo 1: "))
+
+if qtd_jogos == 2:
+	price_2 = float(input("Preco do jogo 2: "))
+	print(round(price_1 + price_2 * -(25/100), 2 ))
+
+else:
+	print(price_1)
+```

@@ -1,0 +1,68 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "523",
+    "assessment_id": "4932",
+    "exercise_id": "2967",
+    "student_id": "8689",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "alt = float(input())\nalt2 = float(input())\n\nif alt >= 1.37:\n\tprint(\"Sim\")\n\tprint(max(alt, alt2))\n\t\nif alt2 >= 1.37:\n\tprint(\"Sim\")\n\tprint(max(alt, alt2))\nelse:\n\tprint(\"Nao\")\n\tprint(max(alt, alt2))\n\t\n\t\n\t",
+    "grade": 0.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "alt = float(input())\nalt2 = float(input())\n\nif (alt >= 1.37) or (alt >= 1.37):\n\tprint(\"Sim\")\n\tprint(max(alt, alt2))\nelse:\n\tprint(\"Nao\")\n\tprint(max(alt, alt2))\n\t\n\t\n\t",
+    "grade": 0.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      1
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": true,
+        "input": "1.25\n1.26",
+        "expected": "Nao\n1.26",
+        "actual": "Nao\n1.26"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "1.20\n1.53",
+        "expected": "Sim\n1.53",
+        "actual": "Nao\n1.53"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "1.85\n1.9",
+        "expected": "Sim\n1.9",
+        "actual": "Sim\n1.9"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 3,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 3
+      }
+    ]
+  }
+}

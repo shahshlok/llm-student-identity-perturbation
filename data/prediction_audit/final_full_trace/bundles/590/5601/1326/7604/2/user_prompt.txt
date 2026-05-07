@@ -1,0 +1,265 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 590
+- assessment_id: 5601
+- assessment_title: Lab 0 – Primeiros passos com o Python - 2020
+- exercise_id: 1326
+- student_id: 7604
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-04-23T18:46:38.455000
+
+Execution Result
+
+- submitted_at: 2024-04-23 18:49:52
+- grade: 100.0
+- pass_count: 1
+- failed_test_indices_0idx: []
+- test_outcome: all_pass
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "xx"
+    expected: "75"
+    actual: "75"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 30
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	8	0	0	0	0	["p"]	[""]	+input
+512	12	0	1	0	1	["r"]	[""]	+input
+688	16	0	2	0	2	["i"]	[""]	+input
+1056	20	0	3	0	3	["n"]	[""]	+input
+1392	24	0	4	0	4	["t"]	[""]	+input
+4148	29	0	5	0	5	["()"]	[""]	+input
+6290	35	0	6	0	6	["''"]	[""]	+input
+8352	39	0	6	0	8	[""]	["''"]	+delete
+9920	45	0	6	0	6	["\"\""]	[""]	+input
+35681	51	0	7	0	7	["4"]	[""]	+input
+36097	55	0	8	0	8	["0"]	[""]	+input
+37937	59	0	9	0	9	["+"]	[""]	+input
+39377	63	0	10	0	10	["3"]	[""]	+input
+39681	67	0	11	0	11	["5"]	[""]	+input
+88593	121	0	12	0	13	[""]	["\""]	+delete
+88769	125	0	11	0	12	[""]	["5"]	+delete
+88945	129	0	10	0	11	[""]	["3"]	+delete
+89249	133	0	9	0	10	[""]	["+"]	+delete
+89441	137	0	8	0	9	[""]	["0"]	+delete
+89633	141	0	7	0	8	[""]	["4"]	+delete
+89857	145	0	6	0	7	[""]	["\""]	+delete
+91842	151	0	6	0	6	["\"\""]	[""]	+input
+94929	156	0	6	0	8	[""]	["\"\""]	+delete
+180965	161	0	6	0	6	["4"]	[""]	+input
+181156	165	0	7	0	7	["0"]	[""]	+input
+181652	169	0	8	0	8	["+"]	[""]	+input
+183140	173	0	9	0	9	["0"]	[""]	+input
+185539	176	0	9	0	10	[""]	["0"]	+delete
+186580	181	0	9	0	9	["3"]	[""]	+input
+186868	185	0	10	0	10	["5"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 191708
+- raw_log_line: 188
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print(40+35)
+```
+Run Output
+```text
+
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 194147
+- raw_log_line: 189
+- feedback: "Congratulations, your code is correct!"
+Code At This Submit
+```python
+print(40+35)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-04-23T18:51:10.063000
+
+Execution Result
+
+- submitted_at: 2024-04-23 18:51:48
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "xx"
+    expected: "75"
+    actual: "75\n75"
+
+Attempt Start Code
+```python
+print(40+35)
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 24
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	194	0	12	0	12	["",""]	[""]	+input
+1326	200	1	0	1	0	["s"]	[""]	+input
+1614	204	1	1	1	1	["o"]	[""]	+input
+2158	208	1	2	1	2	["m"]	[""]	+input
+2349	212	1	3	1	3	["a"]	[""]	+input
+2573	216	1	4	1	4	[" "]	[""]	+input
+4174	220	1	5	1	5	["="]	[""]	+input
+8142	224	1	6	1	6	[" "]	[""]	+input
+9071	228	1	7	1	7	["4"]	[""]	+input
+9534	232	1	8	1	8	["0"]	[""]	+input
+10958	236	1	9	1	9	["+"]	[""]	+input
+11518	240	1	10	1	10	["3"]	[""]	+input
+11870	244	1	11	1	11	["5"]	[""]	+input
+15424	247	1	12	1	12	["",""]	[""]	+input
+16574	253	2	0	2	0	["p"]	[""]	+input
+17006	257	2	1	2	1	["r"]	[""]	+input
+17310	261	2	2	2	2	["i"]	[""]	+input
+17646	265	2	3	2	3	["n"]	[""]	+input
+18078	269	2	4	2	4	["t"]	[""]	+input
+19966	274	2	5	2	5	["()"]	[""]	+input
+21614	280	2	6	2	6	["s"]	[""]	+input
+21838	284	2	7	2	7	["o"]	[""]	+input
+22158	288	2	8	2	8	["m"]	[""]	+input
+22510	292	2	9	2	9	["a"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 31875
+- raw_log_line: 295
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print(40+35)
+soma = 40+35
+print(soma)
+```
+Run Output
+```text
+
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 38126
+- raw_log_line: 296
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print(40+35)
+soma = 40+35
+print(soma)
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-04-23T18:52:03.694000
+
+Execution Result
+
+- submitted_at: 2024-04-23 18:52:16
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "xx"
+    expected: "75"
+    actual: "75\n40+35"
+
+Attempt Start Code
+```python
+print(40+35)
+soma = 40+35
+print(soma)
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	301	1	7	1	7	["9"]	[""]	+input
+1615	304	1	7	1	8	[""]	["9"]	+delete
+3379	310	1	7	1	7	["\""]	[""]	+input
+7599	331	1	13	1	13	["\""]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 13059
+- raw_log_line: 335
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print(40+35)
+soma = "40+35"
+print(soma)
+```

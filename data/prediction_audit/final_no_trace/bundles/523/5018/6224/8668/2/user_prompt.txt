@@ -1,0 +1,204 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the authoritative execution result for that submitted attempt.
+- Each attempt includes the submitted code for that attempt.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 523
+- assessment_id: 5018
+- assessment_title: Lab 4 – Repetição por Condição (while)
+- exercise_id: 6224
+- student_id: 8668
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+Execution Result
+
+- submitted_at: 2023-09-28 00:38:42
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "8.5\n10.0\n7.0\n5.5\n4.5\n-1"
+    expected: "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 4.5"
+    actual: "3 alunos passaram\n1 alunos ficaram abaixo da media\nmaior nota: 10.0\nmenor_nota: 4.5"
+  - test_index_0idx: 1 [FAIL]
+    input: "9.0\n5.0\n6.0\n-1"
+    expected: "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 9.0\nMenor nota: 5.0"
+    actual: "2 alunos passaram\n0 alunos ficaram abaixo da media\nmaior nota: 6.0\nmenor_nota: 5.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "10.0\n8.5\n-1"
+    expected: "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 8.5"
+    actual: "1 alunos passaram\n0 alunos ficaram abaixo da media\nmaior nota: 8.5\nmenor_nota: 8.5"
+
+Submitted Code
+```python
+nota = float(input("notas dos alunos: "))
+
+aprovados = 0 
+reprovados = 0
+maior_nota = -1
+menor_nota = 11
+
+while True:
+	nota = float(input("notas dos alunos: "))
+	if nota < 0:
+		break
+	if nota >= 5.0:
+		aprovados += 1
+	else:
+		reprovados += 1
+	if nota > maior_nota:
+		maior_nota = nota
+	if nota < menor_nota:
+		menor_nota = nota
+		
+print(aprovados, "alunos passaram")
+print(reprovados, "alunos ficaram abaixo da media")
+print("maior nota:", round(maior_nota, 2))
+print("menor_nota:", round(menor_nota, 2))
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+Execution Result
+
+- submitted_at: 2023-09-28 00:39:09
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "8.5\n10.0\n7.0\n5.5\n4.5\n-1"
+    expected: "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 4.5"
+    actual: "3 alunos passaram\n1 alunos ficaram abaixo da media\nmaior_nota: 10.0\nmenor_nota: 4.5"
+  - test_index_0idx: 1 [FAIL]
+    input: "9.0\n5.0\n6.0\n-1"
+    expected: "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 9.0\nMenor nota: 5.0"
+    actual: "2 alunos passaram\n0 alunos ficaram abaixo da media\nmaior_nota: 6.0\nmenor_nota: 5.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "10.0\n8.5\n-1"
+    expected: "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 8.5"
+    actual: "1 alunos passaram\n0 alunos ficaram abaixo da media\nmaior_nota: 8.5\nmenor_nota: 8.5"
+
+Submitted Code
+```python
+nota = float(input("notas dos alunos: "))
+
+aprovados = 0 
+reprovados = 0
+maior_nota = -1
+menor_nota = 11
+
+while True:
+	nota = float(input("notas dos alunos: "))
+	if nota < 0:
+		break
+	if nota >= 5.0:
+		aprovados += 1
+	else:
+		reprovados += 1
+	if nota > maior_nota:
+		maior_nota = nota
+	if nota < menor_nota:
+		menor_nota = nota
+		
+print(aprovados, "alunos passaram")
+print(reprovados, "alunos ficaram abaixo da media")
+print("maior_nota:", round(maior_nota, 2))
+print("menor_nota:", round(menor_nota, 2))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+Execution Result
+
+- submitted_at: 2023-09-28 00:39:31
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "8.5\n10.0\n7.0\n5.5\n4.5\n-1"
+    expected: "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 4.5"
+    actual: "3 alunos passaram\n1 alunos ficaram abaixo da media\nmaior nota: 10.0\nmenor nota: 4.5"
+  - test_index_0idx: 1 [FAIL]
+    input: "9.0\n5.0\n6.0\n-1"
+    expected: "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 9.0\nMenor nota: 5.0"
+    actual: "2 alunos passaram\n0 alunos ficaram abaixo da media\nmaior nota: 6.0\nmenor nota: 5.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "10.0\n8.5\n-1"
+    expected: "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 8.5"
+    actual: "1 alunos passaram\n0 alunos ficaram abaixo da media\nmaior nota: 8.5\nmenor nota: 8.5"
+
+Submitted Code
+```python
+nota = float(input("notas dos alunos: "))
+
+aprovados = 0 
+reprovados = 0
+maior_nota = -1
+menor_nota = 11
+
+while True:
+	nota = float(input("notas dos alunos: "))
+	if nota < 0:
+		break
+	if nota >= 5.0:
+		aprovados += 1
+	else:
+		reprovados += 1
+	if nota > maior_nota:
+		maior_nota = nota
+	if nota < menor_nota:
+		menor_nota = nota
+		
+print(aprovados, "alunos passaram")
+print(reprovados, "alunos ficaram abaixo da media")
+print("maior nota:", round(maior_nota, 2))
+print("menor nota:", round(menor_nota, 2))
+```

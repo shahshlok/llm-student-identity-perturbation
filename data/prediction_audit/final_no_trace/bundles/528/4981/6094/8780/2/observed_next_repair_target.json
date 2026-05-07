@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "528",
+    "assessment_id": "4981",
+    "exercise_id": "6094",
+    "student_id": "8780",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "#Entrada\n\nplano = float(input(\"Digite o valor do plano: \"))\nmembros = int(input(\"Digite o numero de membros da familia: \"))\n\n#Expressão e Saída\n\nif membros == 1:\n\tprint(round(valor_desc, 2))\nelif membros == 2:\n\tdesc = plano * membros * 15 / 100\n\tvalor_desc = plano * membros - desc\n\tprint(round(valor_desc, 2))\nelif membros == 3:\n\tdesc = plano * membros * 25 / 100\n\tvalor_desc = plano * membros - desc\n\tprint(round(valor_desc, 2))\nelse:\n\tdesc = plano * membros * 35 / 100\n\tvalor_desc = plano * membros - desc\n\tprint(round(valor_desc, 2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "#Entrada\n\nplano = float(input(\"Digite o valor do plano: \"))\nmembros = int(input(\"Digite o numero de membros da familia: \"))\n\n#Expressão e Saída\n\nif membros == 1:\n\tprint(round(plano, 2))\nelif membros == 2:\n\tdesc = plano * membros * 15 / 100\n\tvalor_desc = plano * membros - desc\n\tprint(round(valor_desc, 2))\nelif membros == 3:\n\tdesc = plano * membros * 25 / 100\n\tvalor_desc = plano * membros - desc\n\tprint(round(valor_desc, 2))\nelse:\n\tdesc = plano * membros * 35 / 100\n\tvalor_desc = plano * membros - desc\n\tprint(round(valor_desc, 2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "200.0\n3",
+        "expected": "R$ 450.0",
+        "actual": "450.0"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "400.0\n4",
+        "expected": "R$ 1040.0",
+        "actual": "1040.0"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "1200\n1",
+        "expected": "R$ 1200.0",
+        "actual": "1200.0"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 8,
+        "end_line_0idx": 8,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 8,
+        "end_line_0idx": 8
+      }
+    ]
+  }
+}

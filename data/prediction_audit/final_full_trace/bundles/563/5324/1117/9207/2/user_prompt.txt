@@ -1,0 +1,1315 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 563
+- assessment_id: 5324
+- assessment_title: Lab 3: Estrutura Condicional Encadeada
+- exercise_id: 1117
+- student_id: 9207
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-01-30T14:42:38.916000
+
+Execution Result
+
+- submitted_at: 2024-01-30 15:08:43
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "70.56\n2\nN"
+    expected: "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92"
+    actual: "Total: R$ 72.92"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75"
+    actual: "Total: R$ 120.75"
+  - test_index_0idx: 2 [FAIL]
+    input: "0.00\n9\nS"
+    expected: "Entradas: 0.0 , 9 , S\nDados invalidos"
+    actual: ""
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 525
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	13	0	0	0	0	["#"]	[""]	+input
+1126	20	0	1	0	1	["D"]	[""]	+input
+1383	26	0	2	0	2	["i"]	[""]	+input
+1587	30	0	3	0	3	["a"]	[""]	+input
+1795	33	0	4	0	4	["s"]	[""]	+input
+2080	38	0	5	0	5	[" "]	[""]	+input
+3078	42	0	6	0	6	["d"]	[""]	+input
+3174	45	0	7	0	7	["a"]	[""]	+input
+3312	50	0	8	0	8	[" "]	[""]	+input
+3423	54	0	9	0	9	["s"]	[""]	+input
+3632	58	0	10	0	10	["e"]	[""]	+input
+4112	62	0	11	0	11	["m"]	[""]	+input
+4299	66	0	12	0	12	["a"]	[""]	+input
+4438	70	0	13	0	13	["n"]	[""]	+input
+4561	74	0	14	0	14	["a"]	[""]	+input
+4675	78	0	15	0	15	[" "]	[""]	+input
+4864	82	0	16	0	16	["c"]	[""]	+input
+4995	86	0	17	0	17	["o"]	[""]	+input
+6001	90	0	18	0	18	["m"]	[""]	+input
+6194	94	0	19	0	19	[" "]	[""]	+input
+6352	98	0	20	0	20	["d"]	[""]	+input
+6577	102	0	21	0	21	["e"]	[""]	+input
+6756	106	0	22	0	22	["s"]	[""]	+input
+7042	110	0	23	0	23	["c"]	[""]	+input
+7184	114	0	24	0	24	["o"]	[""]	+input
+7416	118	0	25	0	25	["n"]	[""]	+input
+7513	122	0	26	0	26	["t"]	[""]	+input
+7666	126	0	27	0	27	["o"]	[""]	+input
+11047	129	0	28	0	28	["",""]	[""]	+input
+23163	138	1	0	1	0	["egundas, terças e quintas,"]	[""]	paste
+26673	144	1	0	1	0	["s"]	[""]	+input
+32937	148	1	26	1	27	[""]	[","]	+delete
+34104	153	1	26	1	26	[" "]	[""]	+input
+34297	157	1	27	1	27	["-"]	[""]	+input
+34389	161	1	28	1	28	[" "]	[""]	+input
+35158	165	1	29	1	29	["d"]	[""]	+input
+35272	169	1	30	1	30	["e"]	[""]	+input
+35463	173	1	31	1	31	["s"]	[""]	+input
+35719	177	1	32	1	32	["c"]	[""]	+input
+35865	181	1	33	1	33	["o"]	[""]	+input
+36133	185	1	34	1	34	["n"]	[""]	+input
+36377	189	1	35	1	35	["t"]	[""]	+input
+37096	192	1	35	1	36	[""]	["t"]	+delete
+37602	195	1	34	1	35	[""]	["n"]	+delete
+37623	198	1	33	1	34	[""]	["o"]	+delete
+37654	201	1	32	1	33	[""]	["c"]	+delete
+37683	204	1	31	1	32	[""]	["s"]	+delete
+37715	207	1	30	1	31	[""]	["e"]	+delete
+37750	210	1	29	1	30	[""]	["d"]	+delete
+37774	213	1	28	1	29	[""]	[" "]	+delete
+38133	217	1	27	1	28	[""]	["-"]	+delete
+43207	224	1	0	1	0	["#"]	[""]	+input
+44304	229	1	1	1	1	[" "]	[""]	+input
+48306	233	1	0	1	0	["\t"]	[""]	+input
+51849	240	1	30	1	30	["()"]	[""]	+input
+52698	246	1	31	1	31	["d"]	[""]	+input
+52807	249	1	32	1	32	["e"]	[""]	+input
+53004	254	1	33	1	33	["s"]	[""]	+input
+53160	258	1	34	1	34	["c"]	[""]	+input
+53272	262	1	35	1	35	["o"]	[""]	+input
+53514	266	1	36	1	36	["n"]	[""]	+input
+53640	270	1	37	1	37	["t"]	[""]	+input
+53824	274	1	38	1	38	["o"]	[""]	+input
+54511	278	1	39	1	39	[" "]	[""]	+input
+54796	282	1	40	1	40	["d"]	[""]	+input
+54875	285	1	41	1	41	["e"]	[""]	+input
+55001	289	1	42	1	42	[" "]	[""]	+input
+55627	294	1	43	1	43	["2"]	[""]	+input
+55832	298	1	44	1	44	["5"]	[""]	+input
+59242	303	1	45	1	45	["%"]	[""]	+input
+104320	308	1	47	1	47	["",""]	[""]	+input
+104320	309	2	0	2	0	["\t"]	[""]	+input
+104382	314	2	1	2	1	["",""]	[""]	+input
+104382	315	3	0	3	0	["\t"]	[""]	+input
+104960	320	3	0	3	1	[""]	["\t"]	+delete
+106098	325	3	0	3	0	["p"]	[""]	+input
+106175	329	3	1	3	1	["r"]	[""]	+input
+106277	332	3	2	3	2	["e"]	[""]	+input
+106639	337	3	3	3	3	["c"]	[""]	+input
+106682	340	3	4	3	4	["o"]	[""]	+input
+107894	346	3	5	3	5	["_"]	[""]	+input
+108560	351	3	6	3	6	["n"]	[""]	+input
+108711	354	3	7	3	7	["o"]	[""]	+input
+108916	359	3	8	3	8	["r"]	[""]	+input
+109792	363	3	9	3	9	["m"]	[""]	+input
+109922	367	3	10	3	10	["q"]	[""]	+input
+110083	371	3	11	3	11	["l"]	[""]	+input
+110981	374	3	11	3	12	[""]	["l"]	+delete
+111364	378	3	10	3	11	[""]	["q"]	+delete
+112340	383	3	10	3	10	["a"]	[""]	+input
+112559	387	3	11	3	11	["l"]	[""]	+input
+113023	391	3	12	3	12	[" "]	[""]	+input
+113184	395	3	13	3	13	["="]	[""]	+input
+113284	399	3	14	3	14	[" "]	[""]	+input
+119428	403	3	15	3	15	["f"]	[""]	+input
+119600	407	3	16	3	16	["l"]	[""]	+input
+119783	411	3	17	3	17	["o"]	[""]	+input
+119857	415	3	18	3	18	["q"]	[""]	+input
+120765	418	3	18	3	19	[""]	["q"]	+delete
+121150	423	3	18	3	18	["a"]	[""]	+input
+121517	427	3	19	3	19	["t"]	[""]	+input
+122792	432	3	20	3	20	["()"]	[""]	+input
+123554	438	3	21	3	21	["i"]	[""]	+input
+123767	442	3	22	3	22	["n"]	[""]	+input
+124019	446	3	23	3	23	["p"]	[""]	+input
+124307	450	3	24	3	24	["u"]	[""]	+input
+124468	454	3	25	3	25	["t"]	[""]	+input
+125971	459	3	26	3	26	["()"]	[""]	+input
+127941	466	3	27	3	27	["\"\""]	[""]	+input
+128778	474	3	28	3	28	["I"]	[""]	+input
+129016	480	3	29	3	29	["n"]	[""]	+input
+129170	484	3	30	3	30	["f"]	[""]	+input
+129313	488	3	31	3	31	["o"]	[""]	+input
+129474	492	3	32	3	32	["r"]	[""]	+input
+129971	496	3	33	3	33	["ç"]	[""]	+input
+130098	500	3	34	3	34	["e"]	[""]	+input
+130335	504	3	35	3	35	[" "]	[""]	+input
+130609	507	3	35	3	36	[""]	[" "]	+delete
+130801	511	3	34	3	35	[""]	["e"]	+delete
+131171	515	3	33	3	34	[""]	["ç"]	+delete
+131751	520	3	33	3	33	["m"]	[""]	+input
+131885	524	3	34	3	34	["e"]	[""]	+input
+132019	528	3	35	3	35	[" "]	[""]	+input
+132291	532	3	36	3	36	["o"]	[""]	+input
+132661	536	3	37	3	37	[" "]	[""]	+input
+133811	540	3	38	3	38	["p"]	[""]	+input
+134037	544	3	39	3	39	["r"]	[""]	+input
+134194	547	3	40	3	40	["e"]	[""]	+input
+134580	552	3	41	3	41	["c"]	[""]	+input
+134754	556	3	42	3	42	["o"]	[""]	+input
+135042	560	3	43	3	43	[" "]	[""]	+input
+135254	564	3	44	3	44	["n"]	[""]	+input
+135474	568	3	45	3	45	["o"]	[""]	+input
+136063	572	3	46	3	46	["r"]	[""]	+input
+136808	576	3	47	3	47	["m"]	[""]	+input
+136947	580	3	48	3	48	["q"]	[""]	+input
+137109	584	3	49	3	49	["l"]	[""]	+input
+137332	588	3	50	3	50	[" "]	[""]	+input
+137746	591	3	50	3	51	[""]	[" "]	+delete
+137909	595	3	49	3	50	[""]	["l"]	+delete
+138100	599	3	48	3	49	[""]	["q"]	+delete
+139075	604	3	48	3	48	["a"]	[""]	+input
+139219	608	3	49	3	49	["l"]	[""]	+input
+139429	612	3	50	3	50	[" "]	[""]	+input
+139603	616	3	51	3	51	["d"]	[""]	+input
+139735	620	3	52	3	52	["e"]	[""]	+input
+139812	624	3	53	3	53	[" "]	[""]	+input
+139943	628	3	54	3	54	["e"]	[""]	+input
+140052	632	3	55	3	55	["n"]	[""]	+input
+140299	636	3	56	3	56	["t"]	[""]	+input
+140490	640	3	57	3	57	["r"]	[""]	+input
+140580	644	3	58	3	58	["e"]	[""]	+input
+141035	648	3	59	3	59	["q"]	[""]	+input
+141668	651	3	59	3	60	[""]	["q"]	+delete
+141925	656	3	59	3	59	["q"]	[""]	+input
+142178	659	3	59	3	60	[""]	["q"]	+delete
+142354	663	3	58	3	59	[""]	["e"]	+delete
+142403	667	3	58	3	58	["q"]	[""]	+input
+143043	671	3	58	3	59	[""]	["q"]	+delete
+143398	676	3	58	3	58	["a"]	[""]	+input
+143974	680	3	59	3	59	["d"]	[""]	+input
+144150	683	3	60	3	60	["a"]	[""]	+input
+145643	689	3	61	3	61	[":"]	[""]	+input
+145946	694	3	62	3	62	[" "]	[""]	+input
+163798	698	3	66	3	66	["",""]	[""]	+input
+168807	704	4	0	4	0	["d"]	[""]	+input
+168892	707	4	1	4	1	["o"]	[""]	+input
+169106	712	4	2	4	2	["ç"]	[""]	+input
+169367	716	4	3	4	3	["i"]	[""]	+input
+169575	720	4	4	4	4	["n"]	[""]	+input
+169782	724	4	5	4	5	["g"]	[""]	+input
+169899	728	4	6	4	6	["o"]	[""]	+input
+170623	731	4	6	4	7	[""]	["o"]	+delete
+170773	735	4	5	4	6	[""]	["g"]	+delete
+170949	739	4	4	4	5	[""]	["n"]	+delete
+171129	743	4	3	4	4	[""]	["i"]	+delete
+171302	747	4	2	4	3	[""]	["ç"]	+delete
+172670	752	4	2	4	2	["m"]	[""]	+input
+172839	756	4	3	4	3	["i"]	[""]	+input
+173064	760	4	4	4	4	["n"]	[""]	+input
+173222	764	4	5	4	5	["g"]	[""]	+input
+173419	768	4	6	4	6	["o"]	[""]	+input
+174135	772	4	7	4	7	[" "]	[""]	+input
+174291	776	4	8	4	8	["="]	[""]	+input
+174406	780	4	9	4	9	[" "]	[""]	+input
+176863	784	4	10	4	10	["1"]	[""]	+input
+177719	787	4	11	4	11	["",""]	[""]	+input
+178424	793	5	0	5	0	["s"]	[""]	+input
+178619	797	5	1	5	1	["e"]	[""]	+input
+178855	801	5	2	5	2	["g"]	[""]	+input
+178998	805	5	3	5	3	["u"]	[""]	+input
+179239	809	5	4	5	4	["n"]	[""]	+input
+179770	813	5	5	5	5	["d"]	[""]	+input
+179901	816	5	6	5	6	["a"]	[""]	+input
+180600	821	5	7	5	7	[" "]	[""]	+input
+180792	825	5	8	5	8	["="]	[""]	+input
+180905	829	5	9	5	9	[" "]	[""]	+input
+185900	833	5	10	5	10	["2"]	[""]	+input
+186815	836	5	11	5	11	["",""]	[""]	+input
+187464	842	6	0	6	0	["t"]	[""]	+input
+187564	846	6	1	6	1	["e"]	[""]	+input
+187720	850	6	2	6	2	["r"]	[""]	+input
+187896	854	6	3	6	3	["c"]	[""]	+input
+188346	858	6	4	6	4	["a"]	[""]	+input
+188952	862	6	5	6	5	[" "]	[""]	+input
+190217	866	6	6	6	6	["="]	[""]	+input
+190348	870	6	7	6	7	[" "]	[""]	+input
+191344	874	6	8	6	8	["3"]	[""]	+input
+193178	877	6	9	6	9	["",""]	[""]	+input
+194537	883	7	0	7	0	["q"]	[""]	+input
+194680	887	7	1	7	1	["u"]	[""]	+input
+194808	891	7	2	7	2	["a"]	[""]	+input
+194973	895	7	3	7	3	["r"]	[""]	+input
+195162	899	7	4	7	4	["t"]	[""]	+input
+195325	903	7	5	7	5	["a"]	[""]	+input
+196908	907	7	6	7	6	[" "]	[""]	+input
+197081	911	7	7	7	7	["="]	[""]	+input
+197209	915	7	8	7	8	[" "]	[""]	+input
+198218	919	7	9	7	9	["4"]	[""]	+input
+199545	922	7	10	7	10	["",""]	[""]	+input
+200941	928	8	0	8	0	["q"]	[""]	+input
+201109	932	8	1	8	1	["u"]	[""]	+input
+201293	936	8	2	8	2	["i"]	[""]	+input
+201492	940	8	3	8	3	["n"]	[""]	+input
+201743	944	8	4	8	4	["t"]	[""]	+input
+201875	948	8	5	8	5	["q"]	[""]	+input
+203393	951	8	5	8	6	[""]	["q"]	+delete
+203501	956	8	5	8	5	["a"]	[""]	+input
+204623	960	8	6	8	6	[" "]	[""]	+input
+204809	964	8	7	8	7	["="]	[""]	+input
+204941	968	8	8	8	8	[" "]	[""]	+input
+205405	972	8	9	8	9	["5"]	[""]	+input
+206218	975	8	10	8	10	["",""]	[""]	+input
+206970	981	9	0	9	0	["s"]	[""]	+input
+207194	985	9	1	9	1	["e"]	[""]	+input
+207433	989	9	2	9	2	["x"]	[""]	+input
+207565	993	9	3	9	3	["t"]	[""]	+input
+207722	997	9	4	9	4	["a"]	[""]	+input
+208526	1001	9	5	9	5	[" "]	[""]	+input
+208698	1005	9	6	9	6	["="]	[""]	+input
+208810	1009	9	7	9	7	[" "]	[""]	+input
+209626	1013	9	8	9	8	["6"]	[""]	+input
+210494	1016	9	9	9	9	["",""]	[""]	+input
+211419	1022	10	0	10	0	["s"]	[""]	+input
+211578	1025	10	1	10	1	["a"]	[""]	+input
+211854	1030	10	2	10	2	["b"]	[""]	+input
+211915	1034	10	3	10	3	["a"]	[""]	+input
+212177	1038	10	4	10	4	["d"]	[""]	+input
+212458	1042	10	5	10	5	["o"]	[""]	+input
+213027	1046	10	6	10	6	[" "]	[""]	+input
+213195	1050	10	7	10	7	["="]	[""]	+input
+213328	1054	10	8	10	8	[" "]	[""]	+input
+214205	1058	10	9	10	9	["7"]	[""]	+input
+312793	1066	3	66	3	66	["",""]	[""]	+input
+313858	1071	4	0	4	0	["",""]	[""]	+input
+316203	1080	4	0	4	0	["d"]	[""]	+input
+316338	1084	4	1	4	1	["i"]	[""]	+input
+317048	1089	4	2	4	2	["_"]	[""]	+input
+317606	1093	4	2	4	3	[""]	["_"]	+delete
+318356	1098	4	2	4	2	["a"]	[""]	+input
+318978	1103	4	3	4	3	["_"]	[""]	+input
+319252	1108	4	4	4	4	["s"]	[""]	+input
+319476	1112	4	5	4	5	["e"]	[""]	+input
+320066	1116	4	6	4	6	["m"]	[""]	+input
+320198	1120	4	7	4	7	["a"]	[""]	+input
+320368	1124	4	8	4	8	["n"]	[""]	+input
+320482	1128	4	9	4	9	["a"]	[""]	+input
+321475	1132	4	10	4	10	[" "]	[""]	+input
+321602	1136	4	11	4	11	["="]	[""]	+input
+321719	1140	4	12	4	12	[" "]	[""]	+input
+323667	1144	4	13	4	13	["i"]	[""]	+input
+323955	1148	4	14	4	14	["n"]	[""]	+input
+324130	1152	4	15	4	15	["t"]	[""]	+input
+325158	1157	4	16	4	16	["()"]	[""]	+input
+326211	1163	4	17	4	17	["i"]	[""]	+input
+326387	1167	4	18	4	18	["n"]	[""]	+input
+326636	1171	4	19	4	19	["p"]	[""]	+input
+326915	1175	4	20	4	20	["u"]	[""]	+input
+327125	1179	4	21	4	21	["t"]	[""]	+input
+328623	1184	4	22	4	22	["()"]	[""]	+input
+329974	1191	4	23	4	23	["\"\""]	[""]	+input
+331881	1203	4	24	4	24	["I"]	[""]	+input
+332179	1209	4	25	4	25	["n"]	[""]	+input
+332404	1213	4	26	4	26	["f"]	[""]	+input
+333564	1217	4	27	4	27	["o"]	[""]	+input
+333702	1221	4	28	4	28	["r"]	[""]	+input
+334180	1225	4	29	4	29	["m"]	[""]	+input
+334324	1229	4	30	4	30	["e"]	[""]	+input
+334467	1233	4	31	4	31	[" "]	[""]	+input
+334701	1237	4	32	4	32	["o"]	[""]	+input
+334963	1241	4	33	4	33	[" "]	[""]	+input
+335442	1245	4	34	4	34	["d"]	[""]	+input
+335544	1249	4	35	4	35	["i"]	[""]	+input
+335699	1253	4	36	4	36	["a"]	[""]	+input
+335865	1257	4	37	4	37	[" "]	[""]	+input
+336156	1261	4	38	4	38	["d"]	[""]	+input
+336369	1265	4	39	4	39	["a"]	[""]	+input
+336507	1269	4	40	4	40	[" "]	[""]	+input
+336635	1273	4	41	4	41	["s"]	[""]	+input
+336806	1277	4	42	4	42	["e"]	[""]	+input
+338039	1281	4	43	4	43	["m"]	[""]	+input
+338211	1285	4	44	4	44	["a"]	[""]	+input
+338408	1289	4	45	4	45	["n"]	[""]	+input
+338568	1293	4	46	4	46	["a"]	[""]	+input
+340007	1298	4	47	4	47	[":"]	[""]	+input
+340324	1303	4	48	4	48	[" "]	[""]	+input
+360670	1309	4	52	4	52	["",""]	[""]	+input
+362146	1315	5	0	5	0	["m"]	[""]	+input
+362391	1319	5	1	5	1	["u"]	[""]	+input
+362647	1323	5	2	5	2	["s"]	[""]	+input
+362788	1327	5	3	5	3	["i"]	[""]	+input
+362953	1331	5	4	5	4	["c"]	[""]	+input
+364101	1335	5	5	5	5	["a"]	[""]	+input
+365544	1340	5	6	5	6	["_"]	[""]	+input
+366506	1345	5	7	5	7	["a"]	[""]	+input
+366622	1349	5	8	5	8	["o"]	[""]	+input
+366837	1353	5	9	5	9	["v"]	[""]	+input
+366933	1357	5	10	5	10	["i"]	[""]	+input
+367044	1361	5	11	5	11	["v"]	[""]	+input
+367126	1365	5	12	5	12	["o"]	[""]	+input
+368790	1369	5	13	5	13	[" "]	[""]	+input
+368989	1373	5	14	5	14	["="]	[""]	+input
+369110	1377	5	15	5	15	[" "]	[""]	+input
+376914	1381	5	16	5	16	["s"]	[""]	+input
+377046	1385	5	17	5	17	["t"]	[""]	+input
+377225	1389	5	18	5	18	["r"]	[""]	+input
+378283	1394	5	19	5	19	["()"]	[""]	+input
+379508	1400	5	20	5	20	["i"]	[""]	+input
+379706	1404	5	21	5	21	["n"]	[""]	+input
+379946	1408	5	22	5	22	["p"]	[""]	+input
+380221	1412	5	23	5	23	["u"]	[""]	+input
+380379	1416	5	24	5	24	["t"]	[""]	+input
+381523	1421	5	25	5	25	["()"]	[""]	+input
+383773	1428	5	26	5	26	["\"\""]	[""]	+input
+386134	1434	5	27	5	27	["É dia de música ao vivo?"]	[""]	paste
+389577	1442	5	27	5	30	["D"]	["É d"]	+input
+391783	1447	5	49	5	49	[" "]	[""]	+input
+404407	1452	13	10	13	10	["",""]	[""]	+input
+404636	1457	14	0	14	0	["",""]	[""]	+input
+406675	1465	15	0	15	0	["i"]	[""]	+input
+406824	1469	15	1	15	1	["f"]	[""]	+input
+406983	1473	15	2	15	2	[" "]	[""]	+input
+408616	1478	15	3	15	3	["()"]	[""]	+input
+427776	1493	15	4	15	4	["dia_semana"]	[""]	paste
+429828	1498	15	14	15	14	[" "]	[""]	+input
+429992	1502	15	15	15	15	["="]	[""]	+input
+430456	1506	15	16	15	16	[" "]	[""]	+input
+437290	1510	15	17	15	17	["1"]	[""]	+input
+440402	1513	15	17	15	18	[""]	["1"]	+delete
+440953	1518	15	17	15	17	["2"]	[""]	+input
+443894	1523	15	19	15	19	[" "]	[""]	+input
+444538	1527	15	20	15	20	["o"]	[""]	+input
+444632	1531	15	21	15	21	["r"]	[""]	+input
+444857	1535	15	22	15	22	[" "]	[""]	+input
+453127	1546	15	23	15	23	["(dia_semana = 2)"]	[""]	paste
+455610	1552	15	37	15	38	["3"]	["2"]	+input
+459002	1557	15	39	15	39	[" "]	[""]	+input
+459447	1561	15	40	15	40	["o"]	[""]	+input
+459530	1565	15	41	15	41	["r"]	[""]	+input
+459861	1569	15	42	15	42	[" "]	[""]	+input
+466400	1581	15	43	15	43	["(dia_semana = 3)"]	[""]	paste
+470435	1587	15	57	15	58	["5"]	["3"]	+input
+476373	1591	15	59	15	59	["",""]	[""]	+input
+477357	1596	16	0	16	0	["\t"]	[""]	+input
+477758	1601	16	1	16	1	["p"]	[""]	+input
+478095	1605	16	2	16	2	["r"]	[""]	+input
+478270	1609	16	3	16	3	["i"]	[""]	+input
+478479	1613	16	4	16	4	["n"]	[""]	+input
+478554	1617	16	5	16	5	["t"]	[""]	+input
+479355	1622	16	6	16	6	["()"]	[""]	+input
+488847	1635	16	7	16	7	["preco_normal"]	[""]	paste
+492414	1640	16	19	16	19	[" "]	[""]	+input
+492587	1644	16	20	16	20	["*"]	[""]	+input
+492772	1648	16	21	16	21	[" "]	[""]	+input
+512062	1652	16	22	16	22	["0"]	[""]	+input
+513800	1656	16	23	16	23	["."]	[""]	+input
+515666	1660	16	24	16	24	["7"]	[""]	+input
+515895	1664	16	25	16	25	["5"]	[""]	+input
+538670	1668	16	27	16	27	["",""]	[""]	+input
+538671	1669	17	0	17	0	["\t"]	[""]	+input
+539326	1674	17	0	17	1	[""]	["\t"]	+delete
+540878	1679	17	0	17	0	["e"]	[""]	+input
+540992	1683	17	1	17	1	["l"]	[""]	+input
+541229	1687	17	2	17	2	["i"]	[""]	+input
+541468	1691	17	3	17	3	["f"]	[""]	+input
+571702	1702	17	4	17	4	[" "]	[""]	+input
+572222	1706	17	5	17	5	["(dia_semana = 2) or (dia_semana = 3) or (dia_semana = 5)","\tprint(preco_normal * 0.75)"]	[""]	paste
+580047	1713	17	61	17	61	[" "]	[""]	+input
+580161	1717	17	62	17	62	["a"]	[""]	+input
+580402	1721	17	63	17	63	["n"]	[""]	+input
+580542	1725	17	64	17	64	["d"]	[""]	+input
+580783	1729	17	65	17	65	[" "]	[""]	+input
+581919	1734	17	66	17	66	["()"]	[""]	+input
+589811	1748	17	67	17	67	["musica_aovivo"]	[""]	paste
+592424	1753	17	80	17	80	[" "]	[""]	+input
+595268	1757	17	81	17	81	["="]	[""]	+input
+595474	1761	17	82	17	82	["="]	[""]	+input
+600784	1767	15	16	15	16	["="]	[""]	+input
+602402	1772	15	37	15	38	["="]	[" "]	+input
+604383	1776	15	38	15	38	[" "]	[""]	+input
+606816	1781	15	58	15	58	["="]	[""]	+input
+609578	1786	17	18	17	18	["="]	[""]	+input
+611748	1791	17	39	17	39	["="]	[""]	+input
+614353	1797	17	60	17	60	["="]	[""]	+input
+616887	1802	17	86	17	86	[" "]	[""]	+input
+628656	1806	17	87	17	87	["s"]	[""]	+input
+629712	1809	17	87	17	88	[""]	["s"]	+delete
+631073	1815	17	87	17	87	["\"\""]	[""]	+input
+632217	1821	17	88	17	88	["s"]	[""]	+input
+667194	1827	18	26	18	26	[" "]	[""]	+input
+667525	1831	18	27	18	27	["+"]	[""]	+input
+667713	1835	18	28	18	28	[" "]	[""]	+input
+670193	1839	18	29	18	29	["2"]	[""]	+input
+670497	1843	18	30	18	30	["0"]	[""]	+input
+686034	1848	16	27	16	27	["",""]	[""]	+input
+686034	1849	17	0	17	0	["\t"]	[""]	+input
+686531	1854	17	1	17	1	["",""]	[""]	+input
+686531	1855	18	0	18	0	["\t"]	[""]	+input
+689124	1862	17	0	17	0	["e"]	[""]	+input
+689202	1866	17	1	17	1	["l"]	[""]	+input
+689505	1870	17	2	17	2	["i"]	[""]	+input
+689713	1874	17	3	17	3	["f"]	[""]	+input
+690905	1878	17	4	17	4	[" "]	[""]	+input
+696754	1890	17	4	17	4	[" "]	[""]	+input
+697621	1894	17	5	17	5	["(dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5)","\tprint(preco_normal * 0.75)"]	[""]	paste
+704505	1901	17	20	17	21	["1"]	["2"]	+input
+709347	1907	17	41	17	42	["4"]	["3"]	+input
+718745	1913	17	62	17	63	[""]	["5"]	+delete
+719715	1918	17	62	17	62	["6"]	[""]	+input
+723705	1929	17	64	17	64	[" "]	[""]	+input
+724360	1933	17	65	17	65	["or (dia_semana == 6)"]	[""]	paste
+726983	1939	17	83	17	84	["7"]	["6"]	+input
+731943	1946	18	19	18	20	[""]	[" "]	+delete
+732196	1950	18	19	18	20	[""]	["*"]	+delete
+732420	1954	18	19	18	20	[""]	[" "]	+delete
+732626	1958	18	19	18	20	[""]	["0"]	+delete
+732834	1962	18	19	18	20	[""]	["."]	+delete
+733058	1966	18	19	18	20	[""]	["7"]	+delete
+733556	1970	18	19	18	20	[""]	["5"]	+delete
+749175	1976	19	0	19	1	[""]	["\t"]	+delete
+750274	1980	19	0	20	0	[""]	["",""]	+delete
+775094	1995	20	32	20	32	["",""]	[""]	+input
+775094	1996	21	0	21	0	["\t"]	[""]	+input
+776346	2001	21	0	21	1	[""]	["\t"]	+delete
+777073	2006	21	0	21	0	["elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7)","\tprint(preco_normal) "]	[""]	paste
+785884	2019	21	85	21	85	[" "]	[""]	+input
+832702	2027	21	0	22	21	[""]	["elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) ","\tprint(preco_normal) "]	+delete
+835543	2034	19	20	19	21	["1"]	["2"]	+input
+837647	2039	19	41	19	42	["2"]	["3"]	+input
+839776	2044	19	62	19	63	["3"]	["5"]	+input
+850144	2057	19	65	20	32	["(dia_semana == 1) or (dia_semana == 2) or (dia_semana == 3)"]	["and (musica_aovivo == \"s\")","\tprint(preco_normal * 0.75 + 20)"]	paste
+852603	2064	19	64	19	64	[" "]	[""]	+input
+853210	2068	19	65	19	65	["o"]	[""]	+input
+853318	2072	19	66	19	66	["r"]	[""]	+input
+856519	2077	19	83	19	84	["4"]	["1"]	+input
+858463	2082	19	104	19	105	["5"]	["2"]	+input
+860918	2087	19	125	19	126	["6"]	["3"]	+input
+866171	2099	19	127	19	127	[" "]	[""]	+input
+867415	2103	19	128	19	128	["or (dia_semana == 6)"]	[""]	paste
+870703	2109	19	146	19	147	["7"]	["6"]	+input
+888888	2117	19	148	19	148	[" "]	[""]	+input
+889036	2121	19	149	19	149	["a"]	[""]	+input
+889177	2125	19	150	19	150	["n"]	[""]	+input
+889341	2129	19	151	19	151	["d"]	[""]	+input
+889643	2133	19	152	19	152	[" "]	[""]	+input
+890762	2138	19	153	19	153	["()"]	[""]	+input
+901000	2151	19	154	19	154	["musica_aovivo"]	[""]	paste
+902418	2156	19	167	19	167	[" "]	[""]	+input
+902696	2160	19	168	19	168	["="]	[""]	+input
+902873	2164	19	169	19	169	["="]	[""]	+input
+903005	2168	19	170	19	170	[" "]	[""]	+input
+904397	2173	19	171	19	171	["\"\""]	[""]	+input
+905545	2179	19	172	19	172	["s"]	[""]	+input
+914568	2189	20	0	20	0	["\t"]	[""]	+input
+931848	2200	19	0	20	1	[""]	["elif (dia_semana == 1) or (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 4) or (dia_semana == 5) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == \"s\")","\t"]	+delete
+932889	2206	19	0	19	0	["if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5)","\tprint(preco_normal * 0.75)"]	[""]	paste
+935978	2213	19	0	19	0	["e"]	[""]	+input
+936188	2217	19	1	19	1	["l"]	[""]	+input
+942866	2222	20	26	20	26	[" "]	[""]	+input
+943032	2226	20	27	20	27	["+"]	[""]	+input
+943210	2230	20	28	20	28	[" "]	[""]	+input
+944718	2234	20	29	20	29	["2"]	[""]	+input
+944942	2238	20	30	20	30	["0"]	[""]	+input
+949426	2244	19	64	19	64	[" "]	[""]	+input
+949592	2248	19	65	19	65	["a"]	[""]	+input
+949675	2251	19	66	19	66	["n"]	[""]	+input
+949885	2256	19	67	19	67	["d"]	[""]	+input
+950008	2260	19	68	19	68	[" "]	[""]	+input
+950477	2265	19	69	19	69	["()"]	[""]	+input
+957628	2280	19	70	19	70	["musica_aovivo"]	[""]	paste
+964650	2285	19	83	19	83	[" "]	[""]	+input
+964840	2289	19	84	19	84	["="]	[""]	+input
+965009	2293	19	85	19	85	["="]	[""]	+input
+965131	2297	19	86	19	86	[" "]	[""]	+input
+966704	2302	19	87	19	87	["\"\""]	[""]	+input
+968316	2308	19	88	19	88	["s"]	[""]	+input
+975033	2318	20	32	20	32	["",""]	[""]	+input
+975033	2319	21	0	21	0	["\t"]	[""]	+input
+975442	2325	21	1	21	1	["elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7)","\tprint(preco_normal) "]	[""]	paste
+979114	2333	15	62	15	62	[":"]	[""]	+input
+983229	2340	17	85	17	85	[":"]	[""]	+input
+986435	2347	19	91	19	91	[":"]	[""]	+input
+995861	2360	21	86	21	86	[" "]	[""]	+input
+996317	2364	21	87	21	87	["and (musica_aovivo == \"s\"):"]	[""]	paste
+998747	2370	21	110	21	111	["n"]	["s"]	+input
+1006914	2377	22	19	22	19	[" "]	[""]	+input
+1007064	2381	22	20	22	20	["+"]	[""]	+input
+1007208	2385	22	21	22	21	[" "]	[""]	+input
+1007534	2389	22	22	22	22	["2"]	[""]	+input
+1007704	2393	22	23	22	23	[" "]	[""]	+input
+1008539	2396	22	23	22	24	[""]	[" "]	+delete
+1008993	2401	22	23	22	23	["0"]	[""]	+input
+1017864	2405	22	26	22	26	["",""]	[""]	+input
+1017865	2406	23	0	23	0	["\t"]	[""]	+input
+1018679	2411	23	0	23	1	[""]	["\t"]	+delete
+1019756	2416	23	0	23	0	["e"]	[""]	+input
+1019961	2420	23	1	23	1	["l"]	[""]	+input
+1020184	2424	23	2	23	2	["s"]	[""]	+input
+1020392	2428	23	3	23	3	["e"]	[""]	+input
+1027072	2432	21	0	21	1	[""]	["\t"]	+delete
+1035109	2438	23	3	23	4	[""]	["e"]	+delete
+1035285	2442	23	2	23	3	[""]	["s"]	+delete
+1035492	2446	23	1	23	2	[""]	["l"]	+delete
+1035717	2450	23	0	23	1	[""]	["e"]	+delete
+1035973	2454	22	26	23	0	[""]	["",""]	+delete
+
+Local Run 1
+- event_time_delta_ms: 1058322
+- raw_log_line: 2465
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#Dias da semana com desconto
+	# segundas, terças e quintas (desconto de 25%)
+	
+preco_normal = float(input("Informe o preco normal de entrada: "))
+dia_semana = int(input("Informe o dia da semana: "))
+musica_aovivo = str(input("Dia de música ao vivo? "))
+
+domingo = 1
+segunda = 2
+terca = 3
+quarta = 4
+quinta = 5
+sexta = 6
+sabado = 7
+
+if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5):
+	print(preco_normal * 0.75)
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7):
+	print(preco_normal) 	
+elif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "s"):
+	print(preco_normal * 0.75 + 20)
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "n"):
+	print(preco_normal + 20) 
+```
+Run Output
+```text
+Informe o preco normal de entrada: 75.25
+Informe o dia da semana: 3
+Traceback (most recent call last):
+File "main.py", line 6, in <module>
+musica_aovivo = str(input("Dia de m\xfasica ao vivo? "))
+UnicodeEncodeError: 'ascii' codec can't encode character '\xfa' in position 8: ordinal not in range(128)
+```
+
+Edit Segment 2
+- raw_change_event_count: 43
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1067873	2470	5	35	5	36	["u"]	["ú"]	+input
+1101608	2477	16	7	16	7	["r"]	[""]	+input
+1101684	2481	16	8	16	8	["o"]	[""]	+input
+1101905	2485	16	9	16	9	["u"]	[""]	+input
+1102116	2489	16	10	16	10	["n"]	[""]	+input
+1102246	2493	16	11	16	11	["d"]	[""]	+input
+1103362	2498	16	12	16	12	["("]	[""]	+input
+1107005	2504	16	32	16	32	[","]	[""]	+input
+1107257	2508	16	33	16	33	[" "]	[""]	+input
+1108434	2512	16	34	16	34	["2"]	[""]	+input
+1111009	2523	16	36	16	36	[")"]	[""]	+input
+1122004	2529	18	7	18	7	["r"]	[""]	+input
+1122131	2533	18	8	18	8	["o"]	[""]	+input
+1123280	2537	18	9	18	9	["u"]	[""]	+input
+1123506	2541	18	10	18	10	["d"]	[""]	+input
+1124047	2544	18	10	18	11	[""]	["d"]	+delete
+1124693	2549	18	10	18	10	["n"]	[""]	+input
+1124800	2553	18	11	18	11	["d"]	[""]	+input
+1125626	2558	18	12	18	12	["("]	[""]	+input
+1128608	2564	18	25	18	25	[","]	[""]	+input
+1129071	2568	18	26	18	26	[" "]	[""]	+input
+1129445	2572	18	27	18	27	["2"]	[""]	+input
+1132451	2583	18	29	18	29	[")"]	[""]	+input
+1137712	2589	20	7	20	7	["r"]	[""]	+input
+1137842	2593	20	8	20	8	["o"]	[""]	+input
+1138079	2597	20	9	20	9	["u"]	[""]	+input
+1138306	2601	20	10	20	10	["n"]	[""]	+input
+1138470	2605	20	11	20	11	["d"]	[""]	+input
+1139889	2610	20	12	20	12	["("]	[""]	+input
+1142853	2616	20	37	20	37	[","]	[""]	+input
+1143025	2620	20	38	20	38	[" "]	[""]	+input
+1143976	2624	20	39	20	39	["2"]	[""]	+input
+1146436	2635	20	41	20	41	[")"]	[""]	+input
+1152975	2645	22	7	22	7	["r"]	[""]	+input
+1153178	2649	22	8	22	8	["o"]	[""]	+input
+1153445	2653	22	9	22	9	["u"]	[""]	+input
+1153684	2657	22	10	22	10	["n"]	[""]	+input
+1153882	2661	22	11	22	11	["d"]	[""]	+input
+1154783	2666	22	12	22	12	["("]	[""]	+input
+1157587	2672	22	30	22	30	[","]	[""]	+input
+1158094	2676	22	31	22	31	[" "]	[""]	+input
+1159200	2680	22	32	22	32	["2"]	[""]	+input
+1164335	2691	22	34	22	34	[")"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 1168113
+- raw_log_line: 2699
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#Dias da semana com desconto
+	# segundas, terças e quintas (desconto de 25%)
+	
+preco_normal = float(input("Informe o preco normal de entrada: "))
+dia_semana = int(input("Informe o dia da semana: "))
+musica_aovivo = str(input("Dia de musica ao vivo? "))
+
+domingo = 1
+segunda = 2
+terca = 3
+quarta = 4
+quinta = 5
+sexta = 6
+sabado = 7
+
+if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5):
+	print(round(preco_normal * 0.75, 2))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7):
+	print(round(preco_normal, 2)) 	
+elif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "s"):
+	print(round(preco_normal * 0.75 + 20, 2))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "n"):
+	print(round(preco_normal + 20, 2)) 
+```
+Run Output
+```text
+Informe o preco normal de entrada: 75.25
+Informe o dia da semana: 3
+Dia de musica ao vivo? s
+56.4375
+```
+
+Edit Segment 3
+- raw_change_event_count: 41
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1250141	2705	15	0	18	31	[""]	["if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5):","\tprint(round(preco_normal * 0.75, 2))","elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7):","\tprint(round(preco_normal, 2)) "]	cut
+1251406	2710	15	0	15	1	[""]	["\t"]	+delete
+1252610	2714	15	0	16	0	[""]	["",""]	+delete
+1254907	2720	1	47	1	47	["",""]	[""]	+input
+1254907	2721	2	0	2	0	["\t"]	[""]	+input
+1255416	2726	2	1	2	1	["",""]	[""]	+input
+1255416	2727	3	0	3	0	["\t"]	[""]	+input
+1256443	2732	3	0	3	1	[""]	["\t"]	+delete
+1257769	2738	3	0	3	0	["#"]	[""]	+input
+1258731	2743	3	1	3	1	["if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5):","\tprint(round(preco_normal * 0.75, 2))","elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7):","\tprint(round(preco_normal, 2)) "]	[""]	paste
+1261689	2751	4	0	4	0	["#"]	[""]	+input
+1264464	2758	5	0	5	0	["#"]	[""]	+input
+1267394	2765	6	0	6	0	["#"]	[""]	+input
+1296192	2777	21	42	21	42	["",""]	[""]	+input
+1296193	2778	22	0	22	0	["\t"]	[""]	+input
+1296951	2783	22	0	22	1	[""]	["\t"]	+delete
+1298376	2788	22	0	22	0	["e"]	[""]	+input
+1298526	2792	22	1	22	1	["l"]	[""]	+input
+1298744	2796	22	2	22	2	["i"]	[""]	+input
+1298903	2800	22	3	22	3	["f"]	[""]	+input
+1299563	2804	22	4	22	4	[" "]	[""]	+input
+1307372	2819	22	5	22	5	["(dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == \"s\"):","\tprint(round(preco_normal * 0.75 + 20, 2))"]	[""]	paste
+1310775	2825	20	0	20	2	[""]	["el"]	+delete
+1315095	2831	22	88	22	89	["n"]	["s"]	+input
+1319430	2835	23	33	23	34	[""]	["+"]	+delete
+1319669	2839	23	33	23	34	[""]	[" "]	+delete
+1320024	2843	23	33	23	34	[""]	["2"]	+delete
+1320408	2847	23	33	23	34	[""]	["0"]	+delete
+1321032	2851	23	32	23	33	[""]	[" "]	+delete
+1332975	2858	24	109	24	110	["s"]	["n"]	+input
+1338295	2868	25	35	25	36	[""]	[" "]	+delete
+1338523	2872	25	35	25	35	["",""]	[""]	+input
+1338525	2873	26	0	26	0	["\t"]	[""]	+input
+1339506	2878	26	0	26	1	[""]	["\t"]	+delete
+1340299	2883	26	0	26	0	["elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == \"s\"):","\tprint(round(preco_normal + 20, 2)) "]	[""]	paste
+1344630	2890	26	109	26	110	["n"]	["s"]	+input
+1348362	2894	27	26	27	27	[""]	["+"]	+delete
+1348565	2898	27	26	27	27	[""]	[" "]	+delete
+1348771	2902	27	26	27	27	[""]	["2"]	+delete
+1349160	2906	27	26	27	27	[""]	["0"]	+delete
+1349853	2910	27	25	27	26	[""]	[" "]	+delete
+
+Local Run 3
+- event_time_delta_ms: 1378306
+- raw_log_line: 2918
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#Dias da semana com desconto
+	# segundas, terças e quintas (desconto de 25%)
+	
+#if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5):
+#	print(round(preco_normal * 0.75, 2))
+#elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7):
+#	print(round(preco_normal, 2)) 
+	
+preco_normal = float(input("Informe o preco normal de entrada: "))
+dia_semana = int(input("Informe o dia da semana: "))
+musica_aovivo = str(input("Dia de musica ao vivo? "))
+
+domingo = 1
+segunda = 2
+terca = 3
+quarta = 4
+quinta = 5
+sexta = 6
+sabado = 7
+
+if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "s"):
+	print(round(preco_normal * 0.75 + 20, 2))
+elif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "n"):
+	print(round(preco_normal * 0.75, 2))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "s"):
+	print(round(preco_normal + 20, 2))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "n"):
+	print(round(preco_normal, 2)) 
+```
+Run Output
+```text
+Informe o preco normal de entrada: 75.25
+Informe o dia da semana: 3
+Dia de musica ao vivo? s
+76.44
+```
+
+Edit Segment 4
+- raw_change_event_count: 13
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1396436	2925	21	7	21	7	["\""]	[""]	+input
+1398325	2930	21	8	21	8	["Total: R$"]	[""]	paste
+1400151	2936	21	17	21	17	["\""]	[""]	+input
+1401734	2941	21	18	21	18	[","]	[""]	+input
+1402205	2945	21	19	21	19	[" "]	[""]	+input
+1403238	2950	21	20	21	20	["("]	[""]	+input
+1409572	2957	21	56	21	56	[")"]	[""]	+input
+1418371	2969	23	7	23	7	["\"Total: R$\", ("]	[""]	paste
+1421032	2976	23	51	23	51	[")"]	[""]	+input
+1424259	2982	25	7	25	7	["\"Total: R$\", ("]	[""]	paste
+1426957	2989	25	49	25	49	[")"]	[""]	+input
+1430770	2995	27	7	27	7	["\"Total: R$\", ("]	[""]	paste
+1436035	3005	27	44	27	44	[")"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 1452335
+- raw_log_line: 3013
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#Dias da semana com desconto
+	# segundas, terças e quintas (desconto de 25%)
+	
+#if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5):
+#	print(round(preco_normal * 0.75, 2))
+#elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7):
+#	print(round(preco_normal, 2)) 
+	
+preco_normal = float(input("Informe o preco normal de entrada: "))
+dia_semana = int(input("Informe o dia da semana: "))
+musica_aovivo = str(input("Dia de musica ao vivo? "))
+
+domingo = 1
+segunda = 2
+terca = 3
+quarta = 4
+quinta = 5
+sexta = 6
+sabado = 7
+
+if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal * 0.75 + 20, 2)))
+elif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal * 0.75, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal + 20, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal, 2))) 
+```
+Run Output
+```text
+Informe o preco normal de entrada: 75.25
+Informe o dia da semana: 3
+Dia de musica ao vivo? s
+Total: R$ 76.44
+```
+
+Edit Segment 5
+- raw_change_event_count: 11
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1478281	3018	10	53	10	53	["."]	[""]	+input
+1478755	3022	10	54	10	54	["u"]	[""]	+input
+1479035	3026	10	55	10	55	["p"]	[""]	+input
+1479169	3030	10	56	10	56	["p"]	[""]	+input
+1479289	3034	10	57	10	57	["e"]	[""]	+input
+1479473	3038	10	58	10	58	["r"]	[""]	+input
+1480530	3043	10	59	10	59	["()"]	[""]	+input
+1532080	3063	3	0	6	32	[""]	["#if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5):","#\tprint(round(preco_normal * 0.75, 2))","#elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7):","#\tprint(round(preco_normal, 2)) "]	+delete
+1532663	3068	3	0	4	0	[""]	["",""]	+delete
+1533183	3073	3	0	3	1	[""]	["\t"]	+delete
+1534299	3077	3	0	4	0	[""]	["",""]	+delete
+
+Submit Anchor 1
+- event_time_delta_ms: 1565047
+- raw_log_line: 3082
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+#Dias da semana com desconto
+	# segundas, terças e quintas (desconto de 25%)
+	
+preco_normal = float(input("Informe o preco normal de entrada: "))
+dia_semana = int(input("Informe o dia da semana: "))
+musica_aovivo = str(input("Dia de musica ao vivo? ")).upper()
+
+domingo = 1
+segunda = 2
+terca = 3
+quarta = 4
+quinta = 5
+sexta = 6
+sabado = 7
+
+if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal * 0.75 + 20, 2)))
+elif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal * 0.75, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal + 20, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal, 2))) 
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-01-30T15:09:51.038000
+
+Execution Result
+
+- submitted_at: 2024-01-30 15:10:45
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "70.56\n2\nN"
+    expected: "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92"
+    actual: "Total: R$ 72.92"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75"
+    actual: "Total: R$ 120.75"
+  - test_index_0idx: 2 [FAIL]
+    input: "0.00\n9\nS"
+    expected: "Entradas: 0.0 , 9 , S\nDados invalidos"
+    actual: ""
+
+Attempt Start Code
+```python
+#Dias da semana com desconto
+	# segundas, terças e quintas (desconto de 25%)
+	
+preco_normal = float(input("Informe o preco normal de entrada: "))
+dia_semana = int(input("Informe o dia da semana: "))
+musica_aovivo = str(input("Dia de musica ao vivo? ")).upper()
+
+domingo = 1
+segunda = 2
+terca = 3
+quarta = 4
+quinta = 5
+sexta = 6
+sabado = 7
+
+if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal * 0.75 + 20, 2)))
+elif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal * 0.75, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal + 20, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal, 2))) 
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 3090
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#Dias da semana com desconto
+	# segundas, terças e quintas (desconto de 25%)
+	
+preco_normal = float(input("Informe o preco normal de entrada: "))
+dia_semana = int(input("Informe o dia da semana: "))
+musica_aovivo = str(input("Dia de musica ao vivo? ")).upper()
+
+domingo = 1
+segunda = 2
+terca = 3
+quarta = 4
+quinta = 5
+sexta = 6
+sabado = 7
+
+if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal * 0.75 + 20, 2)))
+elif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal * 0.75, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal + 20, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal, 2))) 
+```
+Run Output
+```text
+Informe o preco normal de entrada: 75.25
+Informe o dia da semana: 3
+Dia de musica ao vivo? s
+Total: R$ 76.44
+```
+
+Edit Segment 1
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+19604	3095	5	53	5	61	[""]	[".upper()"]	cut
+22276	3101	5	51	5	51	[","]	[""]	+input
+22865	3105	5	52	5	52	[" "]	[""]	+input
+23193	3109	5	53	5	53	[".upper()"]	[""]	paste
+
+Local Run 2
+- event_time_delta_ms: 30303
+- raw_log_line: 3118
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#Dias da semana com desconto
+	# segundas, terças e quintas (desconto de 25%)
+	
+preco_normal = float(input("Informe o preco normal de entrada: "))
+dia_semana = int(input("Informe o dia da semana: "))
+musica_aovivo = str(input("Dia de musica ao vivo? ", .upper()))
+
+domingo = 1
+segunda = 2
+terca = 3
+quarta = 4
+quinta = 5
+sexta = 6
+sabado = 7
+
+if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal * 0.75 + 20, 2)))
+elif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal * 0.75, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal + 20, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal, 2))) 
+```
+Run Output
+```text
+File "main.py", line 6
+musica_aovivo = str(input("Dia de musica ao vivo? ", .upper()))
+SyntaxError: invalid syntax
+```
+
+Edit Segment 2
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+34614	3123	5	54	5	61	[""]	["upper()"]	cut
+35971	3127	5	53	5	54	[""]	["."]	+delete
+36199	3131	5	52	5	53	[""]	[" "]	+delete
+36457	3135	5	51	5	52	[""]	[","]	+delete
+
+Local Run 3
+- event_time_delta_ms: 42329
+- raw_log_line: 3140
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#Dias da semana com desconto
+	# segundas, terças e quintas (desconto de 25%)
+	
+preco_normal = float(input("Informe o preco normal de entrada: "))
+dia_semana = int(input("Informe o dia da semana: "))
+musica_aovivo = str(input("Dia de musica ao vivo? "))
+
+domingo = 1
+segunda = 2
+terca = 3
+quarta = 4
+quinta = 5
+sexta = 6
+sabado = 7
+
+if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal * 0.75 + 20, 2)))
+elif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal * 0.75, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal + 20, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal, 2))) 
+```
+Run Output
+```text
+
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 54155
+- raw_log_line: 3141
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+#Dias da semana com desconto
+	# segundas, terças e quintas (desconto de 25%)
+	
+preco_normal = float(input("Informe o preco normal de entrada: "))
+dia_semana = int(input("Informe o dia da semana: "))
+musica_aovivo = str(input("Dia de musica ao vivo? "))
+
+domingo = 1
+segunda = 2
+terca = 3
+quarta = 4
+quinta = 5
+sexta = 6
+sabado = 7
+
+if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal * 0.75 + 20, 2)))
+elif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal * 0.75, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal + 20, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal, 2))) 
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-01-30T15:11:23.859000
+
+Execution Result
+
+- submitted_at: 2024-01-30 15:12:18
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "70.56\n2\nN"
+    expected: "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92"
+    actual: "Total: R$ 72.92"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75"
+    actual: "Total: R$ 120.75"
+  - test_index_0idx: 2 [FAIL]
+    input: "0.00\n9\nS"
+    expected: "Entradas: 0.0 , 9 , S\nDados invalidos"
+    actual: "Dados invalidos"
+
+Attempt Start Code
+```python
+#Dias da semana com desconto
+	# segundas, terças e quintas (desconto de 25%)
+	
+preco_normal = float(input("Informe o preco normal de entrada: "))
+dia_semana = int(input("Informe o dia da semana: "))
+musica_aovivo = str(input("Dia de musica ao vivo? "))
+
+domingo = 1
+segunda = 2
+terca = 3
+quarta = 4
+quinta = 5
+sexta = 6
+sabado = 7
+
+if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal * 0.75 + 20, 2)))
+elif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal * 0.75, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal + 20, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal, 2))) 
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 26
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	3146	22	46	22	46	["",""]	[""]	+input
+2	3147	23	0	23	0	["\t"]	[""]	+input
+702	3152	23	0	23	1	[""]	["\t"]	+delete
+2176	3159	23	0	23	0	["E"]	[""]	+input
+2575	3164	23	1	23	1	["L"]	[""]	+input
+2787	3169	23	2	23	2	["s"]	[""]	+input
+2973	3173	23	3	23	3	["e"]	[""]	+input
+3217	3176	23	3	23	4	[""]	["e"]	+delete
+3440	3180	23	2	23	3	[""]	["s"]	+delete
+3615	3184	23	1	23	2	[""]	["L"]	+delete
+3964	3188	23	0	23	1	[""]	["E"]	+delete
+5239	3197	23	0	23	0	["e"]	[""]	+input
+5469	3201	23	1	23	1	["l"]	[""]	+input
+5600	3205	23	2	23	2	["s"]	[""]	+input
+5774	3209	23	3	23	3	["e"]	[""]	+input
+6998	3214	23	4	23	4	[":"]	[""]	+input
+7644	3218	23	5	23	5	["",""]	[""]	+input
+7645	3219	24	0	24	0	["\t"]	[""]	+input
+8705	3225	24	1	24	1	["p"]	[""]	+input
+8868	3229	24	2	24	2	["r"]	[""]	+input
+9021	3233	24	3	24	3	["i"]	[""]	+input
+9236	3237	24	4	24	4	["n"]	[""]	+input
+9324	3241	24	5	24	5	["t"]	[""]	+input
+10659	3246	24	6	24	6	["()"]	[""]	+input
+24821	3256	24	7	24	7	["\"\""]	[""]	+input
+25758	3262	24	8	24	8	["Dados invalidos"]	[""]	paste
+
+Local Run 1
+- event_time_delta_ms: 29127
+- raw_log_line: 3270
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#Dias da semana com desconto
+	# segundas, terças e quintas (desconto de 25%)
+	
+preco_normal = float(input("Informe o preco normal de entrada: "))
+dia_semana = int(input("Informe o dia da semana: "))
+musica_aovivo = str(input("Dia de musica ao vivo? "))
+
+domingo = 1
+segunda = 2
+terca = 3
+quarta = 4
+quinta = 5
+sexta = 6
+sabado = 7
+
+if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal * 0.75 + 20, 2)))
+elif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal * 0.75, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal + 20, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal, 2))) 
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+Informe o preco normal de entrada: 75.25
+Informe o dia da semana: 3
+Dia de musica ao vivo? s
+Total: R$ 76.44
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 54963
+- raw_log_line: 3271
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+#Dias da semana com desconto
+	# segundas, terças e quintas (desconto de 25%)
+	
+preco_normal = float(input("Informe o preco normal de entrada: "))
+dia_semana = int(input("Informe o dia da semana: "))
+musica_aovivo = str(input("Dia de musica ao vivo? "))
+
+domingo = 1
+segunda = 2
+terca = 3
+quarta = 4
+quinta = 5
+sexta = 6
+sabado = 7
+
+if (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal * 0.75 + 20, 2)))
+elif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal * 0.75, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "s"):
+	print("Total: R$", (round(preco_normal + 20, 2)))
+elif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == "n"):
+	print("Total: R$", (round(preco_normal, 2))) 
+else:
+	print("Dados invalidos")
+```

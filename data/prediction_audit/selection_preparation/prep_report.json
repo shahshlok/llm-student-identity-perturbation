@@ -1,0 +1,96 @@
+{
+  "schema_version": "v6_2_multi_dataset_scaleup_prep_v1",
+  "visible_attempt_count": 3,
+  "interior_n": 2,
+  "minimum_total_attempt_count": 4,
+  "data_roots": [
+    "<SOURCE_WORKTREE>/2022-2",
+    "<SOURCE_WORKTREE>/2023-1",
+    "<SOURCE_WORKTREE>/2023-2",
+    "<SOURCE_WORKTREE>/2024-1"
+  ],
+  "merged_root": "data/prediction_audit/selection_preparation/merged_root",
+  "scopes_json": "data/prediction_audit/selection_preparation/scopes.json",
+  "dataset_audits": [
+    {
+      "dataset_root": "<SOURCE_WORKTREE>/2022-2",
+      "assessment_files_seen": 172,
+      "bad_assessment_files_skipped": [],
+      "missing_users_roots": [
+        {
+          "path": "<CODEBENCH_DATA_ROOT>/2022-2/489/users",
+          "assessment_file_count": 4
+        }
+      ],
+      "scope_records_emitted": 1154,
+      "skip_mean_pairwise": true
+    },
+    {
+      "dataset_root": "<SOURCE_WORKTREE>/2023-1",
+      "assessment_files_seen": 137,
+      "bad_assessment_files_skipped": [],
+      "missing_users_roots": [],
+      "scope_records_emitted": 974,
+      "skip_mean_pairwise": true
+    },
+    {
+      "dataset_root": "<SOURCE_WORKTREE>/2023-2",
+      "assessment_files_seen": 149,
+      "bad_assessment_files_skipped": [
+        {
+          "path": "<CODEBENCH_DATA_ROOT>/2023-2/559/assessments/5283.data",
+          "error": "V62AuditError: Empty exercise id in assessment file: <CODEBENCH_DATA_ROOT>/2023-2/559/assessments/5283.data"
+        },
+        {
+          "path": "<CODEBENCH_DATA_ROOT>/2023-2/559/assessments/5371.data",
+          "error": "V62AuditError: Empty exercise id in assessment file: <CODEBENCH_DATA_ROOT>/2023-2/559/assessments/5371.data"
+        }
+      ],
+      "missing_users_roots": [],
+      "scope_records_emitted": 1081,
+      "skip_mean_pairwise": true
+    },
+    {
+      "dataset_root": "<SOURCE_WORKTREE>/2024-1",
+      "assessment_files_seen": 188,
+      "bad_assessment_files_skipped": [],
+      "missing_users_roots": [],
+      "scope_records_emitted": 1081,
+      "skip_mean_pairwise": true
+    }
+  ],
+  "class_to_dataset_root": {
+    "485": "<SOURCE_WORKTREE>/2022-2",
+    "486": "<SOURCE_WORKTREE>/2022-2",
+    "487": "<SOURCE_WORKTREE>/2022-2",
+    "488": "<SOURCE_WORKTREE>/2022-2",
+    "489": "<SOURCE_WORKTREE>/2022-2",
+    "490": "<SOURCE_WORKTREE>/2022-2",
+    "491": "<SOURCE_WORKTREE>/2022-2",
+    "493": "<SOURCE_WORKTREE>/2022-2",
+    "494": "<SOURCE_WORKTREE>/2022-2",
+    "523": "<SOURCE_WORKTREE>/2023-1",
+    "524": "<SOURCE_WORKTREE>/2023-1",
+    "525": "<SOURCE_WORKTREE>/2023-1",
+    "527": "<SOURCE_WORKTREE>/2023-1",
+    "528": "<SOURCE_WORKTREE>/2023-1",
+    "529": "<SOURCE_WORKTREE>/2023-1",
+    "530": "<SOURCE_WORKTREE>/2023-1",
+    "557": "<SOURCE_WORKTREE>/2023-2",
+    "558": "<SOURCE_WORKTREE>/2023-2",
+    "559": "<SOURCE_WORKTREE>/2023-2",
+    "560": "<SOURCE_WORKTREE>/2023-2",
+    "561": "<SOURCE_WORKTREE>/2023-2",
+    "562": "<SOURCE_WORKTREE>/2023-2",
+    "563": "<SOURCE_WORKTREE>/2023-2",
+    "587": "<SOURCE_WORKTREE>/2024-1",
+    "589": "<SOURCE_WORKTREE>/2024-1",
+    "590": "<SOURCE_WORKTREE>/2024-1",
+    "591": "<SOURCE_WORKTREE>/2024-1",
+    "593": "<SOURCE_WORKTREE>/2024-1",
+    "594": "<SOURCE_WORKTREE>/2024-1",
+    "597": "<SOURCE_WORKTREE>/2024-1"
+  },
+  "combined_scope_record_count": 4290,
+  "skip_mean_pairwise": true
+}

@@ -1,0 +1,144 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "527",
+    "assessment_id": "4992",
+    "assessment_title": "Lab 3 - Estrutura Condicional Encadeada",
+    "exercise_id": "6094",
+    "student_id": "8762",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/527/users/8762/executions/4992_6094.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/527/users/8762/codemirror/4992_6094.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-09-04 12:52:53",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "200.0\n3",
+            "expected": "R$ 450.0",
+            "actual": "550.0"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "400.0\n4",
+            "expected": "R$ 1040.0",
+            "actual": "1460.0"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "1200\n1",
+            "expected": "R$ 1200.0",
+            "actual": "1200.0"
+          }
+        ]
+      },
+      "submitted_code": "vp = float(input(\"Informe o valor do Plano individual: \"))\nnf = int(input(\"numero de membros na familia: \"))\n\nif nf==2:\n\tdesconto = vp*0.15\n\ttotal = (vp*nf) - desconto\nelif nf==3:\n\tdesconto = vp*0.25\n\ttotal = (vp*nf) - desconto\nelif nf>=4:\n\tdesconto = vp*0.35\n\ttotal = (vp*nf) - desconto\nelse: \n\ttotal = vp\nprint(total)"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-09-04 12:59:50",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "200.0\n3",
+            "expected": "R$ 450.0",
+            "actual": "500.0"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "400.0\n4",
+            "expected": "R$ 1040.0",
+            "actual": "1320.0"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "1200\n1",
+            "expected": "R$ 1200.0",
+            "actual": "1200.0"
+          }
+        ]
+      },
+      "submitted_code": "vp = float(input(\"Informe o valor do Plano individual: \"))\nnf = int(input(\"numero de membros na familia: \"))\n\nif nf==2:\n\tdesconto = (vp*30)/100\n\ttotal = (vp*nf)-desconto\nelif nf==3:\n\tdesconto = (vp*50)/100\n\ttotal = (vp*nf)-desconto\nelif nf>=4:\n\tdesconto = (vp*70)/100\n\ttotal = (vp*nf)-desconto\nelse: \n\ttotal = vp\n\nprint(round(total,2))"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-09-04 13:01:40",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "200.0\n3",
+            "expected": "R$ 450.0",
+            "actual": "592.5"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "400.0\n4",
+            "expected": "R$ 1040.0",
+            "actual": "1579.0"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "1200\n1",
+            "expected": "R$ 1200.0",
+            "actual": "1200.0"
+          }
+        ]
+      },
+      "submitted_code": "vp = float(input(\"Informe o valor do Plano individual: \"))\nnf = int(input(\"numero de membros na familia: \"))\n\nif nf==2:\n\tdesconto1 = (vp*15)/100\n\tdesconto2 = (desconto1*15)/100\n\ttotal = (vp*nf)-desconto2\nelif nf==3:\n\tdesconto1 = (vp*25)/100\n\tdesconto2 = (desconto1*15)/100\n\ttotal = (vp*nf)-desconto2\nelif nf>=4:\n\tdesconto1 = (vp*35)/100\n\tdesconto2 = (desconto1*15)/100\n\ttotal = (vp*nf)-desconto2\nelse: \n\ttotal = vp\n\nprint(round(total,2))"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

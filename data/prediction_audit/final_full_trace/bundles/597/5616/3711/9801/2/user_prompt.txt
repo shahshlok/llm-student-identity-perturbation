@@ -1,0 +1,551 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 597
+- assessment_id: 5616
+- assessment_title: Lab 0 – Primeiros passos com o Python - 2020
+- exercise_id: 3711
+- student_id: 9801
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-05-02T16:04:15.242000
+
+Execution Result
+
+- submitted_at: 2024-05-02 16:10:48
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "122\nEm  2024 a UFAM completou 122 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "122\nEm  2024 a UFAM completou 122 anos de fundacao."
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 296
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	8	0	0	0	0	["r"]	[""]	+input
+171	12	0	1	0	1	["o"]	[""]	+input
+412	16	0	2	0	2	["u"]	[""]	+input
+846	20	0	3	0	3	["n"]	[""]	+input
+975	24	0	4	0	4	["d"]	[""]	+input
+1742	29	0	5	0	5	["()"]	[""]	+input
+6431	35	0	6	0	7	[""]	[")"]	+delete
+6588	39	0	5	0	6	[""]	["("]	+delete
+6730	43	0	4	0	5	[""]	["d"]	+delete
+6891	47	0	3	0	4	[""]	["n"]	+delete
+6990	51	0	2	0	3	[""]	["u"]	+delete
+7098	55	0	1	0	2	[""]	["o"]	+delete
+7307	59	0	0	0	1	[""]	["r"]	+delete
+8604	68	0	0	0	0	["X"]	[""]	+input
+9021	73	0	1	0	1	[" "]	[""]	+input
+9393	77	0	2	0	2	["="]	[""]	+input
+9729	81	0	3	0	3	[" "]	[""]	+input
+10559	85	0	4	0	4	["2"]	[""]	+input
+10780	89	0	5	0	5	["0"]	[""]	+input
+11259	93	0	6	0	6	["2"]	[""]	+input
+12761	97	0	7	0	7	["4"]	[""]	+input
+23326	102	0	8	0	8	["",""]	[""]	+input
+30528	109	1	0	1	0	["Y"]	[""]	+input
+32029	114	1	1	1	1	[" "]	[""]	+input
+32422	118	1	2	1	2	["="]	[""]	+input
+32773	122	1	3	1	3	[" "]	[""]	+input
+33541	126	1	4	1	4	["1"]	[""]	+input
+33855	130	1	5	1	5	["9"]	[""]	+input
+34078	134	1	6	1	6	["0"]	[""]	+input
+34171	138	1	7	1	7	["2"]	[""]	+input
+35244	141	1	8	1	8	["",""]	[""]	+input
+36204	148	2	0	2	0	["X"]	[""]	+input
+36571	153	2	1	2	1	[" "]	[""]	+input
+37291	157	2	2	2	2	["-"]	[""]	+input
+37623	161	2	3	2	3	[" "]	[""]	+input
+38385	165	2	4	2	4	["y"]	[""]	+input
+39232	168	2	4	2	5	[""]	["y"]	+delete
+39606	174	2	4	2	4	["Y"]	[""]	+input
+39933	179	2	5	2	5	[" "]	[""]	+input
+41410	184	2	6	2	6	["+"]	[""]	+input
+42252	188	2	6	2	7	[""]	["+"]	+delete
+42624	193	2	6	2	6	["="]	[""]	+input
+43152	196	2	6	2	7	[""]	["="]	+delete
+43386	200	2	5	2	6	[""]	[" "]	+delete
+43580	204	2	4	2	5	[""]	["Y"]	+delete
+43772	208	2	3	2	4	[""]	[" "]	+delete
+43981	212	2	2	2	3	[""]	["-"]	+delete
+44170	216	2	1	2	2	[""]	[" "]	+delete
+44398	220	2	0	2	1	[""]	["X"]	+delete
+46476	225	2	0	2	0	["9"]	[""]	+input
+47408	228	2	0	2	1	[""]	["9"]	+delete
+48307	233	2	0	2	0	["p"]	[""]	+input
+48656	237	2	1	2	1	["r"]	[""]	+input
+48805	241	2	2	2	2	["i"]	[""]	+input
+49067	245	2	3	2	3	["n"]	[""]	+input
+49181	249	2	4	2	4	["t"]	[""]	+input
+49709	254	2	5	2	5	["()"]	[""]	+input
+53462	261	2	6	2	6	["E"]	[""]	+input
+54252	266	2	7	2	7	["m"]	[""]	+input
+54804	270	2	8	2	8	[" "]	[""]	+input
+57036	273	2	8	2	9	[""]	[" "]	+delete
+57180	277	2	7	2	8	[""]	["m"]	+delete
+57450	281	2	6	2	7	[""]	["E"]	+delete
+58316	286	2	6	2	6	["''"]	[""]	+input
+59596	292	2	6	2	8	[""]	["''"]	+delete
+60030	297	2	6	2	6	["''"]	[""]	+input
+60604	302	2	7	2	7	["e"]	[""]	+input
+61442	305	2	7	2	8	[""]	["e"]	+delete
+61571	309	2	6	2	8	[""]	["''"]	+delete
+62453	315	2	6	2	6	["\"\""]	[""]	+input
+63949	322	2	7	2	7	["E"]	[""]	+input
+64976	327	2	8	2	8	["m"]	[""]	+input
+65201	331	2	9	2	9	[" "]	[""]	+input
+79218	341	2	11	2	11	["'"]	[""]	+input
+79771	345	2	12	2	12	["'"]	[""]	+input
+80006	348	2	12	2	13	[""]	["'"]	+delete
+80154	352	2	11	2	12	[""]	["'"]	+delete
+80382	357	2	11	2	11	["'"]	[""]	+input
+80848	361	2	12	2	12	["'"]	[""]	+input
+81203	364	2	12	2	13	[""]	["'"]	+delete
+81356	368	2	11	2	12	[""]	["'"]	+delete
+82205	374	2	11	2	11	["\""]	[""]	+input
+85876	380	2	11	2	11	["x"]	[""]	+input
+88588	383	2	11	2	12	[""]	["x"]	+delete
+88988	389	2	11	2	11	["X"]	[""]	+input
+97029	395	2	13	2	13	[","]	[""]	+input
+97652	399	2	14	2	14	[" "]	[""]	+input
+98361	403	2	15	2	15	["a"]	[""]	+input
+98543	407	2	16	2	16	[" "]	[""]	+input
+100327	412	2	17	2	17	["U"]	[""]	+input
+100592	416	2	18	2	18	["F"]	[""]	+input
+100722	420	2	19	2	19	["A"]	[""]	+input
+100959	424	2	20	2	20	["M"]	[""]	+input
+101617	429	2	21	2	21	[" "]	[""]	+input
+102285	433	2	22	2	22	["c"]	[""]	+input
+102542	437	2	23	2	23	["o"]	[""]	+input
+102758	441	2	24	2	24	["m"]	[""]	+input
+103022	445	2	25	2	25	["p"]	[""]	+input
+103198	449	2	26	2	26	["l"]	[""]	+input
+103343	453	2	27	2	27	["e"]	[""]	+input
+103604	457	2	28	2	28	["t"]	[""]	+input
+103708	461	2	29	2	29	["o"]	[""]	+input
+103938	465	2	30	2	30	["y"]	[""]	+input
+104798	468	2	30	2	31	[""]	["y"]	+delete
+105132	473	2	30	2	30	["u"]	[""]	+input
+106713	478	2	31	2	31	["\""]	[""]	+input
+108653	483	2	32	2	32	[","]	[""]	+input
+111230	487	2	33	2	33	[" "]	[""]	+input
+121394	491	2	34	2	34	["x"]	[""]	+input
+122255	494	2	34	2	35	[""]	["x"]	+delete
+122766	500	2	34	2	34	["X"]	[""]	+input
+123633	505	2	35	2	35	[" "]	[""]	+input
+124393	509	2	36	2	36	["-"]	[""]	+input
+124675	513	2	37	2	37	[" "]	[""]	+input
+125054	518	2	38	2	38	["Y"]	[""]	+input
+130626	523	2	39	2	39	[","]	[""]	+input
+132007	527	2	40	2	40	[" "]	[""]	+input
+133030	532	2	41	2	41	["\"\""]	[""]	+input
+133904	538	2	42	2	42	["a"]	[""]	+input
+134045	542	2	43	2	43	["n"]	[""]	+input
+134269	546	2	44	2	44	["o"]	[""]	+input
+134438	550	2	45	2	45	["s"]	[""]	+input
+135186	554	2	46	2	46	[" "]	[""]	+input
+135341	558	2	47	2	47	["d"]	[""]	+input
+135551	562	2	48	2	48	["e"]	[""]	+input
+136100	566	2	49	2	49	[" "]	[""]	+input
+136412	570	2	50	2	50	["f"]	[""]	+input
+136781	574	2	51	2	51	["u"]	[""]	+input
+137026	578	2	52	2	52	["n"]	[""]	+input
+137175	582	2	53	2	53	["d"]	[""]	+input
+137423	586	2	54	2	54	["a"]	[""]	+input
+137999	590	2	55	2	55	["c"]	[""]	+input
+138483	594	2	56	2	56	["a"]	[""]	+input
+139086	598	2	57	2	57	["o"]	[""]	+input
+140594	602	2	58	2	58	["."]	[""]	+input
+147502	608	2	34	2	34	["\""]	[""]	+input
+152532	617	2	40	2	40	["\""]	[""]	+input
+213167	626	2	10	2	10	["r"]	[""]	+input
+213314	630	2	11	2	11	["o"]	[""]	+input
+213534	634	2	12	2	12	["u"]	[""]	+input
+213794	638	2	13	2	13	["n"]	[""]	+input
+213800	641	2	14	2	14	["b"]	[""]	+input
+213872	646	2	15	2	15	["d"]	[""]	+input
+214738	649	2	15	2	16	[""]	["d"]	+delete
+215310	653	2	14	2	15	[""]	["b"]	+delete
+216275	658	2	14	2	14	["d"]	[""]	+input
+216882	663	2	15	2	15	["()"]	[""]	+input
+219617	669	2	19	2	20	[""]	["\""]	+delete
+219789	673	2	18	2	19	[""]	["X"]	+delete
+219974	677	2	17	2	18	[""]	["\""]	+delete
+220157	681	2	16	2	17	[""]	[")"]	+delete
+221279	687	2	16	2	16	["X"]	[""]	+input
+224432	692	2	66	2	67	[""]	[")"]	+delete
+224930	695	2	65	2	66	[""]	["\""]	+delete
+224961	698	2	64	2	65	[""]	["."]	+delete
+224993	701	2	63	2	64	[""]	["o"]	+delete
+225021	704	2	62	2	63	[""]	["a"]	+delete
+225052	707	2	61	2	62	[""]	["c"]	+delete
+225089	710	2	60	2	61	[""]	["a"]	+delete
+225121	713	2	59	2	60	[""]	["d"]	+delete
+225143	716	2	58	2	59	[""]	["n"]	+delete
+225172	719	2	57	2	58	[""]	["u"]	+delete
+225209	722	2	56	2	57	[""]	["f"]	+delete
+225240	725	2	55	2	56	[""]	[" "]	+delete
+225262	728	2	54	2	55	[""]	["e"]	+delete
+225292	731	2	53	2	54	[""]	["d"]	+delete
+225323	734	2	52	2	53	[""]	[" "]	+delete
+225354	737	2	51	2	52	[""]	["s"]	+delete
+225385	740	2	50	2	51	[""]	["o"]	+delete
+225413	743	2	49	2	50	[""]	["n"]	+delete
+225446	746	2	48	2	49	[""]	["a"]	+delete
+225477	749	2	47	2	48	[""]	["\""]	+delete
+225505	752	2	46	2	47	[""]	[" "]	+delete
+225537	755	2	45	2	46	[""]	[","]	+delete
+225575	758	2	44	2	45	[""]	["\""]	+delete
+225598	761	2	43	2	44	[""]	["Y"]	+delete
+225626	764	2	42	2	43	[""]	[" "]	+delete
+225657	767	2	41	2	42	[""]	["-"]	+delete
+225689	770	2	40	2	41	[""]	[" "]	+delete
+225719	773	2	39	2	40	[""]	["X"]	+delete
+225753	776	2	38	2	39	[""]	["\""]	+delete
+225778	779	2	37	2	38	[""]	[" "]	+delete
+225810	782	2	36	2	37	[""]	[","]	+delete
+225839	785	2	35	2	36	[""]	["\""]	+delete
+225868	788	2	34	2	35	[""]	["u"]	+delete
+225900	791	2	33	2	34	[""]	["o"]	+delete
+225930	794	2	32	2	33	[""]	["t"]	+delete
+225965	797	2	31	2	32	[""]	["e"]	+delete
+225989	800	2	30	2	31	[""]	["l"]	+delete
+226023	803	2	29	2	30	[""]	["p"]	+delete
+226058	806	2	28	2	29	[""]	["m"]	+delete
+226088	809	2	27	2	28	[""]	["o"]	+delete
+226112	812	2	26	2	27	[""]	["c"]	+delete
+226141	815	2	25	2	26	[""]	[" "]	+delete
+226176	818	2	24	2	25	[""]	["M"]	+delete
+226205	821	2	23	2	24	[""]	["A"]	+delete
+226233	824	2	22	2	23	[""]	["F"]	+delete
+226264	827	2	21	2	22	[""]	["U"]	+delete
+226294	830	2	20	2	21	[""]	[" "]	+delete
+226326	833	2	19	2	20	[""]	["a"]	+delete
+226355	836	2	18	2	19	[""]	[" "]	+delete
+226386	839	2	17	2	18	[""]	[","]	+delete
+226557	843	2	16	2	17	[""]	["X"]	+delete
+226736	847	2	15	2	16	[""]	["("]	+delete
+226879	851	2	14	2	15	[""]	["d"]	+delete
+226975	855	2	13	2	14	[""]	["n"]	+delete
+227128	859	2	12	2	13	[""]	["u"]	+delete
+227298	863	2	11	2	12	[""]	["o"]	+delete
+227441	867	2	10	2	11	[""]	["r"]	+delete
+227696	871	2	9	2	10	[""]	[" "]	+delete
+227917	875	2	8	2	9	[""]	["m"]	+delete
+228093	879	2	7	2	8	[""]	["E"]	+delete
+228256	883	2	6	2	7	[""]	["\""]	+delete
+229160	888	2	6	2	6	["r"]	[""]	+input
+229301	892	2	7	2	7	["o"]	[""]	+input
+229534	896	2	8	2	8	["u"]	[""]	+input
+229794	900	2	9	2	9	["n"]	[""]	+input
+229912	904	2	10	2	10	["d"]	[""]	+input
+231745	909	2	11	2	11	["()"]	[""]	+input
+232914	916	2	12	2	12	["X"]	[""]	+input
+236447	923	2	14	2	14	[")"]	[""]	+input
+238049	929	2	14	2	14	[" "]	[""]	+input
+276401	937	2	13	2	13	["-"]	[""]	+input
+277470	940	2	13	2	14	[""]	["-"]	+delete
+277978	945	2	13	2	13	["-"]	[""]	+input
+278436	950	2	14	2	14	["Y"]	[""]	+input
+299886	963	2	18	2	18	["",""]	[""]	+input
+300959	969	3	0	3	0	["p"]	[""]	+input
+301151	973	3	1	3	1	["r"]	[""]	+input
+301311	977	3	2	3	2	["i"]	[""]	+input
+301518	981	3	3	3	3	["n"]	[""]	+input
+301605	985	3	4	3	4	["t"]	[""]	+input
+302367	989	3	5	3	5	[" "]	[""]	+input
+302819	994	3	6	3	6	["()"]	[""]	+input
+307746	1001	3	7	3	7	["\"\""]	[""]	+input
+308718	1008	3	8	3	8	["W"]	[""]	+input
+309567	1012	3	8	3	9	[""]	["W"]	+delete
+310046	1018	3	8	3	8	["E"]	[""]	+input
+310831	1023	3	9	3	9	["m"]	[""]	+input
+311508	1027	3	10	3	10	[" "]	[""]	+input
+330575	1032	3	12	3	12	[","]	[""]	+input
+333359	1036	3	13	3	13	["2"]	[""]	+input
+333503	1040	3	14	3	14	["0"]	[""]	+input
+333663	1044	3	15	3	15	["2"]	[""]	+input
+334963	1048	3	16	3	16	["4"]	[""]	+input
+337568	1052	3	17	3	17	[","]	[""]	+input
+338625	1057	3	18	3	18	["\"\""]	[""]	+input
+340740	1063	3	19	3	19	["a"]	[""]	+input
+340927	1067	3	20	3	20	[" "]	[""]	+input
+341263	1072	3	21	3	21	["U"]	[""]	+input
+341619	1076	3	22	3	22	["F"]	[""]	+input
+341759	1080	3	23	3	23	["A"]	[""]	+input
+342763	1084	3	24	3	24	["M"]	[""]	+input
+343584	1089	3	25	3	25	[" "]	[""]	+input
+344031	1093	3	26	3	26	["c"]	[""]	+input
+344255	1097	3	27	3	27	["o"]	[""]	+input
+344496	1101	3	28	3	28	["m"]	[""]	+input
+344735	1105	3	29	3	29	["p"]	[""]	+input
+344933	1109	3	30	3	30	["l"]	[""]	+input
+345073	1113	3	31	3	31	["e"]	[""]	+input
+345299	1117	3	32	3	32	["t"]	[""]	+input
+345423	1121	3	33	3	33	["o"]	[""]	+input
+345643	1125	3	34	3	34	["u"]	[""]	+input
+349344	1130	3	36	3	36	[","]	[""]	+input
+351046	1134	3	37	3	37	[" "]	[""]	+input
+352697	1138	3	38	3	38	["2"]	[""]	+input
+352868	1142	3	39	3	39	["0"]	[""]	+input
+352963	1146	3	40	3	40	["2"]	[""]	+input
+353367	1150	3	41	3	41	["4"]	[""]	+input
+354576	1154	3	42	3	42	[" "]	[""]	+input
+354745	1158	3	43	3	43	["-"]	[""]	+input
+354911	1162	3	44	3	44	[" "]	[""]	+input
+357495	1166	3	45	3	45	["1"]	[""]	+input
+357679	1170	3	46	3	46	["9"]	[""]	+input
+357902	1174	3	47	3	47	["0"]	[""]	+input
+359940	1178	3	48	3	48	["2"]	[""]	+input
+364914	1184	3	49	3	49	[","]	[""]	+input
+368952	1188	3	50	3	50	[" "]	[""]	+input
+370160	1193	3	51	3	51	["\"\""]	[""]	+input
+371132	1199	3	52	3	52	["a"]	[""]	+input
+371331	1203	3	53	3	53	["n"]	[""]	+input
+371618	1207	3	54	3	54	["o"]	[""]	+input
+371763	1211	3	55	3	55	["s"]	[""]	+input
+372019	1215	3	56	3	56	[" "]	[""]	+input
+372114	1219	3	57	3	57	["d"]	[""]	+input
+372303	1223	3	58	3	58	["e"]	[""]	+input
+372513	1227	3	59	3	59	[" "]	[""]	+input
+372963	1231	3	60	3	60	["f"]	[""]	+input
+373138	1235	3	61	3	61	["u"]	[""]	+input
+373380	1239	3	62	3	62	["n"]	[""]	+input
+373604	1243	3	63	3	63	["d"]	[""]	+input
+373811	1247	3	64	3	64	["a"]	[""]	+input
+374064	1251	3	65	3	65	["c"]	[""]	+input
+374334	1255	3	66	3	66	["a"]	[""]	+input
+374915	1259	3	67	3	67	["o"]	[""]	+input
+376271	1263	3	68	3	68	["."]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 380183
+- raw_log_line: 1268
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+X = 2024
+Y = 1902
+print(round(X-Y) )
+print ("Em ",2024,"a UFAM completou", 2024 - 1902, "anos de fundacao.")
+```
+Run Output
+```text
+122
+Em  2024 a UFAM completou 122 anos de fundacao.
+```
+
+Local Run 2
+- event_time_delta_ms: 390120
+- raw_log_line: 1271
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+X = 2024
+Y = 1902
+print(round(X-Y) )
+print ("Em ",2024,"a UFAM completou", 2024 - 1902, "anos de fundacao.")
+```
+Run Output
+```text
+122
+Em  2024 a UFAM completou 122 anos de fundacao.
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 392811
+- raw_log_line: 1272
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+X = 2024
+Y = 1902
+print(round(X-Y) )
+print ("Em ",2024,"a UFAM completou", 2024 - 1902, "anos de fundacao.")
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-05-02T16:10:55.671000
+
+Execution Result
+
+- submitted_at: 2024-05-02 16:11:09
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em  2024 a UFAM completou 122 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em  2024 a UFAM completou 122 anos de fundacao."
+
+Attempt Start Code
+```python
+X = 2024
+Y = 1902
+print(round(X-Y) )
+print ("Em ",2024,"a UFAM completou", 2024 - 1902, "anos de fundacao.")
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1280	0	0	0	0	["#"]	[""]	+input
+2933	1287	1	0	1	0	["#"]	[""]	+input
+7124	1295	2	0	2	0	["#"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 13472
+- raw_log_line: 1299
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+#X = 2024
+#Y = 1902
+#print(round(X-Y) )
+print ("Em ",2024,"a UFAM completou", 2024 - 1902, "anos de fundacao.")
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-05-02T16:11:47.784000
+
+Execution Result
+
+- submitted_at: 2024-05-02 16:11:53
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em  2024 a UFAM completou 115 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em  2024 a UFAM completou 115 anos de fundacao."
+
+Attempt Start Code
+```python
+#X = 2024
+#Y = 1902
+#print(round(X-Y) )
+print ("Em ",2024,"a UFAM completou", 2024 - 1902, "anos de fundacao.")
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1303	3	48	3	49	[""]	["2"]	+delete
+114	1308	3	48	3	48	["9"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 3621
+- raw_log_line: 1312
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#X = 2024
+#Y = 1902
+#print(round(X-Y) )
+print ("Em ",2024,"a UFAM completou", 2024 - 1909, "anos de fundacao.")
+```
+Run Output
+```text
+Em  2024 a UFAM completou 122 anos de fundacao.
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 5601
+- raw_log_line: 1313
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+#X = 2024
+#Y = 1902
+#print(round(X-Y) )
+print ("Em ",2024,"a UFAM completou", 2024 - 1909, "anos de fundacao.")
+```

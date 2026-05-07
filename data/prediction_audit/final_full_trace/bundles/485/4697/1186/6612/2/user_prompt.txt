@@ -1,0 +1,343 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 485
+- assessment_id: 4697
+- assessment_title: Lab 5 - Vetores e Strings
+- exercise_id: 1186
+- student_id: 6612
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-05-26T20:46:17.689000
+
+Execution Result
+
+- submitted_at: 2023-05-26 20:52:04
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "31031980"
+    expected: "31 de marco de 1980"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "27071854"
+    expected: "27 de julho de 1854"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "22082000"
+    expected: "22 de agosto de 2000"
+    actual: ""
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 101
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	9	0	0	0	0	["from numpy import⚫","mes array(['janeiro\", \"fevereiro\", \"marco', 'abril', 'maio\", \"junho\", \"julho','agosto', 'setembro', 'outubto\", \"novembro', 'dezembro\"])","data input(\"data\")","d = data[0:2]","y=data[4:]","while i<=11:","if int(data[2:4])-1==i:","== mes[i]","print(str(d)+\" de \"+m+\" de \"+str(y))"]	[""]	paste
+7413	16	1	3	1	4	[""]	[" "]	+delete
+7899	21	1	3	1	3	["="]	[""]	+input
+8979	25	1	4	1	4	[" "]	[""]	+input
+9782	30	1	3	1	3	[" "]	[""]	+input
+75450	57	2	5	2	5	["="]	[""]	+input
+76599	61	2	6	2	6	[" "]	[""]	+input
+78354	67	2	18	2	18	[" "]	[""]	+input
+79752	70	2	18	2	19	[""]	[" "]	+delete
+80952	76	2	18	2	18	[":"]	[""]	+input
+81050	80	2	19	2	19	[" "]	[""]	+input
+98251	87	3	13	3	13	["",""]	[""]	+input
+98251	88	4	0	4	0	["\t\t\t\t "]	[""]	+input
+99685	93	4	4	4	5	[""]	[" "]	+delete
+99837	97	4	3	4	4	[""]	["\t"]	+delete
+99987	101	4	2	4	3	[""]	["\t"]	+delete
+100144	105	4	1	4	2	[""]	["\t"]	+delete
+100448	109	4	0	4	1	[""]	["\t"]	+delete
+101517	114	4	0	4	0	["m"]	[""]	+input
+102458	118	4	1	4	1	[" "]	[""]	+input
+102819	122	4	2	4	2	["="]	[""]	+input
+103086	126	4	3	4	3	[" "]	[""]	+input
+104423	131	4	4	4	4	["\"\""]	[""]	+input
+129968	430	5	10	5	10	["",""]	[""]	+input
+129969	431	6	0	6	0	["\t\t\t\t "]	[""]	+input
+130629	436	6	4	6	5	[""]	[" "]	+delete
+130797	440	6	3	6	4	[""]	["\t"]	+delete
+130987	444	6	2	6	3	[""]	["\t"]	+delete
+131134	448	6	1	6	2	[""]	["\t"]	+delete
+131252	452	6	0	6	1	[""]	["\t"]	+delete
+131406	456	5	10	6	0	[""]	["",""]	+delete
+135080	462	0	17	0	18	[""]	["⚫"]	+delete
+136259	467	0	17	0	17	[" "]	[""]	+input
+137376	472	0	18	0	18	["*"]	[""]	+input
+139355	479	4	6	4	6	["",""]	[""]	+input
+139356	480	5	0	5	0	["\t\t\t\t "]	[""]	+input
+141755	485	5	4	5	5	[""]	[" "]	+delete
+142004	489	5	3	5	4	[""]	["\t"]	+delete
+142345	493	5	2	5	3	[""]	["\t"]	+delete
+142962	497	5	1	5	2	[""]	["\t"]	+delete
+143202	501	5	0	5	1	[""]	["\t"]	+delete
+143515	505	4	6	5	0	[""]	["",""]	+delete
+146520	514	1	11	1	12	[""]	["("]	+delete
+148216	520	1	11	1	11	["("]	[""]	+input
+150705	527	1	136	1	137	[""]	[")"]	+delete
+152859	533	1	136	1	136	[")"]	[""]	+input
+201907	547	1	13	1	14	[""]	["'"]	+delete
+202493	553	1	13	1	13	["\""]	[""]	+input
+207718	632	1	43	1	44	[""]	["'"]	+delete
+208124	638	1	43	1	43	["\""]	[""]	+input
+210403	651	1	46	1	47	[""]	["'"]	+delete
+210776	657	1	46	1	46	["\""]	[""]	+input
+212927	679	1	52	1	53	[""]	["'"]	+delete
+213230	685	1	52	1	52	["\""]	[""]	+input
+215003	698	1	55	1	56	[""]	["'"]	+delete
+215313	704	1	55	1	55	["\""]	[""]	+input
+219574	767	1	78	1	79	[""]	["'"]	+delete
+220715	774	1	78	1	78	["'"]	[""]	+input
+222350	779	1	78	1	79	[""]	["'"]	+delete
+222777	785	1	78	1	78	["\""]	[""]	+input
+225460	801	1	80	1	81	[""]	["'"]	+delete
+226359	807	1	80	1	80	["\""]	[""]	+input
+228507	832	1	87	1	88	[""]	["'"]	+delete
+229043	838	1	87	1	87	["\""]	[""]	+input
+230821	851	1	90	1	91	[""]	["'"]	+delete
+231427	857	1	90	1	90	["\""]	[""]	+input
+234095	888	1	99	1	100	[""]	["'"]	+delete
+234612	894	1	99	1	99	["\""]	[""]	+input
+236312	907	1	102	1	103	[""]	["'"]	+delete
+236841	913	1	102	1	102	["\""]	[""]	+input
+240809	977	1	122	1	123	[""]	["'"]	+delete
+241360	983	1	122	1	122	["\""]	[""]	+input
+242648	996	1	125	1	126	[""]	["'"]	+delete
+243160	1002	1	125	1	125	["\""]	[""]	+input
+257568	1020	5	10	5	10	["",""]	[""]	+input
+258825	1026	6	0	6	0	["i"]	[""]	+input
+259032	1030	6	1	6	1	[" "]	[""]	+input
+260293	1034	6	2	6	2	["="]	[""]	+input
+260595	1038	6	3	6	3	[" "]	[""]	+input
+261657	1042	6	4	6	4	["0"]	[""]	+input
+268066	1049	7	9	7	9	[" "]	[""]	+input
+269256	1054	7	7	7	7	[" "]	[""]	+input
+275663	1062	7	14	8	0	[""]	["",""]	+delete
+276043	1067	7	14	7	14	["",""]	[""]	+input
+276043	1068	8	0	8	0	["\t"]	[""]	+input
+284319	1079	8	19	8	19	[" "]	[""]	+input
+285883	1084	8	18	8	18	[" "]	[""]	+input
+287155	1089	8	22	8	22	[" "]	[""]	+input
+287917	1094	8	25	8	25	[" "]	[""]	+input
+293933	1100	8	28	9	0	[""]	["",""]	+delete
+294261	1105	8	28	8	28	["",""]	[""]	+input
+294262	1106	9	0	9	0	["\t\t"]	[""]	+input
+298145	1114	9	2	9	2	["m"]	[""]	+input
+298633	1118	9	3	9	3	[" "]	[""]	+input
+341454	1134	9	13	10	0	[""]	["",""]	+delete
+341855	1139	9	13	9	13	["",""]	[""]	+input
+341855	1140	10	0	10	0	["\t\t"]	[""]	+input
+342710	1145	10	2	10	2	["",""]	[""]	+input
+342711	1146	11	0	11	0	["\t\t"]	[""]	+input
+343013	1151	11	1	11	2	[""]	["\t"]	+delete
+343282	1155	11	0	11	1	[""]	["\t"]	+delete
+
+Submit Anchor 1
+- event_time_delta_ms: 347409
+- raw_log_line: 1165
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+from numpy import *
+mes = array(["janeiro", "fevereiro", "marco", "abril", "maio", "junho", "julho","agosto", "setembro", "outubto", "novembro", "dezembro"])
+data = input("data: ")
+d = data[0:2]
+m = ""
+y=data[4:]
+i = 0
+while i <= 11:
+	if int(data[2:4]) - 1 == i:
+		m == mes[i]
+		
+print(str(d)+" de "+m+" de "+str(y))
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-05-26T20:52:06.256000
+
+Execution Result
+
+- submitted_at: 2023-05-26 20:52:05
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "31031980"
+    expected: "31 de marco de 1980"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "27071854"
+    expected: "27 de julho de 1854"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "22082000"
+    expected: "22 de agosto de 2000"
+    actual: ""
+
+Attempt Start Code
+```python
+from numpy import *
+mes = array(["janeiro", "fevereiro", "marco", "abril", "maio", "junho", "julho","agosto", "setembro", "outubto", "novembro", "dezembro"])
+data = input("data: ")
+d = data[0:2]
+m = ""
+y=data[4:]
+i = 0
+while i <= 11:
+	if int(data[2:4]) - 1 == i:
+		m == mes[i]
+		
+print(str(d)+" de "+m+" de "+str(y))
+```
+
+Trace Timeline
+
+Submit Anchor 1
+- event_time_delta_ms: 0
+- raw_log_line: 1168
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+from numpy import *
+mes = array(["janeiro", "fevereiro", "marco", "abril", "maio", "junho", "julho","agosto", "setembro", "outubto", "novembro", "dezembro"])
+data = input("data: ")
+d = data[0:2]
+m = ""
+y=data[4:]
+i = 0
+while i <= 11:
+	if int(data[2:4]) - 1 == i:
+		m == mes[i]
+		
+print(str(d)+" de "+m+" de "+str(y))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-05-26T20:52:06.265000
+
+Execution Result
+
+- submitted_at: 2023-05-26 20:52:05
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "31031980"
+    expected: "31 de marco de 1980"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "27071854"
+    expected: "27 de julho de 1854"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "22082000"
+    expected: "22 de agosto de 2000"
+    actual: ""
+
+Attempt Start Code
+```python
+from numpy import *
+mes = array(["janeiro", "fevereiro", "marco", "abril", "maio", "junho", "julho","agosto", "setembro", "outubto", "novembro", "dezembro"])
+data = input("data: ")
+d = data[0:2]
+m = ""
+y=data[4:]
+i = 0
+while i <= 11:
+	if int(data[2:4]) - 1 == i:
+		m == mes[i]
+		
+print(str(d)+" de "+m+" de "+str(y))
+```
+
+Trace Timeline
+
+Submit Anchor 1
+- event_time_delta_ms: 0
+- raw_log_line: 1169
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+from numpy import *
+mes = array(["janeiro", "fevereiro", "marco", "abril", "maio", "junho", "julho","agosto", "setembro", "outubto", "novembro", "dezembro"])
+data = input("data: ")
+d = data[0:2]
+m = ""
+y=data[4:]
+i = 0
+while i <= 11:
+	if int(data[2:4]) - 1 == i:
+		m == mes[i]
+		
+print(str(d)+" de "+m+" de "+str(y))
+```

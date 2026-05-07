@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "524",
+    "assessment_id": "4949",
+    "exercise_id": "2975",
+    "student_id": "8660",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "sc = int(input(\"quantidade de sucos: \"))\nsalg = int(input(\"quantidade de salgados: \"))\nvalor = float(input(\"valor disponivel: \"))\n\ns = 3\nz = 3.50\n\nr = (s*sc) + (z*salg)\nif (valor>=r):\n\tprint(round(r,2))\n\tprint(\"sim\")\nelse :\n\tprint(round(r,2))\n\tprint(\"nao\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "sc = int(input(\"quantidade de sucos: \"))\nsalg = int(input(\"quantidade de salgados: \"))\nvalor = float(input(\"valor disponivel: \"))\n\ns = 3.0\nz = 3.50\n\nr = (s*sc) + (z*salg)\nif (valor>=r):\n\tprint(round(r,2))\n\tprint(\"sim\")\nelse :\n\tprint(round(r,2))\n\tprint(\"nao\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "2\n2\n15.0",
+        "expected": "13.0\nSim",
+        "actual": "13.0\nsim"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "1\n2\n8.0",
+        "expected": "10.0\nNao",
+        "actual": "10.0\nnao"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "3\n5\n25.50",
+        "expected": "26.5\nNao",
+        "actual": "26.5\nnao"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 4,
+        "end_line_0idx": 4,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 4,
+        "end_line_0idx": 4
+      }
+    ]
+  }
+}

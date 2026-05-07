@@ -1,0 +1,68 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "560",
+    "assessment_id": "5290",
+    "exercise_id": "1397",
+    "student_id": "9244",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "area = float(input(\"digite a area a ser ertilizada em hectares: \"))\n\nif (area <= 10000.0):\n\tcusto = 5.00 * area\nelse: \n\tcusto = (area * 5.00) + 10000.0 * 4\nprint(round(custo, 2))",
+    "grade": 0.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      1
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "area = float(input(\"digite a area a ser ertilizada em hectares: \"))\n\nif (area <= 10000.0):\n\tcusto = 5.00 * area\nelse: \n\tcusto = (area * 5.00) + 10000.0 * 4.00\nprint(round(custo, 2))",
+    "grade": 0.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      1
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": true,
+        "input": "4554.0",
+        "expected": "22770.0",
+        "actual": "22770.0"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "18215.0",
+        "expected": "82860.0",
+        "actual": "131075.0"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "9000.0",
+        "expected": "45000.0",
+        "actual": "45000.0"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5
+      }
+    ]
+  }
+}

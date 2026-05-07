@@ -1,0 +1,144 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4499",
+    "assessment_title": "Extra 2 - Estrutura Condicional Composta",
+    "exercise_id": "1418",
+    "student_id": "8170",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2022-2/485/users/8170/executions/4499_1418.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2022-2/485/users/8170/codemirror/4499_1418.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-04-17 09:40:28",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "900000\n300000\n150000",
+            "expected": "NAO",
+            "actual": "SIM"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "400000\n300000\n100000",
+            "expected": "SIM",
+            "actual": "NAO"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "1180100\n1000000\n700000",
+            "expected": "SIM",
+            "actual": "NAO"
+          }
+        ]
+      },
+      "submitted_code": "p = int(input(\"Candidato mais votado:\"))\ns = int(input(\"Segundo mais votado: \"))\nt = int(input(\"Candidato menos votado: \"))\n\nvv = p + s + t\n\nif (p>(vv/2)):\n\tprint(\"SIM\")\nelse:\n\tprint(\"NAO\")"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-04-17 09:40:38",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "900000\n300000\n150000",
+            "expected": "NAO",
+            "actual": "SIM"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "400000\n300000\n100000",
+            "expected": "SIM",
+            "actual": "NAO"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "1180100\n1000000\n700000",
+            "expected": "SIM",
+            "actual": "NAO"
+          }
+        ]
+      },
+      "submitted_code": "p = int(input(\"Candidato mais votado:\"))\ns = int(input(\"Segundo mais votado: \"))\nt = int(input(\"Candidato menos votado: \"))\n\nvv = p + s + t\n\nif (p>(vv//2)):\n\tprint(\"SIM\")\nelse:\n\tprint(\"NAO\")"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-04-17 09:41:09",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "900000\n300000\n150000",
+            "expected": "NAO",
+            "actual": "SIM"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "400000\n300000\n100000",
+            "expected": "SIM",
+            "actual": "NAO"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "1180100\n1000000\n700000",
+            "expected": "SIM",
+            "actual": "NAO"
+          }
+        ]
+      },
+      "submitted_code": "p = int(input(\"Candidato mais votado:\"))\ns = int(input(\"Segundo mais votado: \"))\nt = int(input(\"Candidato menos votado: \"))\n\nvv = (p + s + t) / 2\n\nif (p>vv):\n\tprint(\"SIM\")\nelse:\n\tprint(\"NAO\")"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

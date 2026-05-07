@@ -1,0 +1,675 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 593
+- assessment_id: 5619
+- assessment_title: Lista 1 -  Exercícios em Sala
+- exercise_id: 6895
+- student_id: 9842
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-04-24T19:11:50.328000
+
+Execution Result
+
+- submitted_at: 2024-04-24 19:47:08
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "Teresa\n13\n1.45"
+    expected: "Nome: Teresa\nIdade: 13\nAltura: 1.45"
+    actual: "Seu nome  Teresa\nSeu idade  13\nSeu altura  1.45"
+  - test_index_0idx: 1 [FAIL]
+    input: "Jose\n45\n1.89"
+    expected: "Nome: Jose\nIdade: 45\nAltura: 1.89"
+    actual: "Seu nome  Jose\nSeu idade  45\nSeu altura  1.89"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 111
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["n"]	[""]	+input
+153	11	0	1	0	1	["o"]	[""]	+input
+285	14	0	2	0	2	["m"]	[""]	+input
+387	18	0	3	0	3	["e"]	[""]	+input
+733	23	0	4	0	4	[" "]	[""]	+input
+1356	27	0	5	0	5	["="]	[""]	+input
+1470	31	0	6	0	6	[" "]	[""]	+input
+51926	35	0	7	0	7	["i"]	[""]	+input
+52017	38	0	8	0	8	["n"]	[""]	+input
+53045	43	0	9	0	9	["p"]	[""]	+input
+53309	47	0	10	0	10	["u"]	[""]	+input
+53564	51	0	11	0	11	["t"]	[""]	+input
+55791	56	0	12	0	12	["()"]	[""]	+input
+56088	61	0	13	0	13	["\"\""]	[""]	+input
+56734	69	0	14	0	14	["D"]	[""]	+input
+56972	74	0	15	0	15	["I"]	[""]	+input
+57213	79	0	16	0	16	["g"]	[""]	+input
+57452	83	0	17	0	17	["i"]	[""]	+input
+57708	87	0	18	0	18	["t"]	[""]	+input
+57804	91	0	19	0	19	["e"]	[""]	+input
+58605	95	0	20	0	20	[" "]	[""]	+input
+59453	99	0	21	0	21	["s"]	[""]	+input
+59650	103	0	22	0	22	["e"]	[""]	+input
+59695	106	0	23	0	23	["u"]	[""]	+input
+59823	111	0	24	0	24	[" "]	[""]	+input
+59964	115	0	25	0	25	["n"]	[""]	+input
+60269	119	0	26	0	26	["o"]	[""]	+input
+60412	122	0	27	0	27	["m"]	[""]	+input
+60560	127	0	28	0	28	["e"]	[""]	+input
+62510	132	0	29	0	29	[":"]	[""]	+input
+63777	137	0	30	0	30	[" "]	[""]	+input
+69786	146	0	33	0	33	["",""]	[""]	+input
+71245	152	1	0	1	0	["i"]	[""]	+input
+71422	156	1	1	1	1	["d"]	[""]	+input
+71533	159	1	2	1	2	["a"]	[""]	+input
+71772	163	1	3	1	3	["e"]	[""]	+input
+72254	167	1	3	1	4	[""]	["e"]	+delete
+72320	172	1	3	1	3	["d"]	[""]	+input
+72350	175	1	4	1	4	["e"]	[""]	+input
+73408	180	1	5	1	5	[" "]	[""]	+input
+73884	184	1	6	1	6	["="]	[""]	+input
+74078	188	1	7	1	7	[" "]	[""]	+input
+74390	192	1	8	1	8	["i"]	[""]	+input
+74479	195	1	9	1	9	["n"]	[""]	+input
+74668	200	1	10	1	10	["t"]	[""]	+input
+76227	205	1	11	1	11	["()"]	[""]	+input
+76588	211	1	12	1	12	["i"]	[""]	+input
+76735	214	1	13	1	13	["n"]	[""]	+input
+77391	219	1	14	1	14	["p"]	[""]	+input
+77652	223	1	15	1	15	["u"]	[""]	+input
+77804	227	1	16	1	16	["t"]	[""]	+input
+79512	232	1	17	1	17	["()"]	[""]	+input
+79932	239	1	18	1	18	["\"\""]	[""]	+input
+80397	247	1	19	1	19	["D"]	[""]	+input
+80530	252	1	20	1	20	["I"]	[""]	+input
+80764	257	1	21	1	21	["g"]	[""]	+input
+80989	261	1	22	1	22	["i"]	[""]	+input
+81331	265	1	23	1	23	["t"]	[""]	+input
+81438	269	1	24	1	24	["e"]	[""]	+input
+81550	273	1	25	1	25	[" "]	[""]	+input
+82157	277	1	26	1	26	["s"]	[""]	+input
+82540	281	1	27	1	27	["u"]	[""]	+input
+82636	285	1	28	1	28	["a"]	[""]	+input
+82748	289	1	29	1	29	[" "]	[""]	+input
+82867	293	1	30	1	30	["i"]	[""]	+input
+82990	297	1	31	1	31	["d"]	[""]	+input
+83072	300	1	32	1	32	["a"]	[""]	+input
+83203	305	1	33	1	33	["d"]	[""]	+input
+83294	308	1	34	1	34	["e"]	[""]	+input
+84481	314	1	35	1	35	[":"]	[""]	+input
+84592	318	1	36	1	36	[" "]	[""]	+input
+87427	333	1	39	1	39	["",""]	[""]	+input
+87596	339	2	0	2	0	["a"]	[""]	+input
+87805	343	2	1	2	1	["l"]	[""]	+input
+88108	347	2	2	2	2	["t"]	[""]	+input
+88286	351	2	3	2	3	["u"]	[""]	+input
+88367	355	2	4	2	4	["r"]	[""]	+input
+88766	359	2	5	2	5	["a"]	[""]	+input
+89069	363	2	6	2	6	[" "]	[""]	+input
+89932	367	2	7	2	7	["="]	[""]	+input
+91569	373	2	8	2	9	[""]	[")"]	+delete
+92493	378	2	8	2	8	[" "]	[""]	+input
+92989	382	2	9	2	9	["f"]	[""]	+input
+93199	386	2	10	2	10	["l"]	[""]	+input
+93358	390	2	11	2	11	["o"]	[""]	+input
+93423	394	2	12	2	12	["a"]	[""]	+input
+93737	398	2	13	2	13	["t"]	[""]	+input
+95472	403	2	14	2	14	["()"]	[""]	+input
+95971	409	2	15	2	15	["i"]	[""]	+input
+96076	412	2	16	2	16	["n"]	[""]	+input
+96533	417	2	17	2	17	["p"]	[""]	+input
+96800	421	2	18	2	18	["u"]	[""]	+input
+97023	425	2	19	2	19	["t"]	[""]	+input
+98670	430	2	20	2	20	["()"]	[""]	+input
+99084	437	2	21	2	21	["\"\""]	[""]	+input
+99564	445	2	22	2	22	["D"]	[""]	+input
+99820	451	2	23	2	23	["i"]	[""]	+input
+100063	455	2	24	2	24	["g"]	[""]	+input
+100300	459	2	25	2	25	["i"]	[""]	+input
+100557	463	2	26	2	26	["t"]	[""]	+input
+100668	467	2	27	2	27	["e"]	[""]	+input
+102012	471	2	28	2	28	[" "]	[""]	+input
+102109	475	2	29	2	29	["a"]	[""]	+input
+102236	479	2	30	2	30	[" "]	[""]	+input
+102348	483	2	31	2	31	["a"]	[""]	+input
+102476	486	2	32	2	32	["l"]	[""]	+input
+102787	491	2	33	2	33	["t"]	[""]	+input
+103040	495	2	34	2	34	["u"]	[""]	+input
+103119	499	2	35	2	35	["r"]	[""]	+input
+103245	502	2	36	2	36	["a"]	[""]	+input
+103857	507	2	37	2	37	[" "]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 109414
+- raw_log_line: 524
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+nome = input("DIgite seu nome: ")
+idade = int(input("DIgite sua idade: ")
+altura = float(input("Digite a altura "))
+```
+Run Output
+```text
+File "main.py", line 3
+altura = float(input("Digite a altura "))
+SyntaxError: invalid syntax
+```
+
+Edit Segment 2
+- raw_change_event_count: 5
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+121570	531	1	39	1	39	[")"]	[""]	+input
+132890	536	0	15	0	16	[""]	["I"]	+delete
+133278	541	0	15	0	15	["i"]	[""]	+input
+135902	545	1	20	1	21	[""]	["I"]	+delete
+136431	550	1	20	1	20	["i"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 149192
+- raw_log_line: 558
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: "))
+altura = float(input("Digite a altura "))
+```
+Run Output
+```text
+Digite seu nome: Julio
+Digite sua idade: 22
+Digite a altura 180
+```
+
+Edit Segment 3
+- raw_change_event_count: 59
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+177116	569	2	41	2	41	["",""]	[""]	+input
+177259	574	3	0	3	0	["",""]	[""]	+input
+177452	579	4	0	4	0	["",""]	[""]	+input
+178412	585	5	0	5	0	["p"]	[""]	+input
+178684	589	5	1	5	1	["r"]	[""]	+input
+178784	592	5	2	5	2	["i"]	[""]	+input
+178909	596	5	3	5	3	["n"]	[""]	+input
+179020	601	5	4	5	4	["t"]	[""]	+input
+180118	606	5	5	5	5	["()"]	[""]	+input
+181999	613	5	6	5	6	["\"\""]	[""]	+input
+200306	621	5	7	5	7	["S"]	[""]	+input
+200561	627	5	8	5	8	["e"]	[""]	+input
+200668	630	5	9	5	9	["u"]	[""]	+input
+200753	635	5	10	5	10	[" "]	[""]	+input
+200908	639	5	11	5	11	["n"]	[""]	+input
+201118	643	5	12	5	12	["o"]	[""]	+input
+201387	647	5	13	5	13	["m"]	[""]	+input
+201547	651	5	14	5	14	["e"]	[""]	+input
+204720	655	5	15	5	15	[" "]	[""]	+input
+208899	665	5	17	5	17	[","]	[""]	+input
+209023	669	5	18	5	18	[" "]	[""]	+input
+210304	673	5	19	5	19	["n"]	[""]	+input
+210587	677	5	20	5	20	["o"]	[""]	+input
+210651	680	5	21	5	21	["m"]	[""]	+input
+210796	685	5	22	5	22	["e"]	[""]	+input
+219500	705	5	24	5	24	["print(\"Seu nome \", nome)"]	[""]	paste
+221951	712	5	24	5	24	["",""]	[""]	+input
+308101	719	6	0	6	0	["",""]	[""]	+input
+309039	724	6	0	7	0	[""]	["",""]	+delete
+311473	737	6	24	6	24	["",""]	[""]	+input
+311936	743	7	0	7	0	["print(\"Seu nome \", nome)"]	[""]	paste
+315210	751	6	11	6	15	["o"]	["nome"]	+input
+315598	754	6	11	6	12	[""]	["o"]	+delete
+316204	759	6	11	6	11	["i"]	[""]	+input
+316411	763	6	12	6	12	["a"]	[""]	+input
+316540	766	6	13	6	13	["d"]	[""]	+input
+316926	770	6	13	6	14	[""]	["d"]	+delete
+317065	774	6	12	6	13	[""]	["a"]	+delete
+317130	779	6	12	6	12	["d"]	[""]	+input
+317214	782	6	13	6	13	["a"]	[""]	+input
+317482	787	6	14	6	14	["d"]	[""]	+input
+317533	790	6	15	6	15	["e"]	[""]	+input
+320575	798	6	20	6	24	["i"]	["nome"]	+input
+320619	802	6	21	6	21	["d"]	[""]	+input
+320698	805	6	22	6	22	["a"]	[""]	+input
+320832	810	6	23	6	23	["d"]	[""]	+input
+320890	813	6	24	6	24	["e"]	[""]	+input
+322747	821	7	11	7	15	["a"]	["nome"]	+input
+323034	825	7	12	7	12	["l"]	[""]	+input
+323293	829	7	13	7	13	["t"]	[""]	+input
+323514	833	7	14	7	14	["u"]	[""]	+input
+323626	837	7	15	7	15	["r"]	[""]	+input
+323834	841	7	16	7	16	["a"]	[""]	+input
+327882	848	7	21	7	25	["a"]	["nome"]	+input
+328221	852	7	22	7	22	["l"]	[""]	+input
+328531	856	7	23	7	23	["t"]	[""]	+input
+328762	860	7	24	7	24	["u"]	[""]	+input
+328899	864	7	25	7	25	["r"]	[""]	+input
+329106	868	7	26	7	26	["a"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 331134
+- raw_log_line: 872
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: "))
+altura = float(input("Digite a altura "))
+
+
+print("Seu nome ", nome)
+print("Seu idade ", idade)
+print("Seu altura ", altura)
+```
+Run Output
+```text
+
+```
+
+Edit Segment 4
+- raw_change_event_count: 10
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+349440	878	7	21	7	21	["r"]	[""]	+input
+349857	882	7	22	7	22	["o"]	[""]	+input
+350079	886	7	23	7	23	["u"]	[""]	+input
+350250	890	7	24	7	24	["n"]	[""]	+input
+350362	894	7	25	7	25	["d"]	[""]	+input
+353034	899	7	26	7	26	["("]	[""]	+input
+360570	922	7	33	7	33	[","]	[""]	+input
+360794	926	7	34	7	34	[" "]	[""]	+input
+360923	930	7	35	7	35	["2"]	[""]	+input
+367519	936	7	37	7	37	[")"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 379057
+- raw_log_line: 948
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: "))
+altura = float(input("Digite a altura "))
+
+
+print("Seu nome ", nome)
+print("Seu idade ", idade)
+print("Seu altura ", round(altura, 2))
+```
+Run Output
+```text
+Digite seu nome: JUlio
+Digite sua idade: 22
+Digite a altura 1.80
+Seu nome  JUlio
+Seu idade  22
+Seu altura  1.8
+```
+
+Edit Segment 5
+- raw_change_event_count: 15
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+383051	954	7	35	7	36	[""]	["2"]	+delete
+383471	959	7	35	7	35	["3"]	[""]	+input
+386178	962	7	36	7	36	["",""]	[""]	+input
+386179	963	8	0	8	0	["\t\t\t\t\t\t\t\t  "]	[""]	+input
+390082	968	8	9	8	10	[""]	[" "]	+delete
+390232	972	8	8	8	9	[""]	[" "]	+delete
+390409	976	8	7	8	8	[""]	["\t"]	+delete
+390665	980	8	6	8	7	[""]	["\t"]	+delete
+390826	984	8	5	8	6	[""]	["\t"]	+delete
+390959	988	8	4	8	5	[""]	["\t"]	+delete
+391066	992	8	3	8	4	[""]	["\t"]	+delete
+391193	996	8	2	8	3	[""]	["\t"]	+delete
+391329	1000	8	1	8	2	[""]	["\t"]	+delete
+391450	1004	8	0	8	1	[""]	["\t"]	+delete
+391577	1008	7	36	8	0	[""]	["",""]	+delete
+
+Local Run 5
+- event_time_delta_ms: 395411
+- raw_log_line: 1015
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: "))
+altura = float(input("Digite a altura "))
+
+
+print("Seu nome ", nome)
+print("Seu idade ", idade)
+print("Seu altura ", round(altura, 3))
+```
+Run Output
+```text
+
+```
+
+Edit Segment 6
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+428780	1024	2	37	2	37	[":"]	[""]	+input
+448139	1031	2	38	2	38	["j"]	[""]	+input
+448569	1034	2	39	2	39	["",""]	[""]	+input
+448569	1035	3	0	3	1	["\t\t\t\t\t\t\t"]	[" "]	+input
+
+Local Run 6
+- event_time_delta_ms: 453004
+- raw_log_line: 1045
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: "))
+altura = float(input("Digite a altura:j
+							"))
+
+
+print("Seu nome ", nome)
+print("Seu idade ", idade)
+print("Seu altura ", round(altura, 3))
+```
+Run Output
+```text
+Digite seu nome: 2
+Digite sua idade: 190
+Digite a altura: 213
+Seu nome  2
+Seu idade  190
+Seu altura  213.0
+```
+
+Edit Segment 7
+- raw_change_event_count: 12
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+460225	1050	8	35	8	35	["0"]	[""]	+input
+460524	1054	8	36	8	36	["."]	[""]	+input
+557085	1065	3	6	3	7	[""]	["\t"]	+delete
+557415	1069	3	5	3	6	[""]	["\t"]	+delete
+557574	1073	3	4	3	5	[""]	["\t"]	+delete
+557703	1077	3	3	3	4	[""]	["\t"]	+delete
+557830	1081	3	2	3	3	[""]	["\t"]	+delete
+557959	1085	3	1	3	2	[""]	["\t"]	+delete
+558310	1089	3	0	3	1	[""]	["\t"]	+delete
+558617	1093	2	39	3	0	[""]	["",""]	+delete
+559435	1098	2	38	2	39	[""]	["j"]	+delete
+560113	1103	2	38	2	38	[" "]	[""]	+input
+
+Local Run 7
+- event_time_delta_ms: 577265
+- raw_log_line: 1117
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: "))
+altura = float(input("Digite a altura: "))
+
+
+print("Seu nome ", nome)
+print("Seu idade ", idade)
+print("Seu altura ", round(altura, 0.3))
+```
+Run Output
+```text
+Digite seu nome: hsvav
+Digite sua idade: 55
+Digite a altura: 150
+Seu nome  hsvav
+Seu idade  55
+Traceback (most recent call last):
+File "main.py", line 8, in <module>
+print("Seu altura ", round(altura, 0.3))
+TypeError: 'float' object cannot be interpreted as an integer
+```
+
+Edit Segment 8
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+579607	1121	7	36	7	37	[""]	["."]	+delete
+579736	1125	7	35	7	36	[""]	["0"]	+delete
+
+Submit Anchor 1
+- event_time_delta_ms: 2117816
+- raw_log_line: 1155
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: "))
+altura = float(input("Digite a altura: "))
+
+
+print("Seu nome ", nome)
+print("Seu idade ", idade)
+print("Seu altura ", round(altura, 3))
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-04-24T19:47:12.691000
+
+Execution Result
+
+- submitted_at: 2024-04-24 19:47:17
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "Teresa\n13\n1.45"
+    expected: "Nome: Teresa\nIdade: 13\nAltura: 1.45"
+    actual: "Seu nome  Teresa\nSeu idade  13\nSeu altura  1.45"
+  - test_index_0idx: 1 [FAIL]
+    input: "Jose\n45\n1.89"
+    expected: "Nome: Jose\nIdade: 45\nAltura: 1.89"
+    actual: "Seu nome  Jose\nSeu idade  45\nSeu altura  1.89"
+
+Attempt Start Code
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: "))
+altura = float(input("Digite a altura: "))
+
+
+print("Seu nome ", nome)
+print("Seu idade ", idade)
+print("Seu altura ", round(altura, 3))
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1161	7	21	7	26	[""]	["round"]	+delete
+953	1166	7	30	7	31	[""]	["3"]	+delete
+1154	1170	7	29	7	30	[""]	[" "]	+delete
+1346	1174	7	28	7	29	[""]	[","]	+delete
+
+Submit Anchor 1
+- event_time_delta_ms: 5046
+- raw_log_line: 1179
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: "))
+altura = float(input("Digite a altura: "))
+
+
+print("Seu nome ", nome)
+print("Seu idade ", idade)
+print("Seu altura ", (altura))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-04-24T19:47:23.697000
+
+Execution Result
+
+- submitted_at: 2024-04-24 19:47:32
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "Teresa\n13\n1.45"
+    expected: "Nome: Teresa\nIdade: 13\nAltura: 1.45"
+    actual: "Seu nome  Teresa\nSeu idade  13\nSeu altura  1.45"
+  - test_index_0idx: 1 [FAIL]
+    input: "Jose\n45\n1.89"
+    expected: "Nome: Jose\nIdade: 45\nAltura: 1.89"
+    actual: "Seu nome  Jose\nSeu idade  45\nSeu altura  1.89"
+
+Attempt Start Code
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: "))
+altura = float(input("Digite a altura: "))
+
+
+print("Seu nome ", nome)
+print("Seu idade ", idade)
+print("Seu altura ", (altura))
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1189
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: "))
+altura = float(input("Digite a altura: "))
+
+
+print("Seu nome ", nome)
+print("Seu idade ", idade)
+print("Seu altura ", (altura))
+```
+Run Output
+```text
+Digite seu nome: a
+Digite sua idade: s
+Traceback (most recent call last):
+File "main.py", line 2, in <module>
+idade = int(input("Digite sua idade: "))
+ValueError: invalid literal for int() with base 10: 's'
+```
+
+Local Run 2
+- event_time_delta_ms: 7584
+- raw_log_line: 1196
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: "))
+altura = float(input("Digite a altura: "))
+
+
+print("Seu nome ", nome)
+print("Seu idade ", idade)
+print("Seu altura ", (altura))
+```
+Run Output
+```text
+Digite seu nome: a
+Digite sua idade: 5
+Digite a altura: 2
+Seu nome  a
+Seu idade  5
+Seu altura  2.0
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 9250
+- raw_log_line: 1197
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: "))
+altura = float(input("Digite a altura: "))
+
+
+print("Seu nome ", nome)
+print("Seu idade ", idade)
+print("Seu altura ", (altura))
+```

@@ -1,0 +1,527 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 563
+- assessment_id: 5288
+- assessment_title: Lab 2: Estrutura Condicional Composta
+- exercise_id: 6715
+- student_id: 9217
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-01-09T15:23:31.643000
+
+Execution Result
+
+- submitted_at: 2024-01-09 15:27:42
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "10\n5"
+    expected: "2\nsim"
+    actual: "2 sim"
+  - test_index_0idx: 1 [FAIL]
+    input: "9\n2"
+    expected: "1 \nnao"
+    actual: "4 sim"
+  - test_index_0idx: 2 [FAIL]
+    input: "0\n12"
+    expected: "0\nsim"
+    actual: "0 nao"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 132
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["i"]	[""]	+input
+108	10	0	1	0	1	["n"]	[""]	+input
+193	14	0	2	0	2	["t"]	[""]	+input
+1063	18	0	2	0	3	[""]	["t"]	+delete
+1266	22	0	1	0	2	[""]	["n"]	+delete
+1441	26	0	0	0	1	[""]	["i"]	+delete
+3894	34	0	0	0	0	["x"]	[""]	+input
+4181	38	0	1	0	1	[" "]	[""]	+input
+5174	42	0	2	0	2	["="]	[""]	+input
+5313	46	0	3	0	3	[" "]	[""]	+input
+6148	50	0	4	0	4	["i"]	[""]	+input
+6293	54	0	5	0	5	["n"]	[""]	+input
+6519	58	0	6	0	6	["t"]	[""]	+input
+7733	63	0	7	0	7	["()"]	[""]	+input
+8041	69	0	8	0	8	["i"]	[""]	+input
+8197	73	0	9	0	9	["n"]	[""]	+input
+8433	77	0	10	0	10	["p"]	[""]	+input
+8659	81	0	11	0	11	["u"]	[""]	+input
+8898	85	0	12	0	12	["t"]	[""]	+input
+9811	92	0	13	0	13	["()"]	[""]	+input
+11219	99	0	14	0	14	["\"\""]	[""]	+input
+12898	105	0	15	0	15	["V"]	[""]	+input
+13076	109	0	16	0	16	["A"]	[""]	+input
+13508	113	0	17	0	17	["O"]	[""]	+input
+13665	117	0	18	0	18	["R"]	[""]	+input
+13829	121	0	19	0	19	[" "]	[""]	+input
+13969	125	0	20	0	20	["D"]	[""]	+input
+14025	128	0	21	0	21	["E"]	[""]	+input
+14257	132	0	21	0	22	[""]	["E"]	+delete
+14451	136	0	20	0	21	[""]	["D"]	+delete
+14625	140	0	19	0	20	[""]	[" "]	+delete
+14801	144	0	18	0	19	[""]	["R"]	+delete
+14982	148	0	17	0	18	[""]	["O"]	+delete
+15694	153	0	17	0	17	["L"]	[""]	+input
+15845	157	0	18	0	18	["O"]	[""]	+input
+15970	161	0	19	0	19	["R"]	[""]	+input
+16130	165	0	20	0	20	[" "]	[""]	+input
+16227	169	0	21	0	21	["D"]	[""]	+input
+16441	173	0	22	0	22	[" "]	[""]	+input
+16916	176	0	22	0	23	[""]	[" "]	+delete
+17043	181	0	22	0	22	["E"]	[""]	+input
+17201	185	0	23	0	23	[" "]	[""]	+input
+18231	189	0	24	0	24	["X"]	[""]	+input
+23989	199	0	28	0	28	["",""]	[""]	+input
+24166	205	1	0	1	0	["x = int(input(\"VALOR DE X\"))"]	[""]	paste
+27781	210	1	0	1	1	[""]	["x"]	+delete
+27959	215	1	0	1	0	["Y"]	[""]	+input
+29156	218	1	0	1	1	[""]	["Y"]	+delete
+30229	224	1	0	1	0	["y"]	[""]	+input
+33106	231	1	24	1	25	[""]	["X"]	+delete
+34218	237	1	24	1	24	["Y"]	[""]	+input
+48095	242	1	28	1	28	["",""]	[""]	+input
+48242	247	2	0	2	0	["",""]	[""]	+input
+49525	253	3	0	3	0	["i"]	[""]	+input
+49619	257	3	1	3	1	["f"]	[""]	+input
+50450	261	3	2	3	2	[" "]	[""]	+input
+51172	266	3	3	3	3	["()"]	[""]	+input
+77179	272	3	4	3	4	[" "]	[""]	+input
+77275	276	3	5	3	5	["x"]	[""]	+input
+78435	280	3	6	3	6	[" "]	[""]	+input
+85026	285	3	7	3	7	["%"]	[""]	+input
+85828	290	3	8	3	8	[" "]	[""]	+input
+86098	294	3	9	3	9	["y"]	[""]	+input
+86274	298	3	10	3	10	[" "]	[""]	+input
+88723	306	3	12	3	12	[":"]	[""]	+input
+107060	311	3	7	3	8	[""]	["%"]	+delete
+107877	316	3	7	3	7	["/"]	[""]	+input
+113510	320	3	13	3	13	["",""]	[""]	+input
+113510	321	4	0	4	0	["\t"]	[""]	+input
+115042	329	4	1	4	1	["p"]	[""]	+input
+115137	333	4	2	4	2	["r"]	[""]	+input
+115275	337	4	3	4	3	["i"]	[""]	+input
+115409	341	4	4	4	4	["n"]	[""]	+input
+115592	345	4	5	4	5	["t"]	[""]	+input
+116498	350	4	6	4	6	["()"]	[""]	+input
+126037	356	4	7	4	7	[" "]	[""]	+input
+126354	360	4	8	4	8	["x"]	[""]	+input
+126739	364	4	9	4	9	[" "]	[""]	+input
+127443	368	4	10	4	10	["/"]	[""]	+input
+127589	372	4	11	4	11	["/"]	[""]	+input
+127827	376	4	12	4	12	[" "]	[""]	+input
+128131	380	4	13	4	13	["y"]	[""]	+input
+130387	386	4	15	4	15	["",""]	[""]	+input
+130387	387	5	0	5	0	["\t"]	[""]	+input
+131793	392	5	0	5	1	[""]	["\t"]	+delete
+131970	397	5	0	5	0	["e"]	[""]	+input
+132114	401	5	1	5	1	["l"]	[""]	+input
+132491	405	5	2	5	2	["s"]	[""]	+input
+132579	408	5	3	5	3	["e"]	[""]	+input
+134197	413	5	4	5	4	[" "]	[""]	+input
+134594	418	5	5	5	5	["()"]	[""]	+input
+146418	426	4	8	4	8	["\""]	[""]	+input
+147386	432	4	9	4	9	["\""]	[""]	+input
+148697	440	4	9	4	9	["s"]	[""]	+input
+148801	444	4	10	4	10	["i"]	[""]	+input
+148917	447	4	11	4	11	["m"]	[""]	+input
+149012	452	4	12	4	12	[" "]	[""]	+input
+150560	455	4	12	4	13	[""]	[" "]	+delete
+151137	463	4	13	4	13	[" "]	[""]	+input
+156290	468	5	6	5	7	[""]	[")"]	+delete
+156505	472	5	5	5	6	[""]	["("]	+delete
+157678	478	5	5	5	5	[":"]	[""]	+input
+159269	482	5	6	5	6	["",""]	[""]	+input
+159269	483	6	0	6	0	["\t"]	[""]	+input
+160269	489	6	1	6	1	["p"]	[""]	+input
+160385	492	6	2	6	2	["r"]	[""]	+input
+160433	495	6	3	6	3	["i"]	[""]	+input
+160590	500	6	4	6	4	["n"]	[""]	+input
+160673	504	6	5	6	5	["t"]	[""]	+input
+162920	509	4	21	4	21	["",""]	[""]	+input
+162920	510	5	0	5	0	["\t"]	[""]	+input
+163588	515	5	0	5	1	[""]	["\t"]	+delete
+166210	522	7	6	7	6	["()"]	[""]	+input
+166914	529	7	7	7	7	["\"\""]	[""]	+input
+167858	535	7	8	7	8	["n"]	[""]	+input
+169237	539	7	9	7	9	["a"]	[""]	+input
+169393	543	7	10	7	10	["o"]	[""]	+input
+171635	550	7	12	7	12	[" "]	[""]	+input
+173272	554	7	13	7	13	["x"]	[""]	+input
+177365	557	7	13	7	14	[""]	["x"]	+delete
+178069	561	7	12	7	13	[""]	[" "]	+delete
+179522	581	7	7	7	7	[" "]	[""]	+input
+183509	588	7	7	7	7	["x"]	[""]	+input
+184873	593	7	8	7	8	["%"]	[""]	+input
+185738	598	7	9	7	9	["y"]	[""]	+input
+187778	605	7	9	7	9	[" "]	[""]	+input
+188442	615	7	8	7	8	[" "]	[""]	+input
+191364	620	4	8	4	13	[""]	["\"sim\""]	cut
+193138	627	4	8	4	9	[""]	[" "]	+delete
+193318	631	4	7	4	8	[""]	[" "]	+delete
+195272	654	4	13	4	13	[" "]	[""]	+input
+195957	658	4	14	4	14	["\"sim\""]	[""]	paste
+
+Local Run 1
+- event_time_delta_ms: 199659
+- raw_log_line: 667
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+x = int(input("VALOR DE X"))
+y = int(input("VALOR DE Y"))
+
+if ( x / y ):
+	print(x // y "sim")
+
+else :
+	print(x % y "nao")
+```
+Run Output
+```text
+File "main.py", line 5
+print(x // y "sim")
+SyntaxError: invalid syntax
+```
+
+Edit Segment 2
+- raw_change_event_count: 8
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+212802	675	4	13	4	13	[","]	[""]	+input
+216642	700	7	12	7	12	[","]	[""]	+input
+229795	711	0	25	0	25	[" "]	[""]	+input
+230833	714	0	25	0	26	[""]	[" "]	+delete
+231185	720	0	25	0	25	[":"]	[""]	+input
+231601	725	0	26	0	26	[" "]	[""]	+input
+234596	731	1	25	1	25	[":"]	[""]	+input
+234738	736	1	26	1	26	[" "]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 249802
+- raw_log_line: 744
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+x = int(input("VALOR DE X: "))
+y = int(input("VALOR DE Y: "))
+
+if ( x / y ):
+	print(x // y, "sim")
+
+else :
+	print(x % y, "nao")
+```
+Run Output
+```text
+VALOR DE X: 432
+VALOR DE Y: 3
+144 sim
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 251115
+- raw_log_line: 745
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+x = int(input("VALOR DE X: "))
+y = int(input("VALOR DE Y: "))
+
+if ( x / y ):
+	print(x // y, "sim")
+
+else :
+	print(x % y, "nao")
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-01-09T15:28:09.278000
+
+Execution Result
+
+- submitted_at: 2024-01-09 15:30:11
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "10\n5"
+    expected: "2\nsim"
+    actual: "2 sim"
+  - test_index_0idx: 1 [FAIL]
+    input: "9\n2"
+    expected: "1 \nnao"
+    actual: "4 sim"
+  - test_index_0idx: 2 [FAIL]
+    input: "0\n12"
+    expected: "0\nsim"
+    actual: "0 nao"
+
+Attempt Start Code
+```python
+x = int(input("VALOR DE X: "))
+y = int(input("VALOR DE Y: "))
+
+if ( x / y ):
+	print(x // y, "sim")
+
+else :
+	print(x % y, "nao")
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 755
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+x = int(input("VALOR DE X: "))
+y = int(input("VALOR DE Y: "))
+
+if ( x / y ):
+	print(x // y, "sim")
+
+else :
+	print(x % y, "nao")
+```
+Run Output
+```text
+VALOR DE X: 1243
+VALOR DE Y: 5
+248 sim
+```
+
+Edit Segment 1
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+102020	759	4	21	5	0	[""]	["",""]	+delete
+
+Local Run 2
+- event_time_delta_ms: 107936
+- raw_log_line: 772
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+x = int(input("VALOR DE X: "))
+y = int(input("VALOR DE Y: "))
+
+if ( x / y ):
+	print(x // y, "sim")
+else :
+	print(x % y, "nao")
+```
+Run Output
+```text
+VALOR DE X: 1243
+VALOR DE Y:
+Traceback (most recent call last):
+File "main.py", line 2, in <module>
+y = int(input("VALOR DE Y: "))
+ValueError: invalid literal for int() with base 10: ''
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 122465
+- raw_log_line: 773
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+x = int(input("VALOR DE X: "))
+y = int(input("VALOR DE Y: "))
+
+if ( x / y ):
+	print(x // y, "sim")
+else :
+	print(x % y, "nao")
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-01-09T15:30:19.272000
+
+Execution Result
+
+- submitted_at: 2024-01-09 15:32:00
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "10\n5"
+    expected: "2\nsim"
+    actual: "0 nao"
+  - test_index_0idx: 1 [FAIL]
+    input: "9\n2"
+    expected: "1 \nnao"
+    actual: "1 nao"
+  - test_index_0idx: 2 [FAIL]
+    input: "0\n12"
+    expected: "0\nsim"
+    actual: "0 sim"
+
+Attempt Start Code
+```python
+x = int(input("VALOR DE X: "))
+y = int(input("VALOR DE Y: "))
+
+if ( x / y ):
+	print(x // y, "sim")
+else :
+	print(x % y, "nao")
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 781
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+x = int(input("VALOR DE X: "))
+y = int(input("VALOR DE Y: "))
+
+if ( x / y ):
+	print(x // y, "sim")
+else :
+	print(x % y, "nao")
+```
+Run Output
+```text
+VALOR DE X: 1243
+VALOR DE Y: 5
+248 sim
+```
+
+Edit Segment 1
+- raw_change_event_count: 20
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+49267	786	6	9	6	10	[""]	["%"]	+delete
+50420	792	6	9	6	9	["%"]	[""]	+input
+65300	797	4	18	4	19	[""]	["m"]	+delete
+65477	801	4	17	4	18	[""]	["i"]	+delete
+65907	805	4	16	4	17	[""]	["s"]	+delete
+66403	810	4	16	4	16	["n"]	[""]	+input
+67268	814	4	17	4	17	["a"]	[""]	+input
+67412	818	4	18	4	18	["o"]	[""]	+input
+71097	825	6	17	6	18	[""]	["o"]	+delete
+71290	829	6	16	6	17	[""]	["a"]	+delete
+71539	833	6	15	6	16	[""]	["n"]	+delete
+71971	838	6	15	6	15	["s"]	[""]	+input
+72155	842	6	16	6	16	["i"]	[""]	+input
+72312	845	6	17	6	17	["m"]	[""]	+input
+74693	850	4	10	4	11	[""]	["/"]	+delete
+74834	854	4	9	4	10	[""]	["/"]	+delete
+76228	860	4	9	4	9	["%"]	[""]	+input
+79171	865	6	9	6	10	[""]	["%"]	+delete
+79942	870	6	9	6	9	["/"]	[""]	+input
+80112	874	6	10	6	10	["/"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 81983
+- raw_log_line: 881
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+x = int(input("VALOR DE X: "))
+y = int(input("VALOR DE Y: "))
+
+if ( x / y ):
+	print(x % y, "nao")
+else :
+	print(x // y, "sim")
+```
+Run Output
+```text
+VALOR DE X: 239
+VALOR DE Y: 12
+19 sim
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 101314
+- raw_log_line: 883
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+x = int(input("VALOR DE X: "))
+y = int(input("VALOR DE Y: "))
+
+if ( x / y ):
+	print(x % y, "nao")
+else :
+	print(x // y, "sim")
+```

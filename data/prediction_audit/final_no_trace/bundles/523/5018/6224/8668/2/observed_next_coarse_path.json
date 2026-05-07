@@ -1,0 +1,27 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "523",
+    "assessment_id": "5018",
+    "exercise_id": "6224",
+    "student_id": "8668",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "nota = float(input(\"notas dos alunos: \"))\n\naprovados = 0 \nreprovados = 0\nmaior_nota = -1\nmenor_nota = 11\n\nwhile True:\n\tnota = float(input(\"notas dos alunos: \"))\n\tif nota < 0:\n\t\tbreak\n\tif nota >= 5.0:\n\t\taprovados += 1\n\telse:\n\t\treprovados += 1\n\tif nota > maior_nota:\n\t\tmaior_nota = nota\n\tif nota < menor_nota:\n\t\tmenor_nota = nota\n\t\t\nprint(aprovados, \"alunos passaram\")\nprint(reprovados, \"alunos ficaram abaixo da media\")\nprint(\"Maior nota:\", round(maior_nota, 2))\nprint(\"Menor nota:\", round(menor_nota, 2))",
+    "coarse_path_steps": [
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 22,
+        "target_end_line_0idx": 23
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

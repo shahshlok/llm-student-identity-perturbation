@@ -1,0 +1,88 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "563",
+    "assessment_id": "5288",
+    "exercise_id": "2445",
+    "student_id": "9215",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "escala = input(\"digite a escala:\").upper()\ntemperatura = float(input(\"digite o valor da temp\"))\n\nif (escala == \"F\"):\n\tconvesao = 5/9 * (temperatura - 32)\nelse:\n\tconversao =9/5 * (temperatura +32)\n\t\n\tprint(round(conversao, 2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "escala = input(\"digite a escala:\").upper()\ntemperatura = float(input(\"digite o valor da temperatura\"))\n\nif (escala == \"F\"):\n\tconvesao = 5/9 * temperatura - 32\nelse:\n\tconversao =9/5 * temperatura +32\n\t\n\tprint(round(conversao, 2))",
+    "grade": 67.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      1
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": true,
+        "input": "C\n320",
+        "expected": "608.0",
+        "actual": "608.0"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "F\n320",
+        "expected": "160.0",
+        "actual": ""
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "C\n0",
+        "expected": "32.0",
+        "actual": "32.0"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "partial_fix",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 1,
+        "end_line_0idx": 1,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 4,
+        "end_line_0idx": 4,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 6,
+        "end_line_0idx": 6,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 3,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 1,
+        "end_line_0idx": 1
+      },
+      {
+        "start_line_0idx": 4,
+        "end_line_0idx": 4
+      },
+      {
+        "start_line_0idx": 6,
+        "end_line_0idx": 6
+      }
+    ]
+  }
+}

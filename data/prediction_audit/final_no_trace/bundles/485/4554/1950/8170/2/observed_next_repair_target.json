@@ -1,0 +1,68 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4554",
+    "exercise_id": "1950",
+    "student_id": "8170",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "tar = float(input(\"Temperatura do ar em graus Celsius: \"))\nv = float(input(\"Velocidade do vento em km/h: \"))\n\nif (tar<-50):\n\tprint(\"Temperatura invalida\")\nelif (tar>10):\n\tprint(\"Temperatura invalida\")\nelif (v<4.8):\n\tprint(\"Velocidade invalida\")\nelse:\n\to = 13.12 + 0.6215 * tar - (11.37+(v**0.16)) + (0.3965 * tar * (v**0.16))\n\tprint(round(o,2))",
+    "grade": 0.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "tar = float(input(\"Temperatura do ar em graus Celsius: \"))\nv = float(input(\"Velocidade do vento em km/h: \"))\n\nif (tar<-50):\n\tprint(\"Temperatura invalida\")\nelif (tar>10):\n\tprint(\"Temperatura invalida\")\nelif (v<4.8):\n\tprint(\"Velocidade invalida\")\nelse:\n\to = 13.12 + 0.6215 * tar - (11.37+(v**0.16)) + (0.3965 * tar * (v**0.16))\n\tprint(round(o,4))",
+    "grade": 0.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": true,
+        "input": "20\n9",
+        "expected": "Temperatura invalida",
+        "actual": "Temperatura invalida"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "-5\n4",
+        "expected": "Velocidade invalida",
+        "actual": "Velocidade invalida"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "-5\n50",
+        "expected": "-14.9563",
+        "actual": "-6.9347"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 11,
+        "end_line_0idx": 11,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 11,
+        "end_line_0idx": 11
+      }
+    ]
+  }
+}

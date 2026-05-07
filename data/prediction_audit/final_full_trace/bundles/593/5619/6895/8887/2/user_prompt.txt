@@ -1,0 +1,640 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 593
+- assessment_id: 5619
+- assessment_title: Lista 1 -  Exercícios em Sala
+- exercise_id: 6895
+- student_id: 8887
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-04-24T19:10:42.201000
+
+Execution Result
+
+- submitted_at: 2024-04-24 19:13:19
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "Teresa\n13\n1.45"
+    expected: "Nome: Teresa\nIdade: 13\nAltura: 1.45"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "Jose\n45\n1.89"
+    expected: "Nome: Jose\nIdade: 45\nAltura: 1.89"
+    actual: ""
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 177
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	8	0	0	0	0	["n"]	[""]	+input
+1200	12	0	1	0	1	["o"]	[""]	+input
+1471	16	0	2	0	2	["m"]	[""]	+input
+1615	20	0	3	0	3	["r"]	[""]	+input
+2127	23	0	3	0	4	[""]	["r"]	+delete
+2255	27	0	3	0	3	["e"]	[""]	+input
+2609	32	0	4	0	4	[" "]	[""]	+input
+2767	36	0	5	0	5	["="]	[""]	+input
+2919	40	0	6	0	6	[" "]	[""]	+input
+6420	46	0	7	0	7	["i"]	[""]	+input
+6722	50	0	8	0	8	["n"]	[""]	+input
+6999	54	0	9	0	9	["p"]	[""]	+input
+7279	58	0	10	0	10	["u"]	[""]	+input
+7503	62	0	11	0	11	["t"]	[""]	+input
+10562	67	0	12	0	12	["()"]	[""]	+input
+11300	74	0	13	0	13	["\"\""]	[""]	+input
+11884	80	0	14	0	14	["d"]	[""]	+input
+12116	84	0	15	0	15	["i"]	[""]	+input
+12597	88	0	16	0	16	["g"]	[""]	+input
+13038	91	0	16	0	17	[""]	["g"]	+delete
+13230	95	0	15	0	16	[""]	["i"]	+delete
+14046	101	0	14	0	15	[""]	["d"]	+delete
+14271	106	0	14	0	14	["D"]	[""]	+input
+14735	112	0	15	0	15	["i"]	[""]	+input
+15023	116	0	16	0	16	["g"]	[""]	+input
+15168	120	0	17	0	17	["i"]	[""]	+input
+15266	123	0	18	0	18	["t"]	[""]	+input
+15472	128	0	19	0	19	["e"]	[""]	+input
+15735	132	0	20	0	20	[" "]	[""]	+input
+15887	136	0	21	0	21	["s"]	[""]	+input
+16081	140	0	22	0	22	["e"]	[""]	+input
+16161	143	0	23	0	23	["u"]	[""]	+input
+16272	148	0	24	0	24	[" "]	[""]	+input
+16418	152	0	25	0	25	["n"]	[""]	+input
+16671	156	0	26	0	26	["o"]	[""]	+input
+16918	160	0	27	0	27	["m"]	[""]	+input
+17071	164	0	28	0	28	["e"]	[""]	+input
+19015	168	0	29	0	29	[" "]	[""]	+input
+19778	177	0	32	0	32	["",""]	[""]	+input
+22431	183	1	0	1	0	["i"]	[""]	+input
+22517	186	1	1	1	1	["d"]	[""]	+input
+22737	191	1	2	1	2	["a"]	[""]	+input
+22930	195	1	3	1	3	["d"]	[""]	+input
+23138	199	1	4	1	4	["e"]	[""]	+input
+24031	203	1	5	1	5	[" "]	[""]	+input
+24239	207	1	6	1	6	["="]	[""]	+input
+24352	210	1	7	1	7	[" "]	[""]	+input
+24672	215	1	8	1	8	["i"]	[""]	+input
+24880	219	1	9	1	9	["n"]	[""]	+input
+24978	223	1	10	1	10	["t"]	[""]	+input
+25795	227	1	11	1	11	[" "]	[""]	+input
+26175	230	1	11	1	12	[""]	[" "]	+delete
+27424	236	1	11	1	11	["()"]	[""]	+input
+28200	242	1	12	1	12	["s"]	[""]	+input
+28447	245	1	12	1	13	[""]	["s"]	+delete
+28544	250	1	12	1	12	["d"]	[""]	+input
+28672	254	1	13	1	13	["i"]	[""]	+input
+28848	258	1	14	1	14	["g"]	[""]	+input
+29072	262	1	15	1	15	["i"]	[""]	+input
+29313	266	1	16	1	16	["t"]	[""]	+input
+30511	270	1	17	1	17	["e"]	[""]	+input
+30752	274	1	18	1	18	[" "]	[""]	+input
+30896	278	1	19	1	19	["s"]	[""]	+input
+31008	282	1	20	1	20	["u"]	[""]	+input
+31136	286	1	21	1	21	["a"]	[""]	+input
+31263	290	1	22	1	22	[" "]	[""]	+input
+31520	294	1	23	1	23	["i"]	[""]	+input
+31585	297	1	24	1	24	["d"]	[""]	+input
+31794	302	1	25	1	25	["a"]	[""]	+input
+31990	306	1	26	1	26	["d"]	[""]	+input
+32163	310	1	27	1	27	["e"]	[""]	+input
+32800	315	1	28	1	28	["\"\""]	[""]	+input
+34287	323	1	27	1	28	[""]	["e"]	+delete
+34479	327	1	26	1	27	[""]	["d"]	+delete
+34610	331	1	25	1	26	[""]	["a"]	+delete
+34719	335	1	24	1	25	[""]	["d"]	+delete
+34846	339	1	23	1	24	[""]	["i"]	+delete
+34961	343	1	22	1	23	[""]	[" "]	+delete
+35102	347	1	21	1	22	[""]	["a"]	+delete
+35231	351	1	20	1	21	[""]	["u"]	+delete
+35363	355	1	19	1	20	[""]	["s"]	+delete
+35503	359	1	18	1	19	[""]	[" "]	+delete
+35615	363	1	17	1	18	[""]	["e"]	+delete
+35760	367	1	16	1	17	[""]	["t"]	+delete
+35903	371	1	15	1	16	[""]	["i"]	+delete
+36031	375	1	14	1	15	[""]	["g"]	+delete
+36177	379	1	13	1	14	[""]	["i"]	+delete
+36351	383	1	12	1	13	[""]	["d"]	+delete
+38758	399	1	13	1	13	["D"]	[""]	+input
+39200	405	1	14	1	14	["i"]	[""]	+input
+39423	409	1	15	1	15	["g"]	[""]	+input
+39567	413	1	16	1	16	["i"]	[""]	+input
+39703	417	1	17	1	17	["t"]	[""]	+input
+39890	421	1	18	1	18	["e"]	[""]	+input
+40018	425	1	19	1	19	[" "]	[""]	+input
+40178	429	1	20	1	20	["s"]	[""]	+input
+40287	433	1	21	1	21	["u"]	[""]	+input
+40402	437	1	22	1	22	["a"]	[""]	+input
+40545	441	1	23	1	23	[" "]	[""]	+input
+41093	445	1	24	1	24	["i"]	[""]	+input
+41152	448	1	25	1	25	["d"]	[""]	+input
+41365	453	1	26	1	26	["a"]	[""]	+input
+41563	457	1	27	1	27	["d"]	[""]	+input
+41728	461	1	28	1	28	["e"]	[""]	+input
+49616	516	1	11	1	11	["("]	[""]	+input
+50655	521	1	12	1	12	["i"]	[""]	+input
+52063	525	1	13	1	13	["n"]	[""]	+input
+52384	529	1	14	1	14	["p"]	[""]	+input
+52995	533	1	15	1	15	["u"]	[""]	+input
+53474	537	1	16	1	16	["t"]	[""]	+input
+56768	593	1	37	1	37	["",""]	[""]	+input
+56768	594	2	0	2	0	["\t\t\t\t"]	[""]	+input
+57599	600	2	4	2	4	["a"]	[""]	+input
+57760	604	2	5	2	5	["l"]	[""]	+input
+58150	607	2	5	2	6	[""]	["l"]	+delete
+61068	611	2	5	2	5	["l"]	[""]	undo
+63697	612	1	37	2	6	[""]	["","\t\t\t\tal"]	undo
+65904	617	1	37	1	37	["",""]	[""]	+input
+65904	618	2	0	2	0	["\t\t\t\t"]	[""]	+input
+71166	624	1	36	1	37	[""]	[")"]	+delete
+73870	628	1	36	1	36	[")"]	[""]	undo
+77526	629	1	37	2	4	[""]	["","\t\t\t\t"]	undo
+81920	638	0	32	0	32	[")"]	[""]	+input
+83777	642	0	32	0	33	[""]	[")"]	+delete
+86374	648	0	32	0	32	[")"]	[""]	+input
+91176	681	1	37	1	37	[")"]	[""]	+input
+99890	768	1	38	1	38	[" "]	[""]	+input
+100404	771	1	39	1	39	["",""]	[""]	+input
+102166	777	2	0	2	0	["a"]	[""]	+input
+102273	781	2	1	2	1	["l"]	[""]	+input
+102463	785	2	2	2	2	["t"]	[""]	+input
+102597	789	2	3	2	3	["u"]	[""]	+input
+102723	793	2	4	2	4	["r"]	[""]	+input
+102965	797	2	5	2	5	["a"]	[""]	+input
+103772	801	2	6	2	6	[" "]	[""]	+input
+103968	805	2	7	2	7	["="]	[""]	+input
+104114	809	2	8	2	8	[" "]	[""]	+input
+104770	813	2	9	2	9	["f"]	[""]	+input
+104881	817	2	10	2	10	["l"]	[""]	+input
+105125	821	2	11	2	11	["o"]	[""]	+input
+105292	825	2	12	2	12	["a"]	[""]	+input
+105536	829	2	13	2	13	["t"]	[""]	+input
+107039	834	2	14	2	14	["()"]	[""]	+input
+107754	840	2	15	2	15	["i"]	[""]	+input
+108416	844	2	16	2	16	["n"]	[""]	+input
+108767	848	2	17	2	17	["p"]	[""]	+input
+109072	852	2	18	2	18	["u"]	[""]	+input
+109231	856	2	19	2	19	["t"]	[""]	+input
+110629	861	2	20	2	20	["()"]	[""]	+input
+111379	867	2	21	2	21	["d"]	[""]	+input
+111678	870	2	21	2	22	[""]	["d"]	+delete
+112124	876	2	21	2	21	["\"\""]	[""]	+input
+112674	884	2	22	2	22	["D"]	[""]	+input
+112910	890	2	23	2	23	["i"]	[""]	+input
+113202	894	2	24	2	24	["g"]	[""]	+input
+113398	898	2	25	2	25	["i"]	[""]	+input
+113503	902	2	26	2	26	["t"]	[""]	+input
+113713	906	2	27	2	27	["e"]	[""]	+input
+113967	910	2	28	2	28	[" "]	[""]	+input
+114224	914	2	29	2	29	["s"]	[""]	+input
+114402	918	2	30	2	30	["u"]	[""]	+input
+114494	921	2	31	2	31	["a"]	[""]	+input
+114863	926	2	32	2	32	[" "]	[""]	+input
+115146	930	2	33	2	33	["a"]	[""]	+input
+115231	934	2	34	2	34	["l"]	[""]	+input
+115411	938	2	35	2	35	["t"]	[""]	+input
+115537	942	2	36	2	36	["u"]	[""]	+input
+115651	946	2	37	2	37	["r"]	[""]	+input
+115872	950	2	38	2	38	["a"]	[""]	+input
+118543	955	2	39	2	39	[":"]	[""]	+input
+120495	960	2	40	2	40	[" "]	[""]	+input
+123407	980	1	35	1	35	[":"]	[""]	+input
+123581	985	1	36	1	36	[" "]	[""]	+input
+127646	1000	0	29	0	30	[""]	[" "]	+delete
+128064	1006	0	29	0	29	[":"]	[""]	+input
+128271	1011	0	30	0	30	[" "]	[""]	+input
+137701	1018	0	33	0	34	[""]	[")"]	+delete
+
+Local Run 1
+- event_time_delta_ms: 155031
+- raw_log_line: 1025
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: ")) 
+altura = float(input("Digite sua altura: "))
+```
+Run Output
+```text
+Digite seu nome: matteo
+Digite sua idade: 22
+Digite sua altura: 1.78
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 157161
+- raw_log_line: 1026
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: ")) 
+altura = float(input("Digite sua altura: "))
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-04-24T19:14:06.372000
+
+Execution Result
+
+- submitted_at: 2024-04-24 19:14:06
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "Teresa\n13\n1.45"
+    expected: "Nome: Teresa\nIdade: 13\nAltura: 1.45"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "Jose\n45\n1.89"
+    expected: "Nome: Jose\nIdade: 45\nAltura: 1.89"
+    actual: ""
+
+Attempt Start Code
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: ")) 
+altura = float(input("Digite sua altura: "))
+```
+
+Trace Timeline
+
+Submit Anchor 1
+- event_time_delta_ms: 0
+- raw_log_line: 1031
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: ")) 
+altura = float(input("Digite sua altura: "))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-04-24T19:14:43.673000
+
+Execution Result
+
+- submitted_at: 2024-04-24 19:19:43
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "Teresa\n13\n1.45"
+    expected: "Nome: Teresa\nIdade: 13\nAltura: 1.45"
+    actual: "seu nome: Teresa\nnome: Teresa\nidade 13\naltura 1.45"
+  - test_index_0idx: 1 [FAIL]
+    input: "Jose\n45\n1.89"
+    expected: "Nome: Jose\nIdade: 45\nAltura: 1.89"
+    actual: "seu nome: Jose\nnome: Jose\nidade 45\naltura 1.89"
+
+Attempt Start Code
+```python
+nome = input("Digite seu nome: ")
+idade = int(input("Digite sua idade: ")) 
+altura = float(input("Digite sua altura: "))
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 231
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1038	1	0	1	0	["",""]	[""]	+input
+1073	1047	1	0	1	0	["p"]	[""]	+input
+1199	1051	1	1	1	1	["r"]	[""]	+input
+1343	1055	1	2	1	2	["i"]	[""]	+input
+1545	1059	1	3	1	3	["n"]	[""]	+input
+1618	1062	1	4	1	4	["t"]	[""]	+input
+5774	1068	1	5	1	5	["()"]	[""]	+input
+6414	1075	1	6	1	6	["\"\""]	[""]	+input
+25598	1080	1	6	1	8	[""]	["\"\""]	+delete
+25805	1084	1	5	1	7	[""]	["()"]	+delete
+25984	1088	1	4	1	5	[""]	["t"]	+delete
+26141	1092	1	3	1	4	[""]	["n"]	+delete
+26308	1096	1	2	1	3	[""]	["i"]	+delete
+26461	1100	1	1	1	2	[""]	["r"]	+delete
+26866	1104	1	0	1	1	[""]	["p"]	+delete
+27342	1108	0	33	1	0	[""]	["",""]	+delete
+30273	1125	2	44	2	44	["",""]	[""]	+input
+31647	1131	3	0	3	0	["p"]	[""]	+input
+31815	1135	3	1	3	1	["r"]	[""]	+input
+31956	1139	3	2	3	2	["i"]	[""]	+input
+32155	1143	3	3	3	3	["n"]	[""]	+input
+32273	1147	3	4	3	4	["t"]	[""]	+input
+33717	1152	3	5	3	5	["()"]	[""]	+input
+35294	1159	3	6	3	6	["\"\""]	[""]	+input
+35662	1165	3	7	3	7	["n"]	[""]	+input
+35999	1169	3	8	3	8	["o"]	[""]	+input
+36222	1173	3	9	3	9	["m"]	[""]	+input
+36366	1177	3	10	3	10	["e"]	[""]	+input
+36854	1182	3	11	3	11	[":"]	[""]	+input
+45100	1208	3	13	3	13	["m"]	[""]	+input
+45825	1211	3	13	3	14	[""]	["m"]	+delete
+49828	1216	3	13	3	13	["m"]	[""]	+input
+50722	1219	3	13	3	14	[""]	["m"]	+delete
+51030	1224	3	13	3	13	["m"]	[""]	+input
+51456	1228	3	14	3	14	[" "]	[""]	+input
+51581	1231	3	14	3	15	[""]	[" "]	+delete
+51840	1235	3	13	3	14	[""]	["m"]	+delete
+51948	1239	3	12	3	13	[""]	["\""]	+delete
+55493	1245	3	12	3	12	["\""]	[""]	+input
+56369	1250	3	13	3	13	[","]	[""]	+input
+65131	1254	3	14	3	14	["n"]	[""]	+input
+65379	1258	3	15	3	15	["o"]	[""]	+input
+65582	1262	3	16	3	16	["m"]	[""]	+input
+65727	1266	3	17	3	17	["e"]	[""]	+input
+68400	1272	3	19	3	19	["",""]	[""]	+input
+70082	1278	4	0	4	0	["p"]	[""]	+input
+71166	1282	4	1	4	1	["r"]	[""]	+input
+71681	1286	4	2	4	2	["i"]	[""]	+input
+71951	1290	4	3	4	3	["n"]	[""]	+input
+72142	1294	4	4	4	4	["t"]	[""]	+input
+73357	1297	4	4	4	5	[""]	["t"]	+delete
+73613	1301	4	3	4	4	[""]	["n"]	+delete
+73871	1305	4	2	4	3	[""]	["i"]	+delete
+74198	1309	4	1	4	2	[""]	["r"]	+delete
+74397	1313	4	0	4	1	[""]	["p"]	+delete
+89293	1325	1	0	1	0	["",""]	[""]	+input
+91424	1332	1	0	1	0	["print(\"nome:\",nome)"]	[""]	paste
+99181	1335	1	10	1	11	[""]	["e"]	+delete
+99358	1339	1	9	1	10	[""]	["m"]	+delete
+99525	1343	1	8	1	9	[""]	["o"]	+delete
+99791	1347	1	7	1	8	[""]	["n"]	+delete
+99906	1352	1	7	1	7	["s"]	[""]	+input
+100130	1356	1	8	1	8	["e"]	[""]	+input
+100247	1360	1	9	1	9	["u"]	[""]	+input
+100591	1364	1	10	1	10	[" "]	[""]	+input
+100695	1367	1	11	1	11	["n"]	[""]	+input
+100962	1372	1	12	1	12	["o"]	[""]	+input
+101150	1376	1	13	1	13	["m"]	[""]	+input
+101262	1380	1	14	1	14	["e"]	[""]	+input
+101386	1383	1	15	1	15	[" "]	[""]	+input
+105678	1399	1	15	1	16	[""]	[" "]	+delete
+112354	1429	2	41	2	41	[" "]	[""]	+input
+113057	1432	2	42	2	42	["",""]	[""]	+input
+114514	1440	3	0	3	0	["P"]	[""]	+input
+114861	1445	3	0	3	1	[""]	["P"]	+delete
+115105	1450	3	0	3	0	["p"]	[""]	+input
+115310	1454	3	1	3	1	["r"]	[""]	+input
+115472	1458	3	2	3	2	["i"]	[""]	+input
+115650	1462	3	3	3	3	["n"]	[""]	+input
+115728	1466	3	4	3	4	["t"]	[""]	+input
+116558	1471	3	5	3	5	["()"]	[""]	+input
+117937	1478	3	6	3	6	["\"\""]	[""]	+input
+118308	1484	3	7	3	7	["s"]	[""]	+input
+118479	1488	3	8	3	8	["u"]	[""]	+input
+118639	1492	3	9	3	9	["a"]	[""]	+input
+119168	1496	3	10	3	10	[" "]	[""]	+input
+119377	1500	3	11	3	11	["a"]	[""]	+input
+119515	1504	3	12	3	12	["l"]	[""]	+input
+119662	1508	3	13	3	13	["t"]	[""]	+input
+119790	1512	3	14	3	14	["u"]	[""]	+input
+119884	1515	3	15	3	15	["r"]	[""]	+input
+120094	1520	3	16	3	16	["a"]	[""]	+input
+120202	1523	3	17	3	17	[" "]	[""]	+input
+120576	1528	3	18	3	18	["e"]	[""]	+input
+120734	1532	3	19	3	19	[" "]	[""]	+input
+124290	1535	3	19	3	20	[""]	[" "]	+delete
+124461	1539	3	18	3	19	[""]	["e"]	+delete
+124896	1543	3	17	3	18	[""]	[" "]	+delete
+125559	1548	3	17	3	17	[" "]	[""]	+input
+126326	1551	3	17	3	18	[""]	[" "]	+delete
+127316	1556	3	17	3	17	[","]	[""]	+input
+127661	1559	3	17	3	18	[""]	[","]	+delete
+129042	1567	3	18	3	18	[","]	[""]	+input
+134927	1578	3	17	3	17	[":"]	[""]	+input
+139853	1583	3	18	3	18	[" "]	[""]	+input
+144544	1614	1	16	1	16	[" "]	[""]	+input
+153358	1623	1	16	1	17	[""]	[" "]	+delete
+159997	1642	3	18	3	19	[""]	[" "]	+delete
+167566	1650	3	19	3	19	[" "]	[""]	+input
+168097	1654	3	20	3	20	["a"]	[""]	+input
+168229	1657	3	21	3	21	["l"]	[""]	+input
+168415	1662	3	22	3	22	["t"]	[""]	+input
+168582	1666	3	23	3	23	["u"]	[""]	+input
+168669	1669	3	24	3	24	["r"]	[""]	+input
+168878	1674	3	25	3	25	["a"]	[""]	+input
+169031	1678	3	26	3	26	[" "]	[""]	+input
+169632	1681	3	26	3	27	[""]	[" "]	+delete
+179853	1688	3	26	3	27	[""]	[","]	+delete
+182225	1716	3	19	3	20	[""]	[" "]	+delete
+182646	1721	3	19	3	19	[","]	[""]	+input
+189485	1754	5	17	5	18	[""]	["e"]	+delete
+189692	1758	5	16	5	17	[""]	["m"]	+delete
+189891	1762	5	15	5	16	[""]	["o"]	+delete
+190149	1766	5	14	5	15	[""]	["n"]	+delete
+203791	1794	3	25	3	26	[""]	["a"]	+delete
+203968	1798	3	24	3	25	[""]	["r"]	+delete
+204141	1802	3	23	3	24	[""]	["u"]	+delete
+204303	1806	3	22	3	23	[""]	["t"]	+delete
+204476	1810	3	21	3	22	[""]	["l"]	+delete
+204659	1814	3	20	3	21	[""]	["a"]	+delete
+205009	1819	3	20	3	20	["i"]	[""]	+input
+205136	1823	3	21	3	21	["d"]	[""]	+input
+205358	1827	3	22	3	22	["a"]	[""]	+input
+205570	1831	3	23	3	23	["d"]	[""]	+input
+205764	1835	3	24	3	24	["e"]	[""]	+input
+215887	1842	5	0	5	15	[""]	["print(\"nome:\",)"]	+delete
+217934	1847	3	0	3	26	[""]	["print(\"sua altura:\",idade)"]	+delete
+218719	1851	2	42	3	0	[""]	["",""]	+delete
+221832	1857	3	44	3	44	["",""]	[""]	+input
+223506	1863	4	0	4	0	["p"]	[""]	+input
+223744	1867	4	1	4	1	["r"]	[""]	+input
+223934	1871	4	2	4	2	["i"]	[""]	+input
+224162	1875	4	3	4	3	["n"]	[""]	+input
+224281	1879	4	4	4	4	["t"]	[""]	+input
+225618	1884	4	5	4	5	["()"]	[""]	+input
+226366	1890	4	6	4	6	["n"]	[""]	+input
+226674	1894	4	7	4	7	["o"]	[""]	+input
+227006	1898	4	8	4	8	["m"]	[""]	+input
+227261	1901	4	8	4	9	[""]	["m"]	+delete
+227458	1905	4	7	4	8	[""]	["o"]	+delete
+227997	1909	4	6	4	7	[""]	["n"]	+delete
+228382	1915	4	6	4	6	["\"\""]	[""]	+input
+229424	1921	4	7	4	7	["n"]	[""]	+input
+229681	1925	4	8	4	8	["o"]	[""]	+input
+230310	1929	4	9	4	9	["m"]	[""]	+input
+230413	1933	4	10	4	10	["e"]	[""]	+input
+231810	1938	4	11	4	11	[":"]	[""]	+input
+236738	1952	4	13	4	13	[","]	[""]	+input
+237360	1956	4	14	4	14	[" "]	[""]	+input
+237966	1959	4	14	4	15	[""]	[" "]	+delete
+238374	1964	4	14	4	14	["n"]	[""]	+input
+238659	1968	4	15	4	15	["o"]	[""]	+input
+238848	1972	4	16	4	16	["m"]	[""]	+input
+238990	1976	4	17	4	17	["e"]	[""]	+input
+241634	1986	5	0	5	0	["p"]	[""]	+input
+241926	1990	5	1	5	1	["r"]	[""]	+input
+242078	1994	5	2	5	2	["i"]	[""]	+input
+242274	1998	5	3	5	3	["n"]	[""]	+input
+242360	2001	5	4	5	4	["t"]	[""]	+input
+243478	2009	5	5	5	5	["()"]	[""]	+input
+245142	2015	5	6	5	6	["i"]	[""]	+input
+245282	2019	5	7	5	7	["d"]	[""]	+input
+245516	2023	5	8	5	8	["a"]	[""]	+input
+245710	2027	5	9	5	9	["d"]	[""]	+input
+246003	2031	5	10	5	10	["e"]	[""]	+input
+249022	2034	5	10	5	11	[""]	["e"]	+delete
+249197	2038	5	9	5	10	[""]	["d"]	+delete
+249372	2042	5	8	5	9	[""]	["a"]	+delete
+249533	2046	5	7	5	8	[""]	["d"]	+delete
+249742	2050	5	6	5	7	[""]	["i"]	+delete
+250206	2056	5	6	5	6	["\"\""]	[""]	+input
+250804	2062	5	7	5	7	["i"]	[""]	+input
+250990	2066	5	8	5	8	["d"]	[""]	+input
+251487	2070	5	9	5	9	["d"]	[""]	+input
+251838	2073	5	9	5	10	[""]	["d"]	+delete
+251934	2077	5	9	5	9	["a"]	[""]	+input
+252158	2082	5	10	5	10	["d"]	[""]	+input
+252352	2086	5	11	5	11	["e"]	[""]	+input
+254190	2093	5	13	5	13	[","]	[""]	+input
+256113	2097	5	14	5	14	["i"]	[""]	+input
+256242	2101	5	15	5	15	["d"]	[""]	+input
+256431	2105	5	16	5	16	["a"]	[""]	+input
+256662	2109	5	17	5	17	["d"]	[""]	+input
+256831	2113	5	18	5	18	["e"]	[""]	+input
+257855	2120	5	20	5	20	["]"]	[""]	+input
+258468	2123	5	20	5	21	[""]	["]"]	+delete
+258736	2127	5	20	5	20	["",""]	[""]	+input
+259407	2133	6	0	6	0	["p"]	[""]	+input
+259569	2137	6	1	6	1	["r"]	[""]	+input
+259747	2141	6	2	6	2	["i"]	[""]	+input
+259932	2145	6	3	6	3	["n"]	[""]	+input
+260000	2148	6	4	6	4	["t"]	[""]	+input
+261090	2154	6	5	6	5	["()"]	[""]	+input
+263602	2160	6	6	6	6	["a"]	[""]	+input
+263727	2164	6	7	6	7	["l"]	[""]	+input
+263887	2168	6	8	6	8	["t"]	[""]	+input
+264030	2172	6	9	6	9	["u"]	[""]	+input
+264126	2175	6	10	6	10	["r"]	[""]	+input
+264384	2180	6	11	6	11	["a"]	[""]	+input
+265870	2183	6	11	6	12	[""]	["a"]	+delete
+265981	2187	6	10	6	11	[""]	["r"]	+delete
+266094	2191	6	9	6	10	[""]	["u"]	+delete
+266526	2195	6	8	6	9	[""]	["t"]	+delete
+266721	2199	6	7	6	8	[""]	["l"]	+delete
+267110	2203	6	6	6	7	[""]	["a"]	+delete
+267632	2209	6	6	6	6	["\"\""]	[""]	+input
+268264	2215	6	7	6	7	["a"]	[""]	+input
+268432	2219	6	8	6	8	["l"]	[""]	+input
+268624	2223	6	9	6	9	["t"]	[""]	+input
+268766	2227	6	10	6	10	["u"]	[""]	+input
+268895	2231	6	11	6	11	["r"]	[""]	+input
+269124	2235	6	12	6	12	["a"]	[""]	+input
+276255	2250	6	14	6	14	[","]	[""]	+input
+276542	2254	6	15	6	15	[" "]	[""]	+input
+276972	2257	6	15	6	16	[""]	[" "]	+delete
+277181	2262	6	15	6	15	["a"]	[""]	+input
+277295	2266	6	16	6	16	["l"]	[""]	+input
+277480	2270	6	17	6	17	["t"]	[""]	+input
+277602	2274	6	18	6	18	["u"]	[""]	+input
+277727	2278	6	19	6	19	["r"]	[""]	+input
+278274	2282	6	20	6	20	["a"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 281325
+- raw_log_line: 2286
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+nome = input("Digite seu nome: ")
+print("seu nome:",nome)
+idade = int(input("Digite sua idade: "))  
+altura = float(input("Digite sua altura: "))
+print("nome:",nome)
+print("idade",idade)
+print("altura",altura)
+
+```
+Run Output
+```text
+Digite seu nome: matteo
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 300203
+- raw_log_line: 2287
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+nome = input("Digite seu nome: ")
+print("seu nome:",nome)
+idade = int(input("Digite sua idade: "))  
+altura = float(input("Digite sua altura: "))
+print("nome:",nome)
+print("idade",idade)
+print("altura",altura)
+
+```

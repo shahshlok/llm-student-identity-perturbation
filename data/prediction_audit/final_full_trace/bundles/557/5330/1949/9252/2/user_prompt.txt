@@ -1,0 +1,988 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 557
+- assessment_id: 5330
+- assessment_title: Extras 3: Condicionais Encadeados (if/elif)
+- exercise_id: 1949
+- student_id: 9252
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-01-29T10:59:00.396000
+
+Execution Result
+
+- submitted_at: 2024-01-29 11:16:24
+- grade: 0.0
+- pass_count: 1
+- failed_test_indices_0idx: [0,1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "55\n55"
+    expected: "Ganhou R$ 100.000,00"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "78\n89"
+    expected: "Ganhou R$ 1.000,00"
+    actual: "Ganhou R$ 50000"
+  - test_index_0idx: 2 [PASS]
+    input: "12\n56"
+    expected: "Perdeu"
+    actual: "Perdeu"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 122
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["u"]	[""]	+input
+364	11	0	1	0	1	["m"]	[""]	+input
+947	14	0	1	0	2	[""]	["m"]	+delete
+1115	18	0	0	0	1	[""]	["u"]	+delete
+1634	23	0	0	0	0	["n"]	[""]	+input
+1780	26	0	1	0	1	["u"]	[""]	+input
+2031	31	0	2	0	2	["m"]	[""]	+input
+2914	35	0	3	0	3	[" "]	[""]	+input
+3048	39	0	4	0	4	["="]	[""]	+input
+3148	43	0	5	0	5	[" "]	[""]	+input
+5712	47	0	6	0	6	["i"]	[""]	+input
+6028	51	0	7	0	7	["n"]	[""]	+input
+6161	55	0	8	0	8	["t"]	[""]	+input
+6915	60	0	9	0	9	["()"]	[""]	+input
+8209	75	0	10	0	10	["i"]	[""]	+input
+8415	79	0	11	0	11	["n"]	[""]	+input
+8687	83	0	12	0	12	["p"]	[""]	+input
+9072	87	0	13	0	13	["u"]	[""]	+input
+9167	91	0	14	0	14	["t"]	[""]	+input
+9904	96	0	15	0	15	["()"]	[""]	+input
+10940	112	0	16	0	16	["\"\""]	[""]	+input
+15409	119	0	17	0	17	["N"]	[""]	+input
+15502	123	0	18	0	18	["U"]	[""]	+input
+15809	128	0	19	0	19	["m"]	[""]	+input
+15951	132	0	20	0	20	["e"]	[""]	+input
+16493	135	0	20	0	21	[""]	["e"]	+delete
+16657	139	0	19	0	20	[""]	["m"]	+delete
+16797	143	0	18	0	19	[""]	["U"]	+delete
+17345	148	0	18	0	18	["u"]	[""]	+input
+17583	152	0	19	0	19	["m"]	[""]	+input
+17711	156	0	20	0	20	["e"]	[""]	+input
+17999	160	0	21	0	21	["r"]	[""]	+input
+18096	164	0	22	0	22	["o"]	[""]	+input
+18800	169	0	23	0	23	[":"]	[""]	+input
+19072	174	0	24	0	24	[" "]	[""]	+input
+20368	186	0	28	0	28	["",""]	[""]	+input
+32831	198	0	28	0	28	["",""]	[""]	+input
+33347	204	1	0	1	0	["num = int(input(\"Numero: \"))"]	[""]	paste
+35824	269	1	2	1	3	[""]	["m"]	+delete
+35998	273	1	1	1	2	[""]	["u"]	+delete
+36125	277	1	0	1	1	[""]	["n"]	+delete
+36752	282	1	0	1	0	["l"]	[""]	+input
+36943	286	1	1	1	1	["o"]	[""]	+input
+37052	290	1	2	1	2	["t"]	[""]	+input
+39470	297	1	22	1	23	[""]	["o"]	+delete
+39629	301	1	21	1	22	[""]	["r"]	+delete
+39762	305	1	20	1	21	[""]	["e"]	+delete
+39885	309	1	19	1	20	[""]	["m"]	+delete
+40032	313	1	18	1	19	[""]	["u"]	+delete
+40397	317	1	17	1	18	[""]	["N"]	+delete
+41030	323	1	17	1	17	["L"]	[""]	+input
+41201	328	1	18	1	18	["o"]	[""]	+input
+41474	332	1	19	1	19	["t"]	[""]	+input
+41572	335	1	20	1	20	["e"]	[""]	+input
+41729	340	1	21	1	21	["r"]	[""]	+input
+41846	343	1	22	1	22	["i"]	[""]	+input
+41985	348	1	23	1	23	["a"]	[""]	+input
+44431	352	1	29	1	29	["",""]	[""]	+input
+44592	357	2	0	2	0	["",""]	[""]	+input
+55633	363	3	0	3	0	["i"]	[""]	+input
+55728	367	3	1	3	1	["f"]	[""]	+input
+59265	372	3	2	3	2	["()"]	[""]	+input
+60880	387	3	3	3	3	["n"]	[""]	+input
+60976	391	3	4	3	4	["u"]	[""]	+input
+61264	395	3	5	3	5	["m"]	[""]	+input
+61827	399	3	6	3	6	[" "]	[""]	+input
+62113	403	3	7	3	7	["="]	[""]	+input
+62244	407	3	8	3	8	["="]	[""]	+input
+62576	411	3	9	3	9	[" "]	[""]	+input
+63488	415	3	10	3	10	["l"]	[""]	+input
+63663	419	3	11	3	11	["o"]	[""]	+input
+63776	423	3	12	3	12	["t"]	[""]	+input
+66720	431	3	14	3	14	[":"]	[""]	+input
+67073	435	3	15	3	15	["",""]	[""]	+input
+67073	436	4	0	4	0	["\t"]	[""]	+input
+72785	442	4	1	4	1	["p"]	[""]	+input
+72928	446	4	2	4	2	["r"]	[""]	+input
+73044	449	4	3	4	3	["e"]	[""]	+input
+74464	454	4	4	4	4	[" "]	[""]	+input
+74611	458	4	5	4	5	["="]	[""]	+input
+74736	462	4	6	4	6	[" "]	[""]	+input
+76737	466	4	7	4	7	["1"]	[""]	+input
+77010	470	4	8	4	8	["0"]	[""]	+input
+77297	474	4	9	4	9	["0"]	[""]	+input
+79199	478	4	10	4	10	["0"]	[""]	+input
+79584	482	4	11	4	11	["0"]	[""]	+input
+79933	486	4	12	4	12	["0"]	[""]	+input
+82353	491	2	0	2	0	["p"]	[""]	+input
+82448	495	2	1	2	1	["r"]	[""]	+input
+82564	498	2	2	2	2	["e"]	[""]	+input
+82992	503	2	3	2	3	[" "]	[""]	+input
+83120	507	2	4	2	4	["="]	[""]	+input
+83264	511	2	5	2	5	[" "]	[""]	+input
+84048	515	2	6	2	6	["0"]	[""]	+input
+85761	519	4	13	4	13	["",""]	[""]	+input
+85762	520	5	0	5	0	["\t"]	[""]	+input
+86944	529	5	0	5	0	["e"]	[""]	+input
+87025	532	5	1	5	1	["l"]	[""]	+input
+87264	537	5	2	5	2	["i"]	[""]	+input
+87344	541	5	3	5	3	["f"]	[""]	+input
+88272	546	5	4	5	4	["()"]	[""]	+input
+140513	561	0	28	0	28	["",""]	[""]	+input
+143216	567	1	0	1	0	["a"]	[""]	+input
+143826	571	1	1	1	1	[" "]	[""]	+input
+144097	575	1	2	1	2	["="]	[""]	+input
+144192	579	1	3	1	3	[" "]	[""]	+input
+145952	583	1	4	1	4	["n"]	[""]	+input
+146048	586	1	5	1	5	["u"]	[""]	+input
+146512	591	1	6	1	6	["m"]	[""]	+input
+175169	595	1	7	1	7	["/"]	[""]	+input
+176945	599	1	8	1	8	["1"]	[""]	+input
+177090	603	1	9	1	9	["0"]	[""]	+input
+358033	609	1	7	1	8	[""]	["/"]	+delete
+358851	615	1	7	1	7	["%"]	[""]	+input
+365698	621	1	10	1	10	["",""]	[""]	+input
+366387	627	2	0	2	0	["p"]	[""]	+input
+366627	631	2	1	2	1	["r"]	[""]	+input
+366724	634	2	2	2	2	["i"]	[""]	+input
+366930	639	2	3	2	3	["n"]	[""]	+input
+367011	643	2	4	2	4	["t"]	[""]	+input
+368450	648	2	5	2	5	["()"]	[""]	+input
+369251	663	2	6	2	6	["a"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 373064
+- raw_log_line: 669
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+num = int(input("Numero: "))
+a = num%10
+print(a)
+lot = int(input("Loteria: "))
+pre = 0
+if(num == lot):
+	pre = 100000
+elif()	
+
+```
+Run Output
+```text
+File "main.py", line 8
+elif()
+SyntaxError: invalid syntax
+```
+
+Edit Segment 2
+- raw_change_event_count: 21
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+376610	673	7	0	7	6	[""]	["elif()"]	+delete
+406417	686	1	7	1	8	[""]	["%"]	+delete
+407619	691	1	7	1	7	["/"]	[""]	+input
+409203	707	1	4	1	4	["i"]	[""]	+input
+409524	711	1	5	1	5	["n"]	[""]	+input
+409652	715	1	6	1	6	["t"]	[""]	+input
+410580	720	1	7	1	7	["("]	[""]	+input
+412720	744	1	14	1	14	[")"]	[""]	+input
+419011	750	1	15	1	15	["",""]	[""]	+input
+420132	756	2	0	2	0	["b"]	[""]	+input
+421413	760	2	1	2	1	[" "]	[""]	+input
+421572	764	2	2	2	2	["="]	[""]	+input
+422963	768	2	3	2	3	[" "]	[""]	+input
+424036	772	2	4	2	4	["n"]	[""]	+input
+424147	775	2	5	2	5	["u"]	[""]	+input
+424723	780	2	6	2	6	["m"]	[""]	+input
+427121	785	2	7	2	7	["%"]	[""]	+input
+428115	790	2	8	2	8	["1"]	[""]	+input
+428229	793	2	9	2	9	["0"]	[""]	+input
+431076	802	3	7	3	7	[","]	[""]	+input
+431845	806	3	8	3	8	["b"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 435715
+- raw_log_line: 811
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+num = int(input("Numero: "))
+a = int(num/10)
+b = num%10
+print(a,b)
+lot = int(input("Loteria: "))
+pre = 0
+if(num == lot):
+	pre = 100000
+	
+
+```
+Run Output
+```text
+Numero: 12
+```
+
+Local Run 3
+- event_time_delta_ms: 449729
+- raw_log_line: 815
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+num = int(input("Numero: "))
+a = int(num/10)
+b = num%10
+print(a,b)
+lot = int(input("Loteria: "))
+pre = 0
+if(num == lot):
+	pre = 100000
+	
+
+```
+Run Output
+```text
+Numero: 23
+2 3
+```
+
+Edit Segment 3
+- raw_change_event_count: 137
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+466354	819	3	0	3	10	[""]	["print(a,b)"]	+delete
+474131	823	2	10	3	0	[""]	["",""]	+delete
+497815	830	6	13	6	13	["",""]	[""]	+input
+497816	831	7	0	7	0	["\t"]	[""]	+input
+506326	840	7	0	7	0	["e"]	[""]	+input
+506438	843	7	1	7	1	["l"]	[""]	+input
+506708	848	7	2	7	2	["i"]	[""]	+input
+506805	852	7	3	7	3	["f"]	[""]	+input
+507814	857	7	4	7	4	["()"]	[""]	+input
+521929	872	7	5	7	5	["n"]	[""]	+input
+522025	875	7	6	7	6	["u"]	[""]	+input
+522374	880	7	7	7	7	["m"]	[""]	+input
+523730	883	7	7	7	8	[""]	["m"]	+delete
+523907	887	7	6	7	7	[""]	["u"]	+delete
+524051	891	7	5	7	6	[""]	["n"]	+delete
+524966	897	7	5	7	5	["()"]	[""]	+input
+527717	912	7	6	7	6	["n"]	[""]	+input
+527814	915	7	7	7	7	["u"]	[""]	+input
+528084	920	7	8	7	8	["m"]	[""]	+input
+529126	924	7	9	7	9	["/"]	[""]	+input
+529488	928	7	10	7	10	["1"]	[""]	+input
+529715	932	7	11	7	11	["0"]	[""]	+input
+535732	939	7	13	7	13	["="]	[""]	+input
+535892	943	7	14	7	14	["="]	[""]	+input
+538532	947	7	15	7	15	[" "]	[""]	+input
+538708	951	7	16	7	16	["a"]	[""]	+input
+540597	955	7	17	7	17	[" "]	[""]	+input
+546645	964	7	15	7	16	[""]	[" "]	+delete
+547749	972	7	16	7	16	[" "]	[""]	+input
+590248	1056	7	5	7	5	["i"]	[""]	+input
+590437	1060	7	6	7	6	["n"]	[""]	+input
+590563	1064	7	7	7	7	["t"]	[""]	+input
+595157	1094	7	19	7	19	[" "]	[""]	+input
+595477	1098	7	20	7	20	["o"]	[""]	+input
+595574	1102	7	21	7	21	["r"]	[""]	+input
+598037	1106	7	22	7	22	[" "]	[""]	+input
+599606	1110	7	23	7	23	["i"]	[""]	+input
+600034	1114	7	24	7	24	["n"]	[""]	+input
+600181	1118	7	25	7	25	["t"]	[""]	+input
+601495	1123	7	26	7	26	["()"]	[""]	+input
+603893	1138	7	27	7	27	["n"]	[""]	+input
+604006	1142	7	28	7	28	["u"]	[""]	+input
+604265	1146	7	29	7	29	["m"]	[""]	+input
+605435	1150	7	30	7	30	["/"]	[""]	+input
+605814	1154	7	31	7	31	["1"]	[""]	+input
+606006	1158	7	32	7	32	["0"]	[""]	+input
+607349	1165	7	34	7	34	["="]	[""]	+input
+607477	1169	7	35	7	35	["="]	[""]	+input
+608421	1173	7	36	7	36	["b"]	[""]	+input
+609619	1182	7	38	7	39	[""]	[" "]	+delete
+610531	1186	7	37	7	38	[""]	[" "]	+delete
+611574	1195	7	38	7	38	[":"]	[""]	+input
+611831	1199	7	39	7	39	["",""]	[""]	+input
+621990	1205	8	1	8	1	["p"]	[""]	+input
+622053	1209	8	2	8	2	["r"]	[""]	+input
+622146	1212	8	3	8	3	["e"]	[""]	+input
+623349	1217	8	4	8	4	[" "]	[""]	+input
+623557	1221	8	5	8	5	["="]	[""]	+input
+624997	1225	8	6	8	6	[" "]	[""]	+input
+625397	1229	8	7	8	7	["5"]	[""]	+input
+625573	1233	8	8	8	8	["0"]	[""]	+input
+625942	1237	8	9	8	9	["0"]	[""]	+input
+626198	1241	8	10	8	10	["0"]	[""]	+input
+626469	1245	8	11	8	11	["0"]	[""]	+input
+627448	1248	8	12	8	12	["",""]	[""]	+input
+627449	1249	9	0	9	0	["\t"]	[""]	+input
+628725	1258	9	0	9	0	["e"]	[""]	+input
+628834	1262	9	1	9	1	["l"]	[""]	+input
+629094	1266	9	2	9	2	["i"]	[""]	+input
+629175	1270	9	3	9	3	["f"]	[""]	+input
+629990	1275	9	4	9	4	["()"]	[""]	+input
+699892	1290	7	11	7	12	[""]	["m"]	+delete
+700036	1294	7	10	7	11	[""]	["u"]	+delete
+700196	1298	7	9	7	10	[""]	["n"]	+delete
+701222	1303	7	9	7	9	["l"]	[""]	+input
+701450	1307	7	10	7	10	["o"]	[""]	+input
+701575	1311	7	11	7	11	["t"]	[""]	+input
+703925	1315	7	29	7	30	[""]	["m"]	+delete
+704068	1319	7	28	7	29	[""]	["u"]	+delete
+704220	1323	7	27	7	28	[""]	["n"]	+delete
+704983	1328	7	27	7	27	["l"]	[""]	+input
+705231	1332	7	28	7	28	["o"]	[""]	+input
+705302	1336	7	29	7	29	["t"]	[""]	+input
+840775	1357	9	5	9	5	["int(lot/10)==a or int(lot/10)==b"]	[""]	paste
+885976	1371	9	37	9	37	[" "]	[""]	+input
+886328	1375	9	38	9	38	["o"]	[""]	+input
+886390	1378	9	39	9	39	["r"]	[""]	+input
+886538	1383	9	40	9	40	[" "]	[""]	+input
+899260	1387	9	41	9	41	["l"]	[""]	+input
+899454	1391	9	42	9	42	["o"]	[""]	+input
+899561	1395	9	43	9	43	["t"]	[""]	+input
+902604	1400	9	44	9	44	["%"]	[""]	+input
+903385	1405	9	45	9	45	["1"]	[""]	+input
+903513	1408	9	46	9	46	["0"]	[""]	+input
+905257	1413	9	47	9	47	["="]	[""]	+input
+905403	1417	9	48	9	48	["="]	[""]	+input
+905946	1421	9	49	9	49	["a"]	[""]	+input
+906617	1425	9	50	9	50	[" "]	[""]	+input
+906985	1429	9	51	9	51	["o"]	[""]	+input
+907082	1433	9	52	9	52	["r"]	[""]	+input
+907224	1437	9	53	9	53	[" "]	[""]	+input
+908025	1441	9	54	9	54	["l"]	[""]	+input
+908235	1445	9	55	9	55	["o"]	[""]	+input
+908344	1449	9	56	9	56	["t"]	[""]	+input
+910251	1454	9	57	9	57	["%"]	[""]	+input
+911655	1459	9	58	9	58	["1"]	[""]	+input
+911818	1463	9	59	9	59	["0"]	[""]	+input
+912760	1467	9	60	9	60	["="]	[""]	+input
+912887	1471	9	61	9	61	["="]	[""]	+input
+913304	1475	9	62	9	62	["b"]	[""]	+input
+914457	1483	9	64	9	64	[":"]	[""]	+input
+914856	1487	9	65	9	65	["",""]	[""]	+input
+917853	1493	10	1	10	1	["p"]	[""]	+input
+917923	1497	10	2	10	2	["r"]	[""]	+input
+918024	1500	10	3	10	3	["e"]	[""]	+input
+919000	1505	10	4	10	4	["="]	[""]	+input
+920293	1508	10	4	10	5	[""]	["="]	+delete
+920440	1513	10	4	10	4	[" "]	[""]	+input
+921096	1517	10	5	10	5	["="]	[""]	+input
+921193	1521	10	6	10	6	[" "]	[""]	+input
+922919	1525	10	7	10	7	["1"]	[""]	+input
+923127	1529	10	8	10	8	["0"]	[""]	+input
+923383	1533	10	9	10	9	["0"]	[""]	+input
+923634	1537	10	10	10	10	["0"]	[""]	+input
+925638	1540	10	11	10	11	["",""]	[""]	+input
+925639	1541	11	0	11	0	["\t"]	[""]	+input
+925864	1546	11	1	11	1	["",""]	[""]	+input
+925865	1547	12	0	12	0	["\t"]	[""]	+input
+928023	1556	12	0	12	0	["p"]	[""]	+input
+928135	1560	12	1	12	1	["r"]	[""]	+input
+928247	1563	12	2	12	2	["i"]	[""]	+input
+928455	1568	12	3	12	3	["n"]	[""]	+input
+928551	1572	12	4	12	4	["t"]	[""]	+input
+929368	1577	12	5	12	5	["()"]	[""]	+input
+934007	1592	12	6	12	6	["p"]	[""]	+input
+934054	1596	12	7	12	7	["r"]	[""]	+input
+934134	1599	12	8	12	8	["e"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 936735
+- raw_log_line: 1606
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+num = int(input("Numero: "))
+a = int(num/10)
+b = num%10
+lot = int(input("Loteria: "))
+pre = 0
+if(num == lot):
+	pre = 100000
+elif(int(lot/10)==a or int(lot/10)==b):
+	pre = 50000
+elif(int(lot/10)==a or int(lot/10)==b or lot%10==a or lot%10==b):
+	pre = 1000
+	
+print(pre)	
+	
+
+```
+Run Output
+```text
+Numero: 99
+9 9
+```
+
+Local Run 5
+- event_time_delta_ms: 954863
+- raw_log_line: 1610
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+num = int(input("Numero: "))
+a = int(num/10)
+b = num%10
+lot = int(input("Loteria: "))
+pre = 0
+if(num == lot):
+	pre = 100000
+elif(int(lot/10)==a or int(lot/10)==b):
+	pre = 50000
+elif(int(lot/10)==a or int(lot/10)==b or lot%10==a or lot%10==b):
+	pre = 1000
+	
+print(pre)	
+	
+
+```
+Run Output
+```text
+Numero: 23
+Loteria: 23
+100000
+```
+
+Local Run 6
+- event_time_delta_ms: 959027
+- raw_log_line: 1611
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+num = int(input("Numero: "))
+a = int(num/10)
+b = num%10
+lot = int(input("Loteria: "))
+pre = 0
+if(num == lot):
+	pre = 100000
+elif(int(lot/10)==a or int(lot/10)==b):
+	pre = 50000
+elif(int(lot/10)==a or int(lot/10)==b or lot%10==a or lot%10==b):
+	pre = 1000
+	
+print(pre)	
+	
+
+```
+Run Output
+```text
+
+```
+
+Edit Segment 4
+- raw_change_event_count: 60
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+976296	1616	11	0	11	0	["e"]	[""]	+input
+976375	1620	11	1	11	1	["l"]	[""]	+input
+976501	1624	11	2	11	2	["s"]	[""]	+input
+976677	1628	11	3	11	3	["e"]	[""]	+input
+977448	1633	11	4	11	4	[":"]	[""]	+input
+978084	1637	11	5	11	5	["",""]	[""]	+input
+979157	1643	12	1	12	1	["p"]	[""]	+input
+979234	1647	12	2	12	2	["r"]	[""]	+input
+979365	1651	12	3	12	3	["i"]	[""]	+input
+979589	1655	12	4	12	4	["n"]	[""]	+input
+979701	1659	12	5	12	5	["t"]	[""]	+input
+980236	1664	12	6	12	6	["()"]	[""]	+input
+981735	1680	12	7	12	7	["\"\""]	[""]	+input
+982421	1687	12	8	12	8	["P"]	[""]	+input
+982691	1692	12	9	12	9	["e"]	[""]	+input
+982885	1696	12	10	12	10	["r"]	[""]	+input
+983189	1700	12	11	12	11	["d"]	[""]	+input
+983333	1703	12	12	12	12	["e"]	[""]	+input
+983430	1707	12	13	12	13	["u"]	[""]	+input
+997330	1712	13	9	13	10	[""]	[")"]	+delete
+997552	1716	13	8	13	9	[""]	["e"]	+delete
+997746	1720	13	7	13	8	[""]	["r"]	+delete
+997902	1724	13	6	13	7	[""]	["p"]	+delete
+998049	1728	13	5	13	6	[""]	["("]	+delete
+998193	1732	13	4	13	5	[""]	["t"]	+delete
+998337	1736	13	3	13	4	[""]	["n"]	+delete
+998480	1740	13	2	13	3	[""]	["i"]	+delete
+998626	1744	13	1	13	2	[""]	["r"]	+delete
+998800	1748	13	0	13	1	[""]	["p"]	+delete
+1006335	1753	8	12	8	12	["",""]	[""]	+input
+1006335	1754	9	0	9	0	["\t"]	[""]	+input
+1007299	1760	9	1	9	1	["p"]	[""]	+input
+1007412	1764	9	2	9	2	["r"]	[""]	+input
+1007555	1768	9	3	9	3	["i"]	[""]	+input
+1007762	1772	9	4	9	4	["n"]	[""]	+input
+1007846	1776	9	5	9	5	["t"]	[""]	+input
+1008662	1781	9	6	9	6	["()"]	[""]	+input
+1010083	1797	9	7	9	7	["\"\""]	[""]	+input
+1010786	1804	9	8	9	8	["G"]	[""]	+input
+1011085	1809	9	9	9	9	["a"]	[""]	+input
+1011251	1813	9	10	9	10	["n"]	[""]	+input
+1011539	1817	9	11	9	11	["h"]	[""]	+input
+1011698	1821	9	12	9	12	["o"]	[""]	+input
+1011778	1825	9	13	9	13	["o"]	[""]	+input
+1011878	1828	9	14	9	14	["u"]	[""]	+input
+1012263	1832	9	14	9	15	[""]	["u"]	+delete
+1012417	1836	9	13	9	14	[""]	["o"]	+delete
+1013093	1841	9	13	9	13	["u"]	[""]	+input
+1013333	1845	9	14	9	14	[" "]	[""]	+input
+1014161	1848	9	14	9	15	[""]	[" "]	+delete
+1015173	1853	9	14	9	14	[" "]	[""]	+input
+1015780	1858	9	15	9	15	["R"]	[""]	+input
+1016531	1864	9	16	9	16	["$"]	[""]	+input
+1017924	1872	9	18	9	18	[","]	[""]	+input
+1021092	1876	9	19	9	19	["p"]	[""]	+input
+1021204	1880	9	20	9	20	["r"]	[""]	+input
+1021331	1883	9	21	9	21	["e"]	[""]	+input
+1033649	1898	11	11	11	11	["",""]	[""]	+input
+1033651	1899	12	0	12	0	["\t"]	[""]	+input
+1034450	1905	12	1	12	1	["print(\"Ganhou R$\",pre)"]	[""]	paste
+
+Submit Anchor 1
+- event_time_delta_ms: 1043901
+- raw_log_line: 1909
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+num = int(input("Numero: "))
+a = int(num/10)
+b = num%10
+lot = int(input("Loteria: "))
+pre = 0
+if(num == lot):
+	pre = 100000
+elif(int(lot/10)==a or int(lot/10)==b):
+	pre = 50000
+	print("Ganhou R$",pre)
+elif(int(lot/10)==a or int(lot/10)==b or lot%10==a or lot%10==b):
+	pre = 1000
+	print("Ganhou R$",pre)
+else:
+	print("Perdeu")
+	
+	
+
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-01-29T11:16:27.082000
+
+Execution Result
+
+- submitted_at: 2024-01-29 11:18:18
+- grade: 0.0
+- pass_count: 2
+- failed_test_indices_0idx: [1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "55\n55"
+    expected: "Ganhou R$ 100.000,00"
+    actual: "Ganhou R$ 100.000,00"
+  - test_index_0idx: 1 [FAIL]
+    input: "78\n89"
+    expected: "Ganhou R$ 1.000,00"
+    actual: "Ganhou R$ 50.000,00"
+  - test_index_0idx: 2 [PASS]
+    input: "12\n56"
+    expected: "Perdeu"
+    actual: "Perdeu"
+
+Attempt Start Code
+```python
+num = int(input("Numero: "))
+a = int(num/10)
+b = num%10
+lot = int(input("Loteria: "))
+pre = 0
+if(num == lot):
+	pre = 100000
+elif(int(lot/10)==a or int(lot/10)==b):
+	pre = 50000
+	print("Ganhou R$",pre)
+elif(int(lot/10)==a or int(lot/10)==b or lot%10==a or lot%10==b):
+	pre = 1000
+	print("Ganhou R$",pre)
+else:
+	print("Perdeu")
+	
+	
+
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1912
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+num = int(input("Numero: "))
+a = int(num/10)
+b = num%10
+lot = int(input("Loteria: "))
+pre = 0
+if(num == lot):
+	pre = 100000
+elif(int(lot/10)==a or int(lot/10)==b):
+	pre = 50000
+	print("Ganhou R$",pre)
+elif(int(lot/10)==a or int(lot/10)==b or lot%10==a or lot%10==b):
+	pre = 1000
+	print("Ganhou R$",pre)
+else:
+	print("Perdeu")
+	
+	
+
+```
+Run Output
+```text
+Numero: 45
+Loteria: 67
+```
+
+Local Run 2
+- event_time_delta_ms: 18126
+- raw_log_line: 1916
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+num = int(input("Numero: "))
+a = int(num/10)
+b = num%10
+lot = int(input("Loteria: "))
+pre = 0
+if(num == lot):
+	pre = 100000
+elif(int(lot/10)==a or int(lot/10)==b):
+	pre = 50000
+	print("Ganhou R$",pre)
+elif(int(lot/10)==a or int(lot/10)==b or lot%10==a or lot%10==b):
+	pre = 1000
+	print("Ganhou R$",pre)
+else:
+	print("Perdeu")
+	
+	
+
+```
+Run Output
+```text
+Numero: 45
+Loteria: 67
+Perdeu
+```
+
+Edit Segment 1
+- raw_change_event_count: 32
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+31409	1920	9	21	9	22	[""]	["e"]	+delete
+31579	1924	9	20	9	21	[""]	["r"]	+delete
+31709	1928	9	19	9	20	[""]	["p"]	+delete
+31938	1932	9	18	9	19	[""]	[","]	+delete
+33924	1940	9	17	9	17	[" "]	[""]	+input
+35484	1944	9	18	9	18	["5"]	[""]	+input
+35564	1947	9	19	9	19	["0"]	[""]	+input
+36002	1952	9	20	9	20	["."]	[""]	+input
+36914	1956	9	21	9	21	["0"]	[""]	+input
+37202	1960	9	22	9	22	["0"]	[""]	+input
+37540	1964	9	23	9	23	["0"]	[""]	+input
+38739	1968	9	24	9	24	[","]	[""]	+input
+39506	1972	9	25	9	25	["0"]	[""]	+input
+39628	1976	9	26	9	26	["0"]	[""]	+input
+44927	1983	12	21	12	22	[""]	["e"]	+delete
+45103	1987	12	20	12	21	[""]	["r"]	+delete
+45262	1991	12	19	12	20	[""]	["p"]	+delete
+45973	1995	12	18	12	19	[""]	[","]	+delete
+47135	2003	12	17	12	17	[" "]	[""]	+input
+70800	2007	12	18	12	18	["1"]	[""]	+input
+71093	2011	12	19	12	19	["0"]	[""]	+input
+71521	2015	12	20	12	20	["0"]	[""]	+input
+72321	2019	12	21	12	21	["0"]	[""]	+input
+76273	2023	12	22	12	22	[","]	[""]	+input
+76543	2027	12	23	12	23	["0"]	[""]	+input
+76688	2031	12	24	12	24	["0"]	[""]	+input
+82641	2036	5	15	5	15	["",""]	[""]	+input
+82643	2037	6	0	6	0	["\t"]	[""]	+input
+100945	2050	6	1	6	1	["print(\"Ganhou R$ 50.000,00\")"]	[""]	paste
+105918	2058	6	18	6	19	[""]	["5"]	+delete
+106705	2063	6	18	6	18	["1"]	[""]	+input
+106896	2067	6	19	6	19	["0"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 111620
+- raw_log_line: 2070
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+num = int(input("Numero: "))
+a = int(num/10)
+b = num%10
+lot = int(input("Loteria: "))
+pre = 0
+if(num == lot):
+	print("Ganhou R$ 100.000,00")
+	pre = 100000
+elif(int(lot/10)==a or int(lot/10)==b):
+	pre = 50000
+	print("Ganhou R$ 50.000,00")
+elif(int(lot/10)==a or int(lot/10)==b or lot%10==a or lot%10==b):
+	pre = 1000
+	print("Ganhou R$ 1000,00")
+else:
+	print("Perdeu")
+	
+	
+
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-01-29T11:18:21.507000
+
+Execution Result
+
+- submitted_at: 2024-01-29 11:19:35
+- grade: 0.0
+- pass_count: 2
+- failed_test_indices_0idx: [1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "55\n55"
+    expected: "Ganhou R$ 100.000,00"
+    actual: "Ganhou R$ 100.000,00"
+  - test_index_0idx: 1 [FAIL]
+    input: "78\n89"
+    expected: "Ganhou R$ 1.000,00"
+    actual: "Ganhou R$ 50.000,00"
+  - test_index_0idx: 2 [PASS]
+    input: "12\n56"
+    expected: "Perdeu"
+    actual: "Perdeu"
+
+Attempt Start Code
+```python
+num = int(input("Numero: "))
+a = int(num/10)
+b = num%10
+lot = int(input("Loteria: "))
+pre = 0
+if(num == lot):
+	print("Ganhou R$ 100.000,00")
+	pre = 100000
+elif(int(lot/10)==a or int(lot/10)==b):
+	pre = 50000
+	print("Ganhou R$ 50.000,00")
+elif(int(lot/10)==a or int(lot/10)==b or lot%10==a or lot%10==b):
+	pre = 1000
+	print("Ganhou R$ 1000,00")
+else:
+	print("Perdeu")
+	
+	
+
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 2074
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+num = int(input("Numero: "))
+a = int(num/10)
+b = num%10
+lot = int(input("Loteria: "))
+pre = 0
+if(num == lot):
+	print("Ganhou R$ 100.000,00")
+	pre = 100000
+elif(int(lot/10)==a or int(lot/10)==b):
+	pre = 50000
+	print("Ganhou R$ 50.000,00")
+elif(int(lot/10)==a or int(lot/10)==b or lot%10==a or lot%10==b):
+	pre = 1000
+	print("Ganhou R$ 1000,00")
+else:
+	print("Perdeu")
+	
+	
+
+```
+Run Output
+```text
+Numero: 23
+Loteria: 32
+Ganhou R$ 50000
+```
+
+Local Run 2
+- event_time_delta_ms: 18112
+- raw_log_line: 2078
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+num = int(input("Numero: "))
+a = int(num/10)
+b = num%10
+lot = int(input("Loteria: "))
+pre = 0
+if(num == lot):
+	print("Ganhou R$ 100.000,00")
+	pre = 100000
+elif(int(lot/10)==a or int(lot/10)==b):
+	pre = 50000
+	print("Ganhou R$ 50.000,00")
+elif(int(lot/10)==a or int(lot/10)==b or lot%10==a or lot%10==b):
+	pre = 1000
+	print("Ganhou R$ 1000,00")
+else:
+	print("Perdeu")
+	
+	
+
+```
+Run Output
+```text
+Numero: 23
+Loteria: 32
+Ganhou R$ 50.000,00
+```
+
+Local Run 3
+- event_time_delta_ms: 32165
+- raw_log_line: 2079
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+num = int(input("Numero: "))
+a = int(num/10)
+b = num%10
+lot = int(input("Loteria: "))
+pre = 0
+if(num == lot):
+	print("Ganhou R$ 100.000,00")
+	pre = 100000
+elif(int(lot/10)==a or int(lot/10)==b):
+	pre = 50000
+	print("Ganhou R$ 50.000,00")
+elif(int(lot/10)==a or int(lot/10)==b or lot%10==a or lot%10==b):
+	pre = 1000
+	print("Ganhou R$ 1000,00")
+else:
+	print("Perdeu")
+	
+	
+
+```
+Run Output
+```text
+
+```
+
+Edit Segment 1
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+62612	2083	12	1	12	11	[""]	["pre = 1000"]	+delete
+64929	2088	9	1	9	12	[""]	["pre = 50000"]	+delete
+67601	2093	7	1	7	13	[""]	["pre = 100000"]	+delete
+70385	2098	4	0	4	7	[""]	["pre = 0"]	+delete
+
+Submit Anchor 1
+- event_time_delta_ms: 74138
+- raw_log_line: 2102
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+num = int(input("Numero: "))
+a = int(num/10)
+b = num%10
+lot = int(input("Loteria: "))
+
+if(num == lot):
+	print("Ganhou R$ 100.000,00")
+	
+elif(int(lot/10)==a or int(lot/10)==b):
+	
+	print("Ganhou R$ 50.000,00")
+elif(int(lot/10)==a or int(lot/10)==b or lot%10==a or lot%10==b):
+	
+	print("Ganhou R$ 1000,00")
+else:
+	print("Perdeu")
+	
+	
+
+```

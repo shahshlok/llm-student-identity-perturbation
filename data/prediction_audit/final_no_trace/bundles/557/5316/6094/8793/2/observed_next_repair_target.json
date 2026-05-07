@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "557",
+    "assessment_id": "5316",
+    "exercise_id": "6094",
+    "student_id": "8793",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "saude = float(input(\",\"))\nn = int(input(\",\"))\n\nif n == 1:\n\tdesconto = 0\nelif n == 2:\n\tdesconto = 0.15\nelif n == 3:\n\tdesconto = 0.25\nelse:\n\tdesconto = 0.35\n\t\nvalor_total = ((saude * n) * (1- desconto))\n\nprint(round(valor_total,2 ))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "saude = float(input(\"\"))\nn = int(input(\"\"))\n\nif n == 1:\n\tdesconto = 0\nelif n == 2:\n\tdesconto = 0.15\nelif n == 3:\n\tdesconto = 0.25\nelse:\n\tdesconto = 0.35\n\t\nvalor_total = ((saude * n) * (1- desconto))\n\nprint(round(valor_total,2 ))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "200.0\n3",
+        "expected": "R$ 450.0",
+        "actual": "450.0"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "400.0\n4",
+        "expected": "R$ 1040.0",
+        "actual": "1040.0"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "1200\n1",
+        "expected": "R$ 1200.0",
+        "actual": "1200.0"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 0,
+        "end_line_0idx": 1,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 2,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 0,
+        "end_line_0idx": 1
+      }
+    ]
+  }
+}

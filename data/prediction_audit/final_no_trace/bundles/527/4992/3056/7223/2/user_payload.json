@@ -1,0 +1,142 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "527",
+    "assessment_id": "4992",
+    "assessment_title": "Lab 3 - Estrutura Condicional Encadeada",
+    "exercise_id": "3056",
+    "student_id": "7223",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/527/users/7223/executions/4992_3056.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/527/users/7223/codemirror/4992_3056.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-09-14 14:54:06",
+        "grade": 67.0,
+        "pass_count": 2,
+        "failed_test_indices_0idx": [
+          0
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "256.8",
+            "expected": "1640.8",
+            "actual": "1640.8000000000002"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": true,
+            "input": "11",
+            "expected": "166.0",
+            "actual": "166.0"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": true,
+            "input": "9638.75",
+            "expected": "57932.5",
+            "actual": "57932.5"
+          }
+        ]
+      },
+      "submitted_code": "Area = float(input(\"Area em ha:\"))\nif 0<Area<=10000:\n\tCusto = 6\n\tFertilizante = 100\nelif 10000<Area<=20000:\n\tCusto = 5.5\n\tFertilizante = 150\nelif 20000<Area<=30000:\n\tCusto = 5\n\tFertilizante = 200\nelif 30000<Area:\n\tCusto = 4.5\n\tFertilizante = 250\n\t\nValor = float(Area*Custo+Fertilizante)\nprint(Valor)"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-09-14 14:56:55",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "256.8",
+            "expected": "1640.8",
+            "actual": "(1641, 2)"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "11",
+            "expected": "166.0",
+            "actual": "(166, 2)"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "9638.75",
+            "expected": "57932.5",
+            "actual": "(57932, 2)"
+          }
+        ]
+      },
+      "submitted_code": "Area = float(input(\"Area em ha:\"))\nif 0<Area<=10000:\n\tCusto = 6\n\tFertilizante = 100\nelif 10000<Area<=20000:\n\tCusto = 5.5\n\tFertilizante = 150\nelif 20000<Area<=30000:\n\tCusto = 5\n\tFertilizante = 200\nelif 30000<Area:\n\tCusto = 4.5\n\tFertilizante = 250\n\t\nValor = (round(float(Area*Custo+Fertilizante)),2)\nprint(Valor)"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-09-14 14:57:43",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "256.8",
+            "expected": "1640.8",
+            "actual": "(1641, 2)"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "11",
+            "expected": "166.0",
+            "actual": "(166, 2)"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "9638.75",
+            "expected": "57932.5",
+            "actual": "(57932, 2)"
+          }
+        ]
+      },
+      "submitted_code": "Area = float(input(\"Area em ha:\"))\nif 0<Area<=10000:\n\tCusto = 6\n\tFertilizante = 100\nelif 10000<Area<=20000:\n\tCusto = 5.5\n\tFertilizante = 150\nelif 20000<Area<=30000:\n\tCusto = 5\n\tFertilizante = 200\nelif 30000<Area:\n\tCusto = 4.5\n\tFertilizante = 250\n\t\nValor = round(Area*Custo+Fertilizante),2\nprint(Valor)"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

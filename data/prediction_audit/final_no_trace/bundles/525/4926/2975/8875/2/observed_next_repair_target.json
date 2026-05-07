@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "525",
+    "assessment_id": "4926",
+    "exercise_id": "2975",
+    "student_id": "8875",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "var1 =int(input(\"Quantidade de sucos: \"))\nvar2 =int(input(\"Quantidade dos salgados: \"))\nvar3 = float(input(\"Valor disponivel: \"))\nvar4 = (var1 * 3) + (var2 * 3.50) - (var3 - 20) \nif var4 <= 20 :\n\tprint(\"sim\")\nelse:\n\tprint(\"nao\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "var1 =int(input(\"Quantidade de sucos: \"))\nvar2 =int(input(\"Quantidade dos salgados: \"))\nvar3 = float(input(\"Valor disponivel: \"))\nvar4 = (var1 * 3) + (var2 * 3.50) - (var3 - 20) \nif var4 <= 20 :\n\tprint(\"sim\")\nelse :\n\tprint(\"nao\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "2\n2\n15.0",
+        "expected": "13.0\nSim",
+        "actual": "sim"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "1\n2\n8.0",
+        "expected": "10.0\nNao",
+        "actual": "nao"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "3\n5\n25.50",
+        "expected": "26.5\nNao",
+        "actual": "nao"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 6,
+        "end_line_0idx": 6,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 6,
+        "end_line_0idx": 6
+      }
+    ]
+  }
+}

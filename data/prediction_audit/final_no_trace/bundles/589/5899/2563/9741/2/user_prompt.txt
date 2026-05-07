@@ -1,0 +1,165 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the authoritative execution result for that submitted attempt.
+- Each attempt includes the submitted code for that attempt.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 589
+- assessment_id: 5899
+- assessment_title: Lista 6 - Exercícios em Sala
+- exercise_id: 2563
+- student_id: 9741
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+Execution Result
+
+- submitted_at: 2024-07-16 15:28:16
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "[6.3,6.4,6.0,6.9,5.5,5.2]\n[4.5,3.8,7.8,4.8,9.6,9.2,8.7,2.3,2.9]\n[5.6,4.7,3.8,7.5,8.2,8.4,7.1,6.9,6.7]\n[1.1,3.1,2.7,7.8,6.7,4.6,4.9,7.0]\n[1]"
+    expected: "6\n0\n3\n1"
+    actual: "1\n2\n2\n2"
+  - test_index_0idx: 1 [FAIL]
+    input: "[5.1,5.2,5.4,5.3,5.7,5.8,6.1,5.6,5.5,5.9,6.2]\n[2.7,6.8,4.7,5.7,3.5,6.6,7.0,5.4]\n[8.7,8.6,8.9,8.6,7.5,7.2,6.9,7.4,7.2]\n[1]"
+    expected: "11\n4\n1"
+    actual: "2\n2\n2"
+  - test_index_0idx: 2 [FAIL]
+    input: "[8.5,7.5,6.8,6.9,7.0,5.6,5.8,6.3]\n[7.3,7.1,7.0,6.8,6.0,5.0]\n[1]"
+    expected: "5\n3"
+    actual: "2\n1"
+
+Submitted Code
+```python
+from numpy import*
+
+notas = array(eval(input()))
+
+while size(notas) >1:
+	qtd = 0
+	for i in range(0,size(notas)):
+		if i>= 5.00 and i < 7.0:
+			qtd +=1
+	print(qtd)
+	notas = array(eval(input()))
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+Execution Result
+
+- submitted_at: 2024-07-16 15:29:01
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "[6.3,6.4,6.0,6.9,5.5,5.2]\n[4.5,3.8,7.8,4.8,9.6,9.2,8.7,2.3,2.9]\n[5.6,4.7,3.8,7.5,8.2,8.4,7.1,6.9,6.7]\n[1.1,3.1,2.7,7.8,6.7,4.6,4.9,7.0]\n[1]"
+    expected: "6\n0\n3\n1"
+    actual: "1\n2\n2\n2"
+  - test_index_0idx: 1 [FAIL]
+    input: "[5.1,5.2,5.4,5.3,5.7,5.8,6.1,5.6,5.5,5.9,6.2]\n[2.7,6.8,4.7,5.7,3.5,6.6,7.0,5.4]\n[8.7,8.6,8.9,8.6,7.5,7.2,6.9,7.4,7.2]\n[1]"
+    expected: "11\n4\n1"
+    actual: "2\n2\n2"
+  - test_index_0idx: 2 [FAIL]
+    input: "[8.5,7.5,6.8,6.9,7.0,5.6,5.8,6.3]\n[7.3,7.1,7.0,6.8,6.0,5.0]\n[1]"
+    expected: "5\n3"
+    actual: "2\n1"
+
+Submitted Code
+```python
+from numpy import*
+
+notas = array(eval(input()))
+
+while size(notas) >1:
+	qtd = 0
+	for i in range(0,size(notas)):
+		if i>= 5.00 and i < 7.0:
+			qtd +=1
+	print(qtd)
+	notas = array(eval(input()))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+Execution Result
+
+- submitted_at: 2024-07-16 15:29:13
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "[6.3,6.4,6.0,6.9,5.5,5.2]\n[4.5,3.8,7.8,4.8,9.6,9.2,8.7,2.3,2.9]\n[5.6,4.7,3.8,7.5,8.2,8.4,7.1,6.9,6.7]\n[1.1,3.1,2.7,7.8,6.7,4.6,4.9,7.0]\n[1]"
+    expected: "6\n0\n3\n1"
+    actual: "1\n3\n3\n3"
+  - test_index_0idx: 1 [FAIL]
+    input: "[5.1,5.2,5.4,5.3,5.7,5.8,6.1,5.6,5.5,5.9,6.2]\n[2.7,6.8,4.7,5.7,3.5,6.6,7.0,5.4]\n[8.7,8.6,8.9,8.6,7.5,7.2,6.9,7.4,7.2]\n[1]"
+    expected: "11\n4\n1"
+    actual: "3\n3\n3"
+  - test_index_0idx: 2 [FAIL]
+    input: "[8.5,7.5,6.8,6.9,7.0,5.6,5.8,6.3]\n[7.3,7.1,7.0,6.8,6.0,5.0]\n[1]"
+    expected: "5\n3"
+    actual: "3\n1"
+
+Submitted Code
+```python
+from numpy import*
+
+notas = array(eval(input()))
+
+while size(notas) >1:
+	qtd = 0
+	for i in range(0,size(notas)):
+		if i>= 5.00 and i <= 7.0:
+			qtd +=1
+	print(qtd)
+	notas = array(eval(input()))
+```

@@ -1,0 +1,144 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "589",
+    "assessment_id": "5675",
+    "assessment_title": "Lista 2: Exercícios em Sala",
+    "exercise_id": "2973",
+    "student_id": "9761",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2024-1/589/users/9761/executions/5675_2973.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2024-1/589/users/9761/codemirror/5675_2973.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2024-05-16 14:34:09",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n60\n120",
+            "expected": "7202\nOK",
+            "actual": "7202.0\nok"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n41\n109",
+            "expected": "4470\nOK",
+            "actual": "4470.0\nok"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "3\n120\n60",
+            "expected": "7203\nACIMA",
+            "actual": "7203.0\nACIMA"
+          }
+        ]
+      },
+      "submitted_code": "pos = float(input())\nvel = float(input())\ntemp = float(input())\n\ns = pos + vel*temp\n\nprint(s)\nif vel >100: \n\tprint(\"ACIMA\")\n\t\nelse: \n\tprint(\"ok\")"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2024-05-16 14:34:19",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n60\n120",
+            "expected": "7202\nOK",
+            "actual": "7202.0\nOK"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n41\n109",
+            "expected": "4470\nOK",
+            "actual": "4470.0\nOK"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "3\n120\n60",
+            "expected": "7203\nACIMA",
+            "actual": "7203.0\nACIMA"
+          }
+        ]
+      },
+      "submitted_code": "pos = float(input())\nvel = float(input())\ntemp = float(input())\n\ns = pos + vel*temp\n\nprint(s)\nif vel >100: \n\tprint(\"ACIMA\")\n\t\nelse: \n\tprint(\"OK\")"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2024-05-16 14:34:53",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n60\n120",
+            "expected": "7202\nOK",
+            "actual": "7202.0\nOK"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n41\n109",
+            "expected": "4470\nOK",
+            "actual": "4470.0\nOK"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "3\n120\n60",
+            "expected": "7203\nACIMA",
+            "actual": "7203.0\nACIMA"
+          }
+        ]
+      },
+      "submitted_code": "pos = float(input())\nvel = float(input())\ntemp = float(input())\n\ns = pos + vel*temp\n\nif vel >100: \n\tprint(s)\n\tprint(\"ACIMA\")\n\t\nelse: \n\tprint(s)\n\tprint(\"OK\")"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

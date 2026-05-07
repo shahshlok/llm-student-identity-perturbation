@@ -1,0 +1,221 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the authoritative execution result for that submitted attempt.
+- Each attempt includes the submitted code for that attempt.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 594
+- assessment_id: 5747
+- assessment_title: Lab 3: Estrutura Condicional Encadeada
+- exercise_id: 6915
+- student_id: 6903
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+Execution Result
+
+- submitted_at: 2024-05-30 14:25:39
+- grade: 100.0
+- pass_count: 3
+- failed_test_indices_0idx: []
+- test_outcome: all_pass
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "70.56\n2\nN"
+    expected: "52.92"
+    actual: "52.92"
+  - test_index_0idx: 1 [PASS]
+    input: "100.75\n6\nS"
+    expected: "120.75"
+    actual: "120.75"
+  - test_index_0idx: 2 [PASS]
+    input: "0.00\n9\nS"
+    expected: "Dados invalidos"
+    actual: "Dados invalidos"
+
+Submitted Code
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	elif dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 4:
+		print(round(p,2))
+	elif dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 6:
+		print(round(p,2))
+	elif dia == 7:
+		print(round(p,2))
+	else:
+		print("Dados invalidos")
+else:
+
+	if dia == 1:
+		print(round(p+20,2))
+	elif dia == 2:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 3:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 4:
+		print(round(p+20,2))
+	elif dia == 5:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 6:
+		print(round(p+20,2))
+	elif dia == 7:
+		print(round(p+20,2))
+	else:
+		print("Dados invalidos")
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+Execution Result
+
+- submitted_at: 2024-05-30 14:56:15
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "70.56\n2\nN"
+    expected: "52.92"
+    actual: "52.92"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "120.75"
+    actual: "100.75"
+  - test_index_0idx: 2 [PASS]
+    input: "0.00\n9\nS"
+    expected: "Dados invalidos"
+    actual: "Dados invalidos"
+
+Submitted Code
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")		
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")
+else:
+	print("Dados invalidos")
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+Execution Result
+
+- submitted_at: 2024-05-30 14:57:28
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "70.56\n2\nN"
+    expected: "52.92"
+    actual: "52.92"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "120.75"
+    actual: "100.75"
+  - test_index_0idx: 2 [PASS]
+    input: "0.00\n9\nS"
+    expected: "Dados invalidos"
+    actual: "Dados invalidos"
+
+Submitted Code
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")		
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")
+else:
+	print("Dados invalidos")
+```

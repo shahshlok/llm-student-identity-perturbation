@@ -1,0 +1,657 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 589
+- assessment_id: 5730
+- assessment_title: Extra 3: Condicionais Encadeados (if/elif)
+- exercise_id: 1949
+- student_id: 9895
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-05-31T12:57:35.401000
+
+Execution Result
+
+- submitted_at: 2024-05-31 13:46:28
+- grade: 0.0
+- pass_count: 2
+- failed_test_indices_0idx: [1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "55\n55"
+    expected: "Ganhou R$ 100.000,00"
+    actual: "Ganhou R$ 100.000,00"
+  - test_index_0idx: 1 [FAIL]
+    input: "78\n89"
+    expected: "Ganhou R$ 1.000,00"
+    actual: "Ganhou R$ 100.000,00"
+  - test_index_0idx: 2 [PASS]
+    input: "12\n56"
+    expected: "Perdeu"
+    actual: "Perdeu"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 157
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	8	0	0	0	0	["",""]	[""]	+input
+207	13	1	0	1	0	["",""]	[""]	+input
+389	18	2	0	2	0	["",""]	[""]	+input
+590	23	3	0	3	0	["",""]	[""]	+input
+26824	30	0	0	0	0	["n"]	[""]	+input
+30818	34	0	1	0	1	["1"]	[""]	+input
+32837	38	0	2	0	2	[" "]	[""]	+input
+33077	42	0	3	0	3	["="]	[""]	+input
+36472	49	1	0	1	0	["n"]	[""]	+input
+38228	53	1	1	1	1	["2"]	[""]	+input
+39446	56	1	2	1	2	["",""]	[""]	+input
+42853	62	2	0	2	0	["l"]	[""]	+input
+43321	66	2	1	2	1	["1"]	[""]	+input
+46473	73	3	0	3	0	["l"]	[""]	+input
+47194	77	3	1	3	1	["2"]	[""]	+input
+48471	81	3	2	3	2	[" "]	[""]	+input
+50508	85	3	3	3	3	["="]	[""]	+input
+52106	92	2	2	2	2	[" "]	[""]	+input
+52613	96	2	3	2	3	["="]	[""]	+input
+53532	103	1	2	1	2	[" "]	[""]	+input
+54588	107	1	3	1	3	["="]	[""]	+input
+87423	114	4	0	4	0	["p"]	[""]	+input
+89091	117	4	0	4	1	[""]	["p"]	+delete
+92440	123	0	4	0	4	["i"]	[""]	+input
+92651	127	0	5	0	5	["n"]	[""]	+input
+93010	131	0	6	0	6	["t"]	[""]	+input
+96006	144	0	4	0	4	[" "]	[""]	+input
+98642	158	0	8	0	8	["()"]	[""]	+input
+98803	163	0	9	0	9	["()"]	[""]	+input
+99343	168	0	10	0	10	["\"\""]	[""]	+input
+100957	180	0	9	0	9	["i"]	[""]	+input
+101153	184	0	10	0	10	["n"]	[""]	+input
+101506	188	0	11	0	11	["p"]	[""]	+input
+101802	192	0	12	0	12	["u"]	[""]	+input
+102137	196	0	13	0	13	["t"]	[""]	+input
+106071	206	0	16	0	16	["n"]	[""]	+input
+106358	210	0	17	0	17	["1"]	[""]	+input
+125430	215	0	5	0	21	[""]	["int(input(\"n1\"))"]	cut
+134224	220	0	5	0	5	["int(input(\"n1\"))"]	[""]	paste
+137754	223	1	0	1	4	[""]	["n2 ="]	+delete
+138260	227	0	21	1	0	[""]	["",""]	+delete
+142797	233	1	0	1	4	[""]	["l1 ="]	+delete
+143904	237	0	21	1	0	[""]	["",""]	+delete
+169254	250	1	4	1	4	[" int(input(\"n1\"))"]	[""]	paste
+172593	253	1	16	1	17	[""]	["n"]	+delete
+175032	258	1	16	1	16	["l"]	[""]	+input
+177498	292	1	1	1	2	[""]	["2"]	+delete
+179732	299	0	1	0	2	[""]	["1"]	+delete
+195428	305	2	0	2	0	["i"]	[""]	+input
+196060	309	2	1	2	1	["f"]	[""]	+input
+196969	312	2	2	2	2	["",""]	[""]	+input
+197837	318	3	0	3	0	["e"]	[""]	+input
+198145	322	3	1	3	1	["l"]	[""]	+input
+198517	326	3	2	3	2	["i"]	[""]	+input
+199048	330	3	3	3	3	["f"]	[""]	+input
+199912	333	3	4	3	4	["",""]	[""]	+input
+200846	339	4	0	4	0	["e"]	[""]	+input
+201009	343	4	1	4	1	["l"]	[""]	+input
+201327	347	4	2	4	2	["i"]	[""]	+input
+201685	351	4	3	4	3	["f"]	[""]	+input
+203857	354	4	4	4	4	["",""]	[""]	+input
+204666	360	5	0	5	0	["e"]	[""]	+input
+204932	364	5	1	5	1	["l"]	[""]	+input
+205702	368	5	2	5	2	["s"]	[""]	+input
+206013	372	5	3	5	3	["e"]	[""]	+input
+208030	377	5	4	5	4	[":"]	[""]	+input
+209605	392	4	4	4	4	[":"]	[""]	+input
+210911	407	3	4	3	4	[":"]	[""]	+input
+212305	427	2	2	2	2	[":"]	[""]	+input
+420663	435	2	2	2	2	[" "]	[""]	+input
+421150	439	2	3	2	3	["n"]	[""]	+input
+421845	443	2	4	2	4	[" "]	[""]	+input
+422465	447	2	5	2	5	["="]	[""]	+input
+422641	451	2	6	2	6	["="]	[""]	+input
+423052	455	2	7	2	7	[" "]	[""]	+input
+423332	459	2	8	2	8	["l"]	[""]	+input
+424705	465	2	10	2	10	["",""]	[""]	+input
+424705	466	3	0	3	0	["\t"]	[""]	+input
+425925	472	3	1	3	1	["p"]	[""]	+input
+426260	476	3	2	3	2	["r"]	[""]	+input
+426492	480	3	3	3	3	["i"]	[""]	+input
+426684	484	3	4	3	4	["n"]	[""]	+input
+427317	488	3	5	3	5	["t"]	[""]	+input
+437576	514	3	6	3	6	["()"]	[""]	+input
+438653	521	3	7	3	7	["\"\""]	[""]	+input
+448778	533	3	8	3	8	["Ganhou R$ 100.000,00"]	[""]	paste
+468969	539	6	5	6	5	["",""]	[""]	+input
+468969	540	7	0	7	0	["\t"]	[""]	+input
+473883	546	7	1	7	1	["p"]	[""]	+input
+474114	550	7	2	7	2	["r"]	[""]	+input
+474306	554	7	3	7	3	["i"]	[""]	+input
+474502	558	7	4	7	4	["n"]	[""]	+input
+474754	562	7	5	7	5	["t"]	[""]	+input
+476773	567	7	6	7	6	["()"]	[""]	+input
+477540	572	7	7	7	7	["\"\""]	[""]	+input
+484050	600	5	5	5	5	["",""]	[""]	+input
+484051	601	6	0	6	0	["\t"]	[""]	+input
+485016	616	6	1	6	1	["print(\"\")"]	[""]	paste
+486078	626	4	5	4	5	["",""]	[""]	+input
+486079	627	5	0	5	0	["\t"]	[""]	+input
+486956	634	5	1	5	1	["print(\"\")"]	[""]	paste
+492658	639	9	8	9	8	["Perdeu"]	[""]	paste
+846838	659	6	4	6	4	["n"]	[""]	+input
+853208	663	6	5	6	5	["["]	[""]	+input
+853424	667	6	6	6	6	["]"]	[""]	+input
+858130	674	6	6	6	6	["0"]	[""]	+input
+861370	693	6	4	6	4	[" "]	[""]	+input
+862201	700	6	6	6	6	[" "]	[""]	+input
+864097	713	6	10	6	10	[" "]	[""]	+input
+870521	719	6	11	6	11	["="]	[""]	+input
+870752	723	6	12	6	12	["="]	[""]	+input
+874098	744	6	6	6	7	[""]	[" "]	+delete
+876279	767	6	12	6	12	[" "]	[""]	+input
+877111	771	6	13	6	13	["l"]	[""]	+input
+879141	775	6	14	6	14	[" "]	[""]	+input
+880749	782	6	14	6	14	["[]"]	[""]	+input
+882625	787	6	15	6	15	["0"]	[""]	+input
+884412	797	6	18	6	18	["o"]	[""]	+input
+884852	801	6	19	6	19	["r"]	[""]	+input
+885081	805	6	20	6	20	[" "]	[""]	+input
+885662	809	6	21	6	21	[" "]	[""]	+input
+886332	813	6	22	6	22	[" "]	[""]	+input
+888937	823	6	21	6	21	["n"]	[""]	+input
+889589	827	6	22	6	22	[" "]	[""]	+input
+891433	831	6	23	6	23	["[]"]	[""]	+input
+892837	836	6	24	6	24	["0"]	[""]	+input
+897716	846	6	27	6	27	["="]	[""]	+input
+897902	850	6	28	6	28	["="]	[""]	+input
+900733	857	6	30	6	30	["l"]	[""]	+input
+902597	861	6	31	6	31	["["]	[""]	+input
+902804	865	6	32	6	32	["]"]	[""]	+input
+904543	872	6	32	6	32	["1"]	[""]	+input
+913958	894	7	8	7	8	["Ganhou R$ 100.000,00"]	[""]	paste
+945305	905	4	4	4	4	[" "]	[""]	+input
+945930	909	4	5	4	5	["sorted(numero_apostado) == sorted(numero_sorteado):"]	[""]	paste
+950911	915	4	11	4	28	[" "]	["(numero_apostado)"]	+input
+951096	919	4	12	4	12	["n"]	[""]	+input
+955331	949	4	24	4	25	[""]	["n"]	+delete
+955833	952	4	24	4	25	[""]	["u"]	+delete
+955858	955	4	24	4	25	[""]	["m"]	+delete
+955901	958	4	24	4	25	[""]	["e"]	+delete
+955923	961	4	24	4	25	[""]	["r"]	+delete
+955963	964	4	24	4	25	[""]	["o"]	+delete
+955989	967	4	24	4	25	[""]	["_"]	+delete
+956202	971	4	24	4	25	[""]	["s"]	+delete
+956393	975	4	24	4	25	[""]	["o"]	+delete
+956573	979	4	24	4	25	[""]	["r"]	+delete
+956745	983	4	24	4	25	[""]	["t"]	+delete
+956906	987	4	24	4	25	[""]	["e"]	+delete
+957073	991	4	24	4	25	[""]	["a"]	+delete
+957257	995	4	24	4	25	[""]	["d"]	+delete
+957727	999	4	24	4	25	[""]	["o"]	+delete
+959431	1004	4	24	4	24	["l"]	[""]	+input
+960311	1010	4	26	4	27	[""]	[":"]	+delete
+962906	1042	4	12	4	13	[""]	["n"]	+delete
+963534	1048	4	12	4	12	["()"]	[""]	+input
+964977	1054	4	13	4	13	["n"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 984406
+- raw_log_line: 1068
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input("n1"))
+l = int(input("l1"))
+if n == l:
+	print("Ganhou R$ 100.000,00")
+elif sorted (n) == sorted(l):
+	print("")
+elif n[0] == l[0] or n [0] == l[1]:
+	print("Ganhou R$ 100.000,00")
+else:
+	print("Perdeu")
+
+```
+Run Output
+```text
+File "main.py", line 5
+elif:
+SyntaxError: invalid syntax
+```
+
+Edit Segment 2
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1000117	1077	1	17	1	17	[":"]	[""]	+input
+1001910	1090	0	17	0	17	[":"]	[""]	+input
+1002197	1095	0	18	0	18	[" "]	[""]	+input
+1003827	1105	1	18	1	18	[" "]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 1006298
+- raw_log_line: 1112
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input("n1: "))
+l = int(input("l1: "))
+if n == l:
+	print("Ganhou R$ 100.000,00")
+elif sorted (n) == sorted(l):
+	print("")
+elif n[0] == l[0] or n [0] == l[1]:
+	print("Ganhou R$ 100.000,00")
+else:
+	print("Perdeu")
+
+```
+Run Output
+```text
+n112
+l112
+Ganhou R$ 100.000,00
+```
+
+Edit Segment 3
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1062062	1119	5	8	5	8	["Ganhou R$ 50.000,00"]	[""]	paste
+
+Local Run 3
+- event_time_delta_ms: 1066087
+- raw_log_line: 1128
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input("n1: "))
+l = int(input("l1: "))
+if n == l:
+	print("Ganhou R$ 100.000,00")
+elif sorted (n) == sorted(l):
+	print("Ganhou R$ 50.000,00")
+elif n[0] == l[0] or n [0] == l[1]:
+	print("Ganhou R$ 100.000,00")
+else:
+	print("Perdeu")
+
+```
+Run Output
+```text
+n1: 45
+l1: 67
+Traceback (most recent call last):
+File "main.py", line 5, in <module>
+elif sorted (n) == sorted(l):
+TypeError: 'int' object is not iterable
+```
+
+Edit Segment 4
+- raw_change_event_count: 5
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1450016	1146	4	5	4	27	[""]	["sorted (n) == sorted(l"]	+delete
+1465794	1150	4	5	4	6	[""]	[")"]	+delete
+2865321	1184	4	5	4	5	["sorted(str(n)) == sorted(str(l)):"]	[""]	paste
+2868122	1188	4	37	4	38	[""]	[":"]	+delete
+2883772	1203	6	5	6	35	["str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:"]	["n[0] == l[0] or n [0] == l[1]:"]	paste
+
+Local Run 4
+- event_time_delta_ms: 2892301
+- raw_log_line: 1214
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input("n1: "))
+l = int(input("l1: "))
+if n == l:
+	print("Ganhou R$ 100.000,00")
+elif sorted(str(n)) == sorted(str(l)):
+	print("Ganhou R$ 50.000,00")
+elif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:
+	print("Ganhou R$ 100.000,00")
+else:
+	print("Perdeu")
+
+```
+Run Output
+```text
+n1: 45
+l1: 67
+Traceback (most recent call last):
+File "main.py", line 5, in <module>
+elif sorted (n) == sorted(l):
+TypeError: 'int' object is not iterable
+```
+
+Local Run 5
+- event_time_delta_ms: 2908054
+- raw_log_line: 1219
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input("n1: "))
+l = int(input("l1: "))
+if n == l:
+	print("Ganhou R$ 100.000,00")
+elif sorted(str(n)) == sorted(str(l)):
+	print("Ganhou R$ 50.000,00")
+elif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:
+	print("Ganhou R$ 100.000,00")
+else:
+	print("Perdeu")
+
+```
+Run Output
+```text
+n1: 23
+l1: 32
+Ganhou R$ 50.000,00
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 2933700
+- raw_log_line: 1220
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+n = int(input("n1: "))
+l = int(input("l1: "))
+if n == l:
+	print("Ganhou R$ 100.000,00")
+elif sorted(str(n)) == sorted(str(l)):
+	print("Ganhou R$ 50.000,00")
+elif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:
+	print("Ganhou R$ 100.000,00")
+else:
+	print("Perdeu")
+
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-05-31T13:46:45.420000
+
+Execution Result
+
+- submitted_at: 2024-05-31 13:55:43
+- grade: 0.0
+- pass_count: 2
+- failed_test_indices_0idx: [1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "55\n55"
+    expected: "Ganhou R$ 100.000,00"
+    actual: "Ganhou R$ 100.000,00"
+  - test_index_0idx: 1 [FAIL]
+    input: "78\n89"
+    expected: "Ganhou R$ 1.000,00"
+    actual: "Ganhou R$ 100.000,00"
+  - test_index_0idx: 2 [PASS]
+    input: "12\n56"
+    expected: "Perdeu"
+    actual: "Perdeu"
+
+Attempt Start Code
+```python
+n = int(input("n1: "))
+l = int(input("l1: "))
+if n == l:
+	print("Ganhou R$ 100.000,00")
+elif sorted(str(n)) == sorted(str(l)):
+	print("Ganhou R$ 50.000,00")
+elif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:
+	print("Ganhou R$ 100.000,00")
+else:
+	print("Perdeu")
+
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1228
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input("n1: "))
+l = int(input("l1: "))
+if n == l:
+	print("Ganhou R$ 100.000,00")
+elif sorted(str(n)) == sorted(str(l)):
+	print("Ganhou R$ 50.000,00")
+elif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:
+	print("Ganhou R$ 100.000,00")
+else:
+	print("Perdeu")
+
+```
+Run Output
+```text
+n1: 23
+l1: 24
+Ganhou R$ 100.000,00
+```
+
+Local Run 2
+- event_time_delta_ms: 32293
+- raw_log_line: 1233
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input("n1: "))
+l = int(input("l1: "))
+if n == l:
+	print("Ganhou R$ 100.000,00")
+elif sorted(str(n)) == sorted(str(l)):
+	print("Ganhou R$ 50.000,00")
+elif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:
+	print("Ganhou R$ 100.000,00")
+else:
+	print("Perdeu")
+
+```
+Run Output
+```text
+n1: 23
+l1: 23
+Ganhou R$ 100.000,00
+```
+
+Edit Segment 1
+- raw_change_event_count: 39
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+145706	1324	9	16	10	0	[""]	["",""]	+delete
+429465	1397	2	0	9	16	[""]	["if n == l:","\tprint(\"Ganhou R$ 100.000,00\")","elif sorted(str(n)) == sorted(str(l)):","\tprint(\"Ganhou R$ 50.000,00\")","elif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:","\tprint(\"Ganhou R$ 100.000,00\")","else:","\tprint(\"Perdeu\")"]	cut
+431000	1403	2	0	2	0	["i"]	[""]	+input
+431610	1407	2	1	2	1	["f"]	[""]	+input
+437508	1413	2	2	2	2	[" "]	[""]	+input
+440264	1417	2	3	2	3	["n"]	[""]	+input
+451565	1424	2	3	2	3	[","]	[""]	+input
+452715	1427	2	3	2	4	[""]	[","]	+delete
+454067	1433	2	3	2	3	["<"]	[""]	+input
+454403	1437	2	4	2	4	["+"]	[""]	+input
+455577	1441	2	4	2	5	[""]	["+"]	+delete
+455846	1446	2	4	2	4	["="]	[""]	+input
+458312	1456	2	3	2	3	["1"]	[""]	+input
+458786	1460	2	4	2	4	["0"]	[""]	+input
+460519	1476	2	5	2	5	[" "]	[""]	+input
+461258	1486	2	8	2	8	[" "]	[""]	+input
+462499	1496	2	10	2	10	[" "]	[""]	+input
+464127	1509	2	11	2	11	["<"]	[""]	+input
+471636	1513	2	11	2	12	[""]	["<"]	+delete
+472875	1519	2	11	2	11	["<"]	[""]	+input
+474142	1524	2	12	2	12	["="]	[""]	+input
+476626	1528	2	13	2	13	["9"]	[""]	+input
+476807	1532	2	14	2	14	["9"]	[""]	+input
+479703	1540	2	15	2	15	[":"]	[""]	+input
+483808	1572	2	13	2	13	[" "]	[""]	+input
+489925	1710	2	17	2	17	["C"]	[""]	+input
+493008	1715	2	18	2	18	["="]	[""]	+input
+494074	1718	2	18	2	19	[""]	["="]	+delete
+494274	1722	2	17	2	18	[""]	["C"]	+delete
+497225	1763	2	17	2	17	["",""]	[""]	+input
+497226	1764	3	0	3	0	["\t"]	[""]	+input
+500429	1840	3	1	3	1	["if n == l:","\tprint(\"Ganhou R$ 100.000,00\")","elif sorted(str(n)) == sorted(str(l)):","\tprint(\"Ganhou R$ 50.000,00\")","elif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:","\tprint(\"Ganhou R$ 100.000,00\")","else:","\tprint(\"Perdeu\")"]	[""]	paste
+506193	1846	4	1	4	1	["\t"]	[""]	+input
+507819	1865	5	0	5	0	["\t"]	[""]	+input
+508888	1872	6	1	6	1	["\t"]	[""]	+input
+511593	1891	7	0	7	0	["\t"]	[""]	+input
+514364	1901	8	0	8	0	["\t"]	[""]	+input
+515298	1911	9	0	9	0	["\t"]	[""]	+input
+516186	1921	10	0	10	0	["\t"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 537887
+- raw_log_line: 1932
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+n = int(input("n1: "))
+l = int(input("l1: "))
+if 10 <= n <= 99:
+	if n == l:
+		print("Ganhou R$ 100.000,00")
+	elif sorted(str(n)) == sorted(str(l)):
+		print("Ganhou R$ 50.000,00")
+	elif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:
+		print("Ganhou R$ 100.000,00")
+	else:
+		print("Perdeu")
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-05-31T13:56:04.648000
+
+Execution Result
+
+- submitted_at: 2024-05-31 13:56:26
+- grade: 0.0
+- pass_count: 2
+- failed_test_indices_0idx: [1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "55\n55"
+    expected: "Ganhou R$ 100.000,00"
+    actual: "Ganhou R$ 100.000,00"
+  - test_index_0idx: 1 [FAIL]
+    input: "78\n89"
+    expected: "Ganhou R$ 1.000,00"
+    actual: "Ganhou R$ 100.000,00"
+  - test_index_0idx: 2 [PASS]
+    input: "12\n56"
+    expected: "Perdeu"
+    actual: "Perdeu"
+
+Attempt Start Code
+```python
+n = int(input("n1: "))
+l = int(input("l1: "))
+if 10 <= n <= 99:
+	if n == l:
+		print("Ganhou R$ 100.000,00")
+	elif sorted(str(n)) == sorted(str(l)):
+		print("Ganhou R$ 50.000,00")
+	elif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:
+		print("Ganhou R$ 100.000,00")
+	else:
+		print("Perdeu")
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 8
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1942	2	16	2	16	[" "]	[""]	+input
+546	1946	2	17	2	17	["a"]	[""]	+input
+866	1950	2	18	2	18	["n"]	[""]	+input
+1198	1954	2	19	2	19	["d"]	[""]	+input
+1781	1958	2	20	2	20	[" "]	[""]	+input
+8278	1985	2	21	2	21	["10 <= n <= 99"]	[""]	paste
+10346	1990	2	27	2	28	[""]	["n"]	+delete
+10885	1995	2	27	2	27	["l"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 22172
+- raw_log_line: 1999
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+n = int(input("n1: "))
+l = int(input("l1: "))
+if 10 <= n <= 99 and 10 <= l <= 99:
+	if n == l:
+		print("Ganhou R$ 100.000,00")
+	elif sorted(str(n)) == sorted(str(l)):
+		print("Ganhou R$ 50.000,00")
+	elif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:
+		print("Ganhou R$ 100.000,00")
+	else:
+		print("Perdeu")
+```

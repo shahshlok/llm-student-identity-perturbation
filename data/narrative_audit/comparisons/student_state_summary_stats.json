@@ -1,0 +1,142 @@
+{
+  "matched_transition_count": 117,
+  "condition_result_files": {
+    "full": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_v6/output.jsonl",
+    "no_trace": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_no_trace_v1/output.jsonl",
+    "trace_shuffled": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_trace_shuffled_v1/output.jsonl"
+  },
+  "similarity_metrics": {
+    "full_vs_no_trace": {
+      "tfidf_cosine": {
+        "mean": 0.1701420107063316,
+        "median": 0.14645322246822542,
+        "std": 0.10669943860424175,
+        "min": 0.021299021486501302,
+        "max": 0.5589060929494083
+      },
+      "levenshtein_ratio": {
+        "mean": 0.6090093280021844,
+        "median": 0.6173913043478261,
+        "std": 0.07335011590836225,
+        "min": 0.4199395770392749,
+        "max": 0.7820069204152249
+      }
+    },
+    "full_vs_trace_shuffled": {
+      "tfidf_cosine": {
+        "mean": 0.1711187801964356,
+        "median": 0.15518888686165774,
+        "std": 0.10534051749928448,
+        "min": 0.017520081509254198,
+        "max": 0.5672989676776848
+      },
+      "levenshtein_ratio": {
+        "mean": 0.6214601665034808,
+        "median": 0.6210526315789474,
+        "std": 0.06549036396369569,
+        "min": 0.43535620052770446,
+        "max": 0.7974137931034483
+      }
+    },
+    "no_trace_vs_trace_shuffled": {
+      "tfidf_cosine": {
+        "mean": 0.21075764586659598,
+        "median": 0.19937795452259557,
+        "std": 0.13107215741636785,
+        "min": 0.021563050418224854,
+        "max": 0.6887286794327748
+      },
+      "levenshtein_ratio": {
+        "mean": 0.6537165115303339,
+        "median": 0.6375,
+        "std": 0.07283614906570043,
+        "min": 0.496,
+        "max": 0.8909090909090909
+      }
+    }
+  },
+  "full_vs_no_trace_substantially_different_counts": {
+    "tfidf_cosine_below_0_5": 115,
+    "levenshtein_ratio_below_0_5": 10,
+    "both_metrics_below_0_5": 10
+  },
+  "trace_related_language": {
+    "term_patterns": {
+      "testing_family": "\\b(?:test|tests|testing|tested|rerun|reruns|rerunning|reran)\\b",
+      "editing_family": "\\b(?:edit|edits|editing|edited|rewrite|rewrites|rewriting|rewrote|patch|patches|patched|patching)\\b",
+      "previous_attempts": "\\b(?:previous|prior|earlier)\\s+attempt(?:s)?\\b",
+      "delete_family": "\\bdelet(?:e|es|ed|ing|ion|ions)\\b",
+      "cursor": "\\bcursor\\b",
+      "keystroke_family": "\\bkeystroke(?:s)?\\b",
+      "typing_family": "\\btyp(?:e|es|ed|ing)\\b",
+      "debug_family": "\\bdebug(?:ging|ged|s)?\\b"
+    },
+    "by_condition": {
+      "full": {
+        "total_occurrences": 85,
+        "summaries_with_any_trace_terms": 59,
+        "mean_occurrences_per_summary": 0.7264957264957265,
+        "occurrences_per_1000_tokens": 24.83201869704937,
+        "term_counts": {
+          "testing_family": 34,
+          "editing_family": 48,
+          "previous_attempts": 0,
+          "delete_family": 3,
+          "cursor": 0,
+          "keystroke_family": 0,
+          "typing_family": 0,
+          "debug_family": 0
+        }
+      },
+      "no_trace": {
+        "total_occurrences": 37,
+        "summaries_with_any_trace_terms": 32,
+        "mean_occurrences_per_summary": 0.3162393162393162,
+        "occurrences_per_1000_tokens": 16.30674305861613,
+        "term_counts": {
+          "testing_family": 17,
+          "editing_family": 20,
+          "previous_attempts": 0,
+          "delete_family": 0,
+          "cursor": 0,
+          "keystroke_family": 0,
+          "typing_family": 0,
+          "debug_family": 0
+        }
+      },
+      "trace_shuffled": {
+        "total_occurrences": 52,
+        "summaries_with_any_trace_terms": 48,
+        "mean_occurrences_per_summary": 0.4444444444444444,
+        "occurrences_per_1000_tokens": 19.711902956785444,
+        "term_counts": {
+          "testing_family": 18,
+          "editing_family": 33,
+          "previous_attempts": 0,
+          "delete_family": 1,
+          "cursor": 0,
+          "keystroke_family": 0,
+          "typing_family": 0,
+          "debug_family": 0
+        }
+      }
+    }
+  },
+  "selected_example_transition_ids": [
+    "589:5897:3189:9741:2",
+    "589:5846:1605:9746:2",
+    "589:5897:3189:9741:4",
+    "591:5853:6788:9787:0",
+    "590:5843:1605:9815:0",
+    "593:5886:6353:9843:0",
+    "591:5902:6353:9781:6",
+    "593:5886:1223:8870:0",
+    "591:5902:6353:9799:0",
+    "590:5896:6353:7604:0"
+  ],
+  "metric_notes": {
+    "tfidf_cosine": "Cosine similarity over corpus-level TF-IDF vectors built from all matched summaries across all three conditions.",
+    "levenshtein_ratio": "Normalized character-level ratio computed as (len(a) + len(b) - distance) / (len(a) + len(b)).",
+    "std": "Population standard deviation across matched transitions."
+  }
+}

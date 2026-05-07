@@ -1,0 +1,865 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 527
+- assessment_id: 5145
+- assessment_title: Lab 6 - Repetição por Contagem (for)
+- exercise_id: 6353
+- student_id: 8767
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-10-19T17:18:44.391000
+
+Execution Result
+
+- submitted_at: 2023-10-19 17:34:24
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "10"
+    expected: "10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "15"
+    expected: " 15\n14\n13\n12\n11\n10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "4"
+    expected: "4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: ""
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 152
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	9	0	0	0	0	["F"]	[""]	+input
+72	12	0	1	0	1	["R"]	[""]	+input
+348	17	0	2	0	2	["O"]	[""]	+input
+535	20	0	3	0	3	["M"]	[""]	+input
+1736	25	0	4	0	4	[" "]	[""]	+input
+3848	28	0	4	0	5	[""]	[" "]	+delete
+4015	32	0	3	0	4	[""]	["M"]	+delete
+4185	36	0	2	0	3	[""]	["O"]	+delete
+4331	40	0	1	0	2	[""]	["R"]	+delete
+4487	44	0	0	0	1	[""]	["F"]	+delete
+6152	51	0	0	0	0	["f"]	[""]	+input
+6248	54	0	1	0	1	["r"]	[""]	+input
+6536	59	0	2	0	2	["o"]	[""]	+input
+6831	63	0	3	0	3	["m"]	[""]	+input
+7616	67	0	4	0	4	[" "]	[""]	+input
+12089	71	0	5	0	5	["n"]	[""]	+input
+12233	75	0	6	0	6	["u"]	[""]	+input
+12631	79	0	7	0	7	["m"]	[""]	+input
+13001	83	0	8	0	8	["p"]	[""]	+input
+13783	87	0	9	0	9	["y"]	[""]	+input
+14664	91	0	10	0	10	[" "]	[""]	+input
+15564	95	0	11	0	11	["i"]	[""]	+input
+15751	99	0	12	0	12	["m"]	[""]	+input
+16087	103	0	13	0	13	["p"]	[""]	+input
+16167	106	0	14	0	14	["o"]	[""]	+input
+16414	111	0	15	0	15	["r"]	[""]	+input
+16631	115	0	16	0	16	["t"]	[""]	+input
+18249	120	0	17	0	17	["*"]	[""]	+input
+19982	124	0	18	0	18	["",""]	[""]	+input
+33705	129	1	0	1	0	["",""]	[""]	+input
+73369	135	2	0	2	0	["f"]	[""]	+input
+73551	139	2	1	2	1	["o"]	[""]	+input
+73728	142	2	2	2	2	["m"]	[""]	+input
+75017	146	2	2	2	3	[""]	["m"]	+delete
+75144	150	2	1	2	2	[""]	["o"]	+delete
+76028	155	2	1	2	1	["o"]	[""]	+input
+76151	158	2	2	2	2	["n"]	[""]	+input
+78216	162	2	2	2	3	[""]	["n"]	+delete
+79481	167	2	2	2	2	["r"]	[""]	+input
+79712	171	2	3	2	3	[" "]	[""]	+input
+428516	178	2	4	2	4	["0"]	[""]	+input
+444132	183	1	0	1	0	["c"]	[""]	+input
+444988	187	1	1	1	1	[" "]	[""]	+input
+445180	191	1	2	1	2	["="]	[""]	+input
+445313	194	1	3	1	3	[" "]	[""]	+input
+447517	199	1	4	1	4	["i"]	[""]	+input
+447680	202	1	5	1	5	["n"]	[""]	+input
+448014	207	1	6	1	6	["t"]	[""]	+input
+449749	212	1	7	1	7	["()"]	[""]	+input
+450414	218	1	8	1	8	["i"]	[""]	+input
+450497	221	1	9	1	9	["n"]	[""]	+input
+450847	226	1	10	1	10	["p"]	[""]	+input
+451116	230	1	11	1	11	["u"]	[""]	+input
+451469	234	1	12	1	12	["t"]	[""]	+input
+452701	239	1	13	1	13	["()"]	[""]	+input
+453901	246	1	14	1	14	["\"\""]	[""]	+input
+456685	252	1	15	1	15	["s"]	[""]	+input
+457452	255	1	15	1	16	[""]	["s"]	+delete
+463250	260	1	15	1	15	["f"]	[""]	+input
+463564	264	1	16	1	16	["i"]	[""]	+input
+464497	267	1	16	1	17	[""]	["i"]	+delete
+464635	271	1	15	1	16	[""]	["f"]	+delete
+466464	277	1	15	1	15	["F"]	[""]	+input
+467500	282	1	16	1	16	["i"]	[""]	+input
+467796	286	1	17	1	17	["n"]	[""]	+input
+468284	289	1	17	1	18	[""]	["n"]	+delete
+468563	294	1	17	1	17	["m"]	[""]	+input
+469452	298	1	18	1	18	[" "]	[""]	+input
+470179	302	1	19	1	19	["d"]	[""]	+input
+470252	305	1	20	1	20	["a"]	[""]	+input
+470462	310	1	21	1	21	[" "]	[""]	+input
+470652	314	1	22	1	22	["c"]	[""]	+input
+470813	318	1	23	1	23	["o"]	[""]	+input
+471013	322	1	24	1	24	["n"]	[""]	+input
+471396	326	1	25	1	25	["t"]	[""]	+input
+471500	330	1	26	1	26	["a"]	[""]	+input
+471796	334	1	27	1	27	["g"]	[""]	+input
+471916	338	1	28	1	28	["e"]	[""]	+input
+472096	342	1	29	1	29	["m"]	[""]	+input
+472284	346	1	30	1	30	[" "]	[""]	+input
+472629	350	1	31	1	31	["e"]	[""]	+input
+473068	354	1	32	1	32	["g"]	[""]	+input
+473762	357	1	32	1	33	[""]	["g"]	+delete
+476862	361	1	31	1	32	[""]	["e"]	+delete
+479031	366	1	31	1	31	["r"]	[""]	+input
+479116	369	1	32	1	32	["e"]	[""]	+input
+479564	374	1	33	1	33	["g"]	[""]	+input
+479795	378	1	34	1	34	["r"]	[""]	+input
+479980	382	1	35	1	35	["e"]	[""]	+input
+481469	386	1	36	1	36	["s"]	[""]	+input
+481662	390	1	37	1	37	["s"]	[""]	+input
+481968	394	1	38	1	38	["i"]	[""]	+input
+482253	398	1	39	1	39	["v"]	[""]	+input
+482380	402	1	40	1	40	["a"]	[""]	+input
+486685	407	1	41	1	41	["!"]	[""]	+input
+498480	412	1	45	1	45	["",""]	[""]	+input
+501379	419	3	5	3	5	[" "]	[""]	+input
+501678	423	3	6	3	6	["i"]	[""]	+input
+501811	426	3	7	3	7	["n"]	[""]	+input
+503312	431	3	8	3	8	["t"]	[""]	+input
+504397	434	3	8	3	9	[""]	["t"]	+delete
+504645	439	3	8	3	8	[" "]	[""]	+input
+512034	443	3	9	3	9	["1"]	[""]	+input
+512229	447	3	10	3	10	["''"]	[""]	+input
+513100	451	3	10	3	12	[""]	["''"]	+delete
+513844	456	3	10	3	10	["1"]	[""]	+input
+515830	461	3	11	3	11	[":"]	[""]	+input
+516797	465	3	12	3	12	["",""]	[""]	+input
+516797	466	4	0	4	0	["\t"]	[""]	+input
+532099	471	4	0	4	1	[""]	["\t"]	+delete
+532977	476	4	0	4	0	["p"]	[""]	+input
+533126	480	4	1	4	1	["e"]	[""]	+input
+533751	483	4	1	4	2	[""]	["e"]	+delete
+533893	488	4	1	4	1	["r"]	[""]	+input
+534093	492	4	2	4	2	["i"]	[""]	+input
+534243	495	4	3	4	3	["n"]	[""]	+input
+534513	500	4	4	4	4	["t"]	[""]	+input
+535729	505	4	5	4	5	["()"]	[""]	+input
+563890	513	2	0	2	0	["i"]	[""]	+input
+564046	517	2	1	2	1	[" "]	[""]	+input
+564593	521	2	2	2	2	["="]	[""]	+input
+565863	525	2	3	2	3	[" "]	[""]	+input
+566094	529	2	4	2	4	["0"]	[""]	+input
+566257	533	2	5	2	5	[" "]	[""]	+input
+573326	537	2	0	2	6	[""]	["i = 0 "]	+delete
+576258	542	3	4	3	5	[""]	["0"]	+delete
+577042	547	3	4	3	4	["i"]	[""]	+input
+601727	552	3	8	3	8	[" "]	[""]	+input
+603647	556	3	9	3	9	["r"]	[""]	+input
+603875	560	3	10	3	10	["a"]	[""]	+input
+607328	564	3	11	3	11	["m"]	[""]	+input
+607807	568	3	12	3	12	["g"]	[""]	+input
+608191	572	3	13	3	13	["e"]	[""]	+input
+610640	581	3	11	3	12	[""]	["m"]	+delete
+611091	586	3	11	3	11	["n"]	[""]	+input
+618618	593	3	14	3	14	["()"]	[""]	+input
+646840	599	3	15	3	15	["c"]	[""]	+input
+656007	603	3	16	3	16	[","]	[""]	+input
+656512	607	3	17	3	17	["1"]	[""]	+input
+658740	611	3	18	3	18	[","]	[""]	+input
+682529	616	3	19	3	19	["+"]	[""]	+input
+684121	621	3	20	3	20	["1"]	[""]	+input
+686944	625	3	19	3	20	[""]	["+"]	+delete
+712241	631	3	23	3	24	[""]	["1"]	+delete
+712689	635	3	22	3	23	[""]	["1"]	+delete
+713873	639	3	21	3	22	[""]	[" "]	+delete
+730071	645	4	6	4	6	["i"]	[""]	+input
+734211	649	4	7	4	7	[" "]	[""]	+input
+735751	652	4	7	4	8	[""]	[" "]	+delete
+739522	657	3	22	4	0	[""]	["",""]	+delete
+740519	662	3	22	3	22	["",""]	[""]	+input
+740519	663	4	0	4	0	["\t"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 750739
+- raw_log_line: 681
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,1,1):
+	print(i)
+```
+Run Output
+```text
+
+```
+
+Edit Segment 2
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+761318	685	3	17	3	18	[""]	["1"]	+delete
+766437	690	3	17	3	17	["1"]	[""]	+input
+766534	693	3	18	3	18	["2"]	[""]	+input
+771956	697	3	18	3	19	[""]	["2"]	+delete
+
+Local Run 2
+- event_time_delta_ms: 802899
+- raw_log_line: 702
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,1,1):
+	print(i)
+```
+Run Output
+```text
+Fim da contagem regressiva!10
+```
+
+Edit Segment 3
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+826634	708	0	0	0	0	["#"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 854570
+- raw_log_line: 713
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,1,1):
+	print(i)
+```
+Run Output
+```text
+Fim da contagem regressiva!10
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 940081
+- raw_log_line: 727
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,1,1):
+	print(i)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-10-19T17:34:36.066000
+
+Execution Result
+
+- submitted_at: 2023-10-19 17:39:47
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "10"
+    expected: "10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "15"
+    expected: " 15\n14\n13\n12\n11\n10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "4"
+    expected: "4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: ""
+
+Attempt Start Code
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,1,1):
+	print(i)
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 735
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,1,1):
+	print(i)
+```
+Run Output
+```text
+Fim da contagem regressiva!10
+```
+
+Edit Segment 1
+- raw_change_event_count: 19
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+151520	740	3	17	3	17	["-"]	[""]	+input
+153985	750	3	20	3	20	["-"]	[""]	+input
+230082	760	3	24	3	24	["",""]	[""]	+input
+230082	761	4	0	4	0	["\t"]	[""]	+input
+247980	767	4	1	4	1	["i"]	[""]	+input
+248379	771	4	2	4	2	["f"]	[""]	+input
+248577	775	4	3	4	3	[" "]	[""]	+input
+272901	779	4	4	4	4	["c"]	[""]	+input
+273607	783	4	5	4	5	[" "]	[""]	+input
+301194	789	4	6	4	6	["="]	[""]	+input
+301507	793	4	7	4	7	["="]	[""]	+input
+302296	797	4	8	4	8	[" "]	[""]	+input
+303027	801	4	9	4	9	["0"]	[""]	+input
+303116	804	4	10	4	10	[" "]	[""]	+input
+304244	810	4	11	4	11	[":"]	[""]	+input
+308490	844	5	0	5	1	[""]	["\t"]	+delete
+308642	848	4	12	5	0	[""]	["",""]	+delete
+309445	853	4	12	4	12	["",""]	[""]	+input
+309445	854	5	0	5	0	["\t\t"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 311812
+- raw_log_line: 860
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,-1,-1):
+	if c == 0 :
+		print(i)
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-10-19T17:39:50.255000
+
+Execution Result
+
+- submitted_at: 2023-10-19 17:49:41
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "10"
+    expected: "10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: "10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim de contagem regressiva!"
+  - test_index_0idx: 1 [FAIL]
+    input: "15"
+    expected: " 15\n14\n13\n12\n11\n10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: "15\n14\n13\n12\n11\n10\n9\n8\n7\n6\n5\n4\n3\n2\n1\n0\nFim de contagem regressiva!"
+  - test_index_0idx: 2 [FAIL]
+    input: "4"
+    expected: "4\n3\n2\n1\n0\nFim da contagem regressiva!"
+    actual: "4\n3\n2\n1\n0\nFim de contagem regressiva!"
+
+Attempt Start Code
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,-1,-1):
+	if c == 0 :
+		print(i)
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 864
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,-1,-1):
+	if c == 0 :
+		print(i)
+```
+Run Output
+```text
+Fim da contagem regressiva!10
+```
+
+Local Run 2
+- event_time_delta_ms: 5722
+- raw_log_line: 871
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,-1,-1):
+	if c == 0 :
+		print(i)
+```
+Run Output
+```text
+Fim da contagem regressiva!10^[[3~
+Traceback (most recent call last):
+File "main.py", line 2, in <module>
+c = int(input("Fim da contagem regressiva!"))
+ValueError: invalid literal for int() with base 10: '10\x1b[3~'
+```
+
+Edit Segment 1
+- raw_change_event_count: 11
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+23117	875	4	1	4	1	["",""]	[""]	+input
+23117	876	5	0	5	0	["\t"]	[""]	+input
+27868	883	4	1	4	1	["p"]	[""]	+input
+27999	887	4	2	4	2	["r"]	[""]	+input
+28183	891	4	3	4	3	["i"]	[""]	+input
+28351	895	4	4	4	4	["n"]	[""]	+input
+28649	899	4	5	4	5	["t"]	[""]	+input
+30233	904	4	6	4	6	["()"]	[""]	+input
+30832	910	4	7	4	7	["i"]	[""]	+input
+34333	914	6	8	6	9	[""]	["i"]	+delete
+38505	919	6	8	6	8	["c"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 43698
+- raw_log_line: 925
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,-1,-1):
+	print(i)
+	if c == 0 :
+		print(c)
+```
+Run Output
+```text
+Fim da contagem regressiva!10
+```
+
+Edit Segment 2
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+57016	930	5	4	5	5	[""]	["c"]	+delete
+57932	935	5	4	5	4	["0"]	[""]	+input
+60584	953	5	9	5	10	[""]	["0"]	+delete
+61416	958	5	9	5	9	["c"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 71835
+- raw_log_line: 970
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,-1,-1):
+	print(i)
+	if 0 == c :
+		print(c)
+```
+Run Output
+```text
+Fim da contagem regressiva!10
+```
+
+Edit Segment 3
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+81248	974	3	17	3	18	[""]	["-"]	+delete
+
+Local Run 5
+- event_time_delta_ms: 87836
+- raw_log_line: 981
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,1,-1):
+	print(i)
+	if 0 == c :
+		print(c)
+```
+Run Output
+```text
+Fim da contagem regressiva!10
+```
+
+Edit Segment 4
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+94448	986	3	17	3	17	["-"]	[""]	+input
+97097	998	3	20	3	21	[""]	["-"]	+delete
+
+Local Run 6
+- event_time_delta_ms: 101748
+- raw_log_line: 1005
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,-1,1):
+	print(i)
+	if 0 == c :
+		print(c)
+```
+Run Output
+```text
+Fim da contagem regressiva!10
+```
+
+Edit Segment 5
+- raw_change_event_count: 9
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+108398	1010	3	20	3	20	["="]	[""]	+input
+109213	1013	3	20	3	21	[""]	["="]	+delete
+109630	1018	3	20	3	20	["-"]	[""]	+input
+116650	1022	3	15	3	16	[""]	["c"]	+delete
+117450	1027	3	15	3	15	["i"]	[""]	+input
+121245	1069	3	4	3	5	[""]	["i"]	+delete
+121745	1074	3	4	3	4	["v"]	[""]	+input
+122314	1077	3	4	3	5	[""]	["v"]	+delete
+122633	1082	3	4	3	4	["c"]	[""]	+input
+
+Local Run 7
+- event_time_delta_ms: 129961
+- raw_log_line: 1092
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for c in range(i,-1,-1):
+	print(i)
+	if 0 == c :
+		print(c)
+```
+Run Output
+```text
+Fim da contagem regressiva!10
+Traceback (most recent call last):
+File "main.py", line 4, in <module>
+for c in range(i,-1,-1):
+NameError: name 'i' is not defined
+```
+
+Edit Segment 6
+- raw_change_event_count: 6
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+132597	1096	3	4	3	5	[""]	["c"]	+delete
+134946	1101	3	4	3	4	["i"]	[""]	+input
+138266	1105	3	15	3	16	[""]	["i"]	+delete
+138848	1110	3	15	3	15	["c"]	[""]	+input
+153482	1118	5	6	5	7	[""]	["="]	+delete
+154306	1124	5	6	5	6	["<"]	[""]	+input
+
+Local Run 8
+- event_time_delta_ms: 157844
+- raw_log_line: 1130
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,-1,-1):
+	print(i)
+	if 0 <= c :
+		print(c)
+```
+Run Output
+```text
+Fim da contagem regressiva!10
+```
+
+Edit Segment 7
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+166511	1135	5	6	5	7	[""]	["<"]	+delete
+167077	1141	5	6	5	6	[">"]	[""]	+input
+
+Local Run 9
+- event_time_delta_ms: 170010
+- raw_log_line: 1147
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,-1,-1):
+	print(i)
+	if 0 >= c :
+		print(c)
+```
+Run Output
+```text
+Fim da contagem regressiva!10
+```
+
+Edit Segment 8
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+202396	1153	5	6	5	7	[""]	[">"]	+delete
+
+Local Run 10
+- event_time_delta_ms: 205775
+- raw_log_line: 1159
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,-1,-1):
+	print(i)
+	if 0 = c :
+		print(c)
+```
+Run Output
+```text
+Fim da contagem regressiva!10
+```
+
+Edit Segment 9
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+209997	1165	5	7	5	7	["="]	[""]	+input
+218381	1170	6	9	6	9	[","]	[""]	+input
+220126	1174	6	10	6	10	["i"]	[""]	+input
+
+Local Run 11
+- event_time_delta_ms: 221731
+- raw_log_line: 1181
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,-1,-1):
+	print(i)
+	if 0 == c :
+		print(c,i)
+```
+Run Output
+```text
+File "main.py", line 6
+if 0 = c :
+SyntaxError: invalid syntax
+```
+
+Edit Segment 10
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+270273	1186	5	9	5	10	[""]	["c"]	+delete
+270740	1191	5	9	5	9	["i"]	[""]	+input
+
+Local Run 12
+- event_time_delta_ms: 283875
+- raw_log_line: 1199
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,-1,-1):
+	print(i)
+	if 0 == i :
+		print(c,i)
+```
+Run Output
+```text
+Fim da contagem regressiva!10
+10 0
+```
+
+Edit Segment 11
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+384689	1203	6	9	6	10	[""]	[","]	+delete
+384851	1207	6	8	6	9	[""]	["c"]	+delete
+385023	1211	6	7	6	8	[""]	["("]	+delete
+386690	1217	6	7	6	7	["("]	[""]	+input
+
+Local Run 13
+- event_time_delta_ms: 391852
+- raw_log_line: 1224
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+#from numpy import*
+c = int(input("Fim da contagem regressiva!"))
+
+for i in range(c,-1,-1):
+	print(i)
+	if 0 == i :
+		print(i)
+```
+Run Output
+```text
+Fim da contagem regressiva!10
+```
+
+Edit Segment 12
+- raw_change_event_count: 34
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+527350	1229	1	14	1	43	[""]	["\"Fim da contagem regressiva!\""]	+delete
+528697	1235	1	14	1	14	["\"\""]	[""]	+input
+552244	1242	0	0	0	19	[""]	["#from numpy import*"]	+delete
+563499	1247	6	8	6	9	[""]	["i"]	+delete
+564949	1253	6	8	6	8	["\"\""]	[""]	+input
+567879	1260	6	9	6	9	["F"]	[""]	+input
+568361	1265	6	10	6	10	["i"]	[""]	+input
+568563	1269	6	11	6	11	["m"]	[""]	+input
+569595	1273	6	12	6	12	[" "]	[""]	+input
+570467	1277	6	13	6	13	["d"]	[""]	+input
+570548	1280	6	14	6	14	["e"]	[""]	+input
+570727	1285	6	15	6	15	[" "]	[""]	+input
+570979	1289	6	16	6	16	["c"]	[""]	+input
+571177	1293	6	17	6	17	["o"]	[""]	+input
+571683	1297	6	18	6	18	["n"]	[""]	+input
+572083	1301	6	19	6	19	["t"]	[""]	+input
+572227	1305	6	20	6	20	["a"]	[""]	+input
+572489	1309	6	21	6	21	["g"]	[""]	+input
+572611	1313	6	22	6	22	["e"]	[""]	+input
+572851	1317	6	23	6	23	["m"]	[""]	+input
+573111	1321	6	24	6	24	[" "]	[""]	+input
+574794	1325	6	25	6	25	["r"]	[""]	+input
+574851	1328	6	26	6	26	["e"]	[""]	+input
+575299	1333	6	27	6	27	["g"]	[""]	+input
+575511	1337	6	28	6	28	["r"]	[""]	+input
+575683	1341	6	29	6	29	["e"]	[""]	+input
+576547	1345	6	30	6	30	["s"]	[""]	+input
+576711	1349	6	31	6	31	["s"]	[""]	+input
+577299	1353	6	32	6	32	["i"]	[""]	+input
+577611	1357	6	33	6	33	["v"]	[""]	+input
+577715	1361	6	34	6	34	["a"]	[""]	+input
+579976	1370	6	35	6	36	[""]	["\""]	+delete
+580760	1376	6	35	6	35	["!"]	[""]	+input
+582995	1382	6	36	6	36	["\""]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 590926
+- raw_log_line: 1388
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+
+c = int(input(""))
+
+for i in range(c,-1,-1):
+	print(i)
+	if 0 == i :
+		print("Fim de contagem regressiva!")
+```

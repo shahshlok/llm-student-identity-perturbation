@@ -1,0 +1,5729 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "530",
+    "assessment_id": "4954",
+    "assessment_title": "Lab 2 - Estrutura Condicional Composta",
+    "exercise_id": "3334",
+    "student_id": "8722",
+    "condition": "full",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/530/users/8722/executions/4954_3334.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/530/users/8722/codemirror/4954_3334.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-08-22 15:50:33",
+        "grade": 67.0,
+        "pass_count": 2,
+        "failed_test_indices_0idx": [
+          2
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": true,
+            "input": "1.0\n5.0\n6.0",
+            "expected": "-2.0\n-3.0",
+            "actual": "-2.0\n-3.0"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": true,
+            "input": "1.0\n4.0\n-5.0",
+            "expected": "1.0\n-5.0",
+            "actual": "1.0\n-5.0"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "10.0\n6.0\n10.0",
+            "expected": "a equacao nao possui raizes reais",
+            "actual": "a equacao nao possui produtos reais"
+          }
+        ]
+      },
+      "trace": {
+        "attempt_start_code": "",
+        "items": [
+          {
+            "item_type": "edit_segment",
+            "change_event_count": 267,
+            "changes": [
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:22.811000",
+                "line_number": 8,
+                "from": {
+                  "line": 0,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 0
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:23.418000",
+                "line_number": 12,
+                "from": {
+                  "line": 0,
+                  "ch": 1
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 1
+                },
+                "text": [
+                  "="
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:29.755000",
+                "line_number": 16,
+                "from": {
+                  "line": 0,
+                  "ch": 2
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 2
+                },
+                "text": [
+                  "f"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:30.010000",
+                "line_number": 20,
+                "from": {
+                  "line": 0,
+                  "ch": 3
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 3
+                },
+                "text": [
+                  "l"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:30.219000",
+                "line_number": 24,
+                "from": {
+                  "line": 0,
+                  "ch": 4
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 4
+                },
+                "text": [
+                  "o"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:30.426000",
+                "line_number": 28,
+                "from": {
+                  "line": 0,
+                  "ch": 5
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 5
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:30.699000",
+                "line_number": 32,
+                "from": {
+                  "line": 0,
+                  "ch": 6
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 6
+                },
+                "text": [
+                  "t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:33.133000",
+                "line_number": 37,
+                "from": {
+                  "line": 0,
+                  "ch": 7
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 7
+                },
+                "text": [
+                  "()"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:34.618000",
+                "line_number": 43,
+                "from": {
+                  "line": 0,
+                  "ch": 8
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 8
+                },
+                "text": [
+                  "i"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:34.906000",
+                "line_number": 47,
+                "from": {
+                  "line": 0,
+                  "ch": 9
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 9
+                },
+                "text": [
+                  "n"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:35.458000",
+                "line_number": 51,
+                "from": {
+                  "line": 0,
+                  "ch": 10
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 10
+                },
+                "text": [
+                  "p"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:35.788000",
+                "line_number": 55,
+                "from": {
+                  "line": 0,
+                  "ch": 11
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 11
+                },
+                "text": [
+                  "u"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:35.996000",
+                "line_number": 59,
+                "from": {
+                  "line": 0,
+                  "ch": 12
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 12
+                },
+                "text": [
+                  "t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:36.762000",
+                "line_number": 63,
+                "from": {
+                  "line": 0,
+                  "ch": 13
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 13
+                },
+                "text": [
+                  "9"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:38.186000",
+                "line_number": 68,
+                "from": {
+                  "line": 0,
+                  "ch": 13
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 14
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "9"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:38.713000",
+                "line_number": 74,
+                "from": {
+                  "line": 0,
+                  "ch": 13
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 13
+                },
+                "text": [
+                  "()"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:39.453000",
+                "line_number": 81,
+                "from": {
+                  "line": 0,
+                  "ch": 14
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 14
+                },
+                "text": [
+                  "\"\""
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:40.634000",
+                "line_number": 88,
+                "from": {
+                  "line": 0,
+                  "ch": 15
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 15
+                },
+                "text": [
+                  "Q"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:41.228000",
+                "line_number": 93,
+                "from": {
+                  "line": 0,
+                  "ch": 16
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 16
+                },
+                "text": [
+                  "u"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:41.405000",
+                "line_number": 97,
+                "from": {
+                  "line": 0,
+                  "ch": 17
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 17
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:41.931000",
+                "line_number": 101,
+                "from": {
+                  "line": 0,
+                  "ch": 18
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 18
+                },
+                "text": [
+                  "l"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:42.154000",
+                "line_number": 105,
+                "from": {
+                  "line": 0,
+                  "ch": 19
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 19
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:42.426000",
+                "line_number": 109,
+                "from": {
+                  "line": 0,
+                  "ch": 20
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 20
+                },
+                "text": [
+                  "o"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:42.717000",
+                "line_number": 113,
+                "from": {
+                  "line": 0,
+                  "ch": 21
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 21
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:42.956000",
+                "line_number": 117,
+                "from": {
+                  "line": 0,
+                  "ch": 22
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 22
+                },
+                "text": [
+                  "v"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:43.067000",
+                "line_number": 121,
+                "from": {
+                  "line": 0,
+                  "ch": 23
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 23
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:43.338000",
+                "line_number": 125,
+                "from": {
+                  "line": 0,
+                  "ch": 24
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 24
+                },
+                "text": [
+                  "l"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:43.546000",
+                "line_number": 129,
+                "from": {
+                  "line": 0,
+                  "ch": 25
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 25
+                },
+                "text": [
+                  "o"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:43.661000",
+                "line_number": 133,
+                "from": {
+                  "line": 0,
+                  "ch": 26
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 26
+                },
+                "text": [
+                  "r"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:43.836000",
+                "line_number": 137,
+                "from": {
+                  "line": 0,
+                  "ch": 27
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 27
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:43.980000",
+                "line_number": 141,
+                "from": {
+                  "line": 0,
+                  "ch": 28
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 28
+                },
+                "text": [
+                  "d"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:44.172000",
+                "line_number": 145,
+                "from": {
+                  "line": 0,
+                  "ch": 29
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 29
+                },
+                "text": [
+                  "e"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:44.269000",
+                "line_number": 149,
+                "from": {
+                  "line": 0,
+                  "ch": 30
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 30
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:44.746000",
+                "line_number": 153,
+                "from": {
+                  "line": 0,
+                  "ch": 31
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 31
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:45.562000",
+                "line_number": 158,
+                "from": {
+                  "line": 0,
+                  "ch": 32
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 32
+                },
+                "text": [
+                  ":"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:46.269000",
+                "line_number": 163,
+                "from": {
+                  "line": 0,
+                  "ch": 33
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 33
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:48.621000",
+                "line_number": 175,
+                "from": {
+                  "line": 0,
+                  "ch": 37
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 37
+                },
+                "text": [
+                  "",
+                  ""
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:49.757000",
+                "line_number": 181,
+                "from": {
+                  "line": 1,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 0
+                },
+                "text": [
+                  "b"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:50.541000",
+                "line_number": 185,
+                "from": {
+                  "line": 1,
+                  "ch": 1
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 1
+                },
+                "text": [
+                  "="
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:51.132000",
+                "line_number": 189,
+                "from": {
+                  "line": 1,
+                  "ch": 2
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 2
+                },
+                "text": [
+                  "f"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:51.322000",
+                "line_number": 193,
+                "from": {
+                  "line": 1,
+                  "ch": 3
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 3
+                },
+                "text": [
+                  "l"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:51.501000",
+                "line_number": 197,
+                "from": {
+                  "line": 1,
+                  "ch": 4
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 4
+                },
+                "text": [
+                  "o"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:51.787000",
+                "line_number": 201,
+                "from": {
+                  "line": 1,
+                  "ch": 5
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 5
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:52.044000",
+                "line_number": 205,
+                "from": {
+                  "line": 1,
+                  "ch": 6
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 6
+                },
+                "text": [
+                  "t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:54.106000",
+                "line_number": 210,
+                "from": {
+                  "line": 1,
+                  "ch": 7
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 7
+                },
+                "text": [
+                  "()"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:54.539000",
+                "line_number": 216,
+                "from": {
+                  "line": 1,
+                  "ch": 8
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 8
+                },
+                "text": [
+                  "i"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:54.794000",
+                "line_number": 220,
+                "from": {
+                  "line": 1,
+                  "ch": 9
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 9
+                },
+                "text": [
+                  "n"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:55.274000",
+                "line_number": 224,
+                "from": {
+                  "line": 1,
+                  "ch": 10
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 10
+                },
+                "text": [
+                  "p"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:55.626000",
+                "line_number": 228,
+                "from": {
+                  "line": 1,
+                  "ch": 11
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 11
+                },
+                "text": [
+                  "u"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:55.914000",
+                "line_number": 232,
+                "from": {
+                  "line": 1,
+                  "ch": 12
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 12
+                },
+                "text": [
+                  "t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:56.716000",
+                "line_number": 237,
+                "from": {
+                  "line": 1,
+                  "ch": 13
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 13
+                },
+                "text": [
+                  "()"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:59.404000",
+                "line_number": 244,
+                "from": {
+                  "line": 1,
+                  "ch": 14
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 14
+                },
+                "text": [
+                  "\"\""
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:43:59.789000",
+                "line_number": 249,
+                "from": {
+                  "line": 1,
+                  "ch": 15
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 15
+                },
+                "text": [
+                  "Q"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:00.345000",
+                "line_number": 254,
+                "from": {
+                  "line": 1,
+                  "ch": 16
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 16
+                },
+                "text": [
+                  "u"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:00.476000",
+                "line_number": 258,
+                "from": {
+                  "line": 1,
+                  "ch": 17
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 17
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:00.716000",
+                "line_number": 262,
+                "from": {
+                  "line": 1,
+                  "ch": 18
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 18
+                },
+                "text": [
+                  "l"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:00.941000",
+                "line_number": 266,
+                "from": {
+                  "line": 1,
+                  "ch": 19
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 19
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:01.196000",
+                "line_number": 270,
+                "from": {
+                  "line": 1,
+                  "ch": 20
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 20
+                },
+                "text": [
+                  "o"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:01.482000",
+                "line_number": 274,
+                "from": {
+                  "line": 1,
+                  "ch": 21
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 21
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:01.690000",
+                "line_number": 278,
+                "from": {
+                  "line": 1,
+                  "ch": 22
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 22
+                },
+                "text": [
+                  "v"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:01.818000",
+                "line_number": 282,
+                "from": {
+                  "line": 1,
+                  "ch": 23
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 23
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:02.074000",
+                "line_number": 286,
+                "from": {
+                  "line": 1,
+                  "ch": 24
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 24
+                },
+                "text": [
+                  "l"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:02.237000",
+                "line_number": 290,
+                "from": {
+                  "line": 1,
+                  "ch": 25
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 25
+                },
+                "text": [
+                  "o"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:02.410000",
+                "line_number": 294,
+                "from": {
+                  "line": 1,
+                  "ch": 26
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 26
+                },
+                "text": [
+                  "r"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:02.569000",
+                "line_number": 298,
+                "from": {
+                  "line": 1,
+                  "ch": 27
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 27
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:02.762000",
+                "line_number": 302,
+                "from": {
+                  "line": 1,
+                  "ch": 28
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 28
+                },
+                "text": [
+                  "d"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:02.989000",
+                "line_number": 306,
+                "from": {
+                  "line": 1,
+                  "ch": 29
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 29
+                },
+                "text": [
+                  "e"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:03.501000",
+                "line_number": 310,
+                "from": {
+                  "line": 1,
+                  "ch": 30
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 30
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:03.866000",
+                "line_number": 314,
+                "from": {
+                  "line": 1,
+                  "ch": 31
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 31
+                },
+                "text": [
+                  "b"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:05.644000",
+                "line_number": 319,
+                "from": {
+                  "line": 1,
+                  "ch": 32
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 32
+                },
+                "text": [
+                  "?"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:06.013000",
+                "line_number": 324,
+                "from": {
+                  "line": 1,
+                  "ch": 33
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 33
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:08.618000",
+                "line_number": 328,
+                "from": {
+                  "line": 0,
+                  "ch": 32
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 33
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  ":"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:09.226000",
+                "line_number": 334,
+                "from": {
+                  "line": 0,
+                  "ch": 32
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 32
+                },
+                "text": [
+                  "?"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:11.978000",
+                "line_number": 340,
+                "from": {
+                  "line": 1,
+                  "ch": 37
+                },
+                "to": {
+                  "line": 1,
+                  "ch": 37
+                },
+                "text": [
+                  "",
+                  ""
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:12.474000",
+                "line_number": 346,
+                "from": {
+                  "line": 2,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 0
+                },
+                "text": [
+                  "c"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:14.170000",
+                "line_number": 350,
+                "from": {
+                  "line": 2,
+                  "ch": 1
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 1
+                },
+                "text": [
+                  "="
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:15.500000",
+                "line_number": 354,
+                "from": {
+                  "line": 2,
+                  "ch": 2
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 2
+                },
+                "text": [
+                  "f"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:15.645000",
+                "line_number": 358,
+                "from": {
+                  "line": 2,
+                  "ch": 3
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 3
+                },
+                "text": [
+                  "l"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:15.869000",
+                "line_number": 362,
+                "from": {
+                  "line": 2,
+                  "ch": 4
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 4
+                },
+                "text": [
+                  "o"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:16.429000",
+                "line_number": 366,
+                "from": {
+                  "line": 2,
+                  "ch": 5
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 5
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:16.621000",
+                "line_number": 370,
+                "from": {
+                  "line": 2,
+                  "ch": 6
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 6
+                },
+                "text": [
+                  "t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:19.081000",
+                "line_number": 375,
+                "from": {
+                  "line": 2,
+                  "ch": 7
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 7
+                },
+                "text": [
+                  "()"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:19.372000",
+                "line_number": 381,
+                "from": {
+                  "line": 2,
+                  "ch": 8
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 8
+                },
+                "text": [
+                  "i"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:19.677000",
+                "line_number": 385,
+                "from": {
+                  "line": 2,
+                  "ch": 9
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 9
+                },
+                "text": [
+                  "n"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:20.222000",
+                "line_number": 389,
+                "from": {
+                  "line": 2,
+                  "ch": 10
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 10
+                },
+                "text": [
+                  "p"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:20.605000",
+                "line_number": 393,
+                "from": {
+                  "line": 2,
+                  "ch": 11
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 11
+                },
+                "text": [
+                  "u"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:20.861000",
+                "line_number": 397,
+                "from": {
+                  "line": 2,
+                  "ch": 12
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 12
+                },
+                "text": [
+                  "t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:21.881000",
+                "line_number": 402,
+                "from": {
+                  "line": 2,
+                  "ch": 13
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 13
+                },
+                "text": [
+                  "()"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:23.402000",
+                "line_number": 409,
+                "from": {
+                  "line": 2,
+                  "ch": 14
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 14
+                },
+                "text": [
+                  "\"\""
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:23.770000",
+                "line_number": 414,
+                "from": {
+                  "line": 2,
+                  "ch": 15
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 15
+                },
+                "text": [
+                  "Q"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:24.316000",
+                "line_number": 419,
+                "from": {
+                  "line": 2,
+                  "ch": 16
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 16
+                },
+                "text": [
+                  "u"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:25.579000",
+                "line_number": 423,
+                "from": {
+                  "line": 2,
+                  "ch": 17
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 17
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:25.690000",
+                "line_number": 426,
+                "from": {
+                  "line": 2,
+                  "ch": 18
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 18
+                },
+                "text": [
+                  "l"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:25.916000",
+                "line_number": 431,
+                "from": {
+                  "line": 2,
+                  "ch": 19
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 19
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:26.185000",
+                "line_number": 435,
+                "from": {
+                  "line": 2,
+                  "ch": 20
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 20
+                },
+                "text": [
+                  "o"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:27.882000",
+                "line_number": 439,
+                "from": {
+                  "line": 2,
+                  "ch": 21
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 21
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:28.122000",
+                "line_number": 443,
+                "from": {
+                  "line": 2,
+                  "ch": 22
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 22
+                },
+                "text": [
+                  "v"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:28.329000",
+                "line_number": 447,
+                "from": {
+                  "line": 2,
+                  "ch": 23
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 23
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:28.873000",
+                "line_number": 451,
+                "from": {
+                  "line": 2,
+                  "ch": 24
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 24
+                },
+                "text": [
+                  "l"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:29.081000",
+                "line_number": 455,
+                "from": {
+                  "line": 2,
+                  "ch": 25
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 25
+                },
+                "text": [
+                  "o"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:29.308000",
+                "line_number": 459,
+                "from": {
+                  "line": 2,
+                  "ch": 26
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 26
+                },
+                "text": [
+                  "r"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:29.530000",
+                "line_number": 463,
+                "from": {
+                  "line": 2,
+                  "ch": 27
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 27
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:29.706000",
+                "line_number": 467,
+                "from": {
+                  "line": 2,
+                  "ch": 28
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 28
+                },
+                "text": [
+                  "d"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:29.916000",
+                "line_number": 471,
+                "from": {
+                  "line": 2,
+                  "ch": 29
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 29
+                },
+                "text": [
+                  "e"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:30.074000",
+                "line_number": 475,
+                "from": {
+                  "line": 2,
+                  "ch": 30
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 30
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:31.337000",
+                "line_number": 479,
+                "from": {
+                  "line": 2,
+                  "ch": 31
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 31
+                },
+                "text": [
+                  "c"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:33.549000",
+                "line_number": 484,
+                "from": {
+                  "line": 2,
+                  "ch": 32
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 32
+                },
+                "text": [
+                  "?"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:33.931000",
+                "line_number": 489,
+                "from": {
+                  "line": 2,
+                  "ch": 33
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 33
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:47.387000",
+                "line_number": 493,
+                "from": {
+                  "line": 2,
+                  "ch": 37
+                },
+                "to": {
+                  "line": 2,
+                  "ch": 37
+                },
+                "text": [
+                  "",
+                  ""
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:47.802000",
+                "line_number": 498,
+                "from": {
+                  "line": 3,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 3,
+                  "ch": 0
+                },
+                "text": [
+                  "",
+                  ""
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:48.570000",
+                "line_number": 504,
+                "from": {
+                  "line": 4,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 0
+                },
+                "text": [
+                  "d"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:48.794000",
+                "line_number": 508,
+                "from": {
+                  "line": 4,
+                  "ch": 1
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 1
+                },
+                "text": [
+                  "e"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:49.001000",
+                "line_number": 512,
+                "from": {
+                  "line": 4,
+                  "ch": 2
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 2
+                },
+                "text": [
+                  "l"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:49.546000",
+                "line_number": 516,
+                "from": {
+                  "line": 4,
+                  "ch": 3
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 3
+                },
+                "text": [
+                  "t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:49.674000",
+                "line_number": 520,
+                "from": {
+                  "line": 4,
+                  "ch": 4
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 4
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:52.109000",
+                "line_number": 524,
+                "from": {
+                  "line": 4,
+                  "ch": 5
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 5
+                },
+                "text": [
+                  "="
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:44:57.627000",
+                "line_number": 528,
+                "from": {
+                  "line": 4,
+                  "ch": 6
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 6
+                },
+                "text": [
+                  "b"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:45:04.317000",
+                "line_number": 533,
+                "from": {
+                  "line": 4,
+                  "ch": 7
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 7
+                },
+                "text": [
+                  "*"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:45:04.461000",
+                "line_number": 537,
+                "from": {
+                  "line": 4,
+                  "ch": 8
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 8
+                },
+                "text": [
+                  "*"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:45:04.989000",
+                "line_number": 542,
+                "from": {
+                  "line": 4,
+                  "ch": 9
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 9
+                },
+                "text": [
+                  "2"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:45:07.324000",
+                "line_number": 546,
+                "from": {
+                  "line": 4,
+                  "ch": 10
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 10
+                },
+                "text": [
+                  "-"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:45:09.514000",
+                "line_number": 551,
+                "from": {
+                  "line": 4,
+                  "ch": 11
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 11
+                },
+                "text": [
+                  "()"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:45:12.698000",
+                "line_number": 557,
+                "from": {
+                  "line": 4,
+                  "ch": 12
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 12
+                },
+                "text": [
+                  "4"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:45:13.965000",
+                "line_number": 562,
+                "from": {
+                  "line": 4,
+                  "ch": 13
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 13
+                },
+                "text": [
+                  "*"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:45:15.052000",
+                "line_number": 567,
+                "from": {
+                  "line": 4,
+                  "ch": 14
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 14
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:45:15.979000",
+                "line_number": 572,
+                "from": {
+                  "line": 4,
+                  "ch": 15
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 15
+                },
+                "text": [
+                  "*"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:45:16.412000",
+                "line_number": 577,
+                "from": {
+                  "line": 4,
+                  "ch": 16
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 16
+                },
+                "text": [
+                  "c"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:45:18.763000",
+                "line_number": 581,
+                "from": {
+                  "line": 4,
+                  "ch": 18
+                },
+                "to": {
+                  "line": 4,
+                  "ch": 18
+                },
+                "text": [
+                  "",
+                  ""
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:45:43.277000",
+                "line_number": 587,
+                "from": {
+                  "line": 5,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 0
+                },
+                "text": [
+                  "i"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:45:44.137000",
+                "line_number": 591,
+                "from": {
+                  "line": 5,
+                  "ch": 1
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 1
+                },
+                "text": [
+                  "f"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:45:45.097000",
+                "line_number": 595,
+                "from": {
+                  "line": 5,
+                  "ch": 2
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 2
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:39.516000",
+                "line_number": 603,
+                "from": {
+                  "line": 5,
+                  "ch": 3
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 3
+                },
+                "text": [
+                  "d"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:39.753000",
+                "line_number": 607,
+                "from": {
+                  "line": 5,
+                  "ch": 4
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 4
+                },
+                "text": [
+                  "e"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:39.898000",
+                "line_number": 611,
+                "from": {
+                  "line": 5,
+                  "ch": 5
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 5
+                },
+                "text": [
+                  "l"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:40.345000",
+                "line_number": 615,
+                "from": {
+                  "line": 5,
+                  "ch": 6
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 6
+                },
+                "text": [
+                  "t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:40.460000",
+                "line_number": 619,
+                "from": {
+                  "line": 5,
+                  "ch": 7
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 7
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:42.090000",
+                "line_number": 623,
+                "from": {
+                  "line": 5,
+                  "ch": 8
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 8
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:43.433000",
+                "line_number": 628,
+                "from": {
+                  "line": 5,
+                  "ch": 9
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 9
+                },
+                "text": [
+                  "<"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:44.057000",
+                "line_number": 633,
+                "from": {
+                  "line": 5,
+                  "ch": 10
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 10
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:44.368000",
+                "line_number": 637,
+                "from": {
+                  "line": 5,
+                  "ch": 11
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 11
+                },
+                "text": [
+                  "0"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:45.705000",
+                "line_number": 642,
+                "from": {
+                  "line": 5,
+                  "ch": 12
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 12
+                },
+                "text": [
+                  ":"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:46.331000",
+                "line_number": 646,
+                "from": {
+                  "line": 5,
+                  "ch": 13
+                },
+                "to": {
+                  "line": 5,
+                  "ch": 13
+                },
+                "text": [
+                  "",
+                  ""
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:46.331000",
+                "line_number": 647,
+                "from": {
+                  "line": 6,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 0
+                },
+                "text": [
+                  "\t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:49.101000",
+                "line_number": 653,
+                "from": {
+                  "line": 6,
+                  "ch": 1
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 1
+                },
+                "text": [
+                  "p"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:49.307000",
+                "line_number": 657,
+                "from": {
+                  "line": 6,
+                  "ch": 2
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 2
+                },
+                "text": [
+                  "r"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:49.533000",
+                "line_number": 661,
+                "from": {
+                  "line": 6,
+                  "ch": 3
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 3
+                },
+                "text": [
+                  "i"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:49.964000",
+                "line_number": 665,
+                "from": {
+                  "line": 6,
+                  "ch": 4
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 4
+                },
+                "text": [
+                  "n"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:50.073000",
+                "line_number": 669,
+                "from": {
+                  "line": 6,
+                  "ch": 5
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 5
+                },
+                "text": [
+                  "t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:50.827000",
+                "line_number": 674,
+                "from": {
+                  "line": 6,
+                  "ch": 6
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 6
+                },
+                "text": [
+                  "()"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:51.321000",
+                "line_number": 681,
+                "from": {
+                  "line": 6,
+                  "ch": 7
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 7
+                },
+                "text": [
+                  "\"\""
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:51.673000",
+                "line_number": 687,
+                "from": {
+                  "line": 6,
+                  "ch": 8
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 8
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:52.089000",
+                "line_number": 691,
+                "from": {
+                  "line": 6,
+                  "ch": 9
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 9
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:52.361000",
+                "line_number": 695,
+                "from": {
+                  "line": 6,
+                  "ch": 10
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 10
+                },
+                "text": [
+                  "e"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:52.637000",
+                "line_number": 699,
+                "from": {
+                  "line": 6,
+                  "ch": 11
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 11
+                },
+                "text": [
+                  "q"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:52.761000",
+                "line_number": 703,
+                "from": {
+                  "line": 6,
+                  "ch": 12
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 12
+                },
+                "text": [
+                  "u"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:52.905000",
+                "line_number": 707,
+                "from": {
+                  "line": 6,
+                  "ch": 13
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 13
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:53.069000",
+                "line_number": 711,
+                "from": {
+                  "line": 6,
+                  "ch": 14
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 14
+                },
+                "text": [
+                  "c"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:53.194000",
+                "line_number": 715,
+                "from": {
+                  "line": 6,
+                  "ch": 15
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 15
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:53.500000",
+                "line_number": 719,
+                "from": {
+                  "line": 6,
+                  "ch": 16
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 16
+                },
+                "text": [
+                  "o"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:53.801000",
+                "line_number": 723,
+                "from": {
+                  "line": 6,
+                  "ch": 17
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 17
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:53.993000",
+                "line_number": 727,
+                "from": {
+                  "line": 6,
+                  "ch": 18
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 18
+                },
+                "text": [
+                  "n"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:54.201000",
+                "line_number": 731,
+                "from": {
+                  "line": 6,
+                  "ch": 19
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 19
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:54.348000",
+                "line_number": 735,
+                "from": {
+                  "line": 6,
+                  "ch": 20
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 20
+                },
+                "text": [
+                  "o"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:54.601000",
+                "line_number": 739,
+                "from": {
+                  "line": 6,
+                  "ch": 21
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 21
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:54.956000",
+                "line_number": 743,
+                "from": {
+                  "line": 6,
+                  "ch": 22
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 22
+                },
+                "text": [
+                  "p"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:55.165000",
+                "line_number": 747,
+                "from": {
+                  "line": 6,
+                  "ch": 23
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 23
+                },
+                "text": [
+                  "o"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:55.289000",
+                "line_number": 751,
+                "from": {
+                  "line": 6,
+                  "ch": 24
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 24
+                },
+                "text": [
+                  "s"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:55.453000",
+                "line_number": 755,
+                "from": {
+                  "line": 6,
+                  "ch": 25
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 25
+                },
+                "text": [
+                  "s"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:55.561000",
+                "line_number": 759,
+                "from": {
+                  "line": 6,
+                  "ch": 26
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 26
+                },
+                "text": [
+                  "u"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:55.737000",
+                "line_number": 763,
+                "from": {
+                  "line": 6,
+                  "ch": 27
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 27
+                },
+                "text": [
+                  "i"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:56.009000",
+                "line_number": 767,
+                "from": {
+                  "line": 6,
+                  "ch": 28
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 28
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:56.297000",
+                "line_number": 771,
+                "from": {
+                  "line": 6,
+                  "ch": 29
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 29
+                },
+                "text": [
+                  "p"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:56.457000",
+                "line_number": 775,
+                "from": {
+                  "line": 6,
+                  "ch": 30
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 30
+                },
+                "text": [
+                  "r"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:56.588000",
+                "line_number": 779,
+                "from": {
+                  "line": 6,
+                  "ch": 31
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 31
+                },
+                "text": [
+                  "o"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:56.745000",
+                "line_number": 783,
+                "from": {
+                  "line": 6,
+                  "ch": 32
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 32
+                },
+                "text": [
+                  "d"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:56.938000",
+                "line_number": 787,
+                "from": {
+                  "line": 6,
+                  "ch": 33
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 33
+                },
+                "text": [
+                  "u"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:57.209000",
+                "line_number": 791,
+                "from": {
+                  "line": 6,
+                  "ch": 34
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 34
+                },
+                "text": [
+                  "t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:57.290000",
+                "line_number": 794,
+                "from": {
+                  "line": 6,
+                  "ch": 35
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 35
+                },
+                "text": [
+                  "o"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:57.612000",
+                "line_number": 799,
+                "from": {
+                  "line": 6,
+                  "ch": 36
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 36
+                },
+                "text": [
+                  "s"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:57.932000",
+                "line_number": 803,
+                "from": {
+                  "line": 6,
+                  "ch": 37
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 37
+                },
+                "text": [
+                  "r"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:59.609000",
+                "line_number": 806,
+                "from": {
+                  "line": 6,
+                  "ch": 37
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 38
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "r"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:47:59.917000",
+                "line_number": 811,
+                "from": {
+                  "line": 6,
+                  "ch": 37
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 37
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:00.028000",
+                "line_number": 815,
+                "from": {
+                  "line": 6,
+                  "ch": 38
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 38
+                },
+                "text": [
+                  "r"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:00.217000",
+                "line_number": 819,
+                "from": {
+                  "line": 6,
+                  "ch": 39
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 39
+                },
+                "text": [
+                  "e"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:00.441000",
+                "line_number": 823,
+                "from": {
+                  "line": 6,
+                  "ch": 40
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 40
+                },
+                "text": [
+                  "e"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:01.818000",
+                "line_number": 826,
+                "from": {
+                  "line": 6,
+                  "ch": 40
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 41
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "e"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:02.505000",
+                "line_number": 831,
+                "from": {
+                  "line": 6,
+                  "ch": 40
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 40
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:02.634000",
+                "line_number": 834,
+                "from": {
+                  "line": 6,
+                  "ch": 41
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 41
+                },
+                "text": [
+                  "i"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:02.836000",
+                "line_number": 839,
+                "from": {
+                  "line": 6,
+                  "ch": 42
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 42
+                },
+                "text": [
+                  "s"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:03.915000",
+                "line_number": 844,
+                "from": {
+                  "line": 6,
+                  "ch": 43
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 43
+                },
+                "text": [
+                  ":"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:05.354000",
+                "line_number": 848,
+                "from": {
+                  "line": 6,
+                  "ch": 43
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 44
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  ":"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:09.371000",
+                "line_number": 853,
+                "from": {
+                  "line": 6,
+                  "ch": 45
+                },
+                "to": {
+                  "line": 6,
+                  "ch": 45
+                },
+                "text": [
+                  "",
+                  ""
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:09.371000",
+                "line_number": 854,
+                "from": {
+                  "line": 7,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 7,
+                  "ch": 0
+                },
+                "text": [
+                  "\t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:10.029000",
+                "line_number": 860,
+                "from": {
+                  "line": 7,
+                  "ch": 1
+                },
+                "to": {
+                  "line": 7,
+                  "ch": 1
+                },
+                "text": [
+                  "e"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:10.153000",
+                "line_number": 864,
+                "from": {
+                  "line": 7,
+                  "ch": 2
+                },
+                "to": {
+                  "line": 7,
+                  "ch": 2
+                },
+                "text": [
+                  "l"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:10.428000",
+                "line_number": 868,
+                "from": {
+                  "line": 7,
+                  "ch": 3
+                },
+                "to": {
+                  "line": 7,
+                  "ch": 3
+                },
+                "text": [
+                  "s"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:10.665000",
+                "line_number": 872,
+                "from": {
+                  "line": 7,
+                  "ch": 4
+                },
+                "to": {
+                  "line": 7,
+                  "ch": 4
+                },
+                "text": [
+                  "e"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:11.624000",
+                "line_number": 875,
+                "from": {
+                  "line": 7,
+                  "ch": 4
+                },
+                "to": {
+                  "line": 7,
+                  "ch": 5
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "e"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:11.786000",
+                "line_number": 879,
+                "from": {
+                  "line": 7,
+                  "ch": 3
+                },
+                "to": {
+                  "line": 7,
+                  "ch": 4
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "s"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:12.170000",
+                "line_number": 883,
+                "from": {
+                  "line": 7,
+                  "ch": 2
+                },
+                "to": {
+                  "line": 7,
+                  "ch": 3
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "l"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:12.474000",
+                "line_number": 887,
+                "from": {
+                  "line": 7,
+                  "ch": 1
+                },
+                "to": {
+                  "line": 7,
+                  "ch": 2
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "e"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:12.888000",
+                "line_number": 891,
+                "from": {
+                  "line": 7,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 7,
+                  "ch": 1
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "\t"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:13.836000",
+                "line_number": 896,
+                "from": {
+                  "line": 7,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 7,
+                  "ch": 0
+                },
+                "text": [
+                  "e"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:14.009000",
+                "line_number": 900,
+                "from": {
+                  "line": 7,
+                  "ch": 1
+                },
+                "to": {
+                  "line": 7,
+                  "ch": 1
+                },
+                "text": [
+                  "l"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:14.269000",
+                "line_number": 904,
+                "from": {
+                  "line": 7,
+                  "ch": 2
+                },
+                "to": {
+                  "line": 7,
+                  "ch": 2
+                },
+                "text": [
+                  "s"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:14.457000",
+                "line_number": 908,
+                "from": {
+                  "line": 7,
+                  "ch": 3
+                },
+                "to": {
+                  "line": 7,
+                  "ch": 3
+                },
+                "text": [
+                  "e"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:16.876000",
+                "line_number": 913,
+                "from": {
+                  "line": 7,
+                  "ch": 4
+                },
+                "to": {
+                  "line": 7,
+                  "ch": 4
+                },
+                "text": [
+                  ":"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:17.307000",
+                "line_number": 917,
+                "from": {
+                  "line": 7,
+                  "ch": 5
+                },
+                "to": {
+                  "line": 7,
+                  "ch": 5
+                },
+                "text": [
+                  "",
+                  ""
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:17.307000",
+                "line_number": 918,
+                "from": {
+                  "line": 8,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 0
+                },
+                "text": [
+                  "\t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:32.236000",
+                "line_number": 924,
+                "from": {
+                  "line": 8,
+                  "ch": 1
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 1
+                },
+                "text": [
+                  "x"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:32.685000",
+                "line_number": 928,
+                "from": {
+                  "line": 8,
+                  "ch": 2
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 2
+                },
+                "text": [
+                  "1"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:33.272000",
+                "line_number": 932,
+                "from": {
+                  "line": 8,
+                  "ch": 3
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 3
+                },
+                "text": [
+                  "="
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:37.020000",
+                "line_number": 937,
+                "from": {
+                  "line": 8,
+                  "ch": 4
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 4
+                },
+                "text": [
+                  "()"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:41.017000",
+                "line_number": 943,
+                "from": {
+                  "line": 8,
+                  "ch": 5
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 5
+                },
+                "text": [
+                  "-"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:45.465000",
+                "line_number": 947,
+                "from": {
+                  "line": 8,
+                  "ch": 6
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 6
+                },
+                "text": [
+                  "b"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:48:51.625000",
+                "line_number": 952,
+                "from": {
+                  "line": 8,
+                  "ch": 7
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 7
+                },
+                "text": [
+                  "+"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:03.436000",
+                "line_number": 958,
+                "from": {
+                  "line": 8,
+                  "ch": 8
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 8
+                },
+                "text": [
+                  "()"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:03.773000",
+                "line_number": 964,
+                "from": {
+                  "line": 8,
+                  "ch": 9
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 9
+                },
+                "text": [
+                  "d"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:04.044000",
+                "line_number": 968,
+                "from": {
+                  "line": 8,
+                  "ch": 10
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 10
+                },
+                "text": [
+                  "e"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:04.200000",
+                "line_number": 972,
+                "from": {
+                  "line": 8,
+                  "ch": 11
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 11
+                },
+                "text": [
+                  "l"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:04.653000",
+                "line_number": 976,
+                "from": {
+                  "line": 8,
+                  "ch": 12
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 12
+                },
+                "text": [
+                  "t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:04.794000",
+                "line_number": 980,
+                "from": {
+                  "line": 8,
+                  "ch": 13
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 13
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:06.169000",
+                "line_number": 985,
+                "from": {
+                  "line": 8,
+                  "ch": 14
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 14
+                },
+                "text": [
+                  "*"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:06.348000",
+                "line_number": 989,
+                "from": {
+                  "line": 8,
+                  "ch": 15
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 15
+                },
+                "text": [
+                  "*"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:12.184000",
+                "line_number": 995,
+                "from": {
+                  "line": 8,
+                  "ch": 16
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 16
+                },
+                "text": [
+                  "()"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:12.729000",
+                "line_number": 1001,
+                "from": {
+                  "line": 8,
+                  "ch": 17
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 17
+                },
+                "text": [
+                  "1"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:13.753000",
+                "line_number": 1005,
+                "from": {
+                  "line": 8,
+                  "ch": 18
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 18
+                },
+                "text": [
+                  "/"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:14.393000",
+                "line_number": 1009,
+                "from": {
+                  "line": 8,
+                  "ch": 19
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 19
+                },
+                "text": [
+                  "2"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:32.875000",
+                "line_number": 1015,
+                "from": {
+                  "line": 8,
+                  "ch": 23
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 23
+                },
+                "text": [
+                  "?"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:33.832000",
+                "line_number": 1021,
+                "from": {
+                  "line": 8,
+                  "ch": 24
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 24
+                },
+                "text": [
+                  "()"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:34.647000",
+                "line_number": 1026,
+                "from": {
+                  "line": 8,
+                  "ch": 24
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 26
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "()"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:35.160000",
+                "line_number": 1030,
+                "from": {
+                  "line": 8,
+                  "ch": 23
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 24
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "?"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:35.964000",
+                "line_number": 1035,
+                "from": {
+                  "line": 8,
+                  "ch": 23
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 23
+                },
+                "text": [
+                  "/"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:36.668000",
+                "line_number": 1040,
+                "from": {
+                  "line": 8,
+                  "ch": 24
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 24
+                },
+                "text": [
+                  "()"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:38.249000",
+                "line_number": 1046,
+                "from": {
+                  "line": 8,
+                  "ch": 25
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 25
+                },
+                "text": [
+                  "2"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:39.404000",
+                "line_number": 1051,
+                "from": {
+                  "line": 8,
+                  "ch": 26
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 26
+                },
+                "text": [
+                  "*"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:39.853000",
+                "line_number": 1056,
+                "from": {
+                  "line": 8,
+                  "ch": 27
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 27
+                },
+                "text": [
+                  "a"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:42.248000",
+                "line_number": 1062,
+                "from": {
+                  "line": 8,
+                  "ch": 29
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 29
+                },
+                "text": [
+                  "",
+                  ""
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:42.249000",
+                "line_number": 1063,
+                "from": {
+                  "line": 9,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 9,
+                  "ch": 0
+                },
+                "text": [
+                  "\t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:42.777000",
+                "line_number": 1069,
+                "from": {
+                  "line": 9,
+                  "ch": 1
+                },
+                "to": {
+                  "line": 9,
+                  "ch": 1
+                },
+                "text": [
+                  "x"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:43.096000",
+                "line_number": 1073,
+                "from": {
+                  "line": 9,
+                  "ch": 2
+                },
+                "to": {
+                  "line": 9,
+                  "ch": 2
+                },
+                "text": [
+                  "2"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:44.297000",
+                "line_number": 1077,
+                "from": {
+                  "line": 9,
+                  "ch": 3
+                },
+                "to": {
+                  "line": 9,
+                  "ch": 3
+                },
+                "text": [
+                  "="
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:54.138000",
+                "line_number": 1090,
+                "from": {
+                  "line": 9,
+                  "ch": 4
+                },
+                "to": {
+                  "line": 9,
+                  "ch": 4
+                },
+                "text": [
+                  "(-b+(delta**(1/2)))/(2*a)"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "paste"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:56.328000",
+                "line_number": 1095,
+                "from": {
+                  "line": 9,
+                  "ch": 7
+                },
+                "to": {
+                  "line": 9,
+                  "ch": 8
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "+"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:57.130000",
+                "line_number": 1100,
+                "from": {
+                  "line": 9,
+                  "ch": 7
+                },
+                "to": {
+                  "line": 9,
+                  "ch": 7
+                },
+                "text": [
+                  "-"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:59.384000",
+                "line_number": 1104,
+                "from": {
+                  "line": 9,
+                  "ch": 29
+                },
+                "to": {
+                  "line": 9,
+                  "ch": 29
+                },
+                "text": [
+                  "",
+                  ""
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:49:59.385000",
+                "line_number": 1105,
+                "from": {
+                  "line": 10,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 10,
+                  "ch": 0
+                },
+                "text": [
+                  "\t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:00.107000",
+                "line_number": 1110,
+                "from": {
+                  "line": 10,
+                  "ch": 1
+                },
+                "to": {
+                  "line": 10,
+                  "ch": 1
+                },
+                "text": [
+                  "",
+                  ""
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:00.108000",
+                "line_number": 1111,
+                "from": {
+                  "line": 11,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 11,
+                  "ch": 0
+                },
+                "text": [
+                  "\t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:00.634000",
+                "line_number": 1117,
+                "from": {
+                  "line": 11,
+                  "ch": 1
+                },
+                "to": {
+                  "line": 11,
+                  "ch": 1
+                },
+                "text": [
+                  "p"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:00.892000",
+                "line_number": 1121,
+                "from": {
+                  "line": 11,
+                  "ch": 2
+                },
+                "to": {
+                  "line": 11,
+                  "ch": 2
+                },
+                "text": [
+                  "r"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:01.050000",
+                "line_number": 1125,
+                "from": {
+                  "line": 11,
+                  "ch": 3
+                },
+                "to": {
+                  "line": 11,
+                  "ch": 3
+                },
+                "text": [
+                  "i"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:01.405000",
+                "line_number": 1129,
+                "from": {
+                  "line": 11,
+                  "ch": 4
+                },
+                "to": {
+                  "line": 11,
+                  "ch": 4
+                },
+                "text": [
+                  "n"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:01.480000",
+                "line_number": 1133,
+                "from": {
+                  "line": 11,
+                  "ch": 5
+                },
+                "to": {
+                  "line": 11,
+                  "ch": 5
+                },
+                "text": [
+                  "t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:02.392000",
+                "line_number": 1138,
+                "from": {
+                  "line": 11,
+                  "ch": 6
+                },
+                "to": {
+                  "line": 11,
+                  "ch": 6
+                },
+                "text": [
+                  "()"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:03.804000",
+                "line_number": 1144,
+                "from": {
+                  "line": 11,
+                  "ch": 7
+                },
+                "to": {
+                  "line": 11,
+                  "ch": 7
+                },
+                "text": [
+                  "x"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:03.977000",
+                "line_number": 1148,
+                "from": {
+                  "line": 11,
+                  "ch": 8
+                },
+                "to": {
+                  "line": 11,
+                  "ch": 8
+                },
+                "text": [
+                  "1"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:05.306000",
+                "line_number": 1154,
+                "from": {
+                  "line": 11,
+                  "ch": 10
+                },
+                "to": {
+                  "line": 11,
+                  "ch": 10
+                },
+                "text": [
+                  "",
+                  ""
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:05.307000",
+                "line_number": 1155,
+                "from": {
+                  "line": 12,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 12,
+                  "ch": 0
+                },
+                "text": [
+                  "\t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:05.854000",
+                "line_number": 1161,
+                "from": {
+                  "line": 12,
+                  "ch": 1
+                },
+                "to": {
+                  "line": 12,
+                  "ch": 1
+                },
+                "text": [
+                  "p"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:06.251000",
+                "line_number": 1165,
+                "from": {
+                  "line": 12,
+                  "ch": 2
+                },
+                "to": {
+                  "line": 12,
+                  "ch": 2
+                },
+                "text": [
+                  "r"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:06.360000",
+                "line_number": 1168,
+                "from": {
+                  "line": 12,
+                  "ch": 3
+                },
+                "to": {
+                  "line": 12,
+                  "ch": 3
+                },
+                "text": [
+                  "i"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:06.697000",
+                "line_number": 1173,
+                "from": {
+                  "line": 12,
+                  "ch": 4
+                },
+                "to": {
+                  "line": 12,
+                  "ch": 4
+                },
+                "text": [
+                  "n"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:07.737000",
+                "line_number": 1177,
+                "from": {
+                  "line": 12,
+                  "ch": 5
+                },
+                "to": {
+                  "line": 12,
+                  "ch": 5
+                },
+                "text": [
+                  "t"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:09.160000",
+                "line_number": 1182,
+                "from": {
+                  "line": 12,
+                  "ch": 6
+                },
+                "to": {
+                  "line": 12,
+                  "ch": 6
+                },
+                "text": [
+                  "()"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:09.565000",
+                "line_number": 1188,
+                "from": {
+                  "line": 12,
+                  "ch": 7
+                },
+                "to": {
+                  "line": 12,
+                  "ch": 7
+                },
+                "text": [
+                  "x"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:50:09.804000",
+                "line_number": 1192,
+                "from": {
+                  "line": 12,
+                  "ch": 8
+                },
+                "to": {
+                  "line": 12,
+                  "ch": 8
+                },
+                "text": [
+                  "2"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              }
+            ]
+          },
+          {
+            "item_type": "submit",
+            "timestamp": "2023-08-22T15:50:33.242000",
+            "line_number": 1197,
+            "feedback": "You're almost there! Your code is 67% correct, but if you try harder you'll be able to hit 100% of the question.",
+            "code_after_anchor": "a=float(input(\"Qual o valor de a? \"))\nb=float(input(\"Qual o valor de b? \"))\nc=float(input(\"Qual o valor de c? \"))\n\ndelta=b**2-(4*a*c)\nif delta < 0:\n\tprint(\"a equacao nao possui produtos reais\")\nelse:\n\tx1=(-b+(delta**(1/2)))/(2*a)\n\tx2=(-b-(delta**(1/2)))/(2*a)\n\t\n\tprint(x1)\n\tprint(x2)"
+          }
+        ]
+      }
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-08-22 15:51:53",
+        "grade": 67.0,
+        "pass_count": 2,
+        "failed_test_indices_0idx": [
+          2
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": true,
+            "input": "1.0\n5.0\n6.0",
+            "expected": "-2.0\n-3.0",
+            "actual": "-2.0\n-3.0"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": true,
+            "input": "1.0\n4.0\n-5.0",
+            "expected": "1.0\n-5.0",
+            "actual": "1.0\n-5.0"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "10.0\n6.0\n10.0",
+            "expected": "a equacao nao possui raizes reais",
+            "actual": "a equacao nao possui produtos reais"
+          }
+        ]
+      },
+      "trace": {
+        "attempt_start_code": "a=float(input(\"Qual o valor de a? \"))\nb=float(input(\"Qual o valor de b? \"))\nc=float(input(\"Qual o valor de c? \"))\n\ndelta=b**2-(4*a*c)\nif delta < 0:\n\tprint(\"a equacao nao possui produtos reais\")\nelse:\n\tx1=(-b+(delta**(1/2)))/(2*a)\n\tx2=(-b-(delta**(1/2)))/(2*a)\n\t\n\tprint(x1)\n\tprint(x2)",
+        "items": [
+          {
+            "item_type": "edit_segment",
+            "change_event_count": 4,
+            "changes": [
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:51:31.815000",
+                "line_number": 1201,
+                "from": {
+                  "line": 8,
+                  "ch": 8
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 9
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "("
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:51:34.344000",
+                "line_number": 1206,
+                "from": {
+                  "line": 9,
+                  "ch": 8
+                },
+                "to": {
+                  "line": 9,
+                  "ch": 9
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "("
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:51:37.031000",
+                "line_number": 1211,
+                "from": {
+                  "line": 8,
+                  "ch": 21
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 22
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  ")"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:51:39.863000",
+                "line_number": 1216,
+                "from": {
+                  "line": 9,
+                  "ch": 21
+                },
+                "to": {
+                  "line": 9,
+                  "ch": 22
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  ")"
+                ],
+                "origin": "+delete"
+              }
+            ]
+          },
+          {
+            "item_type": "saida_testar",
+            "timestamp": "2023-08-22T15:51:52.362000",
+            "line_number": 1225,
+            "command": "$ python3 main.py",
+            "output_lines": [
+              "Qual o valor de a? 1.0",
+              "Qual o valor de b? -2.0",
+              "Qual o valor de c? -3.0",
+              "3.0",
+              "-1.0"
+            ],
+            "code_after_anchor": "a=float(input(\"Qual o valor de a? \"))\nb=float(input(\"Qual o valor de b? \"))\nc=float(input(\"Qual o valor de c? \"))\n\ndelta=b**2-(4*a*c)\nif delta < 0:\n\tprint(\"a equacao nao possui produtos reais\")\nelse:\n\tx1=(-b+delta**(1/2))/(2*a)\n\tx2=(-b-delta**(1/2))/(2*a)\n\t\n\tprint(x1)\n\tprint(x2)"
+          },
+          {
+            "item_type": "submit",
+            "timestamp": "2023-08-22T15:51:53.734000",
+            "line_number": 1226,
+            "feedback": "You're almost there! Your code is 67% correct, but if you try harder you'll be able to hit 100% of the question.",
+            "code_after_anchor": "a=float(input(\"Qual o valor de a? \"))\nb=float(input(\"Qual o valor de b? \"))\nc=float(input(\"Qual o valor de c? \"))\n\ndelta=b**2-(4*a*c)\nif delta < 0:\n\tprint(\"a equacao nao possui produtos reais\")\nelse:\n\tx1=(-b+delta**(1/2))/(2*a)\n\tx2=(-b-delta**(1/2))/(2*a)\n\t\n\tprint(x1)\n\tprint(x2)"
+          }
+        ]
+      }
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-08-22 15:52:47",
+        "grade": 67.0,
+        "pass_count": 2,
+        "failed_test_indices_0idx": [
+          2
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": true,
+            "input": "1.0\n5.0\n6.0",
+            "expected": "-2.0\n-3.0",
+            "actual": "-2.0\n-3.0"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": true,
+            "input": "1.0\n4.0\n-5.0",
+            "expected": "1.0\n-5.0",
+            "actual": "1.0\n-5.0"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "10.0\n6.0\n10.0",
+            "expected": "a equacao nao possui raizes reais",
+            "actual": "a equacao nao possui produtos reais"
+          }
+        ]
+      },
+      "trace": {
+        "attempt_start_code": "a=float(input(\"Qual o valor de a? \"))\nb=float(input(\"Qual o valor de b? \"))\nc=float(input(\"Qual o valor de c? \"))\n\ndelta=b**2-(4*a*c)\nif delta < 0:\n\tprint(\"a equacao nao possui produtos reais\")\nelse:\n\tx1=(-b+delta**(1/2))/(2*a)\n\tx2=(-b-delta**(1/2))/(2*a)\n\t\n\tprint(x1)\n\tprint(x2)",
+        "items": [
+          {
+            "item_type": "edit_segment",
+            "change_event_count": 4,
+            "changes": [
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:52:21.448000",
+                "line_number": 1230,
+                "from": {
+                  "line": 8,
+                  "ch": 26
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 27
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  ")"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:52:23.081000",
+                "line_number": 1243,
+                "from": {
+                  "line": 8,
+                  "ch": 22
+                },
+                "to": {
+                  "line": 8,
+                  "ch": 23
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "("
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:52:25.609000",
+                "line_number": 1265,
+                "from": {
+                  "line": 9,
+                  "ch": 26
+                },
+                "to": {
+                  "line": 9,
+                  "ch": 27
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  ")"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-08-22T15:52:27.239000",
+                "line_number": 1278,
+                "from": {
+                  "line": 9,
+                  "ch": 22
+                },
+                "to": {
+                  "line": 9,
+                  "ch": 23
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "("
+                ],
+                "origin": "+delete"
+              }
+            ]
+          },
+          {
+            "item_type": "saida_testar",
+            "timestamp": "2023-08-22T15:52:46.446000",
+            "line_number": 1287,
+            "command": "$ python3 main.py",
+            "output_lines": [
+              "Qual o valor de a? 1.0",
+              "Qual o valor de b? -2.0",
+              "Qual o valor de c? -3.0",
+              "3.0",
+              "-1.0"
+            ],
+            "code_after_anchor": "a=float(input(\"Qual o valor de a? \"))\nb=float(input(\"Qual o valor de b? \"))\nc=float(input(\"Qual o valor de c? \"))\n\ndelta=b**2-(4*a*c)\nif delta < 0:\n\tprint(\"a equacao nao possui produtos reais\")\nelse:\n\tx1=(-b+delta**(1/2))/2*a\n\tx2=(-b-delta**(1/2))/2*a\n\t\n\tprint(x1)\n\tprint(x2)"
+          },
+          {
+            "item_type": "submit",
+            "timestamp": "2023-08-22T15:52:47.862000",
+            "line_number": 1288,
+            "feedback": "You're almost there! Your code is 67% correct, but if you try harder you'll be able to hit 100% of the question.",
+            "code_after_anchor": "a=float(input(\"Qual o valor de a? \"))\nb=float(input(\"Qual o valor de b? \"))\nc=float(input(\"Qual o valor de c? \"))\n\ndelta=b**2-(4*a*c)\nif delta < 0:\n\tprint(\"a equacao nao possui produtos reais\")\nelse:\n\tx1=(-b+delta**(1/2))/2*a\n\tx2=(-b-delta**(1/2))/2*a\n\t\n\tprint(x1)\n\tprint(x2)"
+          }
+        ]
+      }
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

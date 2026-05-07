@@ -1,0 +1,755 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 563
+- assessment_id: 5373
+- assessment_title: Lab 4 – Repetição por Condição (while)
+- exercise_id: 6042
+- student_id: 9206
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-02-06T15:22:40.761000
+
+Execution Result
+
+- submitted_at: 2024-02-06 15:36:04
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "-525\n1075\n333\n-9\n-1"
+    expected: "4\n874"
+    actual: "0 0"
+  - test_index_0idx: 1 [FAIL]
+    input: "0\n0\n0\n0\n0\n0\n0\n-1"
+    expected: "7\n0"
+    actual: "0 0"
+  - test_index_0idx: 2 [FAIL]
+    input: "10953\n32653\n-10953\n-1"
+    expected: "3\n32653"
+    actual: "43606 2"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 202
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	8	0	0	0	0	["n"]	[""]	+input
+213	12	0	1	0	1	[" "]	[""]	+input
+496	16	0	2	0	2	["="]	[""]	+input
+1197	20	0	3	0	3	[" "]	[""]	+input
+1646	24	0	4	0	4	["i"]	[""]	+input
+1845	28	0	5	0	5	["n"]	[""]	+input
+2046	32	0	6	0	6	["t"]	[""]	+input
+2718	37	0	7	0	7	["()"]	[""]	+input
+3745	43	0	8	0	8	["i"]	[""]	+input
+5518	47	0	9	0	9	["n"]	[""]	+input
+5796	51	0	10	0	10	["p"]	[""]	+input
+6129	55	0	11	0	11	["u"]	[""]	+input
+6319	59	0	12	0	12	["t"]	[""]	+input
+6929	64	0	13	0	13	["()"]	[""]	+input
+7646	71	0	14	0	14	["\"\""]	[""]	+input
+8029	78	0	15	0	15	["I"]	[""]	+input
+8195	83	0	16	0	16	["n"]	[""]	+input
+8349	87	0	17	0	17	["f"]	[""]	+input
+8495	91	0	18	0	18	["o"]	[""]	+input
+8653	95	0	19	0	19	["r"]	[""]	+input
+8797	99	0	20	0	20	["m"]	[""]	+input
+9149	103	0	21	0	21	["e"]	[""]	+input
+9445	107	0	22	0	22	[" "]	[""]	+input
+9645	111	0	23	0	23	["o"]	[""]	+input
+9746	115	0	24	0	24	["s"]	[""]	+input
+9853	119	0	25	0	25	[" "]	[""]	+input
+10029	123	0	26	0	26	["n"]	[""]	+input
+10301	127	0	27	0	27	["u"]	[""]	+input
+10512	131	0	28	0	28	["m"]	[""]	+input
+10653	135	0	29	0	29	["e"]	[""]	+input
+10865	139	0	30	0	30	["r"]	[""]	+input
+10995	143	0	31	0	31	["o"]	[""]	+input
+11149	147	0	32	0	32	["s"]	[""]	+input
+11262	150	0	33	0	33	[" "]	[""]	+input
+11446	155	0	34	0	34	["i"]	[""]	+input
+11597	159	0	35	0	35	["n"]	[""]	+input
+13053	163	0	36	0	36	["e"]	[""]	+input
+13565	166	0	36	0	37	[""]	["e"]	+delete
+13965	171	0	36	0	36	["t"]	[""]	+input
+14112	175	0	37	0	37	["e"]	[""]	+input
+14429	179	0	38	0	38	["i"]	[""]	+input
+14562	183	0	39	0	39	["r"]	[""]	+input
+14704	187	0	40	0	40	["o"]	[""]	+input
+14866	191	0	41	0	41	["s"]	[""]	+input
+15901	196	0	42	0	42	[":"]	[""]	+input
+17501	212	0	46	0	46	["",""]	[""]	+input
+54061	226	1	0	1	0	["c"]	[""]	+input
+54211	230	1	1	1	1	["o"]	[""]	+input
+54412	234	1	2	1	2	["n"]	[""]	+input
+54577	238	1	3	1	3	["t"]	[""]	+input
+54830	241	1	3	1	4	[""]	["t"]	+delete
+54976	245	1	2	1	3	[""]	["n"]	+delete
+55132	249	1	1	1	2	[""]	["o"]	+delete
+55294	253	1	0	1	1	[""]	["c"]	+delete
+55518	258	1	0	1	0	["s"]	[""]	+input
+55932	262	1	1	1	1	["o"]	[""]	+input
+56061	266	1	2	1	2	["m"]	[""]	+input
+56225	270	1	3	1	3	["a"]	[""]	+input
+56395	274	1	4	1	4	[" "]	[""]	+input
+57148	278	1	5	1	5	["="]	[""]	+input
+57360	282	1	6	1	6	[" "]	[""]	+input
+57596	286	1	7	1	7	["0"]	[""]	+input
+57917	289	1	8	1	8	["",""]	[""]	+input
+58544	295	2	0	2	0	["c"]	[""]	+input
+58645	299	2	1	2	1	["o"]	[""]	+input
+58797	303	2	2	2	2	["n"]	[""]	+input
+59011	307	2	3	2	3	["t"]	[""]	+input
+60013	311	2	4	2	4	[" "]	[""]	+input
+60144	315	2	5	2	5	["="]	[""]	+input
+60279	319	2	6	2	6	[" "]	[""]	+input
+60593	323	2	7	2	7	["0"]	[""]	+input
+61117	326	2	8	2	8	["",""]	[""]	+input
+116943	334	3	0	3	0	["n"]	[""]	+input
+117107	338	3	1	3	1	[" "]	[""]	+input
+117359	342	3	2	3	2	["="]	[""]	+input
+117612	346	3	3	3	3	[" "]	[""]	+input
+118975	350	3	4	3	4	["f"]	[""]	+input
+119074	354	3	5	3	5	["l"]	[""]	+input
+119212	358	3	6	3	6	["o"]	[""]	+input
+119491	362	3	7	3	7	["a"]	[""]	+input
+119596	366	3	8	3	8	["t"]	[""]	+input
+120028	370	3	9	3	9	[" "]	[""]	+input
+121180	373	3	9	3	10	[""]	[" "]	+delete
+126764	377	3	8	3	9	[""]	["t"]	+delete
+126909	381	3	7	3	8	[""]	["a"]	+delete
+127071	385	3	6	3	7	[""]	["o"]	+delete
+127227	389	3	5	3	6	[""]	["l"]	+delete
+127390	393	3	4	3	5	[""]	["f"]	+delete
+127547	397	3	3	3	4	[""]	[" "]	+delete
+127725	401	3	2	3	3	[""]	["="]	+delete
+127931	405	3	1	3	2	[""]	[" "]	+delete
+128192	409	3	0	3	1	[""]	["n"]	+delete
+129107	413	3	0	3	0	["",""]	[""]	+input
+129874	419	4	0	4	0	["w"]	[""]	+input
+130012	423	4	1	4	1	["h"]	[""]	+input
+130207	427	4	2	4	2	["i"]	[""]	+input
+130431	431	4	3	4	3	["l"]	[""]	+input
+130544	435	4	4	4	4	["e"]	[""]	+input
+131596	440	4	5	4	5	["()"]	[""]	+input
+136607	448	4	6	4	6	["n"]	[""]	+input
+137891	453	4	7	4	7	[">"]	[""]	+input
+139358	458	4	8	4	8	["="]	[""]	+input
+140274	462	4	9	4	9	["0"]	[""]	+input
+147524	468	4	10	4	10	[" "]	[""]	+input
+147628	472	4	11	4	11	["a"]	[""]	+input
+147723	475	4	12	4	12	["n"]	[""]	+input
+147906	480	4	13	4	13	["d"]	[""]	+input
+148081	484	4	14	4	14	[" "]	[""]	+input
+151996	491	4	15	4	15	["<"]	[""]	+input
+152557	496	4	16	4	16	["="]	[""]	+input
+153363	500	4	17	4	17	[" "]	[""]	+input
+153806	504	4	18	4	18	["-"]	[""]	+input
+154673	508	4	19	4	19	[" "]	[""]	+input
+154828	512	4	20	4	20	["1"]	[""]	+input
+160028	520	4	22	4	22	[":"]	[""]	+input
+160428	524	4	23	4	23	["",""]	[""]	+input
+160428	525	5	0	5	0	["\t"]	[""]	+input
+164380	533	5	1	5	1	["s"]	[""]	+input
+164491	537	5	2	5	2	["o"]	[""]	+input
+164639	541	5	3	5	3	["m"]	[""]	+input
+164779	545	5	4	5	4	["a"]	[""]	+input
+164892	549	5	5	5	5	[" "]	[""]	+input
+165740	554	5	6	5	6	["+"]	[""]	+input
+166578	558	5	6	5	7	[""]	["+"]	+delete
+166843	562	5	5	5	6	[""]	[" "]	+delete
+167556	567	5	5	5	5	[" "]	[""]	+input
+167724	571	5	6	5	6	["="]	[""]	+input
+167806	575	5	7	5	7	[" "]	[""]	+input
+168876	579	5	8	5	8	["s"]	[""]	+input
+169010	583	5	9	5	9	["o"]	[""]	+input
+169163	587	5	10	5	10	["m"]	[""]	+input
+169292	591	5	11	5	11	["a"]	[""]	+input
+169708	595	5	12	5	12	[" "]	[""]	+input
+176924	603	5	13	5	13	["-"]	[""]	+input
+177259	607	5	14	5	14	[" "]	[""]	+input
+177439	611	5	15	5	15	["1"]	[""]	+input
+274718	626	5	16	5	16	["",""]	[""]	+input
+274718	627	6	0	6	0	["\t"]	[""]	+input
+275484	633	6	1	6	1	["c"]	[""]	+input
+275619	637	6	2	6	2	["o"]	[""]	+input
+275818	641	6	3	6	3	["n"]	[""]	+input
+275968	645	6	4	6	4	["t"]	[""]	+input
+276786	649	6	5	6	5	[" "]	[""]	+input
+277135	653	6	6	6	6	["="]	[""]	+input
+277355	657	6	7	6	7	[" "]	[""]	+input
+277968	661	6	8	6	8	["-"]	[""]	+input
+278684	665	6	9	6	9	[" "]	[""]	+input
+279468	668	6	9	6	10	[""]	[" "]	+delete
+279651	672	6	8	6	9	[""]	["-"]	+delete
+279837	676	6	7	6	8	[""]	[" "]	+delete
+280285	681	6	7	6	7	[" "]	[""]	+input
+280451	685	6	8	6	8	["s"]	[""]	+input
+280586	689	6	9	6	9	["o"]	[""]	+input
+280835	693	6	10	6	10	["n"]	[""]	+input
+280956	697	6	11	6	11	["t"]	[""]	+input
+281601	700	6	11	6	12	[""]	["t"]	+delete
+281754	704	6	10	6	11	[""]	["n"]	+delete
+281933	708	6	9	6	10	[""]	["o"]	+delete
+282050	712	6	8	6	9	[""]	["s"]	+delete
+282685	717	6	8	6	8	["c"]	[""]	+input
+282818	721	6	9	6	9	["p"]	[""]	+input
+283021	725	6	10	6	10	["n"]	[""]	+input
+283200	729	6	11	6	11	["t"]	[""]	+input
+283618	732	6	11	6	12	[""]	["t"]	+delete
+283754	736	6	10	6	11	[""]	["n"]	+delete
+284034	740	6	9	6	10	[""]	["p"]	+delete
+284570	745	6	9	6	9	["p"]	[""]	+input
+284851	749	6	10	6	10	["n"]	[""]	+input
+285534	752	6	10	6	11	[""]	["n"]	+delete
+285673	756	6	9	6	10	[""]	["p"]	+delete
+286219	761	6	9	6	9	["p"]	[""]	+input
+286418	765	6	10	6	10	["n"]	[""]	+input
+286586	769	6	11	6	11	["t"]	[""]	+input
+286686	773	6	12	6	12	[" "]	[""]	+input
+287168	777	6	13	6	13	["-"]	[""]	+input
+287402	781	6	14	6	14	[" "]	[""]	+input
+287601	785	6	15	6	15	["1"]	[""]	+input
+288054	788	6	16	6	16	["",""]	[""]	+input
+288054	789	7	0	7	0	["\t"]	[""]	+input
+316717	797	6	9	6	10	[""]	["p"]	+delete
+317067	802	6	9	6	9	["o"]	[""]	+input
+368970	809	5	14	5	15	[""]	[" "]	+delete
+369321	813	5	13	5	14	[""]	["-"]	+delete
+370398	819	5	13	5	13	["+"]	[""]	+input
+370554	824	5	14	5	14	[" "]	[""]	+input
+371852	830	6	14	6	15	[""]	[" "]	+delete
+372014	834	6	13	6	14	[""]	["-"]	+delete
+372954	840	6	13	6	13	["+"]	[""]	+input
+373115	845	6	14	6	14	[" "]	[""]	+input
+376927	851	6	16	6	16	["",""]	[""]	+input
+376927	852	7	0	7	0	["\t"]	[""]	+input
+377998	857	7	0	7	1	[""]	["\t"]	+delete
+378921	862	7	0	7	0	["p"]	[""]	+input
+379050	866	7	1	7	1	["r"]	[""]	+input
+379714	870	7	2	7	2	["i"]	[""]	+input
+379865	874	7	3	7	3	["n"]	[""]	+input
+380314	878	7	4	7	4	["t"]	[""]	+input
+381147	883	7	5	7	5	["()"]	[""]	+input
+381321	889	7	6	7	6	["s"]	[""]	+input
+381452	893	7	7	7	7	["o"]	[""]	+input
+381597	897	7	8	7	8	["m"]	[""]	+input
+381721	901	7	9	7	9	["a"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 400932
+- raw_log_line: 907
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input("Informe os numeros inteiros:"))
+soma = 0
+cont = 0
+
+while(n>=0 and <= - 1):
+	soma = soma + 1
+	cont = cont + 1
+print(soma)
+	
+```
+Run Output
+```text
+File "main.py", line 5
+while(n>=0 and <= - 1):
+SyntaxError: invalid syntax
+```
+
+Edit Segment 2
+- raw_change_event_count: 21
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+406929	911	4	19	4	20	[""]	[" "]	+delete
+407081	915	4	18	4	19	[""]	["-"]	+delete
+407246	919	4	17	4	18	[""]	[" "]	+delete
+407385	923	4	16	4	17	[""]	["="]	+delete
+407513	927	4	15	4	16	[""]	["<"]	+delete
+407695	931	4	14	4	15	[""]	[" "]	+delete
+407833	935	4	13	4	14	[""]	["d"]	+delete
+408046	939	4	12	4	13	[""]	["n"]	+delete
+410132	943	4	11	4	12	[""]	["a"]	+delete
+410297	947	4	10	4	11	[""]	[" "]	+delete
+410479	951	4	9	4	10	[""]	["0"]	+delete
+412063	956	4	9	4	9	[" "]	[""]	+input
+412185	960	4	10	4	10	["-"]	[""]	+input
+412282	964	4	11	4	11	[" "]	[""]	+input
+414283	967	4	11	4	12	[""]	[" "]	+delete
+414463	971	4	10	4	11	[""]	["-"]	+delete
+414828	975	4	9	4	10	[""]	[" "]	+delete
+415195	979	4	8	4	9	[""]	["="]	+delete
+416567	984	4	8	4	8	[" "]	[""]	+input
+418986	987	4	8	4	9	[""]	[" "]	+delete
+419278	992	4	8	4	8	["-"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 445078
+- raw_log_line: 997
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input("Informe os numeros inteiros:"))
+soma = 0
+cont = 0
+
+while(n>-1):
+	soma = soma + 1
+	cont = cont + 1
+print(soma)
+	
+```
+Run Output
+```text
+Informe os numeros inteiros:1
+```
+
+Edit Segment 3
+- raw_change_event_count: 9
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+506377	1007	7	6	7	6	["c"]	[""]	+input
+507112	1011	7	7	7	7	["n"]	[""]	+input
+508109	1014	7	7	7	8	[""]	["n"]	+delete
+508576	1019	7	7	7	7	["o"]	[""]	+input
+508760	1023	7	8	7	8	["n"]	[""]	+input
+508992	1027	7	9	7	9	["t"]	[""]	+input
+511976	1031	7	10	7	10	[" "]	[""]	+input
+512328	1035	7	11	7	11	[","]	[""]	+input
+512476	1039	7	12	7	12	[" "]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 515325
+- raw_log_line: 1043
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input("Informe os numeros inteiros:"))
+soma = 0
+cont = 0
+
+while(n>-1):
+	soma = soma + 1
+	cont = cont + 1
+print(cont , soma)
+	
+```
+Run Output
+```text
+Informe os numeros inteiros:1
+```
+
+Edit Segment 4
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+547160	1051	4	9	4	10	[""]	["1"]	+delete
+547495	1055	4	8	4	9	[""]	["-"]	+delete
+548296	1060	4	8	4	8	["0"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 553063
+- raw_log_line: 1064
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input("Informe os numeros inteiros:"))
+soma = 0
+cont = 0
+
+while(n>0):
+	soma = soma + 1
+	cont = cont + 1
+print(cont , soma)
+	
+```
+Run Output
+```text
+Informe os numeros inteiros:5
+```
+
+Edit Segment 5
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+575592	1069	6	15	6	16	[""]	["1"]	+delete
+575960	1074	6	15	6	15	["n"]	[""]	+input
+
+Local Run 5
+- event_time_delta_ms: 592956
+- raw_log_line: 1079
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input("Informe os numeros inteiros:"))
+soma = 0
+cont = 0
+
+while(n>0):
+	soma = soma + 1
+	cont = cont + n
+print(cont , soma)
+	
+```
+Run Output
+```text
+Informe os numeros inteiros:2
+```
+
+Edit Segment 6
+- raw_change_event_count: 62
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+713319	1084	3	0	3	0	["n"]	[""]	+input
+713502	1088	3	1	3	1	[" "]	[""]	+input
+713934	1092	3	2	3	2	["="]	[""]	+input
+714267	1096	3	3	3	3	[" "]	[""]	+input
+715534	1100	3	4	3	4	["f"]	[""]	+input
+715623	1104	3	5	3	5	["l"]	[""]	+input
+715800	1108	3	6	3	6	["o"]	[""]	+input
+716136	1112	3	7	3	7	["a"]	[""]	+input
+716251	1116	3	8	3	8	["t"]	[""]	+input
+717335	1121	3	9	3	9	["()"]	[""]	+input
+717656	1127	3	10	3	10	["i"]	[""]	+input
+717800	1131	3	11	3	11	["n"]	[""]	+input
+718022	1135	3	12	3	12	["p"]	[""]	+input
+718301	1139	3	13	3	13	["u"]	[""]	+input
+718439	1143	3	14	3	14	["t"]	[""]	+input
+719751	1148	3	15	3	15	["()"]	[""]	+input
+720301	1155	3	16	3	16	["\"\""]	[""]	+input
+720651	1162	3	17	3	17	["I"]	[""]	+input
+720791	1167	3	18	3	18	["n"]	[""]	+input
+720984	1171	3	19	3	19	["f"]	[""]	+input
+721068	1175	3	20	3	20	["o"]	[""]	+input
+721223	1179	3	21	3	21	["r"]	[""]	+input
+721334	1183	3	22	3	22	["m"]	[""]	+input
+721484	1187	3	23	3	23	["e"]	[""]	+input
+721623	1191	3	24	3	24	[" "]	[""]	+input
+721868	1195	3	25	3	25	["o"]	[""]	+input
+722807	1199	3	26	3	26	["s"]	[""]	+input
+728252	1203	3	27	3	27	[" "]	[""]	+input
+728684	1207	3	28	3	28	["n"]	[""]	+input
+728904	1211	3	29	3	29	["y"]	[""]	+input
+728908	1214	3	30	3	30	["u"]	[""]	+input
+729567	1218	3	30	3	31	[""]	["u"]	+delete
+729718	1222	3	29	3	30	[""]	["y"]	+delete
+730216	1227	3	29	3	29	["u"]	[""]	+input
+730407	1231	3	30	3	30	["m"]	[""]	+input
+730503	1235	3	31	3	31	["e"]	[""]	+input
+730700	1239	3	32	3	32	["r"]	[""]	+input
+730767	1243	3	33	3	33	["o"]	[""]	+input
+730967	1247	3	34	3	34	["s"]	[""]	+input
+731068	1251	3	35	3	35	[" "]	[""]	+input
+738391	1260	3	36	3	36	["i"]	[""]	+input
+738551	1264	3	37	3	37	["n"]	[""]	+input
+738794	1268	3	38	3	38	["t"]	[""]	+input
+738887	1272	3	39	3	39	["e"]	[""]	+input
+739833	1276	3	40	3	40	["i"]	[""]	+input
+739983	1280	3	41	3	41	["r"]	[""]	+input
+740103	1284	3	42	3	42	["o"]	[""]	+input
+740266	1288	3	43	3	43	["s"]	[""]	+input
+741223	1293	3	44	3	44	[":"]	[""]	+input
+762087	1306	6	16	6	16	["",""]	[""]	+input
+762087	1307	7	0	7	0	["\t"]	[""]	+input
+762699	1313	7	1	7	1	["n = float(input(\"Informe os numeros inteiros:\"))"]	[""]	paste
+767899	1409	7	9	7	10	[""]	["t"]	+delete
+768038	1413	7	8	7	9	[""]	["a"]	+delete
+768199	1417	7	7	7	8	[""]	["o"]	+delete
+768347	1421	7	6	7	7	[""]	["l"]	+delete
+768664	1425	7	5	7	6	[""]	["f"]	+delete
+769607	1430	7	5	7	5	["i"]	[""]	+input
+769782	1434	7	6	7	6	["n"]	[""]	+input
+769883	1438	7	7	7	7	["t"]	[""]	+input
+772838	1442	3	0	3	48	[""]	["n = float(input(\"Informe os numeros inteiros:\"))"]	+delete
+773432	1446	2	8	3	0	[""]	["",""]	+delete
+
+Local Run 6
+- event_time_delta_ms: 800951
+- raw_log_line: 1458
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input("Informe os numeros inteiros:"))
+soma = 0
+cont = 0
+while(n>0):
+	soma = soma + 1
+	cont = cont + n
+	n = int(input("Informe os numeros inteiros:"))
+print(cont , soma)
+	
+```
+Run Output
+```text
+Informe os numeros inteiros:8
+Informe os numeros inteiros:6
+Informe os numeros inteiros:4
+Informe os numeros inteiros:2
+Informe os numeros inteiros:3
+Informe os numeros inteiros:-1
+23 5
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 803770
+- raw_log_line: 1459
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+n = int(input("Informe os numeros inteiros:"))
+soma = 0
+cont = 0
+while(n>0):
+	soma = soma + 1
+	cont = cont + n
+	n = int(input("Informe os numeros inteiros:"))
+print(cont , soma)
+	
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-02-06T15:37:04.790000
+
+Execution Result
+
+- submitted_at: 2024-02-06 15:37:21
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "-525\n1075\n333\n-9\n-1"
+    expected: "4\n874"
+    actual: "0 0"
+  - test_index_0idx: 1 [FAIL]
+    input: "0\n0\n0\n0\n0\n0\n0\n-1"
+    expected: "7\n0"
+    actual: "0 0"
+  - test_index_0idx: 2 [FAIL]
+    input: "10953\n32653\n-10953\n-1"
+    expected: "3\n32653"
+    actual: "43606 43606"
+
+Attempt Start Code
+```python
+n = int(input("Informe os numeros inteiros:"))
+soma = 0
+cont = 0
+while(n>0):
+	soma = soma + 1
+	cont = cont + n
+	n = int(input("Informe os numeros inteiros:"))
+print(cont , soma)
+	
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1463	4	15	4	16	[""]	["1"]	+delete
+349	1468	4	15	4	15	["n"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 16581
+- raw_log_line: 1471
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+n = int(input("Informe os numeros inteiros:"))
+soma = 0
+cont = 0
+while(n>0):
+	soma = soma + n
+	cont = cont + n
+	n = int(input("Informe os numeros inteiros:"))
+print(cont , soma)
+	
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-02-06T15:38:05.237000
+
+Execution Result
+
+- submitted_at: 2024-02-06 15:38:36
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "-525\n1075\n333\n-9\n-1"
+    expected: "4\n874"
+    actual: "0 0"
+  - test_index_0idx: 1 [FAIL]
+    input: "0\n0\n0\n0\n0\n0\n0\n-1"
+    expected: "7\n0"
+    actual: "0 0"
+  - test_index_0idx: 2 [FAIL]
+    input: "10953\n32653\n-10953\n-1"
+    expected: "3\n32653"
+    actual: "2 43606"
+
+Attempt Start Code
+```python
+n = int(input("Informe os numeros inteiros:"))
+soma = 0
+cont = 0
+while(n>0):
+	soma = soma + n
+	cont = cont + n
+	n = int(input("Informe os numeros inteiros:"))
+print(cont , soma)
+	
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1475	5	15	5	16	[""]	["n"]	+delete
+267	1480	5	15	5	15	["1"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 14683
+- raw_log_line: 1493
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input("Informe os numeros inteiros:"))
+soma = 0
+cont = 0
+while(n>0):
+	soma = soma + n
+	cont = cont + 1
+	n = int(input("Informe os numeros inteiros:"))
+print(cont , soma)
+	
+```
+Run Output
+```text
+Informe os numeros inteiros:6
+Informe os numeros inteiros:8
+Informe os numeros inteiros:4
+Informe os numeros inteiros:9
+Informe os numeros inteiros:2
+Informe os numeros inteiros:.8
+Traceback (most recent call last):
+File "main.py", line 7, in <module>
+n = int(input("Informe os numeros inteiros:"))
+ValueError: invalid literal for int() with base 10: '.8'
+```
+
+Local Run 2
+- event_time_delta_ms: 28598
+- raw_log_line: 1500
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input("Informe os numeros inteiros:"))
+soma = 0
+cont = 0
+while(n>0):
+	soma = soma + n
+	cont = cont + 1
+	n = int(input("Informe os numeros inteiros:"))
+print(cont , soma)
+	
+```
+Run Output
+```text
+Informe os numeros inteiros:1
+Informe os numeros inteiros:2
+Informe os numeros inteiros:3
+Informe os numeros inteiros:4
+Informe os numeros inteiros:-1
+4 10
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 30899
+- raw_log_line: 1501
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+n = int(input("Informe os numeros inteiros:"))
+soma = 0
+cont = 0
+while(n>0):
+	soma = soma + n
+	cont = cont + 1
+	n = int(input("Informe os numeros inteiros:"))
+print(cont , soma)
+	
+```

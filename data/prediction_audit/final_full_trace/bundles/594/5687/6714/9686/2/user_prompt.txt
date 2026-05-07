@@ -1,0 +1,560 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 594
+- assessment_id: 5687
+- assessment_title: Lab 2: Estrutura Condicional Composta
+- exercise_id: 6714
+- student_id: 9686
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-05-16T14:29:22.621000
+
+Execution Result
+
+- submitted_at: 2024-05-16 14:39:41
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "C\n11245"
+    expected: "529.34"
+    actual: "1349.3341178966614"
+  - test_index_0idx: 1 [FAIL]
+    input: "V\n54000"
+    expected: "2442.27"
+    actual: "6479.9341178966615"
+  - test_index_0idx: 2 [FAIL]
+    input: "C\n32450"
+    expected: "1527.53"
+    actual: "3893.9341178966615"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 251
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["a"]	[""]	+input
+194	11	0	1	0	1	[" "]	[""]	+input
+354	15	0	2	0	2	["="]	[""]	+input
+448	19	0	3	0	3	[" "]	[""]	+input
+3361	23	0	4	0	4	["i"]	[""]	+input
+3569	27	0	5	0	5	["n"]	[""]	+input
+3857	31	0	6	0	6	["o"]	[""]	+input
+4366	34	0	6	0	7	[""]	["o"]	+delete
+5124	39	0	6	0	6	["p"]	[""]	+input
+5344	43	0	7	0	7	["u"]	[""]	+input
+5486	47	0	8	0	8	["t"]	[""]	+input
+5968	52	0	9	0	9	["()"]	[""]	+input
+6659	59	0	10	0	10	["\"\""]	[""]	+input
+7745	67	0	11	0	11	["D"]	[""]	+input
+9172	72	0	11	0	12	[""]	["D"]	+delete
+9890	79	0	11	0	11	["V"]	[""]	+input
+10774	85	0	12	0	12	["o"]	[""]	+input
+10895	89	0	13	0	13	["c"]	[""]	+input
+11074	93	0	14	0	14	["e"]	[""]	+input
+11200	97	0	15	0	15	[" "]	[""]	+input
+11942	101	0	16	0	16	["q"]	[""]	+input
+12080	105	0	17	0	17	["u"]	[""]	+input
+12208	109	0	18	0	18	["e"]	[""]	+input
+12386	113	0	19	0	19	["r"]	[""]	+input
+12465	117	0	20	0	20	[" "]	[""]	+input
+12723	121	0	21	0	21	["p"]	[""]	+input
+12730	124	0	22	0	22	["o"]	[""]	+input
+12788	129	0	23	0	23	[" "]	[""]	+input
+13215	132	0	23	0	24	[""]	[" "]	+delete
+13407	136	0	22	0	23	[""]	["o"]	+delete
+13570	140	0	21	0	22	[""]	["p"]	+delete
+14049	145	0	21	0	21	["o"]	[""]	+input
+14177	149	0	22	0	22	[" "]	[""]	+input
+14404	153	0	23	0	23	["c"]	[""]	+input
+14512	157	0	24	0	24	["o"]	[""]	+input
+14702	161	0	25	0	25	["m"]	[""]	+input
+14913	165	0	26	0	26	["u"]	[""]	+input
+15090	169	0	27	0	27	["m"]	[""]	+input
+15205	173	0	28	0	28	[" "]	[""]	+input
+15312	177	0	29	0	29	["o"]	[""]	+input
+15507	181	0	30	0	30	["u"]	[""]	+input
+15617	185	0	31	0	31	["v"]	[""]	+input
+16191	188	0	31	0	32	[""]	["v"]	+delete
+16545	193	0	31	0	31	[" "]	[""]	+input
+17442	197	0	32	0	32	["v"]	[""]	+input
+17942	201	0	33	0	33	["i"]	[""]	+input
+18241	205	0	34	0	34	["p"]	[""]	+input
+18708	210	0	35	0	35	["?"]	[""]	+input
+34610	215	0	38	0	38	["",""]	[""]	+input
+89141	239	1	0	1	0	["t"]	[""]	+input
+89329	243	1	1	1	1	[" "]	[""]	+input
+89574	247	1	2	1	2	["="]	[""]	+input
+89633	251	1	3	1	3	[" "]	[""]	+input
+91214	255	1	4	1	4	["f"]	[""]	+input
+91313	259	1	5	1	5	["l"]	[""]	+input
+91490	263	1	6	1	6	["o"]	[""]	+input
+91555	267	1	7	1	7	["a"]	[""]	+input
+91824	271	1	8	1	8	["t"]	[""]	+input
+92610	276	1	9	1	9	["()"]	[""]	+input
+92994	282	1	10	1	10	["i"]	[""]	+input
+93201	286	1	11	1	11	["n"]	[""]	+input
+93441	290	1	12	1	12	["p"]	[""]	+input
+93681	294	1	13	1	13	["u"]	[""]	+input
+93809	298	1	14	1	14	["t"]	[""]	+input
+94759	303	1	15	1	15	["()"]	[""]	+input
+95426	310	1	16	1	16	["\"\""]	[""]	+input
+96593	318	1	17	1	17	["D"]	[""]	+input
+97009	324	1	18	1	18	["i"]	[""]	+input
+97191	328	1	19	1	19	["g"]	[""]	+input
+97313	332	1	20	1	20	["i"]	[""]	+input
+97440	336	1	21	1	21	["t"]	[""]	+input
+97665	340	1	22	1	22	["e"]	[""]	+input
+97759	344	1	23	1	23	[" "]	[""]	+input
+98014	348	1	24	1	24	["o"]	[""]	+input
+98097	352	1	25	1	25	[" "]	[""]	+input
+98274	356	1	26	1	26	["v"]	[""]	+input
+98593	360	1	27	1	27	["a"]	[""]	+input
+98945	364	1	28	1	28	["l"]	[""]	+input
+99124	368	1	29	1	29	["o"]	[""]	+input
+99217	372	1	30	1	30	["r"]	[""]	+input
+99334	376	1	31	1	31	[" "]	[""]	+input
+99458	380	1	32	1	32	["d"]	[""]	+input
+99574	384	1	33	1	33	["o"]	[""]	+input
+99649	388	1	34	1	34	[" "]	[""]	+input
+99793	392	1	35	1	35	["i"]	[""]	+input
+100191	395	1	35	1	36	[""]	["i"]	+delete
+100374	400	1	35	1	35	["e"]	[""]	+input
+100625	404	1	36	1	36	["m"]	[""]	+input
+100849	408	1	37	1	37	["p"]	[""]	+input
+101074	412	1	38	1	38	["r"]	[""]	+input
+101230	416	1	39	1	39	["e"]	[""]	+input
+101424	420	1	40	1	40	["s"]	[""]	+input
+101646	424	1	41	1	41	["t"]	[""]	+input
+101745	428	1	42	1	42	["i"]	[""]	+input
+101905	432	1	43	1	43	["m"]	[""]	+input
+102097	436	1	44	1	44	["o"]	[""]	+input
+105127	448	1	48	1	48	["",""]	[""]	+input
+115991	456	2	0	2	0	["I"]	[""]	+input
+116740	461	2	0	2	1	[""]	["I"]	+delete
+117208	466	2	0	2	0	["i"]	[""]	+input
+117294	470	2	1	2	1	["f"]	[""]	+input
+119362	474	2	2	2	2	[" "]	[""]	+input
+119649	478	2	3	2	3	["="]	[""]	+input
+119793	482	2	4	2	4	[" "]	[""]	+input
+156226	486	1	48	1	48	["",""]	[""]	+input
+156561	494	2	0	2	0	["P"]	[""]	+input
+157525	500	2	1	2	1	["="]	[""]	+input
+158176	503	2	1	2	2	[""]	["="]	+delete
+158302	508	2	1	2	1	[" "]	[""]	+input
+158497	512	2	2	2	2	["="]	[""]	+input
+158592	516	2	3	2	3	[" "]	[""]	+input
+204118	621	1	48	1	48	["",""]	[""]	+input
+205991	627	2	0	2	0	["c"]	[""]	+input
+206209	631	2	1	2	1	["e"]	[""]	+input
+206689	634	2	1	2	2	[""]	["e"]	+delete
+206783	639	2	1	2	1	["c"]	[""]	+input
+207272	643	2	2	2	2	[" "]	[""]	+input
+207524	647	2	3	2	3	["="]	[""]	+input
+210930	651	2	4	2	4	[" "]	[""]	+input
+211558	655	2	5	2	5	["t"]	[""]	+input
+216302	665	2	6	2	6	["8"]	[""]	+input
+216658	669	2	7	2	7	["0"]	[""]	+input
+217042	673	2	8	2	8	["."]	[""]	+input
+217409	677	2	9	2	9	["8"]	[""]	+input
+218640	680	2	9	2	10	[""]	["8"]	+delete
+218815	684	2	8	2	9	[""]	["."]	+delete
+218975	688	2	7	2	8	[""]	["0"]	+delete
+219342	692	2	6	2	7	[""]	["8"]	+delete
+220174	698	2	6	2	6	["*"]	[""]	+input
+220497	703	2	7	2	7	["0"]	[""]	+input
+220791	707	2	8	2	8	["."]	[""]	+input
+221091	711	2	9	2	9	["8"]	[""]	+input
+221662	714	2	10	2	10	["",""]	[""]	+input
+222946	720	3	0	3	0	["v"]	[""]	+input
+223095	724	3	1	3	1	["v"]	[""]	+input
+223908	728	3	2	3	2	[" "]	[""]	+input
+224225	732	3	3	3	3	["="]	[""]	+input
+224433	736	3	4	3	4	[" "]	[""]	+input
+224792	740	3	5	3	5	["t"]	[""]	+input
+225601	745	3	6	3	6	["*"]	[""]	+input
+226008	750	3	7	3	7	["-"]	[""]	+input
+226848	753	3	7	3	8	[""]	["-"]	+delete
+229058	758	3	7	3	7	["0"]	[""]	+input
+230466	762	3	8	3	8	["."]	[""]	+input
+234574	766	3	9	3	9	["8"]	[""]	+input
+241647	770	2	9	2	10	[""]	["8"]	+delete
+242008	775	2	9	2	9	["0"]	[""]	+input
+242291	779	2	10	2	10	["8"]	[""]	+input
+245709	785	3	9	3	10	[""]	["8"]	+delete
+245903	790	3	9	3	9	["1"]	[""]	+input
+246558	794	3	10	3	10	["2"]	[""]	+input
+258372	800	4	1	4	1	["c"]	[""]	+input
+262357	810	4	4	4	4	[" "]	[""]	+input
+337490	817	4	6	4	6	["0"]	[""]	+input
+339426	821	4	7	4	7	["."]	[""]	+input
+339926	825	4	8	4	8	["0"]	[""]	+input
+340807	829	4	9	4	9	["8"]	[""]	+input
+342529	834	4	10	4	10	["*"]	[""]	+input
+348162	839	4	11	4	11	["5"]	[""]	+input
+349189	842	4	11	4	12	[""]	["5"]	+delete
+349358	847	4	11	4	11	["t"]	[""]	+input
+349908	852	4	12	4	12	["()"]	[""]	+input
+350558	857	4	12	4	14	[""]	["()"]	+delete
+351345	863	4	12	4	12	[")"]	[""]	+input
+354870	890	4	6	4	6	["("]	[""]	+input
+356898	895	3	11	3	11	["",""]	[""]	+input
+357974	901	4	0	4	0	["i"]	[""]	+input
+358158	905	4	1	4	1	["n"]	[""]	+input
+358242	909	4	2	4	2	["f"]	[""]	+input
+358980	912	4	2	4	3	[""]	["f"]	+delete
+359189	916	4	1	4	2	[""]	["n"]	+delete
+359329	921	4	1	4	1	["f"]	[""]	+input
+361410	925	4	2	4	2	[" "]	[""]	+input
+367218	929	4	3	4	3	["s"]	[""]	+input
+368370	932	4	3	4	4	[""]	["s"]	+delete
+369158	937	4	3	4	3	["a"]	[""]	+input
+370914	945	4	4	4	4	["."]	[""]	+input
+372206	949	4	5	4	5	["u"]	[""]	+input
+373134	953	4	6	4	6	["p"]	[""]	+input
+373314	957	4	7	4	7	["p"]	[""]	+input
+373474	961	4	8	4	8	["e"]	[""]	+input
+373697	965	4	9	4	9	["r"]	[""]	+input
+376291	969	4	10	4	10	[" "]	[""]	+input
+376558	973	4	11	4	11	["="]	[""]	+input
+376724	977	4	12	4	12	["="]	[""]	+input
+376914	981	4	13	4	13	[" "]	[""]	+input
+378015	986	4	14	4	14	["\"\""]	[""]	+input
+379442	994	4	15	4	15	["C"]	[""]	+input
+382781	1000	6	0	6	5	[""]	["if = "]	+delete
+388514	1007	5	14	5	14	["/"]	[""]	+input
+391217	1012	5	15	5	15	["1"]	[""]	+input
+392833	1016	5	16	5	16	["-"]	[""]	+input
+394376	1023	5	17	5	17	["()"]	[""]	+input
+396498	1029	5	18	5	18	["1"]	[""]	+input
+398130	1034	5	19	5	19	["+"]	[""]	+input
+402372	1039	5	20	5	20	["0"]	[""]	+input
+402692	1043	5	21	5	21	["."]	[""]	+input
+403042	1047	5	22	5	22	["0"]	[""]	+input
+403394	1051	5	23	5	23	["8"]	[""]	+input
+413508	1059	5	25	5	25	["*"]	[""]	+input
+413698	1063	5	26	5	26	["*"]	[""]	+input
+414562	1068	5	27	5	27	["-"]	[""]	+input
+439810	1072	5	28	5	28	["2"]	[""]	+input
+439975	1076	5	29	5	29	["4"]	[""]	+input
+494447	1080	5	0	5	0	["\t"]	[""]	+input
+500035	1089	5	31	5	31	["",""]	[""]	+input
+500036	1090	6	0	6	0	["\t"]	[""]	+input
+500864	1095	6	0	6	1	[""]	["\t"]	+delete
+501346	1100	6	0	6	0	["e"]	[""]	+input
+501509	1104	6	1	6	1	["l"]	[""]	+input
+501585	1108	6	2	6	2	["s"]	[""]	+input
+501776	1112	6	3	6	3	["e"]	[""]	+input
+502321	1115	6	4	6	4	["\t"]	[""]	+input
+502671	1119	6	4	6	5	[""]	["\t"]	+delete
+503592	1125	6	4	6	4	[":"]	[""]	+input
+506978	1167	4	17	4	17	[":"]	[""]	+input
+508610	1177	6	5	6	5	["",""]	[""]	+input
+508611	1178	7	0	7	0	["\t"]	[""]	+input
+510991	1184	7	1	7	1	["(0.08*t)/1-(1+0.08)**-24"]	[""]	paste
+513698	1192	7	1	7	1	["P"]	[""]	+input
+514514	1198	7	2	7	2	["c"]	[""]	+input
+516146	1202	7	3	7	3	[" "]	[""]	+input
+516391	1206	7	4	7	4	["="]	[""]	+input
+518771	1210	7	9	7	10	[""]	["8"]	+delete
+519071	1214	7	8	7	9	[""]	["0"]	+delete
+519182	1219	7	8	7	8	["1"]	[""]	+input
+519345	1223	7	9	7	9	["2"]	[""]	+input
+521906	1227	7	22	7	23	[""]	["8"]	+delete
+522077	1231	7	21	7	22	[""]	["0"]	+delete
+522194	1236	7	21	7	21	["1"]	[""]	+input
+522302	1240	7	22	7	22	["2"]	[""]	+input
+532726	1245	7	6	7	12	["v"]	["0.12*t"]	+input
+532898	1249	7	7	7	7	["v"]	[""]	+input
+538066	1254	5	8	5	14	["c"]	["0.08*t"]	+input
+538258	1258	5	9	5	9	["c"]	[""]	+input
+575320	1264	1	4	1	9	["i"]	["float"]	+input
+575558	1268	1	5	1	5	["n"]	[""]	+input
+575909	1272	1	6	1	6	["r"]	[""]	+input
+576527	1275	1	6	1	7	[""]	["r"]	+delete
+578560	1280	1	6	1	6	["t"]	[""]	+input
+591469	1284	7	25	7	25	["",""]	[""]	+input
+591469	1285	8	0	8	0	["\t"]	[""]	+input
+592431	1290	8	0	8	1	[""]	["\t"]	+delete
+593150	1295	8	0	8	0	["p"]	[""]	+input
+593266	1299	8	1	8	1	["r"]	[""]	+input
+593394	1303	8	2	8	2	["i"]	[""]	+input
+593609	1307	8	3	8	3	["n"]	[""]	+input
+593711	1311	8	4	8	4	["t"]	[""]	+input
+594563	1316	8	5	8	5	["()"]	[""]	+input
+596626	1326	8	6	8	6	["P"]	[""]	+input
+597193	1332	8	7	8	7	["c"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 618818
+- raw_log_line: 1336
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+a = input("Voce quer o comum ou vip?")
+t = int(input("Digite o valor do emprestimo"))
+cc = t*0.08
+vv = t*0.12
+if a.upper == "C":
+	Pc =  (cc)/1-(1+0.08)**-24
+else:
+	Pc =(vv)/1-(1+0.12)**-24
+print(Pc)
+
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-05-16T14:39:49.171000
+
+Execution Result
+
+- submitted_at: 2024-05-16 14:40:03
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "C\n11245"
+    expected: "529.34"
+    actual: "1349.33"
+  - test_index_0idx: 1 [FAIL]
+    input: "V\n54000"
+    expected: "2442.27"
+    actual: "6479.93"
+  - test_index_0idx: 2 [FAIL]
+    input: "C\n32450"
+    expected: "1527.53"
+    actual: "3893.93"
+
+Attempt Start Code
+```python
+a = input("Voce quer o comum ou vip?")
+t = int(input("Digite o valor do emprestimo"))
+cc = t*0.08
+vv = t*0.12
+if a.upper == "C":
+	Pc =  (cc)/1-(1+0.08)**-24
+else:
+	Pc =(vv)/1-(1+0.12)**-24
+print(Pc)
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 15
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1340	8	6	8	6	["r"]	[""]	+input
+76	1344	8	7	8	7	["o"]	[""]	+input
+284	1348	8	8	8	8	["u"]	[""]	+input
+428	1352	8	9	8	9	["d"]	[""]	+input
+574	1356	8	10	8	10	["n"]	[""]	+input
+1459	1361	8	11	8	11	["("]	[""]	+input
+5193	1386	8	10	8	11	[""]	["n"]	+delete
+5373	1390	8	9	8	10	[""]	["d"]	+delete
+6044	1395	8	9	8	9	["m"]	[""]	+input
+6951	1398	8	9	8	10	[""]	["m"]	+delete
+7292	1403	8	9	8	9	["n"]	[""]	+input
+7402	1407	8	10	8	10	["d"]	[""]	+input
+9408	1420	8	14	8	14	[","]	[""]	+input
+9916	1424	8	15	8	15	["2"]	[""]	+input
+11810	1434	8	17	8	17	[")"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 14499
+- raw_log_line: 1439
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+a = input("Voce quer o comum ou vip?")
+t = int(input("Digite o valor do emprestimo"))
+cc = t*0.08
+vv = t*0.12
+if a.upper == "C":
+	Pc =  (cc)/1-(1+0.08)**-24
+else:
+	Pc =(vv)/1-(1+0.12)**-24
+print(round(Pc,2))
+
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-05-16T14:40:59.730000
+
+Execution Result
+
+- submitted_at: 2024-05-16 14:43:00
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "C\n11245"
+    expected: "529.34"
+    actual: "111.66"
+  - test_index_0idx: 1 [FAIL]
+    input: "V\n54000"
+    expected: "2442.27"
+    actual: "539.21"
+  - test_index_0idx: 2 [FAIL]
+    input: "C\n32450"
+    expected: "1527.53"
+    actual: "323.71"
+
+Attempt Start Code
+```python
+a = input("Voce quer o comum ou vip?")
+t = int(input("Digite o valor do emprestimo"))
+cc = t*0.08
+vv = t*0.12
+if a.upper == "C":
+	Pc =  (cc)/1-(1+0.08)**-24
+else:
+	Pc =(vv)/1-(1+0.12)**-24
+print(round(Pc,2))
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 50
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1449	2	11	2	11	["",""]	[""]	+input
+1500	1454	2	11	3	0	[""]	["",""]	+delete
+2620	1462	3	11	3	11	["",""]	[""]	+input
+4000	1468	4	0	4	0	["P"]	[""]	+input
+5560	1473	4	0	4	1	[""]	["P"]	+delete
+6836	1478	4	0	4	0	["l"]	[""]	+input
+6969	1482	4	1	4	1	["a"]	[""]	+input
+7389	1486	4	2	4	2	[" "]	[""]	+input
+7963	1490	4	3	4	3	["="]	[""]	+input
+8489	1494	4	4	4	4	[" "]	[""]	+input
+13600	1498	4	5	4	5	["0"]	[""]	+input
+14050	1502	4	6	4	6	["."]	[""]	+input
+15069	1506	4	7	4	7	["0"]	[""]	+input
+16012	1510	4	8	4	8	["8"]	[""]	+input
+20835	1516	4	9	4	9	["q"]	[""]	+input
+22218	1519	4	9	4	10	[""]	["q"]	+delete
+27596	1524	4	9	4	9	["q"]	[""]	+input
+28445	1527	4	9	4	10	[""]	["q"]	+delete
+29248	1533	4	9	4	9	["/"]	[""]	+input
+30733	1538	4	10	4	10	["1"]	[""]	+input
+30921	1542	4	11	4	11	["2"]	[""]	+input
+32750	1545	4	12	4	12	["",""]	[""]	+input
+33633	1551	5	0	5	0	["l"]	[""]	+input
+33803	1555	5	1	5	1	["e"]	[""]	+input
+34637	1559	5	2	5	2	[" "]	[""]	+input
+34900	1563	5	3	5	3	["="]	[""]	+input
+35533	1567	5	4	5	4	[" "]	[""]	+input
+36701	1571	5	5	5	5	["0"]	[""]	+input
+37260	1575	5	6	5	6	["."]	[""]	+input
+37485	1579	5	7	5	7	["1"]	[""]	+input
+37676	1583	5	8	5	8	["2"]	[""]	+input
+38525	1588	5	9	5	9	["/"]	[""]	+input
+38909	1593	5	10	5	10	["1"]	[""]	+input
+39129	1597	5	11	5	11	["2"]	[""]	+input
+71854	1607	2	0	3	11	[""]	["cc = t*0.08","vv = t*0.12"]	drag
+71854	1608	5	0	5	0	["cc = t*0.08","vv = t*0.12"]	[""]	paste
+76156	1612	1	46	2	0	[""]	["",""]	+delete
+79053	1618	5	11	5	11	["",""]	[""]	+input
+85790	1625	4	7	4	11	["l"]	["0.08"]	+input
+85913	1629	4	8	4	8	["a"]	[""]	+input
+90047	1647	5	10	5	11	[""]	["2"]	+delete
+90298	1651	5	9	5	10	[""]	["1"]	+delete
+90497	1655	5	8	5	9	[""]	["."]	+delete
+90747	1659	5	7	5	8	[""]	["0"]	+delete
+91325	1664	5	7	5	7	["l"]	[""]	+input
+91437	1668	5	8	5	8	["e"]	[""]	+input
+100574	1673	7	17	7	21	["l"]	["0.08"]	+input
+100667	1677	7	18	7	18	["a"]	[""]	+input
+105950	1682	9	15	9	19	["l"]	["0.12"]	+input
+106059	1686	9	16	9	16	["e"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 120816
+- raw_log_line: 1690
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+a = input("Voce quer o comum ou vip?")
+t = int(input("Digite o valor do emprestimo"))
+la = 0.08/12
+le = 0.12/12
+cc = t*la
+vv = t*le
+if a.upper == "C":
+	Pc =  (cc)/1-(1+la)**-24
+else:
+	Pc =(vv)/1-(1+le)**-24
+print(round(Pc,2))
+
+```

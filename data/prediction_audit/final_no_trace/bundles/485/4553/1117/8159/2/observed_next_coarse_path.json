@@ -1,0 +1,32 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4553",
+    "exercise_id": "1117",
+    "student_id": "8159",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "pn=float(input(\"preco normal: \"))\nds=int(input(\"dia da semana: \"))\nd=input(\"e dia de musica ao vivo: \").upper()\nif(pn>=0 and 1<=ds<=7):\n\tif(2<=ds<=3 or ds==5):\n\t\tif(d==\"S\"):\n\t\t\tcont=(pn+20)-(0.25*pn)\n\t\t\tprint(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)\n\t\t\tprint(\"Total:\",\"R$\",round(cont,2))\n\t\telse:\n\t\t\tcont=pn-(0.25*pn)\n\t\t\tprint(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)\n\t\t\tprint(\"Total:\",\"R$\",round(cont,2))\n\telse:\n\t\tif(d==\"S\"):\n\t\t\tcont=pn+20\n\t\t\tprint(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)\n\t\t\tprint(\"Total:\",\"R$\",round(cont,2))\n\t\telse:\n\t\t\tcont=pn\n\t\t\tprint(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)\n\t\t\tprint(\"Total:\",\"R$\",round(cont,2))\nelse:\n\tprint(\"Entradas:\",\",\",round(pn,2),\",\",ds,\",\",d)\n\tprint(\"Dados invalidos\")",
+    "coarse_path_steps": [
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 23,
+        "target_end_line_0idx": 23
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

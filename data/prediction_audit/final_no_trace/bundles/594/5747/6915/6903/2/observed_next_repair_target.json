@@ -1,0 +1,77 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "594",
+    "assessment_id": "5747",
+    "exercise_id": "6915",
+    "student_id": "6903",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "p = float(input(\"preco total da entrada: \"))\ndia = int(input(\"Dia da semana: \"))\nmv = input(\"E dia de musica ao vivo: \").upper()\n\nif p > 0:\n\tif mv == 'N':\n\t\tif (dia == 2) or (dia == 3) or (dia == 5):\n\t\t\tt = p - p*0.25\n\t\t\tprint(round(t,2))\n\t\telif dia == 1 or dia == 4 or dia == 6 or dia == 7:\n\t\t\tprint(round(p,2))\n\t\telse:\n\t\t\tprint(\"Dados invalidos\")\t\t\n\telse:\n\t\tif (dia == 2) or (dia == 3) or (dia == 5):\n\t\t\tt = (p - p*0.25)+20\n\t\t\tprint(round(t,2))\n\t\telif dia == 1 or dia == 4 or dia == 6 or dia == 7:\n\t\t\tprint(round(p,2))\n\t\telse:\n\t\t\tprint(\"Dados invalidos\")\nelse:\n\tprint(\"Dados invalidos\")",
+    "grade": 67.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      1
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "p = float(input(\"preco total da entrada: \"))\ndia = int(input(\"Dia da semana: \"))\nmv = input(\"E dia de musica ao vivo: \").upper()\n\nif p > 0:\n\tif mv == 'N':\n\t\tif (dia == 2) or (dia == 3) or (dia == 5):\n\t\t\tt = p - p*0.25\n\t\t\tprint(round(t,2))\n\t\telif (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):\n\t\t\tprint(round(p,2))\n\t\telse:\n\t\t\tprint(\"Dados invalidos\")\t\t\n\telse:\n\t\tif (dia == 2) or (dia == 3) or (dia == 5):\n\t\t\tt = (p - p*0.25)+20\n\t\t\tprint(round(t,2))\n\t\telif (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):\n\t\t\tprint(round(p,2))\n\t\telse:\n\t\t\tprint(\"Dados invalidos\")\nelse:\n\tprint(\"Dados invalidos\")",
+    "grade": 67.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      1
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": true,
+        "input": "70.56\n2\nN",
+        "expected": "52.92",
+        "actual": "52.92"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "100.75\n6\nS",
+        "expected": "120.75",
+        "actual": "100.75"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "0.00\n9\nS",
+        "expected": "Dados invalidos",
+        "actual": "Dados invalidos"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 9,
+        "end_line_0idx": 9,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 17,
+        "end_line_0idx": 17,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 2,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 9,
+        "end_line_0idx": 9
+      },
+      {
+        "start_line_0idx": 17,
+        "end_line_0idx": 17
+      }
+    ]
+  }
+}

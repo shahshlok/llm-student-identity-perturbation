@@ -1,0 +1,413 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 589
+- assessment_id: 5675
+- assessment_title: Lista 2: Exercícios em Sala
+- exercise_id: 2973
+- student_id: 9761
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-05-16T14:14:35.723000
+
+Execution Result
+
+- submitted_at: 2024-05-16 14:34:09
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "2\n60\n120"
+    expected: "7202\nOK"
+    actual: "7202.0\nok"
+  - test_index_0idx: 1 [FAIL]
+    input: "1\n41\n109"
+    expected: "4470\nOK"
+    actual: "4470.0\nok"
+  - test_index_0idx: 2 [FAIL]
+    input: "3\n120\n60"
+    expected: "7203\nACIMA"
+    actual: "7203.0\nACIMA"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 120
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["p"]	[""]	+input
+186	11	0	1	0	1	["o"]	[""]	+input
+299	15	0	2	0	2	["s"]	[""]	+input
+532	19	0	3	0	3	["i"]	[""]	+input
+1419	23	0	4	0	4	["ç"]	[""]	+input
+1600	26	0	5	0	5	["~"]	[""]	*compose
+1733	29	0	5	0	6	["ã"]	["~"]	*compose
+2499	32	0	5	0	6	[""]	["ã"]	+delete
+2698	36	0	4	0	5	[""]	["ç"]	+delete
+3531	40	0	3	0	4	[""]	["i"]	+delete
+5099	45	0	3	0	3	[" "]	[""]	+input
+5216	49	0	4	0	4	["="]	[""]	+input
+5350	53	0	5	0	5	[" "]	[""]	+input
+7567	57	0	6	0	6	["f"]	[""]	+input
+7666	61	0	7	0	7	["l"]	[""]	+input
+7803	65	0	8	0	8	["o"]	[""]	+input
+7949	69	0	9	0	9	["a"]	[""]	+input
+8716	73	0	10	0	10	["t"]	[""]	+input
+9366	78	0	11	0	11	["()"]	[""]	+input
+9933	84	0	12	0	12	["i"]	[""]	+input
+10032	88	0	13	0	13	["n"]	[""]	+input
+10299	92	0	14	0	14	["p"]	[""]	+input
+10636	96	0	15	0	15	["u"]	[""]	+input
+10765	100	0	16	0	16	["t"]	[""]	+input
+11615	105	0	17	0	17	["()"]	[""]	+input
+14235	117	0	20	0	20	["",""]	[""]	+input
+18185	130	1	0	1	0	["pos = float(input())"]	[""]	paste
+18382	134	1	20	1	20	["",""]	[""]	+input
+18583	140	2	0	2	0	["pos = float(input())"]	[""]	paste
+21836	148	1	0	1	3	["v"]	["pos"]	+input
+21982	151	1	1	1	1	["e"]	[""]	+input
+22332	156	1	2	1	2	["l"]	[""]	+input
+25615	163	2	0	2	3	["t"]	["pos"]	+input
+25698	166	2	1	2	1	["e"]	[""]	+input
+25851	171	2	2	2	2	["m"]	[""]	+input
+26098	175	2	3	2	3	["p"]	[""]	+input
+29003	180	2	21	2	21	["",""]	[""]	+input
+29798	185	3	0	3	0	["",""]	[""]	+input
+47681	191	4	0	4	0	["s"]	[""]	+input
+48249	195	4	1	4	1	[" "]	[""]	+input
+48364	199	4	2	4	2	["="]	[""]	+input
+48430	202	4	3	4	3	[" "]	[""]	+input
+65933	207	4	4	4	4	["p"]	[""]	+input
+66134	211	4	5	4	5	["o"]	[""]	+input
+66247	215	4	6	4	6	["s"]	[""]	+input
+68097	219	4	7	4	7	[" "]	[""]	+input
+68279	223	4	8	4	8	["+"]	[""]	+input
+68348	226	4	9	4	9	[" "]	[""]	+input
+69413	231	4	10	4	10	["v"]	[""]	+input
+70814	235	4	11	4	11	["*"]	[""]	+input
+71231	239	4	12	4	12	["t"]	[""]	+input
+138381	244	4	11	4	11	["e"]	[""]	+input
+138461	247	4	12	4	12	["l"]	[""]	+input
+140365	258	4	15	4	15	["e"]	[""]	+input
+140460	262	4	16	4	16	["m"]	[""]	+input
+140812	266	4	17	4	17	["p"]	[""]	+input
+142829	272	4	18	4	18	["",""]	[""]	+input
+143260	277	5	0	5	0	["",""]	[""]	+input
+1116555	294	6	0	6	0	["p"]	[""]	+input
+1116706	298	6	1	6	1	["r"]	[""]	+input
+1116787	302	6	2	6	2	["i"]	[""]	+input
+1116971	306	6	3	6	3	["n"]	[""]	+input
+1117088	310	6	4	6	4	["t"]	[""]	+input
+1117455	315	6	5	6	5	["()"]	[""]	+input
+1118427	321	6	6	6	6	["s"]	[""]	+input
+1120505	327	6	8	6	8	["",""]	[""]	+input
+1121189	333	7	0	7	0	["i"]	[""]	+input
+1121273	337	7	1	7	1	["f"]	[""]	+input
+1121822	341	7	2	7	2	[" "]	[""]	+input
+1122754	345	7	3	7	3	["v"]	[""]	+input
+1122841	348	7	4	7	4	["e"]	[""]	+input
+1122976	353	7	5	7	5	["l"]	[""]	+input
+1123521	357	7	6	7	6	[" "]	[""]	+input
+1124271	362	7	7	7	7	[">"]	[""]	+input
+1124771	367	7	8	7	8	["1"]	[""]	+input
+1124911	371	7	9	7	9	["0"]	[""]	+input
+1125071	375	7	10	7	10	["0"]	[""]	+input
+1125988	380	7	11	7	11	[":"]	[""]	+input
+1126157	385	7	12	7	12	[" "]	[""]	+input
+1126442	388	7	13	7	13	["",""]	[""]	+input
+1126442	389	8	0	8	0	["\t"]	[""]	+input
+1127237	395	8	1	8	1	["p"]	[""]	+input
+1127359	399	8	2	8	2	["r"]	[""]	+input
+1127472	403	8	3	8	3	["i"]	[""]	+input
+1127673	407	8	4	8	4	["n"]	[""]	+input
+1127822	411	8	5	8	5	["t"]	[""]	+input
+1128635	416	8	6	8	6	["()"]	[""]	+input
+1133807	424	8	7	8	7	["A"]	[""]	+input
+1133922	428	8	8	8	8	["C"]	[""]	+input
+1134090	432	8	9	8	9	["I"]	[""]	+input
+1134340	436	8	10	8	10	["M"]	[""]	+input
+1134421	440	8	11	8	11	["A"]	[""]	+input
+1136604	448	8	13	8	13	["",""]	[""]	+input
+1136604	449	9	0	9	0	["\t"]	[""]	+input
+1136803	454	9	1	9	1	["",""]	[""]	+input
+1136804	455	10	0	10	0	["\t"]	[""]	+input
+1137375	460	10	0	10	1	[""]	["\t"]	+delete
+1137968	465	10	0	10	0	["e"]	[""]	+input
+1138090	469	10	1	10	1	["l"]	[""]	+input
+1138170	473	10	2	10	2	["s"]	[""]	+input
+1138254	476	10	3	10	3	["e"]	[""]	+input
+1139134	482	10	4	10	4	[":"]	[""]	+input
+1139322	487	10	5	10	5	[" "]	[""]	+input
+1143576	490	10	6	10	6	["",""]	[""]	+input
+1143576	491	11	0	11	0	["\t"]	[""]	+input
+1145171	497	11	1	11	1	["p"]	[""]	+input
+1145276	501	11	2	11	2	["r"]	[""]	+input
+1145404	505	11	3	11	3	["i"]	[""]	+input
+1145621	509	11	4	11	4	["n"]	[""]	+input
+1145723	513	11	5	11	5	["t"]	[""]	+input
+1154404	523	11	6	11	6	["()"]	[""]	+input
+1154804	529	11	7	11	7	["o"]	[""]	+input
+1154960	533	11	8	11	8	["k"]	[""]	+input
+1155586	536	11	8	11	9	[""]	["k"]	+delete
+1155753	540	11	7	11	8	[""]	["o"]	+delete
+1156106	546	11	7	11	7	["\"\""]	[""]	+input
+1156752	552	11	8	11	8	["o"]	[""]	+input
+1156906	556	11	9	11	9	["k"]	[""]	+input
+1158911	562	8	7	8	7	["\""]	[""]	+input
+1160404	570	8	13	8	13	["\""]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 1170374
+- raw_log_line: 577
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+pos = float(input())
+vel = float(input())
+temp = float(input())
+
+s = pos + vel*temp
+
+print(s)
+if vel >100: 
+	print("ACIMA")
+	
+else: 
+	print("ok")
+```
+Run Output
+```text
+170
+3400.0
+ACIMA
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 1174020
+- raw_log_line: 578
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+pos = float(input())
+vel = float(input())
+temp = float(input())
+
+s = pos + vel*temp
+
+print(s)
+if vel >100: 
+	print("ACIMA")
+	
+else: 
+	print("ok")
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-05-16T14:34:15.110000
+
+Execution Result
+
+- submitted_at: 2024-05-16 14:34:19
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "2\n60\n120"
+    expected: "7202\nOK"
+    actual: "7202.0\nOK"
+  - test_index_0idx: 1 [FAIL]
+    input: "1\n41\n109"
+    expected: "4470\nOK"
+    actual: "4470.0\nOK"
+  - test_index_0idx: 2 [FAIL]
+    input: "3\n120\n60"
+    expected: "7203\nACIMA"
+    actual: "7203.0\nACIMA"
+
+Attempt Start Code
+```python
+pos = float(input())
+vel = float(input())
+temp = float(input())
+
+s = pos + vel*temp
+
+print(s)
+if vel >100: 
+	print("ACIMA")
+	
+else: 
+	print("ok")
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	582	11	9	11	10	[""]	["k"]	+delete
+147	586	11	8	11	9	[""]	["o"]	+delete
+488	592	11	8	11	8	["O"]	[""]	+input
+632	596	11	9	11	9	["K"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 4549
+- raw_log_line: 600
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+pos = float(input())
+vel = float(input())
+temp = float(input())
+
+s = pos + vel*temp
+
+print(s)
+if vel >100: 
+	print("ACIMA")
+	
+else: 
+	print("OK")
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-05-16T14:34:36.277000
+
+Execution Result
+
+- submitted_at: 2024-05-16 14:34:53
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "2\n60\n120"
+    expected: "7202\nOK"
+    actual: "7202.0\nOK"
+  - test_index_0idx: 1 [FAIL]
+    input: "1\n41\n109"
+    expected: "4470\nOK"
+    actual: "4470.0\nOK"
+  - test_index_0idx: 2 [FAIL]
+    input: "3\n120\n60"
+    expected: "7203\nACIMA"
+    actual: "7203.0\nACIMA"
+
+Attempt Start Code
+```python
+pos = float(input())
+vel = float(input())
+temp = float(input())
+
+s = pos + vel*temp
+
+print(s)
+if vel >100: 
+	print("ACIMA")
+	
+else: 
+	print("OK")
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 10
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	606	4	18	5	0	[""]	["",""]	+delete
+1184	612	5	8	5	8	["",""]	[""]	+input
+10717	624	7	13	7	13	["",""]	[""]	+input
+10717	625	8	0	8	0	["\t"]	[""]	+input
+10931	631	8	1	8	1	["print(s)"]	[""]	paste
+12548	636	11	6	11	6	["",""]	[""]	+input
+12548	637	12	0	12	0	["\t"]	[""]	+input
+12782	643	12	1	12	1	["print(s)"]	[""]	paste
+14246	648	5	0	5	8	[""]	["print(s)"]	+delete
+14880	652	4	18	5	0	[""]	["",""]	+delete
+
+Submit Anchor 1
+- event_time_delta_ms: 17012
+- raw_log_line: 657
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+pos = float(input())
+vel = float(input())
+temp = float(input())
+
+s = pos + vel*temp
+
+if vel >100: 
+	print(s)
+	print("ACIMA")
+	
+else: 
+	print(s)
+	print("OK")
+```

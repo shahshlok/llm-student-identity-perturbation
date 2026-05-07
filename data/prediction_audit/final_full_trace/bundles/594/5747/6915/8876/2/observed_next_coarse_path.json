@@ -1,0 +1,32 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "594",
+    "assessment_id": "5747",
+    "exercise_id": "6915",
+    "student_id": "8876",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "preco = float(input(\"Preco de entrada: \"))\ndiasemana = int(input(\"Segunda [2]\\nTerca [3]\\nQuarta [4]\\nQuinta [5]\\nSexta [6]\\nSabado [7]\\nDomingo [1]\\n Opcao:\"))\ndia = input(\"Ao vivo: [S] ou [N]: \").upper()\n\na = diasemana\n\nif preco >= 0:\n\tif 1 <= a <= 7:\n\t\tif a == 2 or 3 or 5:\n\t\t\tif dia == \"S\":\n\t\t\t\ttotal = preco - (preco*0.25) + 20\n\t\t\t\tprint(round(total, 2))\n\t\t\telse:\n\t\t\t\ttotal = preco - (preco*0.25)\n\t\t\t\tprint(round(total, 2))\n\t\telse:\n\t\t\tif dia == \"S\":\n\t\t\t\ttotal = preco + 20\n\t\t\t\tprint(round(total, 2))\n\t\t\telse:\n\t\t\t\ttotal = preco\n\t\t\t\tprint(round(preco, 2))\n\telse:\n\t\tprint(\"Dados invalidos\")\nelse:\n\tprint(\"Dados invalidos\")",
+    "coarse_path_steps": [
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 11,
+        "target_end_line_0idx": 21
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

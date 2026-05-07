@@ -1,0 +1,416 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 530
+- assessment_id: 4880
+- assessment_title: Lab 0 – Primeiros passos com o Python - 2020
+- exercise_id: 3711
+- student_id: 8717
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-07-27T14:35:37.051000
+
+Execution Result
+
+- submitted_at: 2023-07-27 14:38:19
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em  2023 a UFAM completou 114 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em  2023 a UFAM completou 114 anos de fundacao."
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 95
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	15	0	0	0	0	["p"]	[""]	+input
+199	19	0	1	0	1	["r"]	[""]	+input
+381	23	0	2	0	2	["i"]	[""]	+input
+536	27	0	3	0	3	["n"]	[""]	+input
+768	31	0	4	0	4	["t"]	[""]	+input
+1421	36	0	5	0	5	["()"]	[""]	+input
+3392	52	0	6	0	6	["\"\""]	[""]	+input
+4777	59	0	7	0	7	["E"]	[""]	+input
+5032	64	0	8	0	8	["m"]	[""]	+input
+6786	68	0	9	0	9	[" "]	[""]	+input
+8545	75	0	11	0	11	[","]	[""]	+input
+8695	79	0	12	0	12	[" "]	[""]	+input
+9743	83	0	13	0	13	["2"]	[""]	+input
+9913	87	0	14	0	14	["0"]	[""]	+input
+10419	91	0	15	0	15	["2"]	[""]	+input
+11564	95	0	16	0	16	["3"]	[""]	+input
+13948	99	0	17	0	17	[","]	[""]	+input
+14055	103	0	18	0	18	[" "]	[""]	+input
+14503	107	0	19	0	19	["a"]	[""]	+input
+14729	111	0	20	0	20	[" "]	[""]	+input
+15645	114	0	20	0	21	[""]	[" "]	+delete
+16011	118	0	19	0	20	[""]	["a"]	+delete
+17135	124	0	19	0	19	["\"\""]	[""]	+input
+23595	139	0	20	0	20	["a"]	[""]	+input
+24007	143	0	21	0	21	[" "]	[""]	+input
+25599	153	0	22	0	22	["U"]	[""]	+input
+26171	157	0	23	0	23	["F"]	[""]	+input
+26372	161	0	24	0	24	["A"]	[""]	+input
+26619	165	0	25	0	25	["M"]	[""]	+input
+28362	171	0	26	0	26	[" "]	[""]	+input
+28634	175	0	27	0	27	["c"]	[""]	+input
+28795	179	0	28	0	28	["o"]	[""]	+input
+29131	183	0	29	0	29	["m"]	[""]	+input
+29387	187	0	30	0	30	["p"]	[""]	+input
+29577	191	0	31	0	31	["l"]	[""]	+input
+29723	195	0	32	0	32	["e"]	[""]	+input
+30027	199	0	33	0	33	["t"]	[""]	+input
+30170	203	0	34	0	34	["o"]	[""]	+input
+30345	207	0	35	0	35	["u"]	[""]	+input
+34462	214	0	37	0	37	[","]	[""]	+input
+34604	218	0	38	0	38	[" "]	[""]	+input
+38323	231	0	36	0	36	[" "]	[""]	+input
+45835	244	0	40	0	40	["2"]	[""]	+input
+45957	247	0	41	0	41	["0"]	[""]	+input
+46143	252	0	42	0	42	["2"]	[""]	+input
+46317	256	0	43	0	43	["2"]	[""]	+input
+47312	259	0	43	0	44	[""]	["2"]	+delete
+47536	263	0	42	0	43	[""]	["2"]	+delete
+47651	267	0	41	0	42	[""]	["0"]	+delete
+48233	271	0	40	0	41	[""]	["2"]	+delete
+49244	276	0	40	0	40	["1"]	[""]	+input
+49422	280	0	41	0	41	["9"]	[""]	+input
+49545	283	0	42	0	42	["0"]	[""]	+input
+49738	288	0	43	0	43	["9"]	[""]	+input
+51854	292	0	44	0	44	[" "]	[""]	+input
+52446	295	0	44	0	45	[""]	[" "]	+delete
+52602	299	0	43	0	44	[""]	["9"]	+delete
+52740	303	0	42	0	43	[""]	["0"]	+delete
+52890	307	0	41	0	42	[""]	["9"]	+delete
+53017	311	0	40	0	41	[""]	["1"]	+delete
+54351	316	0	40	0	40	["2"]	[""]	+input
+54491	320	0	41	0	41	["0"]	[""]	+input
+54658	324	0	42	0	42	["2"]	[""]	+input
+54907	328	0	43	0	43	["3"]	[""]	+input
+59209	332	0	44	0	44	[" "]	[""]	+input
+59444	336	0	45	0	45	["-"]	[""]	+input
+59692	340	0	46	0	46	[" "]	[""]	+input
+63988	346	0	47	0	47	["1"]	[""]	+input
+64241	350	0	48	0	48	["9"]	[""]	+input
+64415	353	0	49	0	49	["0"]	[""]	+input
+64603	358	0	50	0	50	["9"]	[""]	+input
+73137	362	0	51	0	51	[","]	[""]	+input
+73287	366	0	52	0	52	[" "]	[""]	+input
+75586	371	0	53	0	53	["\"\""]	[""]	+input
+78665	377	0	54	0	54	["a"]	[""]	+input
+78836	380	0	55	0	55	["n"]	[""]	+input
+78915	384	0	56	0	56	["o"]	[""]	+input
+79111	389	0	57	0	57	["s"]	[""]	+input
+79206	392	0	58	0	58	[" "]	[""]	+input
+79381	397	0	59	0	59	["d"]	[""]	+input
+79511	400	0	60	0	60	["e"]	[""]	+input
+79652	405	0	61	0	61	[" "]	[""]	+input
+79797	409	0	62	0	62	["f"]	[""]	+input
+79906	413	0	63	0	63	["u"]	[""]	+input
+80006	417	0	64	0	64	["n"]	[""]	+input
+80550	421	0	65	0	65	["d"]	[""]	+input
+80712	425	0	66	0	66	["a"]	[""]	+input
+80995	429	0	67	0	67	["ç"]	[""]	+input
+81129	432	0	68	0	68	["~"]	[""]	*compose
+81412	435	0	68	0	69	["ã"]	["~"]	*compose
+81590	439	0	69	0	69	["o"]	[""]	+input
+83794	443	0	70	0	70	["."]	[""]	+input
+104939	449	0	68	0	69	[""]	["ã"]	+delete
+106873	454	0	68	0	68	["a"]	[""]	+input
+114326	458	0	36	0	37	[""]	[" "]	+delete
+
+Local Run 1
+- event_time_delta_ms: 117594
+- raw_log_line: 466
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em ", 2023, "a UFAM completou", 2023 - 1909, "anos de fundaçao.")
+```
+Run Output
+```text
+Em  2023 a UFAM completou  114 Traceback (most recent call last):
+File "main.py", line 1, in <module>
+print("Em ", 2023, "a UFAM completou ", 2023 - 1909, "anos de funda\xe7\xe3o.")
+UnicodeEncodeError: 'ascii' codec can't encode characters in position 13-14: ordinal not in range(128)
+```
+
+Edit Segment 2
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+148863	470	0	66	0	67	[""]	["ç"]	+delete
+148992	475	0	66	0	66	["c"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 153427
+- raw_log_line: 479
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em ", 2023, "a UFAM completou", 2023 - 1909, "anos de fundacao.")
+```
+Run Output
+```text
+Em  2023 a UFAM completou 114 anos de fundacao.
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 162602
+- raw_log_line: 480
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print("Em ", 2023, "a UFAM completou", 2023 - 1909, "anos de fundacao.")
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-07-27T14:39:07.930000
+
+Execution Result
+
+- submitted_at: 2023-07-27 14:40:06
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em  2009 a UFAM completou 100 anos de fundacao.\nEm  2009 a UFAM completou 111 anos de fundacao.\nEm  1985 a UFAM completou 76 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em  2009 a UFAM completou 100 anos de fundacao.\nEm  2009 a UFAM completou 111 anos de fundacao.\nEm  1985 a UFAM completou 76 anos de fundacao."
+
+Attempt Start Code
+```python
+print("Em ", 2023, "a UFAM completou", 2023 - 1909, "anos de fundacao.")
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 42
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	486	0	16	0	17	[""]	["3"]	+delete
+160	490	0	15	0	16	[""]	["2"]	+delete
+1364	494	0	14	0	15	[""]	["0"]	+delete
+3311	499	0	14	0	14	["0"]	[""]	+input
+3449	503	0	15	0	15	["0"]	[""]	+input
+3613	507	0	16	0	16	["9"]	[""]	+input
+5886	511	0	42	0	43	[""]	["3"]	+delete
+6031	515	0	41	0	42	[""]	["2"]	+delete
+6516	520	0	41	0	41	["0"]	[""]	+input
+6665	524	0	42	0	42	["0"]	[""]	+input
+6838	528	0	43	0	43	["9"]	[""]	+input
+15728	538	0	73	0	73	["",""]	[""]	+input
+16203	544	1	0	1	0	["print(\"Em \", 2009, \"a UFAM completou\", 20009 - 1909, \"anos de fundacao.\")"]	[""]	paste
+21302	549	1	43	1	44	[""]	["9"]	+delete
+21476	553	1	42	1	43	[""]	["0"]	+delete
+21769	558	1	42	1	42	["2"]	[""]	+input
+22039	562	1	43	1	43	["0"]	[""]	+input
+24054	565	1	43	1	44	[""]	["0"]	+delete
+24256	569	1	42	1	43	[""]	["2"]	+delete
+24372	573	1	41	1	42	[""]	["0"]	+delete
+24636	578	1	41	1	41	["2"]	[""]	+input
+25385	582	1	42	1	42	["0"]	[""]	+input
+28508	587	0	41	0	42	[""]	["0"]	+delete
+31990	592	1	72	1	72	["",""]	[""]	+input
+32299	598	2	0	2	0	["print(\"Em \", 2009, \"a UFAM completou\", 20009 - 1909, \"anos de fundacao.\")"]	[""]	paste
+37220	603	2	16	2	17	[""]	["9"]	+delete
+37377	607	2	15	2	16	[""]	["0"]	+delete
+37522	611	2	14	2	15	[""]	["0"]	+delete
+37888	615	2	13	2	14	[""]	["2"]	+delete
+38642	620	2	13	2	13	["1"]	[""]	+input
+38784	624	2	14	2	14	["9"]	[""]	+input
+39377	628	2	15	2	15	["8"]	[""]	+input
+39683	632	2	16	2	16	["5"]	[""]	+input
+44460	636	2	43	2	44	[""]	["9"]	+delete
+44641	640	2	42	2	43	[""]	["0"]	+delete
+44782	644	2	41	2	42	[""]	["0"]	+delete
+44927	648	2	40	2	41	[""]	["0"]	+delete
+45286	652	2	39	2	40	[""]	["2"]	+delete
+46185	657	2	39	2	39	["1"]	[""]	+input
+46432	661	2	40	2	40	["9"]	[""]	+input
+47202	665	2	41	2	41	["8"]	[""]	+input
+47519	669	2	42	2	42	["5"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 50633
+- raw_log_line: 673
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em ", 2009, "a UFAM completou", 2009 - 1909, "anos de fundacao.")
+print("Em ", 2009, "a UFAM completou", 2020 - 1909, "anos de fundacao.")
+print("Em ", 1985, "a UFAM completou", 1985 - 1909, "anos de fundacao.")
+```
+Run Output
+```text
+Em  2023 a UFAM completou 114 anos de fundacao.
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 58698
+- raw_log_line: 674
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print("Em ", 2009, "a UFAM completou", 2009 - 1909, "anos de fundacao.")
+print("Em ", 2009, "a UFAM completou", 2020 - 1909, "anos de fundacao.")
+print("Em ", 1985, "a UFAM completou", 1985 - 1909, "anos de fundacao.")
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-07-27T14:40:18.580000
+
+Execution Result
+
+- submitted_at: 2023-07-27 14:40:35
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em 2009 a UFAM completou 100 anos de fundacao.\nEm 2009 a UFAM completou 111 anos de fundacao.\nEm 1985 a UFAM completou 76 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em 2009 a UFAM completou 100 anos de fundacao.\nEm 2009 a UFAM completou 111 anos de fundacao.\nEm 1985 a UFAM completou 76 anos de fundacao."
+
+Attempt Start Code
+```python
+print("Em ", 2009, "a UFAM completou", 2009 - 1909, "anos de fundacao.")
+print("Em ", 2009, "a UFAM completou", 2020 - 1909, "anos de fundacao.")
+print("Em ", 1985, "a UFAM completou", 1985 - 1909, "anos de fundacao.")
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 678
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em ", 2009, "a UFAM completou", 2009 - 1909, "anos de fundacao.")
+print("Em ", 2009, "a UFAM completou", 2020 - 1909, "anos de fundacao.")
+print("Em ", 1985, "a UFAM completou", 1985 - 1909, "anos de fundacao.")
+```
+Run Output
+```text
+Em  2009 a UFAM completou 100 anos de fundacao.
+Em  2009 a UFAM completou 111 anos de fundacao.
+Em  1985 a UFAM completou 76 anos de fundacao.
+```
+
+Edit Segment 1
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+7391	682	0	9	0	10	[""]	[" "]	+delete
+8952	692	1	9	1	10	[""]	[" "]	+delete
+10331	702	2	9	2	10	[""]	[" "]	+delete
+
+Local Run 2
+- event_time_delta_ms: 15870
+- raw_log_line: 709
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em", 2009, "a UFAM completou", 2009 - 1909, "anos de fundacao.")
+print("Em", 2009, "a UFAM completou", 2020 - 1909, "anos de fundacao.")
+print("Em", 1985, "a UFAM completou", 1985 - 1909, "anos de fundacao.")
+```
+Run Output
+```text
+Em 2009 a UFAM completou 100 anos de fundacao.
+Em 2009 a UFAM completou 111 anos de fundacao.
+Em 1985 a UFAM completou 76 anos de fundacao.
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 17052
+- raw_log_line: 710
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print("Em", 2009, "a UFAM completou", 2009 - 1909, "anos de fundacao.")
+print("Em", 2009, "a UFAM completou", 2020 - 1909, "anos de fundacao.")
+print("Em", 1985, "a UFAM completou", 1985 - 1909, "anos de fundacao.")
+```

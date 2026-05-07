@@ -1,0 +1,36 @@
+{
+  "schema_version": "v6_2_full_trace_prototype_bundle_v6",
+  "custom_id": "485:4399:4553:1117:2",
+  "condition": "no_trace",
+  "exercise_scope": "485:4553:1117",
+  "tertile": "T1",
+  "diversity_score": 0.0,
+  "model": "gpt-5.4",
+  "reasoning_effort": "xhigh",
+  "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+  "system_prompt_path": "system_prompt.txt",
+  "user_payload_path": "user_payload.json",
+  "user_prompt_path": "user_prompt.txt",
+  "response_schema_path": "response_schema.json",
+  "request_body_path": "request_body.json",
+  "batch_request_path": "batch_request.json",
+  "batch_request_jsonl_path": "requests.jsonl",
+  "observed_next_repair_target_path": "observed_next_repair_target.json",
+  "observed_next_coarse_path_path": "observed_next_coarse_path.json",
+  "transition_index_0idx": 2,
+  "prompt_char_count": 5739,
+  "visible_attempt_count": 3,
+  "attempt_n_pass_fail_vector": [
+    false,
+    false,
+    false
+  ],
+  "attempt_n_failed_test_indices_0idx": [
+    0,
+    1,
+    2
+  ],
+  "attempt_n_test_count": 3,
+  "attempt_n_pass_vector_signature": "FFF",
+  "attempt_n_normalized_code": "preco_normal = float(input())\ndia_semana = int(input())\nmusica_ao_vivo = str(input())\n\nif dia_semana == 2 or dia_semana == 3 or dia_semana == 5:\n\ttotal = preco_normal - (25/100) * preco_normal\n\tif musica_ao_vivo == 'S':\n\t\ttotal = total + 20\n\t\tprint(\"Entradas: {}, {}, {}\".format(round(preco_normal, 2), dia_semana, musica_ao_vivo))\n\t\tprint(\"Total\", round(total, 2))\nelif dia_semana > 7 or dia_semana < 1:\n\tprint(\"Entradas: {}, {}, {}\".format(round(preco_normal, 2), dia_semana, musica_ao_vivo))\n\tprint(\"Dados invalidos\")\nelse:\n\tprint(\"Entradas: {}, {}, {}\".format(round(preco_normal, 2), dia_semana, musica_ao_vivo))\n\tprint(\"Total: \", round(preco_normal, 2))"
+}

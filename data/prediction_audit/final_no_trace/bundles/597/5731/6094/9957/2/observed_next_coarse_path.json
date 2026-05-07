@@ -1,0 +1,57 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "597",
+    "assessment_id": "5731",
+    "exercise_id": "6094",
+    "student_id": "9957",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "valor = float(input())\nmembros = int(input())\n\n#definindo variavel de calculo\nresultado = valor * membros\n\n#definindo condicionaqmento\nif membros == 2:\n\tcom_desconto = resultado - (valor * 15 / 100)*(membros)\nif membros == 3:\n\tcom_desconto = resultado - (valor * 25 / 100)*(membros)\nelif membros > 4:\n\tcom_desconto = resultado - (valor * 35 / 100)*(membros)\n\n#definindo arredondado\t\nnumero_arredondado = round(com_desconto, 2)\nprint(\"R$ \", numero_arredondado)",
+    "coarse_path_steps": [
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 16,
+        "target_end_line_0idx": 16
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 16,
+        "target_end_line_0idx": 16
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 16,
+        "target_end_line_0idx": 16
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "589",
+    "assessment_id": "5730",
+    "exercise_id": "1949",
+    "student_id": "9895",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "n = int(input(\"n1: \"))\nl = int(input(\"l1: \"))\nif 10 <= n <= 99 and 10 <= l <= 99:\n\tif n == l:\n\t\tprint(\"Ganhou R$ 100.000,00\")\n\telif sorted(str(n)) == sorted(str(l)):\n\t\tprint(\"Ganhou R$ 50.000,00\")\n\telif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:\n\t\tprint(\"Ganhou R$ 100.000,00\")\n\telse:\n\t\tprint(\"Perdeu\")",
+    "grade": 0.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      1
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "n = int(input(\"Digite o número apostado (dois dígitos): \"))\nl = int(input(\"Digite o número sorteado (dois dígitos): \"))\n\nif n == l:\n    print(\"Ganhou R$ 100.000,00\")\nelif sorted(str(n)) == sorted(str(l)):\n    print(\"Ganhou R$ 50.000,00\")\nelif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:\n    print(\"Ganhou R$ 1.000,00\")\nelse:\n    print(\"Perdeu\")",
+    "grade": 100.0,
+    "pass_count": 3,
+    "failed_test_indices_0idx": [],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": true,
+        "input": "55\n55",
+        "expected": "Ganhou R$ 100.000,00",
+        "actual": "Ganhou R$ 100.000,00"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "78\n89",
+        "expected": "Ganhou R$ 1.000,00",
+        "actual": "Ganhou R$ 1.000,00"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "12\n56",
+        "expected": "Perdeu",
+        "actual": "Perdeu"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "solved",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 0,
+        "end_line_0idx": 10,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 11,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 0,
+        "end_line_0idx": 10
+      }
+    ]
+  }
+}

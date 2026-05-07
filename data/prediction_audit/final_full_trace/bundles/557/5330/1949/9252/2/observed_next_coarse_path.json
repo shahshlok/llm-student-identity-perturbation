@@ -1,0 +1,42 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "557",
+    "assessment_id": "5330",
+    "exercise_id": "1949",
+    "student_id": "9252",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "num = int(input(\"Numero: \"))\na = int(num//10)\nb = num%10\nlot = int(input(\"Loteria: \"))\n\nif(num == lot):\n\tprint(\"Ganhou R$ 100.000,00\")\n\t\nelif(int(lot/10)==a or int(lot/10)==b):\n\t\n\tprint(\"Ganhou R$ 50.000,00\")\nelif(int(lot/10)==a or int(lot/10)==b or lot%10==a or lot%10==b):\n\t\n\tprint(\"Ganhou R$ 1000,00\")\nelse:\n\tprint(\"Perdeu\")\n\t\n\t\n",
+    "coarse_path_steps": [
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 1,
+        "target_end_line_0idx": 1
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

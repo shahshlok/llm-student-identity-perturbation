@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4477",
+    "exercise_id": "2971",
+    "student_id": "8170",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "j = float(input(\"Taxa de juros: \"))\nv = float(input(\"Valor do apartamento: \"))\nq0 = 1.500\nt = 36\n\nqf = q0 * (1+j)**t\n\nif(qf<=v):\n\tprint(round(qf,2))\n\tprint(\"Sim\")\nelse:\n\tprint(round(qf,2))\n\tprint(\"Nao\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "j = float(input(\"Taxa de juros: \"))\nv = float(input(\"Valor do apartamento: \"))\nq0 = 1.500\nt = 36\n\nqf = (q0 * (1+j)**t) * 100\n\nif(qf<=v):\n\tprint(round(qf,2))\n\tprint(\"Sim\")\nelse:\n\tprint(round(qf,2))\n\tprint(\"Nao\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "0.29\n125250",
+        "expected": "14365502.76\nSim",
+        "actual": "1436550.28\nNao"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "0.15\n300000",
+        "expected": "229727.78\nNao",
+        "actual": "22972.78\nSim"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "0.2\n150000",
+        "expected": "1063202.81\nSim",
+        "actual": "106320.28\nSim"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5
+      }
+    ]
+  }
+}

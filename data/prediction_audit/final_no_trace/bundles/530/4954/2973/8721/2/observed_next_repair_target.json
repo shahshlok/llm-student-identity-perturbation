@@ -1,0 +1,67 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "530",
+    "assessment_id": "4954",
+    "exercise_id": "2973",
+    "student_id": "8721",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "p = int(input(\"Qual e a posicao inicial em m?: \"))\nv = int(input(\"Qual e a velocidade do objeto em m/s\"))\nt = int(input(\"Qual e o tempo de deslocamento em segundos?: \"))\ns= p+v*t\nprint(s)\nif (s<=100):\n\tprint(\"OK\")\nelse:\n\tprint(\"ACIMA\")",
+    "grade": 0.0,
+    "pass_count": 1,
+    "failed_test_indices_0idx": [
+      0,
+      1
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "p = int(input(\"Qual e a posicao inicial em m?: \"))\nv = int(input(\"Qual e a velocidade do objeto em m/s\"))\nt = int(input(\"Qual e o tempo de deslocamento em segundos?: \"))\ns= p+v*t\nprint(s)\nif (v<=100):\n\tprint(\"OK\")\nelse:\n\tprint(\"ACIMA\")",
+    "grade": 100.0,
+    "pass_count": 3,
+    "failed_test_indices_0idx": [],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": true,
+        "input": "2\n60\n120",
+        "expected": "7202\nOK",
+        "actual": "7202\nOK"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "1\n41\n109",
+        "expected": "4470\nOK",
+        "actual": "4470\nOK"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "3\n120\n60",
+        "expected": "7203\nACIMA",
+        "actual": "7203\nACIMA"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "solved",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5
+      }
+    ]
+  }
+}

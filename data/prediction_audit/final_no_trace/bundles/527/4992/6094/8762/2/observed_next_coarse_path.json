@@ -1,0 +1,52 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "527",
+    "assessment_id": "4992",
+    "exercise_id": "6094",
+    "student_id": "8762",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "vp = float(input(\"Informe o valor do Plano individual: \"))\nnf = int(input(\"numero de membros na familia: \"))\n\nif nf==2:\n\tdesconto1 = (vp*15)/100\n\ttotal = (vp*nf)-desconto1-desconto1\nelif nf==3:\n\tdesconto1 = (vp*25)/100\n\ttotal = (vp*nf)-desconto1-desconto1\nelif nf>=4:\n\tdesconto1 = (vp*35)/100\n\ttotal = (vp*nf)-desconto1-desconto1\nelse: \n\ttotal = vp\n\nprint(round(total,2))",
+    "coarse_path_steps": [
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 5,
+        "target_end_line_0idx": 5
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 5,
+        "target_end_line_0idx": 11
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 5,
+        "target_end_line_0idx": 5
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

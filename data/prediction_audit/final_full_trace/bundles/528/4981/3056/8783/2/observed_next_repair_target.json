@@ -1,0 +1,68 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "528",
+    "assessment_id": "4981",
+    "exercise_id": "3056",
+    "student_id": "8783",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "import math\narea=float(input())\nif area>=0:\n\tif area>=0 and area<=10000:\n\t\tvalor=area*6+100\n\t\tprint(valor)\n\telif area>10000 and area<=20000:\n\t\tvalor=area*5.5+150\n\t\tprint(valor)\n\telif area>20000 and area<=30000:\n\t\tvalor=area*5+200\n\t\tprint(valor)\n\telif area>30000 and area<math.inf:\n\t\tvalor=area*4.5+250\n\t\tprint(valor)",
+    "grade": 67.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      0
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "import math\narea=float(input())\nif area>=0:\n\tif area>=0 and area<=10000:\n\t\tvalor=area*6+100\n\t\tprint(valor)\n\telif area>10000 and area<=20000:\n\t\tvalor=area*5.5+150\n\t\tprint(valor)\n\telif area>20000 and area<=30000:\n\t\tvalor=area*5+200\n\t\tprint(valor)\n\telif area>30000 and area>math.inf:\n\t\tvalor=area*4.5+250\n\t\tprint(valor)",
+    "grade": 67.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      0
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "256.8",
+        "expected": "1640.8",
+        "actual": "1640.8000000000002"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "11",
+        "expected": "166.0",
+        "actual": "166.0"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "9638.75",
+        "expected": "57932.5",
+        "actual": "57932.5"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 12,
+        "end_line_0idx": 12,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 12,
+        "end_line_0idx": 12
+      }
+    ]
+  }
+}

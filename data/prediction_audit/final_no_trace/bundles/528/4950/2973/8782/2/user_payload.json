@@ -1,0 +1,141 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "528",
+    "assessment_id": "4950",
+    "assessment_title": "Lab 2 - Estrutura Condicional Composta",
+    "exercise_id": "2973",
+    "student_id": "8782",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/528/users/8782/executions/4950_2973.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/528/users/8782/codemirror/4950_2973.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-08-21 15:22:06",
+        "grade": 0.0,
+        "pass_count": 1,
+        "failed_test_indices_0idx": [
+          0,
+          1
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n60\n120",
+            "expected": "7202\nOK",
+            "actual": "7202\nACIMA"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n41\n109",
+            "expected": "4470\nOK",
+            "actual": "4470\nACIMA"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": true,
+            "input": "3\n120\n60",
+            "expected": "7203\nACIMA",
+            "actual": "7203\nACIMA"
+          }
+        ]
+      },
+      "submitted_code": "pio=int(input(\"So: \"))\nv=int(input (\"m/s: \"))\nts=int(input(\"tempo: \"))\ns=pio+v*ts\nif (s)<= 100:\n\tmensagem=\"ok\"\nelse:\n\tmensagem=\"ACIMA\"\nprint(round(s,2))\nprint(mensagem)"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-08-21 15:22:16",
+        "grade": 0.0,
+        "pass_count": 1,
+        "failed_test_indices_0idx": [
+          0,
+          1
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n60\n120",
+            "expected": "7202\nOK",
+            "actual": "7202\nACIMA"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n41\n109",
+            "expected": "4470\nOK",
+            "actual": "4470\nACIMA"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": true,
+            "input": "3\n120\n60",
+            "expected": "7203\nACIMA",
+            "actual": "7203\nACIMA"
+          }
+        ]
+      },
+      "submitted_code": "pio=int(input(\"So: \"))\nv=int(input (\"m/s: \"))\nts=int(input(\"tempo: \"))\ns=pio+v*ts\nif (s)<= 100:\n\tmensagem=\"OK\"\nelse:\n\tmensagem=\"ACIMA\"\nprint(round(s,2))\nprint(mensagem)"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-08-21 15:22:40",
+        "grade": 0.0,
+        "pass_count": 1,
+        "failed_test_indices_0idx": [
+          0,
+          1
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n60\n120",
+            "expected": "7202\nOK",
+            "actual": "7202\nACIMA"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n41\n109",
+            "expected": "4470\nOK",
+            "actual": "4470\nACIMA"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": true,
+            "input": "3\n120\n60",
+            "expected": "7203\nACIMA",
+            "actual": "7203\nACIMA"
+          }
+        ]
+      },
+      "submitted_code": "pio=int(input(\"So: \"))\nv=int(input(\"m/s: \"))\nts=int(input(\"tempo: \"))\ns=pio+v*ts\nif(s)<=100:\n\tmensagem=\"OK\"\nelse:\n\tmensagem=\"ACIMA\"\nprint(round(s,2))\nprint(mensagem)"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

@@ -1,0 +1,2816 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 594
+- assessment_id: 5747
+- assessment_title: Lab 3: Estrutura Condicional Encadeada
+- exercise_id: 6915
+- student_id: 6903
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-05-30T13:46:06.281000
+
+Execution Result
+
+- submitted_at: 2024-05-30 14:25:39
+- grade: 100.0
+- pass_count: 3
+- failed_test_indices_0idx: []
+- test_outcome: all_pass
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "70.56\n2\nN"
+    expected: "52.92"
+    actual: "52.92"
+  - test_index_0idx: 1 [PASS]
+    input: "100.75\n6\nS"
+    expected: "120.75"
+    actual: "120.75"
+  - test_index_0idx: 2 [PASS]
+    input: "0.00\n9\nS"
+    expected: "Dados invalidos"
+    actual: "Dados invalidos"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 476
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["p"]	[""]	+input
+466	11	0	1	0	1	[" "]	[""]	+input
+1234	15	0	2	0	2	["="]	[""]	+input
+1381	19	0	3	0	3	[" "]	[""]	+input
+5296	23	0	4	0	4	["f"]	[""]	+input
+5425	27	0	5	0	5	["l"]	[""]	+input
+5559	31	0	6	0	6	["o"]	[""]	+input
+5740	35	0	7	0	7	["a"]	[""]	+input
+5863	38	0	8	0	8	["t"]	[""]	+input
+6813	44	0	9	0	9	["()"]	[""]	+input
+7596	50	0	10	0	10	["i"]	[""]	+input
+7760	54	0	11	0	11	["n"]	[""]	+input
+7890	57	0	12	0	12	["p"]	[""]	+input
+8090	61	0	13	0	13	["u"]	[""]	+input
+8293	66	0	14	0	14	["t"]	[""]	+input
+9080	71	0	15	0	15	["()"]	[""]	+input
+9491	78	0	16	0	16	["\"\""]	[""]	+input
+12294	84	0	17	0	17	["p"]	[""]	+input
+12733	88	0	18	0	18	["r"]	[""]	+input
+12914	92	0	19	0	19	["e"]	[""]	+input
+13353	96	0	20	0	20	["c"]	[""]	+input
+13557	100	0	21	0	21	["o"]	[""]	+input
+13781	104	0	22	0	22	[" "]	[""]	+input
+14325	108	0	23	0	23	["t"]	[""]	+input
+14543	112	0	24	0	24	["o"]	[""]	+input
+14771	116	0	25	0	25	["t"]	[""]	+input
+15277	120	0	26	0	26	["l"]	[""]	+input
+15407	124	0	27	0	27	["s"]	[""]	+input
+16146	127	0	27	0	28	[""]	["s"]	+delete
+16287	131	0	26	0	27	[""]	["l"]	+delete
+16323	135	0	26	0	26	["a"]	[""]	+input
+17124	140	0	27	0	27	["l"]	[""]	+input
+17247	144	0	28	0	28	[" "]	[""]	+input
+18792	148	0	29	0	29	["d"]	[""]	+input
+18955	151	0	30	0	30	["s"]	[""]	+input
+19154	156	0	31	0	31	[" "]	[""]	+input
+19340	160	0	32	0	32	["e"]	[""]	+input
+19454	163	0	33	0	33	["n"]	[""]	+input
+20127	167	0	33	0	34	[""]	["n"]	+delete
+20267	171	0	32	0	33	[""]	["e"]	+delete
+20654	175	0	31	0	32	[""]	[" "]	+delete
+20836	179	0	30	0	31	[""]	["s"]	+delete
+21543	184	0	30	0	30	["a"]	[""]	+input
+21727	188	0	31	0	31	[" "]	[""]	+input
+21970	192	0	32	0	32	["e"]	[""]	+input
+22162	196	0	33	0	33	["n"]	[""]	+input
+22492	200	0	34	0	34	["t"]	[""]	+input
+22739	204	0	35	0	35	["r"]	[""]	+input
+23208	208	0	36	0	36	["a"]	[""]	+input
+23656	212	0	37	0	37	["d"]	[""]	+input
+23807	215	0	38	0	38	["a"]	[""]	+input
+25591	221	0	39	0	39	[":"]	[""]	+input
+26359	226	0	40	0	40	[" "]	[""]	+input
+28522	230	0	44	0	44	["",""]	[""]	+input
+68425	236	1	0	1	0	["d"]	[""]	+input
+68599	240	1	1	1	1	["i"]	[""]	+input
+68836	244	1	2	1	2	["a"]	[""]	+input
+69582	248	1	3	1	3	[" "]	[""]	+input
+69833	252	1	4	1	4	["="]	[""]	+input
+69951	256	1	5	1	5	[" "]	[""]	+input
+72270	260	1	6	1	6	["i"]	[""]	+input
+72380	264	1	7	1	7	["n"]	[""]	+input
+73505	268	1	8	1	8	["p"]	[""]	+input
+73868	272	1	9	1	9	["u"]	[""]	+input
+74053	276	1	10	1	10	["t"]	[""]	+input
+75106	283	1	11	1	11	["()"]	[""]	+input
+76087	290	1	12	1	12	["\"\""]	[""]	+input
+77468	297	1	13	1	13	["d"]	[""]	+input
+77688	302	1	14	1	14	["I"]	[""]	+input
+77778	305	1	15	1	15	["A"]	[""]	+input
+77998	310	1	16	1	16	[" "]	[""]	+input
+78712	313	1	16	1	17	[""]	[" "]	+delete
+78879	317	1	15	1	16	[""]	["A"]	+delete
+79040	321	1	14	1	15	[""]	["I"]	+delete
+79160	325	1	13	1	14	[""]	["d"]	+delete
+79819	330	1	13	1	13	["D"]	[""]	+input
+81233	336	1	14	1	14	["i"]	[""]	+input
+81347	340	1	15	1	15	["a"]	[""]	+input
+81572	344	1	16	1	16	[" "]	[""]	+input
+82048	348	1	17	1	17	["d"]	[""]	+input
+82173	351	1	18	1	18	["a"]	[""]	+input
+82372	355	1	19	1	19	[" "]	[""]	+input
+82862	360	1	20	1	20	["e"]	[""]	+input
+83065	364	1	21	1	21	["m"]	[""]	+input
+83234	368	1	22	1	22	["a"]	[""]	+input
+83353	372	1	23	1	23	["n"]	[""]	+input
+83505	376	1	24	1	24	["a"]	[""]	+input
+84143	379	1	24	1	25	[""]	["a"]	+delete
+84312	383	1	23	1	24	[""]	["n"]	+delete
+84449	387	1	22	1	23	[""]	["a"]	+delete
+84603	391	1	21	1	22	[""]	["m"]	+delete
+84731	395	1	20	1	21	[""]	["e"]	+delete
+84891	399	1	19	1	20	[""]	[" "]	+delete
+84926	403	1	19	1	19	["s"]	[""]	+input
+85726	407	1	19	1	20	[""]	["s"]	+delete
+86078	412	1	19	1	19	[" "]	[""]	+input
+86263	416	1	20	1	20	["s"]	[""]	+input
+86497	420	1	21	1	21	["e"]	[""]	+input
+87634	424	1	22	1	22	["m"]	[""]	+input
+87798	428	1	23	1	23	["a"]	[""]	+input
+87952	432	1	24	1	24	["n"]	[""]	+input
+88084	436	1	25	1	25	["a"]	[""]	+input
+88946	441	1	26	1	26	[":"]	[""]	+input
+89092	446	1	27	1	27	[" "]	[""]	+input
+187151	455	1	30	1	30	["",""]	[""]	+input
+191238	461	2	0	2	0	["m"]	[""]	+input
+193366	465	2	1	2	1	["v"]	[""]	+input
+194455	469	2	2	2	2	[" "]	[""]	+input
+194651	473	2	3	2	3	["="]	[""]	+input
+194804	477	2	4	2	4	[" "]	[""]	+input
+197308	481	2	5	2	5	["i"]	[""]	+input
+197539	485	2	6	2	6	[" "]	[""]	+input
+197672	489	2	7	2	7	["p"]	[""]	+input
+198477	492	2	7	2	8	[""]	["p"]	+delete
+198643	496	2	6	2	7	[""]	[" "]	+delete
+202615	501	2	6	2	6	["m"]	[""]	+input
+202846	505	2	7	2	7	["i"]	[""]	+input
+203527	508	2	7	2	8	[""]	["i"]	+delete
+203711	512	2	6	2	7	[""]	["m"]	+delete
+205034	517	2	6	2	6	["n"]	[""]	+input
+206315	521	2	7	2	7	["p"]	[""]	+input
+206474	524	2	8	2	8	["u"]	[""]	+input
+207058	529	2	9	2	9	["y"]	[""]	+input
+207794	532	2	9	2	10	[""]	["y"]	+delete
+208049	537	2	9	2	9	["t"]	[""]	+input
+208663	542	2	10	2	10	["()"]	[""]	+input
+209218	549	2	11	2	11	["\"\""]	[""]	+input
+212268	556	2	12	2	12	["E"]	[""]	+input
+212605	561	2	13	2	13	[" "]	[""]	+input
+213214	565	2	14	2	14	["d"]	[""]	+input
+213394	569	2	15	2	15	["i"]	[""]	+input
+213530	573	2	16	2	16	["a"]	[""]	+input
+213699	576	2	17	2	17	[" "]	[""]	+input
+213881	581	2	18	2	18	["d"]	[""]	+input
+214027	584	2	19	2	19	["e"]	[""]	+input
+214142	588	2	20	2	20	[" "]	[""]	+input
+214720	593	2	21	2	21	["n"]	[""]	+input
+215754	596	2	21	2	22	[""]	["n"]	+delete
+216441	601	2	21	2	21	["n"]	[""]	+input
+217034	604	2	21	2	22	[""]	["n"]	+delete
+217736	609	2	21	2	21	["m"]	[""]	+input
+218036	613	2	22	2	22	["u"]	[""]	+input
+218324	617	2	23	2	23	["s"]	[""]	+input
+218470	621	2	24	2	24	["i"]	[""]	+input
+218921	625	2	25	2	25	["c"]	[""]	+input
+219102	629	2	26	2	26	["a"]	[""]	+input
+219268	633	2	27	2	27	[" "]	[""]	+input
+220253	637	2	28	2	28	["a"]	[""]	+input
+220347	640	2	29	2	29	["o"]	[""]	+input
+220599	645	2	30	2	30	[" "]	[""]	+input
+220936	649	2	31	2	31	["v"]	[""]	+input
+221204	653	2	32	2	32	["i"]	[""]	+input
+221390	657	2	33	2	33	["v"]	[""]	+input
+221535	661	2	34	2	34	["o"]	[""]	+input
+222471	666	2	35	2	35	[":"]	[""]	+input
+222842	671	2	36	2	36	[" "]	[""]	+input
+226110	676	1	6	1	6	["i"]	[""]	+input
+226331	680	1	7	1	7	["n"]	[""]	+input
+226652	684	1	8	1	8	["t"]	[""]	+input
+228303	689	1	9	1	9	["("]	[""]	+input
+230710	696	1	34	1	34	[")"]	[""]	+input
+234244	702	2	39	2	39	["."]	[""]	+input
+234946	706	2	40	2	40	["u"]	[""]	+input
+235231	710	2	41	2	41	["p"]	[""]	+input
+235439	714	2	42	2	42	["p"]	[""]	+input
+236330	718	2	43	2	43	["e"]	[""]	+input
+236525	722	2	44	2	44	["r"]	[""]	+input
+237903	727	2	45	2	45	["()"]	[""]	+input
+266447	733	2	47	2	47	["",""]	[""]	+input
+339388	741	3	0	3	0	["",""]	[""]	+input
+339554	746	4	0	4	0	["",""]	[""]	+input
+486050	753	4	0	4	0	["i"]	[""]	+input
+486240	757	4	1	4	1	["i"]	[""]	+input
+486698	761	4	2	4	2	["f"]	[""]	+input
+486920	765	4	3	4	3	[" "]	[""]	+input
+487585	768	4	3	4	4	[""]	[" "]	+delete
+487765	772	4	2	4	3	[""]	["f"]	+delete
+488206	776	4	1	4	2	[""]	["i"]	+delete
+488924	781	4	1	4	1	["f"]	[""]	+input
+489150	785	4	2	4	2	[" "]	[""]	+input
+494494	789	4	3	4	3	["d"]	[""]	+input
+494664	793	4	4	4	4	["i"]	[""]	+input
+494836	797	4	5	4	5	["a"]	[""]	+input
+495449	801	4	6	4	6	[" "]	[""]	+input
+526640	805	4	7	4	7	["="]	[""]	+input
+526801	809	4	8	4	8	["="]	[""]	+input
+527599	813	4	9	4	9	[" "]	[""]	+input
+528223	817	4	10	4	10	["1"]	[""]	+input
+529382	822	4	11	4	11	[":"]	[""]	+input
+539136	826	4	12	4	12	["",""]	[""]	+input
+539137	827	5	0	5	0	["\t"]	[""]	+input
+539913	833	5	1	5	1	["t"]	[""]	+input
+540145	837	5	2	5	2	[" "]	[""]	+input
+540995	841	5	3	5	3	["="]	[""]	+input
+541224	845	5	4	5	4	[" "]	[""]	+input
+592018	849	5	5	5	5	["p"]	[""]	+input
+596963	853	5	6	5	6	[" "]	[""]	+input
+597410	857	5	7	5	7	["="]	[""]	+input
+598105	860	5	7	5	8	[""]	["="]	+delete
+598446	865	5	7	5	7	["-"]	[""]	+input
+598692	869	5	8	5	8	[" "]	[""]	+input
+600234	873	5	9	5	9	["p"]	[""]	+input
+603027	878	5	10	5	10	["*"]	[""]	+input
+604734	883	5	11	5	11	["0"]	[""]	+input
+604995	887	5	12	5	12	["."]	[""]	+input
+607056	891	5	13	5	13	["2"]	[""]	+input
+607371	895	5	14	5	14	["5"]	[""]	+input
+609663	899	5	15	5	15	["",""]	[""]	+input
+609663	900	6	0	6	0	["\t"]	[""]	+input
+611575	906	6	1	6	1	["p"]	[""]	+input
+611854	910	6	2	6	2	["r"]	[""]	+input
+611973	913	6	3	6	3	["i"]	[""]	+input
+612195	918	6	4	6	4	["n"]	[""]	+input
+612342	922	6	5	6	5	["y"]	[""]	+input
+613001	925	6	5	6	6	[""]	["y"]	+delete
+614499	930	6	5	6	5	["t"]	[""]	+input
+615408	935	6	6	6	6	["()"]	[""]	+input
+616272	941	6	7	6	7	["r"]	[""]	+input
+616569	945	6	8	6	8	["o"]	[""]	+input
+616758	948	6	9	6	9	["u"]	[""]	+input
+616941	953	6	10	6	10	["n"]	[""]	+input
+617086	957	6	11	6	11	["f"]	[""]	+input
+617883	960	6	11	6	12	[""]	["f"]	+delete
+618194	965	6	11	6	11	["d"]	[""]	+input
+619011	970	6	12	6	12	["()"]	[""]	+input
+620853	976	6	13	6	13	["t"]	[""]	+input
+621905	980	6	14	6	14	[","]	[""]	+input
+622952	984	6	15	6	15	["e"]	[""]	+input
+624221	987	6	15	6	16	[""]	["e"]	+delete
+624979	992	6	15	6	15	["2"]	[""]	+input
+628469	1001	6	18	6	18	["",""]	[""]	+input
+628470	1002	7	0	7	0	["\t"]	[""]	+input
+628782	1007	7	0	7	1	[""]	["\t"]	+delete
+672100	1012	4	0	4	0	["\t"]	[""]	+input
+674562	1019	5	0	5	0	["\t"]	[""]	+input
+676459	1024	6	0	6	0	["\t"]	[""]	+input
+678030	1029	6	1	6	1	["B"]	[""]	+input
+678901	1032	6	1	6	2	[""]	["B"]	+delete
+684983	1043	3	0	3	0	["i"]	[""]	+input
+685322	1047	3	1	3	1	["f"]	[""]	+input
+685697	1051	3	2	3	2	[" "]	[""]	+input
+692386	1055	3	3	3	3	["m"]	[""]	+input
+692773	1059	3	4	3	4	["v"]	[""]	+input
+693361	1063	3	5	3	5	[" "]	[""]	+input
+695710	1070	3	6	3	6	["="]	[""]	+input
+695880	1074	3	7	3	7	["="]	[""]	+input
+696207	1078	3	8	3	8	[" "]	[""]	+input
+700690	1088	3	9	3	9	["''"]	[""]	+input
+703159	1094	3	10	3	10	["N"]	[""]	+input
+706652	1099	3	12	3	12	["",""]	[""]	+input
+707932	1106	3	12	4	0	[""]	["",""]	+delete
+708903	1113	3	12	3	12	[":"]	[""]	+input
+729657	1129	6	19	6	19	["",""]	[""]	+input
+729658	1130	7	0	7	0	["\t\t"]	[""]	+input
+731027	1135	7	1	7	2	[""]	["\t"]	+delete
+732061	1142	7	1	7	1	["if dia == 1:","\t\tt = p - p*0.25","\t\tprint(round(t,2))"]	[""]	paste
+733277	1147	9	19	9	19	["",""]	[""]	+input
+733278	1148	10	0	10	0	["\t\t"]	[""]	+input
+733698	1153	10	1	10	2	[""]	["\t"]	+delete
+734855	1162	10	1	10	1	["if dia == 1:","\t\tt = p - p*0.25","\t\tprint(round(t,2))"]	[""]	paste
+738034	1167	12	19	12	19	["",""]	[""]	+input
+738035	1168	13	0	13	0	["\t\t"]	[""]	+input
+739009	1173	13	1	13	2	[""]	["\t"]	+delete
+739966	1184	13	1	13	1	["if dia == 1:","\t\tt = p - p*0.25","\t\tprint(round(t,2))"]	[""]	paste
+745650	1210	7	2	7	3	[""]	["f"]	+delete
+745856	1214	7	1	7	2	[""]	["i"]	+delete
+746789	1219	7	1	7	1	["e"]	[""]	+input
+747322	1223	7	2	7	2	["l"]	[""]	+input
+747578	1227	7	3	7	3	["i"]	[""]	+input
+747956	1231	7	4	7	4	["f"]	[""]	+input
+751469	1238	7	13	7	14	[""]	["1"]	+delete
+752712	1243	7	13	7	13	["2"]	[""]	+input
+773529	1249	5	15	5	16	[""]	["5"]	+delete
+773709	1253	5	14	5	15	[""]	["2"]	+delete
+773890	1257	5	13	5	14	[""]	["."]	+delete
+774064	1261	5	12	5	13	[""]	["0"]	+delete
+774632	1265	5	11	5	12	[""]	["*"]	+delete
+774809	1269	5	10	5	11	[""]	["p"]	+delete
+774954	1273	5	9	5	10	[""]	[" "]	+delete
+775105	1277	5	8	5	9	[""]	["-"]	+delete
+775305	1281	5	7	5	8	[""]	[" "]	+delete
+781105	1286	10	11	10	12	[""]	["1"]	+delete
+781852	1291	10	11	10	11	["3"]	[""]	+input
+792668	1310	13	11	13	12	[""]	["1"]	+delete
+793185	1315	13	11	13	11	["4"]	[""]	+input
+798150	1338	17	0	17	0	["\t"]	[""]	+input
+799356	1343	17	1	17	1	["if dia == 1:","\t\tt = p - p*0.25","\t\tprint(round(t,2))"]	[""]	paste
+800736	1348	19	19	19	19	["",""]	[""]	+input
+800737	1349	20	0	20	0	["\t\t"]	[""]	+input
+801889	1355	20	2	20	2	["if dia == 1:","\t\tt = p - p*0.25","\t\tprint(round(t,2))"]	[""]	paste
+804899	1361	17	11	17	12	[""]	["1"]	+delete
+805853	1366	17	11	17	11	["5"]	[""]	+input
+808015	1370	20	12	20	13	[""]	["1"]	+delete
+808838	1375	20	12	20	12	["6"]	[""]	+input
+855186	1404	22	19	22	19	["",""]	[""]	+input
+855187	1405	23	0	23	0	["\t\t"]	[""]	+input
+857145	1410	23	1	23	2	[""]	["\t"]	+delete
+859072	1417	23	1	23	1	["if dia == 1:","\t\tt = p - p*0.25","\t\tprint(round(t,2))"]	[""]	paste
+861637	1423	20	1	20	2	[""]	["\t"]	+delete
+864799	1428	23	11	23	12	[""]	["1"]	+delete
+865763	1433	23	11	23	11	["7"]	[""]	+input
+883749	1437	21	7	21	16	[""]	[" - p*0.25"]	+delete
+888254	1442	24	7	24	16	[""]	[" - p*0.25"]	+delete
+894764	1447	25	14	25	15	[""]	["t"]	+delete
+895248	1452	25	14	25	14	["p"]	[""]	+input
+899146	1456	22	14	22	15	[""]	["t"]	+delete
+899652	1461	22	14	22	14	["p"]	[""]	+input
+904097	1468	24	2	24	7	[""]	["t = p"]	+delete
+904542	1472	24	1	24	2	[""]	["\t"]	+delete
+904940	1476	24	0	24	1	[""]	["\t"]	+delete
+905360	1480	23	13	24	0	[""]	["",""]	+delete
+909241	1486	21	2	21	7	[""]	["t = p"]	+delete
+909580	1490	21	1	21	2	[""]	["\t"]	+delete
+910101	1494	21	0	21	1	[""]	["\t"]	+delete
+910578	1498	20	13	21	0	[""]	["",""]	+delete
+917581	1504	15	19	16	0	[""]	["",""]	+delete
+922022	1510	15	14	15	15	[""]	["t"]	+delete
+922475	1515	15	14	15	14	["p"]	[""]	+input
+927042	1519	14	2	14	16	[""]	["t = p - p*0.25"]	+delete
+927456	1523	14	1	14	2	[""]	["\t"]	+delete
+927925	1527	14	0	14	1	[""]	["\t"]	+delete
+928322	1531	13	13	14	0	[""]	["",""]	+delete
+948045	1555	6	14	6	15	[""]	["t"]	+delete
+948450	1560	6	14	6	14	["p"]	[""]	+input
+951058	1564	5	1	5	7	[""]	["\tt = p"]	+delete
+951425	1568	5	0	5	1	[""]	["\t"]	+delete
+951891	1572	4	13	5	0	[""]	["",""]	+delete
+985641	1591	20	19	20	19	["",""]	[""]	+input
+985643	1592	21	0	21	0	["\t\t"]	[""]	+input
+986000	1597	21	1	21	2	[""]	["\t"]	+delete
+986478	1601	21	0	21	1	[""]	["\t"]	+delete
+987766	1606	21	0	21	0	["e"]	[""]	+input
+988302	1610	21	1	21	1	["l"]	[""]	+input
+988428	1614	21	2	21	2	["s"]	[""]	+input
+988719	1618	21	3	21	3	["e"]	[""]	+input
+992094	1627	21	4	21	4	[":"]	[""]	+input
+994843	1631	21	5	21	5	["",""]	[""]	+input
+994845	1632	22	0	22	0	["\t"]	[""]	+input
+997863	1638	22	1	22	1	["if dia == 1:","\t\tprint(round(p,2))","\telif dia == 2:","\t\tt = p - p*0.25","\t\tprint(round(t,2))","\tif dia == 3:","\t\tt = p - p*0.25","\t\tprint(round(t,2))","\tif dia == 4:","\t\tprint(round(p,2))","\tif dia == 5:","\t\tt = p - p*0.25","\t\tprint(round(t,2))","\tif dia == 6:","\t\tprint(round(p,2))","\tif dia == 7:","\t\tprint(round(p,2))"]	[""]	paste
+1004461	1646	33	7	33	7	["+"]	[""]	+input
+1008194	1650	33	7	33	8	[""]	["+"]	+delete
+1020143	1720	23	15	23	15	["+"]	[""]	+input
+1023426	1725	23	16	23	16	["2"]	[""]	+input
+1023557	1728	23	17	23	17	["0"]	[""]	+input
+1038720	1781	31	2	31	19	["print(round(p+20,2))"]	["print(round(p,2))"]	paste
+1047417	1803	36	2	36	19	["print(round(p+20,2))"]	["print(round(p,2))"]	paste
+1051079	1809	38	2	38	19	["print(round(p+20,2))"]	["print(round(p,2))"]	paste
+1064774	1819	33	6	33	6	["("]	[""]	+input
+1066443	1828	33	8	33	8	["+"]	[""]	+input
+1068090	1833	33	9	33	9	["2"]	[""]	+input
+1068254	1836	33	10	33	10	["0"]	[""]	+input
+1069257	1842	33	11	33	11	[")"]	[""]	+input
+1095177	1851	33	10	33	11	[""]	["0"]	+delete
+1095389	1855	33	9	33	10	[""]	["2"]	+delete
+1095564	1859	33	8	33	9	[""]	["+"]	+delete
+1097166	1866	33	8	33	9	[""]	[")"]	+delete
+1098959	1873	33	6	33	7	[""]	["("]	+delete
+1105342	1912	21	5	21	5	["",""]	[""]	+input
+1105344	1913	22	0	22	0	["\t"]	[""]	+input
+1106359	1919	22	1	22	1	["p"]	[""]	+input
+1106843	1923	22	2	22	2	[" "]	[""]	+input
+1107491	1927	22	3	22	3	["="]	[""]	+input
+1107774	1931	22	4	22	4	[" "]	[""]	+input
+1109298	1935	22	5	22	5	["p"]	[""]	+input
+1110934	1940	22	6	22	6	["+"]	[""]	+input
+1112112	1945	22	7	22	7	["2"]	[""]	+input
+1112282	1948	22	8	22	8	["0"]	[""]	+input
+1125380	1953	24	17	24	18	[""]	["0"]	+delete
+1125571	1957	24	16	24	17	[""]	["2"]	+delete
+1125963	1961	24	15	24	16	[""]	["+"]	+delete
+1136845	1991	32	17	32	18	[""]	["0"]	+delete
+1137024	1995	32	16	32	17	[""]	["2"]	+delete
+1137167	1999	32	15	32	16	[""]	["+"]	+delete
+1142705	2023	37	17	37	18	[""]	["0"]	+delete
+1142875	2027	37	16	37	17	[""]	["2"]	+delete
+1143039	2031	37	15	37	16	[""]	["+"]	+delete
+1145938	2039	39	17	39	18	[""]	["0"]	+delete
+1146128	2043	39	16	39	17	[""]	["2"]	+delete
+1146461	2047	39	15	39	16	[""]	["+"]	+delete
+1166733	2053	21	3	21	4	[""]	["e"]	+delete
+1166935	2057	21	2	21	3	[""]	["s"]	+delete
+1167100	2061	21	1	21	2	[""]	["l"]	+delete
+1167499	2065	21	0	21	1	[""]	["e"]	+delete
+1169298	2070	21	0	21	0	["e"]	[""]	+input
+1169446	2074	21	1	21	1	["l"]	[""]	+input
+1169625	2078	21	2	21	2	["i"]	[""]	+input
+1169781	2082	21	3	21	3	["f"]	[""]	+input
+1174482	2090	21	4	21	4	[" "]	[""]	+input
+1175781	2094	21	5	21	5	["d"]	[""]	+input
+1176030	2098	21	6	21	6	["i"]	[""]	+input
+1176144	2102	21	7	21	7	["a"]	[""]	+input
+1176338	2105	21	8	21	8	[" "]	[""]	+input
+1178203	2109	21	8	21	9	[""]	[" "]	+delete
+1178390	2113	21	7	21	8	[""]	["a"]	+delete
+1178761	2117	21	6	21	7	[""]	["i"]	+delete
+1179029	2121	21	5	21	6	[""]	["d"]	+delete
+1180027	2126	21	5	21	5	["m"]	[""]	+input
+1181259	2130	21	6	21	6	["v"]	[""]	+input
+1181526	2134	21	7	21	7	[" "]	[""]	+input
+1182350	2138	21	8	21	8	["="]	[""]	+input
+1182532	2142	21	9	21	9	["="]	[""]	+input
+1183066	2146	21	10	21	10	[" "]	[""]	+input
+1184040	2150	21	11	21	11	["''"]	[""]	+input
+1186309	2156	21	12	21	12	["S"]	[""]	+input
+1195973	2345	39	19	39	19	["",""]	[""]	+input
+1195975	2346	40	0	40	0	["\t\t"]	[""]	+input
+1196280	2351	40	1	40	2	[""]	["\t"]	+delete
+1196486	2355	40	0	40	1	[""]	["\t"]	+delete
+1197427	2360	40	0	40	0	["e"]	[""]	+input
+1197591	2364	40	1	40	1	["l"]	[""]	+input
+1197690	2368	40	2	40	2	["s"]	[""]	+input
+1197922	2372	40	3	40	3	["e"]	[""]	+input
+1199265	2377	40	4	40	4	[":"]	[""]	+input
+1199708	2382	40	5	40	5	[" "]	[""]	+input
+1200546	2385	40	6	40	6	["",""]	[""]	+input
+1200548	2386	41	0	41	0	["\t"]	[""]	+input
+1201638	2392	41	1	41	1	["p"]	[""]	+input
+1202025	2397	41	2	41	2	["r"]	[""]	+input
+1202181	2401	41	3	41	3	["i"]	[""]	+input
+1202372	2405	41	4	41	4	["n"]	[""]	+input
+1202504	2409	41	5	41	5	["t"]	[""]	+input
+1203264	2414	41	6	41	6	[")"]	[""]	+input
+1203952	2418	41	6	41	7	[""]	[")"]	+delete
+1204306	2424	41	6	41	6	["()"]	[""]	+input
+1206491	2431	41	7	41	7	["D"]	[""]	+input
+1206678	2436	41	8	41	8	["a"]	[""]	+input
+1206957	2440	41	9	41	9	["d"]	[""]	+input
+1207205	2444	41	10	41	10	["o"]	[""]	+input
+1207321	2448	41	11	41	11	["s"]	[""]	+input
+1207587	2452	41	12	41	12	[" "]	[""]	+input
+1208195	2456	41	13	41	13	["i"]	[""]	+input
+1208506	2460	41	14	41	14	["b"]	[""]	+input
+1209233	2463	41	14	41	15	[""]	["b"]	+delete
+1209643	2468	41	14	41	14	["n"]	[""]	+input
+1210022	2472	41	15	41	15	["v"]	[""]	+input
+1210209	2476	41	16	41	16	["a"]	[""]	+input
+1210823	2480	41	17	41	17	["l"]	[""]	+input
+1211010	2484	41	18	41	18	["i"]	[""]	+input
+1211229	2488	41	19	41	19	["d"]	[""]	+input
+1211368	2492	41	20	41	20	["o"]	[""]	+input
+1211547	2496	41	21	41	21	["s"]	[""]	+input
+1212567	2499	41	21	41	22	[""]	["s"]	+delete
+1212783	2503	41	20	41	21	[""]	["o"]	+delete
+1214067	2509	41	19	41	20	[""]	["d"]	+delete
+1214363	2513	41	18	41	19	[""]	["i"]	+delete
+1214533	2517	41	17	41	18	[""]	["l"]	+delete
+1214671	2521	41	16	41	17	[""]	["a"]	+delete
+1214800	2525	41	15	41	16	[""]	["v"]	+delete
+1214939	2529	41	14	41	15	[""]	["n"]	+delete
+1215047	2533	41	13	41	14	[""]	["i"]	+delete
+1215165	2537	41	12	41	13	[""]	[" "]	+delete
+1215298	2541	41	11	41	12	[""]	["s"]	+delete
+1215549	2545	41	10	41	11	[""]	["o"]	+delete
+1215663	2549	41	9	41	10	[""]	["d"]	+delete
+1215781	2553	41	8	41	9	[""]	["a"]	+delete
+1215969	2557	41	7	41	8	[""]	["D"]	+delete
+1217178	2566	41	7	41	7	["\"\""]	[""]	+input
+1218568	2573	41	8	41	8	["D"]	[""]	+input
+1219088	2578	41	9	41	9	["a"]	[""]	+input
+1219836	2582	41	10	41	10	["d"]	[""]	+input
+1220026	2586	41	11	41	11	["o"]	[""]	+input
+1220152	2590	41	12	41	12	["s"]	[""]	+input
+1220336	2594	41	13	41	13	[" "]	[""]	+input
+1220887	2598	41	14	41	14	["i"]	[""]	+input
+1221134	2602	41	15	41	15	["n"]	[""]	+input
+1221418	2606	41	16	41	16	["v"]	[""]	+input
+1221566	2610	41	17	41	17	["a"]	[""]	+input
+1222253	2614	41	18	41	18	["l"]	[""]	+input
+1222468	2618	41	19	41	19	["i"]	[""]	+input
+1222697	2622	41	20	41	20	["f"]	[""]	+input
+1223446	2625	41	20	41	21	[""]	["f"]	+delete
+1223783	2630	41	20	41	20	["d"]	[""]	+input
+1223918	2634	41	21	41	21	["o"]	[""]	+input
+1224054	2638	41	22	41	22	["d"]	[""]	+input
+1224998	2641	41	22	41	23	[""]	["d"]	+delete
+1225156	2646	41	22	41	22	["s"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 1265273
+- raw_log_line: 2653
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	elif dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+elif mv == 'S':
+	p = p+20
+	if dia == 1:
+		print(round(p,2))
+	elif dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+else: 
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 75.25
+Dia da semana: 3
+E dia de musica ao vivo: s
+71.44
+```
+
+Local Run 2
+- event_time_delta_ms: 1292778
+- raw_log_line: 2658
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	elif dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+elif mv == 'S':
+	p = p+20
+	if dia == 1:
+		print(round(p,2))
+	elif dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+else: 
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 82.4
+Dia da semana: 7
+E dia de musica ao vivo: n
+82.4
+```
+
+Edit Segment 2
+- raw_change_event_count: 66
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1346174	2664	23	2	23	3	[""]	["f"]	+delete
+1347071	2668	23	1	23	2	[""]	["i"]	+delete
+1348305	2673	23	1	23	1	["e"]	[""]	+input
+1348483	2676	23	2	23	2	["l"]	[""]	+input
+1348671	2681	23	3	23	3	["i"]	[""]	+input
+1348782	2685	23	4	23	4	["f"]	[""]	+input
+1356302	2700	28	1	28	3	["elif"]	["if"]	paste
+1358878	2706	31	1	31	3	["elif"]	["if"]	paste
+1364693	2736	33	0	33	3	["elif"]	["\tif"]	paste
+1366861	2741	33	0	33	0	["\t"]	[""]	+input
+1371211	2750	36	1	36	3	["elif"]	["if"]	paste
+1373378	2756	38	1	38	3	["elif"]	["if"]	paste
+1378382	2761	39	19	39	19	["",""]	[""]	+input
+1378384	2762	40	0	40	0	["\t\t"]	[""]	+input
+1380351	2767	40	1	40	2	[""]	["\t"]	+delete
+1382533	2772	40	1	40	1	["e"]	[""]	+input
+1382686	2776	40	2	40	2	["l"]	[""]	+input
+1382796	2780	40	3	40	3	["s"]	[""]	+input
+1383020	2784	40	4	40	4	["e"]	[""]	+input
+1384007	2789	40	5	40	5	[":"]	[""]	+input
+1384154	2794	40	6	40	6	[" "]	[""]	+input
+1385001	2797	40	7	40	7	["",""]	[""]	+input
+1385003	2798	41	0	41	0	["\t\t"]	[""]	+input
+1386312	2804	41	2	41	2	["p"]	[""]	+input
+1386574	2808	41	3	41	3	["r"]	[""]	+input
+1386714	2812	41	4	41	4	["i"]	[""]	+input
+1386908	2816	41	5	41	5	["t"]	[""]	+input
+1387026	2819	41	6	41	6	["n"]	[""]	+input
+1387873	2823	41	6	41	7	[""]	["n"]	+delete
+1388038	2827	41	5	41	6	[""]	["t"]	+delete
+1388779	2832	41	5	41	5	["n"]	[""]	+input
+1388910	2836	41	6	41	6	["y"]	[""]	+input
+1389918	2839	41	6	41	7	[""]	["y"]	+delete
+1390801	2843	41	5	41	6	[""]	["n"]	+delete
+1392061	2848	41	5	41	5	["n"]	[""]	+input
+1392237	2852	41	6	41	6	["t"]	[""]	+input
+1409638	2866	41	2	41	7	["print(\"Dados invalidos\")"]	["print"]	paste
+1414207	2877	42	0	43	25	[""]	["else: ","\tprint(\"Dados invalidos\")"]	+delete
+1415761	2882	41	26	42	0	[""]	["",""]	+delete
+1425378	2938	21	0	21	13	["e"]	["elif mv == 'S"]	+input
+1425563	2942	21	1	21	1	["l"]	[""]	+input
+1425677	2946	21	2	21	2	["s"]	[""]	+input
+1425893	2950	21	3	21	3	["e"]	[""]	+input
+1428585	2954	21	4	21	5	[""]	["'"]	+delete
+1440037	2981	20	19	20	19	["",""]	[""]	+input
+1440039	2982	21	0	21	0	["\t\t"]	[""]	+input
+1441401	2988	21	2	21	2	["print(\"Dados invalidos\")"]	[""]	paste
+1444833	2993	20	19	20	19	["",""]	[""]	+input
+1444835	2994	21	0	21	0	["\t\t"]	[""]	+input
+1445532	2999	21	1	21	2	[""]	["\t"]	+delete
+1446525	3004	21	1	21	1	["e"]	[""]	+input
+1446716	3008	21	2	21	2	["l"]	[""]	+input
+1446807	3012	21	3	21	3	["s"]	[""]	+input
+1447011	3016	21	4	21	4	["e"]	[""]	+input
+1447960	3021	21	5	21	5	[":"]	[""]	+input
+1452936	3026	19	2	19	3	[""]	["f"]	+delete
+1453091	3030	19	1	19	2	[""]	["i"]	+delete
+1453971	3035	19	1	19	1	["e"]	[""]	+input
+1454287	3039	19	2	19	2	["l"]	[""]	+input
+1454452	3043	19	3	19	3	["i"]	[""]	+input
+1454668	3047	19	4	19	4	["f"]	[""]	+input
+1461261	3065	17	1	17	3	["elif"]	["if"]	paste
+1463485	3071	14	1	14	3	["elif"]	["if"]	paste
+1465652	3077	12	1	12	3	["elif"]	["if"]	paste
+1472333	3158	4	1	4	3	["elif"]	["if"]	paste
+1474584	3172	9	1	9	3	["elif"]	["if"]	paste
+
+Local Run 3
+- event_time_delta_ms: 1487099
+- raw_log_line: 3179
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	elif dia == 1:
+		print(round(p,2))
+	elif dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 4:
+		print(round(p,2))
+	elif dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 6:
+		print(round(p,2))
+	elif dia == 7:
+		print(round(p,2))
+	else:
+		print("Dados invalidos")
+else:
+	p = p+20
+	elif dia == 1:
+		print(round(p,2))
+	elif dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 4:
+		print(round(p,2))
+	elif dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 6:
+		print(round(p,2))
+	elif dia == 7:
+		print(round(p,2))
+	else: 
+		print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 1
+Dia da semana: 10
+E dia de musica ao vivo: s
+```
+
+Edit Segment 3
+- raw_change_event_count: 21
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1576321	3185	9	1	9	5	["if"]	["elif"]	undo
+1576691	3189	4	1	4	5	["if"]	["elif"]	undo
+1576970	3193	12	1	12	5	["if"]	["elif"]	undo
+1577582	3197	14	1	14	5	["if"]	["elif"]	undo
+1578101	3201	17	1	17	5	["if"]	["elif"]	undo
+1578454	3205	19	1	19	5	[""]	["elif"]	undo
+1578817	3209	19	1	19	1	["i"]	[""]	undo
+1578819	3210	19	2	19	2	["f"]	[""]	undo
+1579253	3214	21	1	21	6	[""]	["else:"]	undo
+1579620	3218	21	1	21	1	["\t"]	[""]	undo
+1579965	3222	20	19	21	2	[""]	["","\t\t"]	undo
+1580369	3227	21	2	21	26	[""]	["print(\"Dados invalidos\")"]	undo
+1580774	3232	20	19	21	2	[""]	["","\t\t"]	undo
+1581173	3237	21	4	21	4	["'"]	[""]	undo
+1583272	3242	21	4	21	5	[""]	["'"]	+delete
+1589067	3269	6	4	6	5	[""]	["f"]	+delete
+1589220	3273	6	3	6	4	[""]	["i"]	+delete
+1589368	3277	6	2	6	3	[""]	["l"]	+delete
+1589517	3281	6	1	6	2	[""]	["e"]	+delete
+1590421	3286	6	1	6	1	["i"]	[""]	+input
+1592905	3290	6	2	6	2	["f"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 1599101
+- raw_log_line: 3296
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	if dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+else:
+	p = p+20
+	elif dia == 1:
+		print(round(p,2))
+	elif dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 4:
+		print(round(p,2))
+	elif dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 6:
+		print(round(p,2))
+	elif dia == 7:
+		print(round(p,2))
+	else: 
+		print("Dados invalidos")
+```
+Run Output
+```text
+File "main.py", line 24
+elif dia == 1:
+SyntaxError: invalid syntax
+```
+
+Edit Segment 4
+- raw_change_event_count: 14
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1620665	3307	23	1	23	5	["i"]	["elif"]	+input
+1620914	3311	23	2	23	2	["f"]	[""]	+input
+1624142	3316	25	2	25	3	[""]	["l"]	+delete
+1624303	3320	25	1	25	2	[""]	["e"]	+delete
+1626673	3325	28	2	28	3	[""]	["l"]	+delete
+1626853	3329	28	1	28	2	[""]	["e"]	+delete
+1628918	3334	31	2	31	3	[""]	["l"]	+delete
+1629072	3338	31	1	31	2	[""]	["e"]	+delete
+1630994	3343	33	2	33	3	[""]	["l"]	+delete
+1631175	3347	33	1	33	2	[""]	["e"]	+delete
+1635853	3376	36	2	36	3	[""]	["l"]	+delete
+1636034	3380	36	1	36	2	[""]	["e"]	+delete
+1638001	3385	38	2	38	3	[""]	["l"]	+delete
+1638172	3389	38	1	38	2	[""]	["e"]	+delete
+
+Local Run 5
+- event_time_delta_ms: 1662970
+- raw_log_line: 3397
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	if dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+else:
+	p = p+20
+	if dia == 1:
+		print(round(p,2))
+	if dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+	else: 
+		print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 1
+Dia da semana: 10
+E dia de musica ao vivo: s
+Dados invalidos
+```
+
+Local Run 6
+- event_time_delta_ms: 1682639
+- raw_log_line: 3402
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	if dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+else:
+	p = p+20
+	if dia == 1:
+		print(round(p,2))
+	if dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+	else: 
+		print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 82.4
+Dia da semana: 7
+E dia de musica ao vivo: n
+82.4
+```
+
+Local Run 7
+- event_time_delta_ms: 1751169
+- raw_log_line: 3409
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	if dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+else:
+	p = p+20
+	if dia == 1:
+		print(round(p,2))
+	if dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+	else: 
+		print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 75.25
+Dia da semana: 3
+E dia de musica ao vivo: s
+71.44
+Dados invalidos
+```
+
+Edit Segment 5
+- raw_change_event_count: 6
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1760594	3414	40	1	40	7	[""]	["else: "]	+delete
+1761145	3418	40	0	40	1	[""]	["\t"]	+delete
+1763686	3423	41	1	41	2	[""]	["\t"]	+delete
+1764116	3427	41	0	41	1	[""]	["\t"]	+delete
+1766966	3432	30	0	30	0	["https://codebench.icomp.ufam.edu.br/index.php?r=trabalho%2Fview&id=5747#"]	[""]	paste
+1769102	3435	30	0	30	72	[""]	["https://codebench.icomp.ufam.edu.br/index.php?r=trabalho%2Fview&id=5747#"]	undo
+
+Local Run 8
+- event_time_delta_ms: 1782704
+- raw_log_line: 3445
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	if dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+else:
+	p = p+20
+	if dia == 1:
+		print(round(p,2))
+	if dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+
+print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 75.25
+Dia da semana: 3
+E dia de musica ao vivo: s
+71.44
+Dados invalidos
+```
+
+Edit Segment 6
+- raw_change_event_count: 19
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1956539	3453	22	1	22	9	[""]	["p = p+20"]	+delete
+1957927	3457	22	0	22	1	[""]	["\t"]	+delete
+1962505	3465	24	15	24	15	["="]	[""]	+input
+1963394	3468	24	15	24	16	[""]	["="]	+delete
+1963966	3474	24	15	24	15	["+"]	[""]	+input
+1965254	3479	24	16	24	16	["2"]	[""]	+input
+1965377	3482	24	17	24	17	["0"]	[""]	+input
+1991152	3514	32	2	32	19	["print(round(p+20,2))"]	["print(round(p,2))"]	paste
+1998018	3537	37	2	37	19	["print(round(p+20,2))"]	["print(round(p,2))"]	paste
+2000671	3543	39	2	39	19	["print(round(p+20,2))"]	["print(round(p,2))"]	paste
+2007984	3558	34	6	34	6	["("]	[""]	+input
+2011968	3591	34	17	34	17	[")"]	[""]	+input
+2012437	3596	34	18	34	18	[" "]	[""]	+input
+2013555	3601	34	19	34	19	["+"]	[""]	+input
+2014004	3606	34	20	34	20	[" "]	[""]	+input
+2014482	3610	34	21	34	21	["2"]	[""]	+input
+2014705	3614	34	22	34	22	["0"]	[""]	+input
+2034834	3661	29	2	29	16	["(p - p*0.25) + 20"]	["t = p - p*0.25"]	paste
+2040940	3667	26	2	26	16	["(p - p*0.25) + 20"]	["t = p - p*0.25"]	paste
+
+Local Run 9
+- event_time_delta_ms: 2047180
+- raw_log_line: 3671
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	if dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+else:
+
+	if dia == 1:
+		print(round(p+20,2))
+	if dia == 2:
+		(p - p*0.25) + 20
+		print(round(t,2))
+	if dia == 3:
+		(p - p*0.25) + 20
+		print(round(t,2))
+	if dia == 4:
+		print(round(p+20,2))
+	if dia == 5:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	if dia == 6:
+		print(round(p+20,2))
+	if dia == 7:
+		print(round(p+20,2))
+
+print("Dados invalidos")
+```
+Run Output
+```text
+
+```
+
+Edit Segment 7
+- raw_change_event_count: 5
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+2069134	3676	26	2	26	2	["t"]	[""]	+input
+2069416	3680	26	3	26	3	[" "]	[""]	+input
+2070393	3684	26	4	26	4	["="]	[""]	+input
+2070519	3688	26	5	26	5	[" "]	[""]	+input
+2080031	3712	29	2	29	19	["t = (p - p*0.25) + 20"]	["(p - p*0.25) + 20"]	paste
+
+Local Run 10
+- event_time_delta_ms: 2092992
+- raw_log_line: 3762
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	if dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+else:
+
+	if dia == 1:
+		print(round(p+20,2))
+	if dia == 2:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	if dia == 3:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	if dia == 4:
+		print(round(p+20,2))
+	if dia == 5:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	if dia == 6:
+		print(round(p+20,2))
+	if dia == 7:
+		print(round(p+20,2))
+
+print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 75.25
+Dia da semana: 3
+E dia de musica ao vivo: s
+Traceback (most recent call last):
+File "main.py", line 31, in <module>
+print(round(t,2))
+NameError: name 't' is not defined
+```
+
+Edit Segment 8
+- raw_change_event_count: 10
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+2106721	3766	40	0	41	0	[""]	["",""]	+delete
+2108963	3772	40	0	40	0	["e"]	[""]	+input
+2109102	3776	40	1	40	1	["l"]	[""]	+input
+2109201	3780	40	2	40	2	["s"]	[""]	+input
+2109415	3784	40	3	40	3	["e"]	[""]	+input
+2110645	3789	40	4	40	4	[":"]	[""]	+input
+2112714	3793	40	5	40	5	["",""]	[""]	+input
+2112716	3794	41	0	41	0	["\t"]	[""]	+input
+2118493	3802	40	0	40	0	["\t"]	[""]	+input
+2118496	3803	41	0	41	1	["\t\t"]	["\t"]	+input
+
+Local Run 11
+- event_time_delta_ms: 2128648
+- raw_log_line: 3813
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	if dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+else:
+
+	if dia == 1:
+		print(round(p+20,2))
+	if dia == 2:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	if dia == 3:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	if dia == 4:
+		print(round(p+20,2))
+	if dia == 5:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	if dia == 6:
+		print(round(p+20,2))
+	if dia == 7:
+		print(round(p+20,2))
+	else:
+		print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 75.25
+Dia da semana: 3
+E dia de musica ao vivo: s
+76.44
+Dados invalidos
+```
+
+Edit Segment 9
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+2146115	3866	20	19	20	19	["",""]	[""]	+input
+2146118	3867	21	0	21	0	["\t\t"]	[""]	+input
+2147117	3873	21	2	21	2	["else:","\t\tprint(\"Dados invalidos\")"]	[""]	paste
+2149930	3879	21	1	21	2	[""]	["\t"]	+delete
+
+Local Run 12
+- event_time_delta_ms: 2154821
+- raw_log_line: 3883
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	if dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 4:
+		print(round(p,2))
+	if dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	if dia == 6:
+		print(round(p,2))
+	if dia == 7:
+		print(round(p,2))
+	else:
+		print("Dados invalidos")
+else:
+
+	if dia == 1:
+		print(round(p+20,2))
+	if dia == 2:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	if dia == 3:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	if dia == 4:
+		print(round(p+20,2))
+	if dia == 5:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	if dia == 6:
+		print(round(p+20,2))
+	if dia == 7:
+		print(round(p+20,2))
+	else:
+		print("Dados invalidos")
+```
+Run Output
+```text
+
+```
+
+Edit Segment 10
+- raw_change_event_count: 34
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+2235927	3921	40	1	40	1	["e"]	[""]	+input
+2236039	3924	40	2	40	2	["l"]	[""]	+input
+2240924	3938	38	1	38	1	["e"]	[""]	+input
+2241039	3941	38	2	38	2	["l"]	[""]	+input
+2243740	3961	35	1	35	1	["e"]	[""]	+input
+2244527	3965	35	2	35	2	["i"]	[""]	+input
+2245330	3968	35	2	35	3	[""]	["i"]	+delete
+2245668	3973	35	2	35	2	["l"]	[""]	+input
+2249356	3992	33	1	33	1	["e"]	[""]	+input
+2249584	3996	33	2	33	2	["l"]	[""]	+input
+2254428	4024	30	1	30	1	["e"]	[""]	+input
+2254581	4027	30	2	30	2	["l"]	[""]	+input
+2257896	4053	27	1	27	1	["e"]	[""]	+input
+2258607	4057	27	2	27	2	["l"]	[""]	+input
+2261543	4079	25	1	25	1	["e"]	[""]	+input
+2261795	4083	25	2	25	2	["l"]	[""]	+input
+2276668	4133	25	4	25	5	[""]	["f"]	+delete
+2276832	4137	25	3	25	4	[""]	["i"]	+delete
+2277003	4141	25	2	25	3	[""]	["l"]	+delete
+2277304	4145	25	1	25	2	[""]	["e"]	+delete
+2278107	4150	25	1	25	1	["i"]	[""]	+input
+2278310	4154	25	2	25	2	["f"]	[""]	+input
+2289672	4160	19	1	19	1	["e"]	[""]	+input
+2289782	4163	19	2	19	2	["l"]	[""]	+input
+2292719	4187	17	1	17	1	["e"]	[""]	+input
+2293509	4191	17	2	17	2	["l"]	[""]	+input
+2296500	4212	14	1	14	1	["e"]	[""]	+input
+2297216	4216	14	2	14	2	["l"]	[""]	+input
+2300082	4239	12	1	12	1	["e"]	[""]	+input
+2300754	4243	12	2	12	2	["l"]	[""]	+input
+2304465	4275	9	1	9	1	["e"]	[""]	+input
+2305281	4279	9	2	9	2	["l"]	[""]	+input
+2308056	4298	6	1	6	1	["e"]	[""]	+input
+2308800	4302	6	2	6	2	["l"]	[""]	+input
+
+Local Run 13
+- event_time_delta_ms: 2330690
+- raw_log_line: 4639
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	elif dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 4:
+		print(round(p,2))
+	elif dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 6:
+		print(round(p,2))
+	elif dia == 7:
+		print(round(p,2))
+	else:
+		print("Dados invalidos")
+else:
+
+	if dia == 1:
+		print(round(p+20,2))
+	elif dia == 2:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 3:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 4:
+		print(round(p+20,2))
+	elif dia == 5:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 6:
+		print(round(p+20,2))
+	elif dia == 7:
+		print(round(p+20,2))
+	else:
+		print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 75.25
+Dia da semana: 3
+E dia de musica ao vivo: s
+76.44
+Dados invalidos
+```
+
+Local Run 14
+- event_time_delta_ms: 2350729
+- raw_log_line: 4644
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	elif dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 4:
+		print(round(p,2))
+	elif dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 6:
+		print(round(p,2))
+	elif dia == 7:
+		print(round(p,2))
+	else:
+		print("Dados invalidos")
+else:
+
+	if dia == 1:
+		print(round(p+20,2))
+	elif dia == 2:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 3:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 4:
+		print(round(p+20,2))
+	elif dia == 5:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 6:
+		print(round(p+20,2))
+	elif dia == 7:
+		print(round(p+20,2))
+	else:
+		print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 75.25
+Dia da semana: 3
+E dia de musica ao vivo: s
+76.44
+```
+
+Local Run 15
+- event_time_delta_ms: 2360963
+- raw_log_line: 4649
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	elif dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 4:
+		print(round(p,2))
+	elif dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 6:
+		print(round(p,2))
+	elif dia == 7:
+		print(round(p,2))
+	else:
+		print("Dados invalidos")
+else:
+
+	if dia == 1:
+		print(round(p+20,2))
+	elif dia == 2:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 3:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 4:
+		print(round(p+20,2))
+	elif dia == 5:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 6:
+		print(round(p+20,2))
+	elif dia == 7:
+		print(round(p+20,2))
+	else:
+		print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 1
+Dia da semana: 10
+E dia de musica ao vivo: s
+Dados invalidos
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 2372736
+- raw_log_line: 4650
+- feedback: "Congratulations, your code is correct!"
+Code At This Submit
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	elif dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 4:
+		print(round(p,2))
+	elif dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 6:
+		print(round(p,2))
+	elif dia == 7:
+		print(round(p,2))
+	else:
+		print("Dados invalidos")
+else:
+
+	if dia == 1:
+		print(round(p+20,2))
+	elif dia == 2:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 3:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 4:
+		print(round(p+20,2))
+	elif dia == 5:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 6:
+		print(round(p+20,2))
+	elif dia == 7:
+		print(round(p+20,2))
+	else:
+		print("Dados invalidos")
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-05-30T14:36:08.157000
+
+Execution Result
+
+- submitted_at: 2024-05-30 14:56:15
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "70.56\n2\nN"
+    expected: "52.92"
+    actual: "52.92"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "120.75"
+    actual: "100.75"
+  - test_index_0idx: 2 [PASS]
+    input: "0.00\n9\nS"
+    expected: "Dados invalidos"
+    actual: "Dados invalidos"
+
+Attempt Start Code
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if mv == 'N':
+	if dia == 1:
+		print(round(p,2))
+	elif dia == 2:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 3:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 4:
+		print(round(p,2))
+	elif dia == 5:
+		t = p - p*0.25
+		print(round(t,2))
+	elif dia == 6:
+		print(round(p,2))
+	elif dia == 7:
+		print(round(p,2))
+	else:
+		print("Dados invalidos")
+else:
+
+	if dia == 1:
+		print(round(p+20,2))
+	elif dia == 2:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 3:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 4:
+		print(round(p+20,2))
+	elif dia == 5:
+		t = (p - p*0.25) + 20
+		print(round(t,2))
+	elif dia == 6:
+		print(round(p+20,2))
+	elif dia == 7:
+		print(round(p+20,2))
+	else:
+		print("Dados invalidos")
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 332
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	4662	3	0	43	26	[""]	["if mv == 'N':","\tif dia == 1:","\t\tprint(round(p,2))","\telif dia == 2:","\t\tt = p - p*0.25","\t\tprint(round(t,2))","\telif dia == 3:","\t\tt = p - p*0.25","\t\tprint(round(t,2))","\telif dia == 4:","\t\tprint(round(p,2))","\telif dia == 5:","\t\tt = p - p*0.25","\t\tprint(round(t,2))","\telif dia == 6:","\t\tprint(round(p,2))","\telif dia == 7:","\t\tprint(round(p,2))","\telse:","\t\tprint(\"Dados invalidos\")","else:","","\tif dia == 1:","\t\tprint(round(p+20,2))","\telif dia == 2:","\t\tt = (p - p*0.25) + 20","\t\tprint(round(t,2))","\telif dia == 3:","\t\tt = (p - p*0.25) + 20","\t\tprint(round(t,2))","\telif dia == 4:","\t\tprint(round(p+20,2))","\telif dia == 5:","\t\tt = (p - p*0.25) + 20","\t\tprint(round(t,2))","\telif dia == 6:","\t\tprint(round(p+20,2))","\telif dia == 7:","\t\tprint(round(p+20,2))","\telse:","\t\tprint(\"Dados invalidos\")"]	+delete
+4830	4668	3	0	3	0	["i"]	[""]	+input
+4979	4672	3	1	3	1	["f"]	[""]	+input
+5565	4676	3	2	3	2	[" "]	[""]	+input
+10737	4680	3	3	3	3	["o"]	[""]	+input
+11676	4683	3	3	3	4	[""]	["o"]	+delete
+12042	4688	3	3	3	3	["p"]	[""]	+input
+12900	4692	3	4	3	4	[" "]	[""]	+input
+15147	4697	3	5	3	5	["<"]	[""]	+input
+15824	4701	3	5	3	6	[""]	["<"]	+delete
+16358	4707	3	5	3	5	[">"]	[""]	+input
+17731	4712	3	6	3	6	[" "]	[""]	+input
+24173	4716	3	7	3	7	["0"]	[""]	+input
+25587	4721	3	8	3	8	[":"]	[""]	+input
+25827	4725	3	9	3	9	["",""]	[""]	+input
+25830	4726	4	0	4	0	["\t"]	[""]	+input
+27680	4732	4	1	4	1	["i"]	[""]	+input
+27870	4736	4	2	4	2	["f"]	[""]	+input
+28775	4740	4	3	4	3	[" "]	[""]	+input
+31173	4744	4	4	4	4	["d"]	[""]	+input
+31303	4748	4	5	4	5	["i"]	[""]	+input
+31514	4752	4	6	4	6	["a"]	[""]	+input
+31768	4756	4	7	4	7	[" "]	[""]	+input
+33187	4760	4	8	4	8	["="]	[""]	+input
+33335	4764	4	9	4	9	["="]	[""]	+input
+33679	4767	4	9	4	10	[""]	["="]	+delete
+34650	4772	4	9	4	9	["="]	[""]	+input
+36422	4776	4	10	4	10	[" "]	[""]	+input
+36725	4780	4	11	4	11	["1"]	[""]	+input
+41556	4783	4	11	4	12	[""]	["1"]	+delete
+42311	4788	4	11	4	11	["2"]	[""]	+input
+43387	4792	4	12	4	12	[" "]	[""]	+input
+44508	4796	4	13	4	13	["a"]	[""]	+input
+44706	4799	4	14	4	14	["n"]	[""]	+input
+44851	4804	4	15	4	15	["d"]	[""]	+input
+46155	4808	4	16	4	16	[" "]	[""]	+input
+48935	4811	4	16	4	17	[""]	[" "]	+delete
+49119	4815	4	15	4	16	[""]	["d"]	+delete
+49279	4819	4	14	4	15	[""]	["n"]	+delete
+49577	4823	4	13	4	14	[""]	["a"]	+delete
+50825	4828	4	13	4	13	["0"]	[""]	+input
+52851	4832	4	14	4	14	["r"]	[""]	+input
+53301	4836	4	15	4	15	[" "]	[""]	+input
+54010	4839	4	15	4	16	[""]	[" "]	+delete
+54160	4843	4	14	4	15	[""]	["r"]	+delete
+54870	4847	4	13	4	14	[""]	["0"]	+delete
+55734	4852	4	13	4	13	["o"]	[""]	+input
+56858	4856	4	14	4	14	["r"]	[""]	+input
+57421	4860	4	15	4	15	[" "]	[""]	+input
+60483	4864	4	16	4	16	["d"]	[""]	+input
+60699	4868	4	17	4	17	["i"]	[""]	+input
+60866	4872	4	18	4	18	["a"]	[""]	+input
+61153	4876	4	19	4	19	[" "]	[""]	+input
+62996	4880	4	20	4	20	["="]	[""]	+input
+63166	4884	4	21	4	21	["="]	[""]	+input
+64074	4888	4	22	4	22	[" "]	[""]	+input
+65966	4892	4	23	4	23	["3"]	[""]	+input
+68067	4896	4	24	4	24	[" "]	[""]	+input
+69578	4900	4	25	4	25	["o"]	[""]	+input
+69943	4904	4	26	4	26	["r"]	[""]	+input
+70131	4908	4	27	4	27	[" "]	[""]	+input
+70874	4912	4	28	4	28	["d"]	[""]	+input
+71063	4916	4	29	4	29	["i"]	[""]	+input
+71197	4920	4	30	4	30	["a"]	[""]	+input
+71348	4923	4	31	4	31	[" "]	[""]	+input
+72178	4928	4	32	4	32	["="]	[""]	+input
+72303	4932	4	33	4	33	["="]	[""]	+input
+72773	4936	4	34	4	34	[" "]	[""]	+input
+73984	4940	4	35	4	35	["5"]	[""]	+input
+75903	4945	4	36	4	36	[":"]	[""]	+input
+79646	4958	4	36	4	36	[")"]	[""]	+input
+82617	4985	4	28	4	28	["("]	[""]	+input
+85237	5006	4	24	4	24	[")"]	[""]	+input
+88003	5039	4	16	4	16	["("]	[""]	+input
+90371	5056	4	12	4	12	[")"]	[""]	+input
+93929	5086	4	4	4	4	["("]	[""]	+input
+100706	5091	4	43	4	43	["",""]	[""]	+input
+100709	5092	5	0	5	0	["\t\t"]	[""]	+input
+102072	5098	5	2	5	2	["t"]	[""]	+input
+102357	5102	5	3	5	3	[" "]	[""]	+input
+102579	5106	5	4	5	4	["="]	[""]	+input
+102704	5110	5	5	5	5	[" "]	[""]	+input
+104438	5114	5	6	5	6	["p"]	[""]	+input
+104587	5118	5	7	5	7	[" "]	[""]	+input
+106134	5122	5	8	5	8	["-"]	[""]	+input
+106259	5126	5	9	5	9	[" "]	[""]	+input
+107286	5130	5	10	5	10	["p"]	[""]	+input
+109167	5135	5	11	5	11	["*"]	[""]	+input
+110552	5140	5	12	5	12	["0"]	[""]	+input
+111052	5144	5	13	5	13	["."]	[""]	+input
+112353	5148	5	14	5	14	["2"]	[""]	+input
+112655	5152	5	15	5	15	["5"]	[""]	+input
+113744	5155	5	16	5	16	["",""]	[""]	+input
+113747	5156	6	0	6	0	["\t\t"]	[""]	+input
+116699	5162	6	2	6	2	["p"]	[""]	+input
+117337	5166	6	3	6	3	["r"]	[""]	+input
+117468	5169	6	4	6	4	["i"]	[""]	+input
+117664	5174	6	5	6	5	["n"]	[""]	+input
+117761	5178	6	6	6	6	["t"]	[""]	+input
+118778	5183	6	7	6	7	["()"]	[""]	+input
+120742	5189	6	8	6	8	["r"]	[""]	+input
+120871	5192	6	9	6	9	["o"]	[""]	+input
+121117	5197	6	10	6	10	["u"]	[""]	+input
+121297	5201	6	11	6	11	["n"]	[""]	+input
+121461	5205	6	12	6	12	["f"]	[""]	+input
+122365	5208	6	12	6	13	[""]	["f"]	+delete
+122599	5213	6	12	6	12	["d"]	[""]	+input
+124011	5218	6	13	6	13	["()"]	[""]	+input
+125676	5224	6	14	6	14	["t"]	[""]	+input
+126230	5228	6	15	6	15	[","]	[""]	+input
+128212	5232	6	16	6	16	["2"]	[""]	+input
+136174	5236	6	19	6	19	["",""]	[""]	+input
+136178	5237	7	0	7	0	["\t\t"]	[""]	+input
+146540	5243	4	0	4	1	["\t\t"]	["\t"]	+input
+146544	5244	5	0	5	2	["\t\t\t"]	["\t\t"]	+input
+146547	5245	6	0	6	2	["\t\t\t"]	["\t\t"]	+input
+148627	5250	3	9	3	9	["",""]	[""]	+input
+148631	5251	4	0	4	0	["\t"]	[""]	+input
+149957	5257	4	1	4	1	["i"]	[""]	+input
+150259	5261	4	2	4	2	["f"]	[""]	+input
+151153	5265	4	3	4	3	[" "]	[""]	+input
+152358	5269	4	4	4	4	["m"]	[""]	+input
+153490	5273	4	5	4	5	["v"]	[""]	+input
+154523	5277	4	6	4	6	[" "]	[""]	+input
+154677	5281	4	7	4	7	["="]	[""]	+input
+154820	5285	4	8	4	8	[" "]	[""]	+input
+156520	5289	4	9	4	9	["''"]	[""]	+input
+157720	5295	4	10	4	10	["N"]	[""]	+input
+159768	5304	4	12	4	12	[":"]	[""]	+input
+170777	5309	7	20	7	20	["",""]	[""]	+input
+170781	5310	8	0	8	0	["\t\t\t"]	[""]	+input
+172123	5315	8	2	8	3	[""]	["\t"]	+delete
+173227	5320	8	2	8	2	["e"]	[""]	+input
+173374	5324	8	3	8	3	["l"]	[""]	+input
+173479	5328	8	4	8	4	["s"]	[""]	+input
+173680	5332	8	5	8	5	["e"]	[""]	+input
+174414	5337	8	6	8	6	[">"]	[""]	+input
+175122	5341	8	6	8	7	[""]	[">"]	+delete
+175584	5347	8	6	8	6	[":"]	[""]	+input
+176798	5351	8	7	8	7	["",""]	[""]	+input
+176801	5352	9	0	9	0	["\t\t\t"]	[""]	+input
+178014	5358	9	3	9	3	["p"]	[""]	+input
+178360	5362	9	4	9	4	["r"]	[""]	+input
+178480	5365	9	5	9	5	["i"]	[""]	+input
+178690	5370	9	6	9	6	["n"]	[""]	+input
+178827	5374	9	7	9	7	["t"]	[""]	+input
+180087	5379	9	8	9	8	["()"]	[""]	+input
+185817	5385	9	9	9	9	["r"]	[""]	+input
+185878	5388	9	10	9	10	["o"]	[""]	+input
+186065	5392	9	11	9	11	["u"]	[""]	+input
+186260	5397	9	12	9	12	["n"]	[""]	+input
+186413	5401	9	13	9	13	["f"]	[""]	+input
+187389	5404	9	13	9	14	[""]	["f"]	+delete
+187589	5409	9	13	9	13	["d"]	[""]	+input
+191665	5414	9	14	9	14	["()"]	[""]	+input
+194514	5420	9	15	9	15	["p"]	[""]	+input
+196145	5424	9	16	9	16	[","]	[""]	+input
+196658	5428	9	17	9	17	["2"]	[""]	+input
+200989	5436	9	20	9	20	["",""]	[""]	+input
+200994	5437	10	0	10	0	["\t\t\t"]	[""]	+input
+201603	5442	10	2	10	3	[""]	["\t"]	+delete
+205000	5446	10	1	10	2	[""]	["\t"]	+delete
+213429	5451	10	1	10	1	["e"]	[""]	+input
+213621	5455	10	2	10	2	["l"]	[""]	+input
+213682	5458	10	3	10	3	["s"]	[""]	+input
+213872	5463	10	4	10	4	["e"]	[""]	+input
+214891	5468	10	5	10	5	[":"]	[""]	+input
+215383	5473	10	6	10	6	[" "]	[""]	+input
+232178	5476	10	6	10	7	[""]	[" "]	+delete
+232405	5480	10	6	10	6	["",""]	[""]	+input
+232409	5481	11	0	11	0	["\t\t"]	[""]	+input
+242645	5487	11	2	11	2	["t"]	[""]	+input
+243768	5491	11	3	11	3	[" "]	[""]	+input
+258634	5495	11	4	11	4	["="]	[""]	+input
+258788	5499	11	5	11	5	[" "]	[""]	+input
+262170	5503	11	6	11	6	["p"]	[""]	+input
+263595	5507	11	7	11	7	["-"]	[""]	+input
+264862	5511	11	8	11	8	[" "]	[""]	+input
+265531	5514	11	8	11	9	[""]	[" "]	+delete
+265696	5518	11	7	11	8	[""]	["-"]	+delete
+265836	5523	11	7	11	7	[" "]	[""]	+input
+266503	5527	11	8	11	8	["-"]	[""]	+input
+266606	5531	11	9	11	9	[" "]	[""]	+input
+267533	5535	11	10	11	10	["p"]	[""]	+input
+268536	5540	11	11	11	11	["*"]	[""]	+input
+270024	5545	11	12	11	12	["0"]	[""]	+input
+270767	5549	11	13	11	13	["."]	[""]	+input
+271902	5553	11	14	11	14	["2"]	[""]	+input
+272050	5556	11	15	11	15	["5"]	[""]	+input
+276625	5598	11	6	11	6	["("]	[""]	+input
+280760	5637	11	17	11	17	[")"]	[""]	+input
+281842	5643	11	18	11	18	["+"]	[""]	+input
+282799	5648	11	19	11	19	["2"]	[""]	+input
+282982	5651	11	20	11	20	["0"]	[""]	+input
+284457	5656	11	21	11	21	["",""]	[""]	+input
+284461	5657	12	0	12	0	["\t\t"]	[""]	+input
+287158	5665	12	2	12	2	["´"]	[""]	+input
+287175	5667	12	3	12	3	["p"]	[""]	+input
+287528	5671	12	4	12	4	["r"]	[""]	+input
+287653	5674	12	5	12	5	["i"]	[""]	+input
+287862	5679	12	6	12	6	["n"]	[""]	+input
+287968	5683	12	7	12	7	["t"]	[""]	+input
+288595	5686	12	7	12	8	[""]	["t"]	+delete
+288770	5690	12	6	12	7	[""]	["n"]	+delete
+288908	5694	12	5	12	6	[""]	["i"]	+delete
+289075	5698	12	4	12	5	[""]	["r"]	+delete
+289234	5702	12	3	12	4	[""]	["p"]	+delete
+289432	5706	12	2	12	3	[""]	["´"]	+delete
+290243	5711	12	2	12	2	["p"]	[""]	+input
+291558	5715	12	3	12	3	["r"]	[""]	+input
+291709	5718	12	4	12	4	["i"]	[""]	+input
+291876	5723	12	5	12	5	["n"]	[""]	+input
+292707	5727	12	6	12	6	["t"]	[""]	+input
+293390	5732	12	7	12	7	["()"]	[""]	+input
+296692	5738	12	8	12	8	["r"]	[""]	+input
+296909	5742	12	9	12	9	["o"]	[""]	+input
+297079	5746	12	10	12	10	["u"]	[""]	+input
+297264	5750	12	11	12	11	["n"]	[""]	+input
+297404	5754	12	12	12	12	["f"]	[""]	+input
+298333	5757	12	12	12	13	[""]	["f"]	+delete
+298609	5762	12	12	12	12	["d"]	[""]	+input
+299809	5767	12	13	12	13	["()"]	[""]	+input
+306866	5773	12	14	12	14	["t"]	[""]	+input
+307652	5777	12	15	12	15	[","]	[""]	+input
+308136	5781	12	16	12	16	["2"]	[""]	+input
+317834	5785	10	4	10	5	[""]	["e"]	+delete
+318043	5789	10	3	10	4	[""]	["s"]	+delete
+318249	5793	10	2	10	3	[""]	["l"]	+delete
+318588	5797	10	1	10	2	[""]	["e"]	+delete
+319496	5802	10	1	10	1	["i"]	[""]	+input
+319953	5806	10	2	10	2	["f"]	[""]	+input
+339922	5816	5	2	5	2	["e"]	[""]	+input
+340037	5819	5	3	5	3	["l"]	[""]	+input
+343121	5824	8	5	8	6	[""]	["e"]	+delete
+343305	5828	8	4	8	5	[""]	["s"]	+delete
+343440	5832	8	3	8	4	[""]	["l"]	+delete
+343597	5836	8	2	8	3	[""]	["e"]	+delete
+343809	5841	8	2	8	2	["e"]	[""]	+input
+344587	5845	8	3	8	3	["l"]	[""]	+input
+344855	5849	8	4	8	4	["i"]	[""]	+input
+346527	5853	8	5	8	5	["f"]	[""]	+input
+348453	5857	9	20	9	20	["",""]	[""]	+input
+348457	5858	10	0	10	0	["\t\t\t"]	[""]	+input
+349347	5863	10	2	10	3	[""]	["\t"]	+delete
+350363	5868	10	2	10	2	["e"]	[""]	+input
+350540	5872	10	3	10	3	["l"]	[""]	+input
+350627	5875	10	4	10	4	["s"]	[""]	+input
+350817	5880	10	5	10	5	["e"]	[""]	+input
+351929	5885	10	6	10	6	[":"]	[""]	+input
+363582	5890	5	3	5	4	[""]	["l"]	+delete
+363801	5894	5	2	5	3	[""]	["e"]	+delete
+366767	5899	10	7	10	7	["",""]	[""]	+input
+366772	5900	11	0	11	0	["\t\t\t"]	[""]	+input
+370710	5906	11	3	11	3	["p"]	[""]	+input
+371147	5910	11	4	11	4	["r"]	[""]	+input
+371255	5913	11	5	11	5	["i"]	[""]	+input
+371446	5918	11	6	11	6	["n"]	[""]	+input
+371563	5922	11	7	11	7	["t"]	[""]	+input
+372566	5927	11	8	11	8	["()"]	[""]	+input
+374135	5934	11	9	11	9	["\"\""]	[""]	+input
+381494	5941	11	10	11	10	["D"]	[""]	+input
+381637	5946	11	11	11	11	["a"]	[""]	+input
+382598	5950	11	12	11	12	["d"]	[""]	+input
+382784	5954	11	13	11	13	["o"]	[""]	+input
+382894	5958	11	14	11	14	["s"]	[""]	+input
+383415	5962	11	15	11	15	[" "]	[""]	+input
+383879	5966	11	16	11	16	["i"]	[""]	+input
+384191	5970	11	17	11	17	["v"]	[""]	+input
+384374	5974	11	18	11	18	["a"]	[""]	+input
+386151	5977	11	18	11	19	[""]	["a"]	+delete
+386313	5981	11	17	11	18	[""]	["v"]	+delete
+387003	5986	11	17	11	17	["n"]	[""]	+input
+387489	5990	11	18	11	18	["c"]	[""]	+input
+388031	5993	11	18	11	19	[""]	["c"]	+delete
+388183	5998	11	18	11	18	["v"]	[""]	+input
+388428	6002	11	19	11	19	["a"]	[""]	+input
+389129	6006	11	20	11	20	["l"]	[""]	+input
+389382	6010	11	21	11	21	["i"]	[""]	+input
+389554	6014	11	22	11	22	["d"]	[""]	+input
+389687	6018	11	23	11	23	["o"]	[""]	+input
+389822	6022	11	24	11	24	["s"]	[""]	+input
+410636	6052	12	1	12	3	["e"]	["if"]	+input
+410777	6055	12	2	12	2	["l"]	[""]	+input
+410938	6060	12	3	12	3	["s"]	[""]	+input
+411172	6064	12	4	12	4	["e"]	[""]	+input
+506400	6077	12	6	12	6	["",""]	[""]	+input
+506404	6078	13	0	13	0	["\t\t"]	[""]	+input
+507625	6084	13	2	13	2	["if (dia == 2) or (dia == 3) or (dia == 5):"]	[""]	paste
+517203	6093	14	0	14	2	["\t\t\t"]	["\t\t"]	+input
+517208	6094	15	0	15	2	["\t\t\t"]	["\t\t"]	+input
+534956	6100	15	20	15	20	["",""]	[""]	+input
+534960	6101	16	0	16	0	["\t\t\t"]	[""]	+input
+539499	6106	16	2	16	3	[""]	["\t"]	+delete
+545369	6111	16	2	16	2	["e"]	[""]	+input
+546083	6115	16	3	16	3	["l"]	[""]	+input
+546849	6119	16	4	16	4	["i"]	[""]	+input
+546979	6123	16	5	16	5	["f"]	[""]	+input
+586279	6127	8	5	8	6	[""]	["f"]	+delete
+586430	6131	8	4	8	5	[""]	["i"]	+delete
+586579	6135	8	3	8	4	[""]	["l"]	+delete
+587615	6140	8	3	8	3	["l"]	[""]	+input
+587922	6144	8	4	8	4	["s"]	[""]	+input
+588147	6148	8	5	8	5	["e"]	[""]	+input
+668242	6152	10	2	10	7	[""]	["else:"]	+delete
+668715	6156	10	1	10	2	[""]	["\t"]	+delete
+669121	6160	10	0	10	1	[""]	["\t"]	+delete
+670023	6164	9	20	10	0	[""]	["",""]	+delete
+673635	6170	10	2	10	3	[""]	["\t"]	+delete
+675386	6174	10	1	10	2	[""]	["\t"]	+delete
+679701	6178	10	1	10	1	["\t"]	[""]	+input
+692890	6186	15	5	15	6	[""]	["f"]	+delete
+693046	6190	15	4	15	5	[""]	["i"]	+delete
+694013	6195	15	4	15	4	["s"]	[""]	+input
+694187	6198	15	5	15	5	["e"]	[""]	+input
+695245	6204	15	6	15	6	[":"]	[""]	+input
+695465	6207	15	7	15	7	["",""]	[""]	+input
+695469	6208	16	0	16	0	["\t\t\t"]	[""]	+input
+709997	6227	16	3	16	3	["print(round(p,2))","\t\tprint(\"Dados invalidos\")"]	[""]	paste
+712898	6233	17	2	17	2	["\t"]	[""]	+input
+716624	6237	17	2	17	3	[""]	["\t"]	+delete
+741805	6321	18	1	18	2	[""]	["\t"]	+delete
+742169	6325	18	0	18	1	[""]	["\t"]	+delete
+744102	6330	18	0	18	0	["e"]	[""]	+input
+744262	6334	18	1	18	1	["l"]	[""]	+input
+744373	6338	18	2	18	2	["s"]	[""]	+input
+744592	6342	18	3	18	3	["e"]	[""]	+input
+745580	6347	18	4	18	4	[":"]	[""]	+input
+745806	6351	18	5	18	5	["",""]	[""]	+input
+745810	6352	19	0	19	0	["\t"]	[""]	+input
+747151	6358	19	1	19	1	["print(\"Dados invalidos\")"]	[""]	paste
+754191	6363	1	2	1	2	["https://codebench.icomp.ufam.edu.br/index.php?r=trabalho%2Fview&id=5747#"]	[""]	paste
+756185	6381	1	2	1	74	[""]	["https://codebench.icomp.ufam.edu.br/index.php?r=trabalho%2Fview&id=5747#"]	undo
+
+Local Run 1
+- event_time_delta_ms: 761090
+- raw_log_line: 6390
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if p > 0:
+	if mv = 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		else:
+			print(round(p,2))
+		print("Dados invalidos")
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		else:
+			print(round(p,2))
+		print("Dados invalidos")
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 82.4
+Dia da semana: 7
+E dia de musica ao vivo: n
+82.4
+```
+
+Edit Segment 2
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+803073	6398	4	8	4	8	["="]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 807851
+- raw_log_line: 6404
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		else:
+			print(round(p,2))
+		print("Dados invalidos")
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		else:
+			print(round(p,2))
+		print("Dados invalidos")
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+File "main.py", line 5
+if mv = 'N':
+SyntaxError: invalid syntax
+```
+
+Local Run 3
+- event_time_delta_ms: 843060
+- raw_log_line: 6413
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		else:
+			print(round(p,2))
+		print("Dados invalidos")
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		else:
+			print(round(p,2))
+		print("Dados invalidos")
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 75.25
+Dia da semana: 3
+E dia de musica ao vivo: s
+76.44
+Dados invalidos
+```
+
+Local Run 4
+- event_time_delta_ms: 853050
+- raw_log_line: 6414
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		else:
+			print(round(p,2))
+		print("Dados invalidos")
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		else:
+			print(round(p,2))
+		print("Dados invalidos")
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+
+```
+
+Edit Segment 3
+- raw_change_event_count: 6
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+889028	6418	10	2	10	26	[""]	["print(\"Dados invalidos\")"]	+delete
+889600	6422	10	1	10	2	[""]	["\t"]	+delete
+890098	6426	10	0	10	1	[""]	["\t"]	+delete
+890482	6430	9	20	10	0	[""]	["",""]	+delete
+940475	6436	16	2	16	26	[""]	["print(\"Dados invalidos\")"]	+delete
+940942	6440	16	1	16	2	[""]	["\t"]	+delete
+
+Local Run 5
+- event_time_delta_ms: 945373
+- raw_log_line: 6449
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		else:
+			print(round(p,2))
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		else:
+			print(round(p,2))
+	
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 82.4
+Dia da semana: 7
+E dia de musica ao vivo: n
+82.4
+Dados invalidos
+```
+
+Local Run 6
+- event_time_delta_ms: 965206
+- raw_log_line: 6454
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		else:
+			print(round(p,2))
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		else:
+			print(round(p,2))
+	
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 75.25
+Dia da semana: 3
+E dia de musica ao vivo: s
+76.44
+```
+
+Local Run 7
+- event_time_delta_ms: 973858
+- raw_log_line: 6461
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		else:
+			print(round(p,2))
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		else:
+			print(round(p,2))
+	
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 1
+Dia da semana:
+Traceback (most recent call last):
+File "main.py", line 2, in <module>
+dia = int(input("Dia da semana: "))
+ValueError: invalid literal for int() with base 10: ''
+```
+
+Edit Segment 4
+- raw_change_event_count: 81
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1010074	6465	14	5	14	6	[""]	["e"]	+delete
+1010253	6469	14	4	14	5	[""]	["s"]	+delete
+1010383	6473	14	3	14	4	[""]	["l"]	+delete
+1011774	6478	14	3	14	3	["l"]	[""]	+input
+1011982	6482	14	4	14	4	["i"]	[""]	+input
+1012071	6486	14	5	14	5	["f"]	[""]	+input
+1014795	6490	14	6	14	6	[" "]	[""]	+input
+1016038	6494	14	7	14	7	["d"]	[""]	+input
+1016139	6498	14	8	14	8	["i"]	[""]	+input
+1016408	6502	14	9	14	9	["a"]	[""]	+input
+1016909	6506	14	10	14	10	[" "]	[""]	+input
+1017656	6510	14	11	14	11	["="]	[""]	+input
+1017790	6514	14	12	14	12	["="]	[""]	+input
+1018044	6518	14	13	14	13	[" "]	[""]	+input
+1019701	6522	14	14	14	14	["1"]	[""]	+input
+1022222	6526	14	15	14	15	[" "]	[""]	+input
+1025371	6530	14	16	14	16	["o"]	[""]	+input
+1025604	6534	14	17	14	17	["r"]	[""]	+input
+1025816	6538	14	18	14	18	[" "]	[""]	+input
+1026706	6542	14	19	14	19	["d"]	[""]	+input
+1026900	6546	14	20	14	20	["i"]	[""]	+input
+1027039	6550	14	21	14	21	["a"]	[""]	+input
+1027222	6554	14	22	14	22	[" "]	[""]	+input
+1027988	6558	14	23	14	23	["="]	[""]	+input
+1028130	6562	14	24	14	24	["="]	[""]	+input
+1028353	6566	14	25	14	25	[" "]	[""]	+input
+1030906	6570	14	26	14	26	["4"]	[""]	+input
+1031505	6574	14	27	14	27	[" "]	[""]	+input
+1037279	6578	14	28	14	28	["o"]	[""]	+input
+1037685	6582	14	29	14	29	["r"]	[""]	+input
+1037818	6586	14	30	14	30	[" "]	[""]	+input
+1038492	6590	14	31	14	31	["d"]	[""]	+input
+1038610	6594	14	32	14	32	["i"]	[""]	+input
+1038969	6598	14	33	14	33	[" "]	[""]	+input
+1038993	6601	14	34	14	34	["a"]	[""]	+input
+1039702	6605	14	34	14	35	[""]	["a"]	+delete
+1039835	6609	14	33	14	34	[""]	[" "]	+delete
+1040039	6614	14	33	14	33	["a"]	[""]	+input
+1040428	6618	14	34	14	34	[" "]	[""]	+input
+1041666	6622	14	35	14	35	["="]	[""]	+input
+1041801	6626	14	36	14	36	["="]	[""]	+input
+1042358	6630	14	37	14	37	[" "]	[""]	+input
+1044282	6634	14	38	14	38	["6"]	[""]	+input
+1046782	6638	14	39	14	39	[" "]	[""]	+input
+1048083	6642	14	40	14	40	["o"]	[""]	+input
+1048443	6646	14	41	14	41	["r"]	[""]	+input
+1048586	6650	14	42	14	42	[" "]	[""]	+input
+1049312	6654	14	43	14	43	["d"]	[""]	+input
+1049450	6658	14	44	14	44	["i"]	[""]	+input
+1049616	6662	14	45	14	45	["a"]	[""]	+input
+1049837	6666	14	46	14	46	[" "]	[""]	+input
+1050887	6670	14	47	14	47	["="]	[""]	+input
+1051034	6674	14	48	14	48	["="]	[""]	+input
+1051752	6678	14	49	14	49	[" "]	[""]	+input
+1052500	6682	14	50	14	50	["7"]	[""]	+input
+1070250	6778	8	2	8	7	["elif dia == 1 or dia == 4 or dia == 6 or dia == 7:"]	["else:"]	paste
+1072717	6783	9	19	9	20	[""]	[")"]	+delete
+1074539	6787	9	19	9	19	["",""]	[""]	+input
+1074544	6788	10	0	10	0	["\t\t\t\t\t"]	[""]	+input
+1075135	6793	10	4	10	5	[""]	["\t"]	+delete
+1075906	6797	10	3	10	4	[""]	["\t"]	+delete
+1076437	6801	10	2	10	3	[""]	["\t"]	+delete
+1077493	6806	10	2	10	2	["e"]	[""]	+input
+1077691	6810	10	3	10	3	["l"]	[""]	+input
+1077796	6814	10	4	10	4	["s"]	[""]	+input
+1078024	6818	10	5	10	5	["e"]	[""]	+input
+1079305	6823	10	6	10	6	[":"]	[""]	+input
+1080339	6827	10	7	10	7	["",""]	[""]	+input
+1080342	6828	11	0	11	0	["\t\t\t\t\t"]	[""]	+input
+1095133	6853	18	1	18	1	["\t"]	[""]	+input
+1096558	6858	18	2	18	2	["e"]	[""]	+input
+1096836	6862	18	3	18	3	["l"]	[""]	+input
+1096892	6865	18	4	18	4	["s"]	[""]	+input
+1097103	6870	18	5	18	5	["e"]	[""]	+input
+1098240	6875	18	6	18	6	[":"]	[""]	+input
+1098500	6879	18	7	18	7	["",""]	[""]	+input
+1098504	6880	19	0	19	0	["\t\t\t\t\t"]	[""]	+input
+1099549	6885	19	4	19	5	[""]	["\t"]	+delete
+1100145	6889	19	3	19	4	[""]	["\t"]	+delete
+1102083	6894	19	3	19	3	["print(\"Dados invalidos\")"]	[""]	paste
+1106532	6903	11	3	11	3	["print(\"Dados invalidos\")"]	[""]	paste
+
+Local Run 8
+- event_time_delta_ms: 1112878
+- raw_log_line: 6911
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2)
+		else:
+			print("Dados invalidos")		
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 1
+Dia da semana: 10
+E dia de musica ao vivo: s
+1.0
+```
+
+Edit Segment 5
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+1133872	6922	9	19	9	19	[")"]	[""]	+input
+
+Local Run 9
+- event_time_delta_ms: 1139138
+- raw_log_line: 6929
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")		
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+File "main.py", line 11
+else:
+SyntaxError: invalid syntax
+```
+
+Local Run 10
+- event_time_delta_ms: 1156928
+- raw_log_line: 6934
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")		
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 82.4
+Dia da semana: 7
+E dia de musica ao vivo: n
+82.4
+```
+
+Local Run 11
+- event_time_delta_ms: 1175095
+- raw_log_line: 6939
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")		
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 75.25
+Dia da semana: 3
+E dia de musica ao vivo: s
+76.44
+```
+
+Local Run 12
+- event_time_delta_ms: 1189771
+- raw_log_line: 6944
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")		
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: 1
+Dia da semana: 10
+E dia de musica ao vivo: s
+Dados invalidos
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 1206242
+- raw_log_line: 6945
+- feedback: "You're almost there! Your code is 67% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")		
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")
+else:
+	print("Dados invalidos")
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-05-30T14:56:19.341000
+
+Execution Result
+
+- submitted_at: 2024-05-30 14:57:28
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "70.56\n2\nN"
+    expected: "52.92"
+    actual: "52.92"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "120.75"
+    actual: "100.75"
+  - test_index_0idx: 2 [PASS]
+    input: "0.00\n9\nS"
+    expected: "Dados invalidos"
+    actual: "Dados invalidos"
+
+Attempt Start Code
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")		
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")
+else:
+	print("Dados invalidos")
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 6950
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")		
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")
+else:
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco total da entrada: -52
+Dia da semana: 5
+E dia de musica ao vivo: s
+Dados invalidos
+```
+
+Edit Segment 1
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+16040	7006	2	47	2	47	["",""]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 68069
+- raw_log_line: 7151
+- feedback: "You're almost there! Your code is 67% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+p = float(input("preco total da entrada: "))
+dia = int(input("Dia da semana: "))
+mv = input("E dia de musica ao vivo: ").upper()
+
+if p > 0:
+	if mv == 'N':
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = p - p*0.25
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")		
+	else:
+		if (dia == 2) or (dia == 3) or (dia == 5):
+			t = (p - p*0.25)+20
+			print(round(t,2))
+		elif dia == 1 or dia == 4 or dia == 6 or dia == 7:
+			print(round(p,2))
+		else:
+			print("Dados invalidos")
+else:
+	print("Dados invalidos")
+```

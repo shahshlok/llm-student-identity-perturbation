@@ -1,0 +1,90 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "558",
+    "assessment_id": "5320",
+    "exercise_id": "1117",
+    "student_id": "4822",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "entrada = float(input(\"Valor: \"))\ndia = int(input(\"semana: \"))\nmusica = input(\"S ou N: \")\nmusica = musica.upper()\n\nif entrada < 0 or dia < 1 or dia > 7 or musica !=\"S\" and musica !=\"N\":\n\tprint(\"Dados invalidos\")\nelif dia in(2, 3, 5):\n\t\tdesconto = entrada - (25/100) * entrada\nelif musica == \"S\":\n\t\ttaxa = entrada + 20.00\n\t\tprint(\"Total: R$\", round(entrada, 2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "entrada = float(input(\"Valor: \"))\ndia = int(input(\"semana: \"))\nmusica = input(\"S ou N: \")\nmusica = musica.upper()\n\nif entrada < 0 or dia < 1 or dia > 7 or musica == \"S\" and musica == \"N\":\n\tprint(\"Dados invalidos\")\nelif(dia == 2 and dia == 3 and dia == 5):\n\ttaxa = (entrada * 0.25) + 20\n\tprint(\"Total: R$\",round(taxa, 2))\nelif musica == \"S\":\n\tprint(\"Entradas:\", round(entrada, 2), dia , musica)",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "70.56\n2\nN",
+        "expected": "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92",
+        "actual": ""
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "100.75\n6\nS",
+        "expected": "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75",
+        "actual": "Entradas: 100.75 6 S"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "0.00\n9\nS",
+        "expected": "Entradas: 0.0 , 9 , S\nDados invalidos",
+        "actual": "Dados invalidos"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 7,
+        "end_line_0idx": 9,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 11,
+        "end_line_0idx": 11,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 5,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5
+      },
+      {
+        "start_line_0idx": 7,
+        "end_line_0idx": 9
+      },
+      {
+        "start_line_0idx": 11,
+        "end_line_0idx": 11
+      }
+    ]
+  }
+}

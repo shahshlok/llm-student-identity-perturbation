@@ -1,0 +1,77 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "487",
+    "assessment_id": "4578",
+    "exercise_id": "6102",
+    "student_id": "8186",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "i = int(input(\"Diga a idade: \"))\nimc = float(input(\"Diga o imc: \"))\n\nif ( i < 45 ) and ( imc < 22.0 ):\n\tprint(\"Risco: Baixo\")\n\t\t\nelif ( i <= 0 ) and ( i > 130 ) and ( imc <= 0 ):\n\tprint(\"Dados invalidos\")\n\nelif ( i < 45 ) and ( imc >= 22.0 ):\n\tprint(\"Risco: Medio\")\n\nelif ( i >= 45 ) and ( imc < 22.0 ):\n\tprint(\"Risco: Medio\")\n\t\nelif ( i >= 45 ) and ( imc >= 22.0 ):\n\tprint(\"Risco: Alto\")",
+    "grade": 67.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      0
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "i = int(input(\"Diga a idade: \"))\nimc = float(input(\"Diga o imc: \"))\n\nif ( i < 45 ) and ( imc < 22.0 ):\n\tprint(\"Risco: Baixo\")\n\n\nelif ( i < 45 ) and ( imc >= 22.0 ):\n\tprint(\"Risco: Medio\")\n\nelif ( i >= 45 ) and ( imc < 22.0 ):\n\tprint(\"Risco: Medio\")\n\t\nelif ( i >= 45 ) and ( imc >= 22.0 ):\n\tprint(\"Risco: Alto\")\n\t\nelse:\n\tprint(\"Dados invalidos\")",
+    "grade": 67.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      0
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "0\n0",
+        "expected": "Dados invalidos",
+        "actual": "Risco: Baixo"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "25\n25",
+        "expected": "Risco: Medio",
+        "actual": "Risco: Medio"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "50\n25",
+        "expected": "Risco: Alto",
+        "actual": "Risco: Alto"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 15,
+        "end_line_0idx": 17,
+        "edit_kind": "insert"
+      }
+    ],
+    "changed_line_count_in_next_code": 4,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5
+      },
+      {
+        "start_line_0idx": 15,
+        "end_line_0idx": 17
+      }
+    ]
+  }
+}

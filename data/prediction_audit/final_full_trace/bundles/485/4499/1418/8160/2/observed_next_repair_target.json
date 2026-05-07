@@ -1,0 +1,70 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4499",
+    "exercise_id": "1418",
+    "student_id": "8160",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "cp= int(input('mais votado: '))\ncs= int(input('segundo lugar: '))\nct= int(input('menos votado: '))\nx= (cp+cs+ct)//2\nif(cp>x):\n\tprint('SIM')\nelse:\n\tprint('NAO')\n\n\t",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "cp= int(input('mais votado: '))\ncs= int(input('segundo lugar: '))\nct= int(input('menos votado: '))\nx= (cp+cs+ct)/(cs+ct)\nif(cp>x):\n\tprint('SIM')\nelse:\n\tprint('NAO')\n\n\t",
+    "grade": 0.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      0
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "900000\n300000\n150000",
+        "expected": "NAO",
+        "actual": "SIM"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "400000\n300000\n100000",
+        "expected": "SIM",
+        "actual": "SIM"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "1180100\n1000000\n700000",
+        "expected": "SIM",
+        "actual": "SIM"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "partial_fix",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 3,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 3
+      }
+    ]
+  }
+}

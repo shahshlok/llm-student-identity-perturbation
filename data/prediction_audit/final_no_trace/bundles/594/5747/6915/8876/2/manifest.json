@@ -1,0 +1,34 @@
+{
+  "schema_version": "v6_2_full_trace_prototype_bundle_v6",
+  "custom_id": "594:8876:5747:6915:2",
+  "condition": "no_trace",
+  "exercise_scope": "594:5747:6915",
+  "tertile": "T1",
+  "diversity_score": 0.0,
+  "model": "gpt-5.4",
+  "reasoning_effort": "xhigh",
+  "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+  "system_prompt_path": "system_prompt.txt",
+  "user_payload_path": "user_payload.json",
+  "user_prompt_path": "user_prompt.txt",
+  "response_schema_path": "response_schema.json",
+  "request_body_path": "request_body.json",
+  "batch_request_path": "batch_request.json",
+  "batch_request_jsonl_path": "requests.jsonl",
+  "observed_next_repair_target_path": "observed_next_repair_target.json",
+  "observed_next_coarse_path_path": "observed_next_coarse_path.json",
+  "transition_index_0idx": 2,
+  "prompt_char_count": 5168,
+  "visible_attempt_count": 3,
+  "attempt_n_pass_fail_vector": [
+    true,
+    false,
+    true
+  ],
+  "attempt_n_failed_test_indices_0idx": [
+    1
+  ],
+  "attempt_n_test_count": 3,
+  "attempt_n_pass_vector_signature": "PFP",
+  "attempt_n_normalized_code": "preco = float(input(\"Preco de entrada: \"))\ndiasemana = int(input(\"Segunda [2]\\nTerca [3]\\nQuarta [4]\\nQuinta [5]\\nSexta [6]\\nSabado [7]\\nDomingo [1]\\n Opcao:\"))\ndia = input(\"Ao vivo: [S] ou [N]: \").upper()\n\na = diasemana\n\nif preco >= 0:\n\tif 1 <= a <= 7:\n\t\tif a == 2 or 3 or 5:\n\t\t\tif dia == \"S\":\n\t\t\t\ttotal = preco - (preco*0.25) + 20\n\t\t\t\tprint(total)\n\t\t\telse:\n\t\t\t\ttotal = preco - (preco*0.25)\n\t\t\t\tprint(total)\n\t\telse:\n\t\t\tif dia == \"S\":\n\t\t\t\ttotal = preco + 20\n\t\t\t\tprint(total)\n\t\t\telse:\n\t\t\t\ttotal = preco\n\t\t\t\tprint(preco)\n\telse:\n\t\tprint(\"Dados invalidos\")\nelse:\n\tprint(\"Dados invalidos\")"
+}

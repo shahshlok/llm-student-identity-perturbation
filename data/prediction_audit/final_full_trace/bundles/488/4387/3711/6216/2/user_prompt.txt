@@ -1,0 +1,463 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 488
+- assessment_id: 4387
+- assessment_title: Lab 0 – Primeiros passos com o Python - 2023
+- exercise_id: 3711
+- student_id: 6216
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-03-28T12:27:14.760000
+
+Execution Result
+
+- submitted_at: 2023-03-28 12:33:55
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em 2023 a Ufam completou 114 anos de fundacao"
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em 2023 a Ufam completou 114 anos de fundacao"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 55
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["p"]	[""]	+input
+203	11	0	1	0	1	["r"]	[""]	+input
+324	15	0	2	0	2	["i"]	[""]	+input
+622	19	0	3	0	3	["n"]	[""]	+input
+773	23	0	4	0	4	["t"]	[""]	+input
+1700	28	0	5	0	5	[")"]	[""]	+input
+3242	32	0	5	0	6	[""]	[")"]	+delete
+4218	38	0	5	0	5	["()"]	[""]	+input
+5941	45	0	6	0	6	["\"\""]	[""]	+input
+6572	52	0	7	0	7	["E"]	[""]	+input
+7224	57	0	8	0	8	["m"]	[""]	+input
+7406	61	0	9	0	9	[" "]	[""]	+input
+16678	65	0	10	0	10	["2"]	[""]	+input
+16876	69	0	11	0	11	["0"]	[""]	+input
+17053	73	0	12	0	12	["2"]	[""]	+input
+17225	77	0	13	0	13	["3"]	[""]	+input
+24714	96	0	9	0	9	[","]	[""]	+input
+29595	115	0	15	0	15	[","]	[""]	+input
+38290	122	0	17	0	17	["a"]	[""]	+input
+38462	126	0	18	0	18	[" "]	[""]	+input
+39221	131	0	19	0	19	["U"]	[""]	+input
+39491	136	0	20	0	20	["f"]	[""]	+input
+39891	140	0	21	0	21	["a"]	[""]	+input
+39945	143	0	22	0	22	["m"]	[""]	+input
+40137	148	0	23	0	23	[" "]	[""]	+input
+40964	152	0	24	0	24	["c"]	[""]	+input
+41091	156	0	25	0	25	["o"]	[""]	+input
+41302	160	0	26	0	26	["m"]	[""]	+input
+41519	164	0	27	0	27	["p"]	[""]	+input
+41761	168	0	28	0	28	["l"]	[""]	+input
+41887	172	0	29	0	29	["e"]	[""]	+input
+42194	176	0	30	0	30	["t"]	[""]	+input
+42437	180	0	31	0	31	["r"]	[""]	+input
+42542	184	0	32	0	32	["o"]	[""]	+input
+42719	188	0	33	0	33	["u"]	[""]	+input
+42986	192	0	34	0	34	[" "]	[""]	+input
+47004	195	0	34	0	35	[""]	[" "]	+delete
+47160	199	0	33	0	34	[""]	["u"]	+delete
+47337	203	0	32	0	33	[""]	["o"]	+delete
+47474	207	0	31	0	32	[""]	["r"]	+delete
+48375	212	0	31	0	31	["o"]	[""]	+input
+48549	216	0	32	0	32	["u"]	[""]	+input
+53962	221	0	33	0	33	["\"\""]	[""]	+input
+57174	227	0	34	0	34	[","]	[""]	+input
+57382	231	0	35	0	35	[" "]	[""]	+input
+76215	237	0	36	0	36	["1"]	[""]	+input
+76328	241	0	37	0	37	["1"]	[""]	+input
+76521	245	0	38	0	38	["4"]	[""]	+input
+78724	249	0	39	0	39	["-"]	[""]	+input
+79963	252	0	39	0	40	[""]	["-"]	+delete
+80847	257	0	39	0	39	[" "]	[""]	+input
+80965	261	0	40	0	40	["-"]	[""]	+input
+81065	265	0	41	0	41	[" "]	[""]	+input
+150945	276	0	9	0	9	["\""]	[""]	+input
+166551	344	0	41	0	42	[""]	["-"]	+delete
+
+Local Run 1
+- event_time_delta_ms: 171646
+- raw_log_line: 351
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em", 2023,"a Ufam completou", 114  ")
+```
+Run Output
+```text
+File "main.py", line 1
+print("Em, 2023,"a Ufam completou", 114 - ")
+SyntaxError: invalid syntax
+```
+
+Edit Segment 2
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+183218	355	0	42	0	43	[""]	["\""]	+delete
+
+Local Run 2
+- event_time_delta_ms: 187949
+- raw_log_line: 362
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em", 2023,"a Ufam completou", 114  )
+```
+Run Output
+```text
+File "main.py", line 1
+print("Em", 2023,"a Ufam completou", 114  ")
+SyntaxError: EOL while scanning string literal
+```
+
+Edit Segment 3
+- raw_change_event_count: 58
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+214233	366	0	40	0	41	[""]	[" "]	+delete
+214903	371	0	40	0	40	[" "]	[""]	+input
+215106	375	0	41	0	41	["-"]	[""]	+input
+215241	379	0	42	0	42	[" "]	[""]	+input
+242400	382	0	42	0	43	[""]	[" "]	+delete
+242508	386	0	41	0	42	[""]	["-"]	+delete
+242680	390	0	40	0	41	[""]	[" "]	+delete
+243716	395	0	40	0	40	["2"]	[""]	+input
+243896	399	0	41	0	41	["0"]	[""]	+input
+244099	403	0	42	0	42	["2"]	[""]	+input
+244270	407	0	43	0	43	["3"]	[""]	+input
+245237	410	0	43	0	44	[""]	["3"]	+delete
+245403	414	0	42	0	43	[""]	["2"]	+delete
+245555	418	0	41	0	42	[""]	["0"]	+delete
+245706	422	0	40	0	41	[""]	["2"]	+delete
+245871	426	0	39	0	40	[""]	["4"]	+delete
+246016	430	0	38	0	39	[""]	["1"]	+delete
+246346	434	0	37	0	38	[""]	["1"]	+delete
+247026	439	0	37	0	37	["2"]	[""]	+input
+247200	443	0	38	0	38	["0"]	[""]	+input
+247393	447	0	39	0	39	["2"]	[""]	+input
+247573	451	0	40	0	40	["3"]	[""]	+input
+249792	455	0	41	0	41	[" "]	[""]	+input
+249945	459	0	42	0	42	["-"]	[""]	+input
+250076	463	0	43	0	43	[" "]	[""]	+input
+254232	467	0	44	0	44	["1"]	[""]	+input
+254660	471	0	45	0	45	["9"]	[""]	+input
+254977	475	0	46	0	46	["0"]	[""]	+input
+255199	479	0	47	0	47	["9"]	[""]	+input
+256953	483	0	48	0	48	[","]	[""]	+input
+257151	487	0	49	0	49	[" "]	[""]	+input
+258003	492	0	50	0	50	["\"\""]	[""]	+input
+258678	498	0	51	0	51	["a"]	[""]	+input
+258835	502	0	52	0	52	["n"]	[""]	+input
+259011	506	0	53	0	53	["o"]	[""]	+input
+259122	510	0	54	0	54	["s"]	[""]	+input
+259959	514	0	55	0	55	[" "]	[""]	+input
+260203	518	0	56	0	56	["d"]	[""]	+input
+260377	522	0	57	0	57	["e"]	[""]	+input
+260498	526	0	58	0	58	[" "]	[""]	+input
+261902	530	0	59	0	59	["f"]	[""]	+input
+262067	534	0	60	0	60	["u"]	[""]	+input
+262364	538	0	61	0	61	["n"]	[""]	+input
+263010	542	0	62	0	62	["d"]	[""]	+input
+263080	545	0	63	0	63	["a"]	[""]	+input
+263585	550	0	64	0	64	["ç"]	[""]	+input
+263993	556	0	65	0	65	["õ"]	[""]	+input
+264116	560	0	66	0	66	["a"]	[""]	+input
+265044	563	0	66	0	67	[""]	["a"]	+delete
+265177	567	0	65	0	66	[""]	["õ"]	+delete
+266933	572	0	65	0	65	["a"]	[""]	+input
+267116	576	0	66	0	66	["o"]	[""]	+input
+269090	579	0	66	0	67	[""]	["o"]	+delete
+269718	583	0	65	0	66	[""]	["a"]	+delete
+269878	587	0	64	0	65	[""]	["ç"]	+delete
+272244	592	0	64	0	64	["ç"]	[""]	+input
+272450	596	0	65	0	65	["a"]	[""]	+input
+272550	600	0	66	0	66	["o"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 289709
+- raw_log_line: 604
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em", 2023,"a Ufam completou", 2023 - 1909, "anos de fundaçao" )
+```
+Run Output
+```text
+Em 2023 a Ufam completou 114
+```
+
+Edit Segment 4
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+294942	608	0	64	0	65	[""]	["ç"]	+delete
+295425	613	0	64	0	64	["c"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 301876
+- raw_log_line: 620
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em", 2023,"a Ufam completou", 2023 - 1909, "anos de fundacao" )
+```
+Run Output
+```text
+Em 2023 a Ufam completou 114 Traceback (most recent call last):
+File "main.py", line 1, in <module>
+print("Em", 2023,"a Ufam completou", 2023 - 1909, "anos de funda\xe7ao" )
+UnicodeEncodeError: 'ascii' codec can't encode character '\xe7' in position 13: ordinal not in range(128)
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 401239
+- raw_log_line: 621
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print("Em", 2023,"a Ufam completou", 2023 - 1909, "anos de fundacao" )
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-03-28T12:34:04.790000
+
+Execution Result
+
+- submitted_at: 2023-03-28 12:34:31
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em 2023 a Ufam completou 114 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em 2023 a Ufam completou 114 anos de fundacao."
+
+Attempt Start Code
+```python
+print("Em", 2023,"a Ufam completou", 2023 - 1909, "anos de fundacao" )
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 623
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em", 2023,"a Ufam completou", 2023 - 1909, "anos de fundacao" )
+```
+Run Output
+```text
+Em 2023 a Ufam completou 114 anos de fundacao
+```
+
+Edit Segment 1
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+4066	631	0	67	0	67	["."]	[""]	+input
+11312	638	0	69	0	70	[""]	[" "]	+delete
+
+Local Run 2
+- event_time_delta_ms: 15770
+- raw_log_line: 643
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em", 2023,"a Ufam completou", 2023 - 1909, "anos de fundacao.")
+```
+Run Output
+```text
+Em 2023 a Ufam completou 114 anos de fundacao
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 27405
+- raw_log_line: 644
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print("Em", 2023,"a Ufam completou", 2023 - 1909, "anos de fundacao.")
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-03-28T12:35:03.807000
+
+Execution Result
+
+- submitted_at: 2023-03-28 12:35:50
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em 2023 a Ufam completou 114 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em 2023 a Ufam completou 114 anos de fundacao."
+
+Attempt Start Code
+```python
+print("Em", 2023,"a Ufam completou", 2023 - 1909, "anos de fundacao.")
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 31
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	662	0	0	0	0	["",""]	[""]	+input
+2188	670	0	0	0	0	["E"]	[""]	+input
+3785	675	0	1	0	1	["n"]	[""]	+input
+4090	679	0	2	0	2	["t"]	[""]	+input
+4285	683	0	3	0	3	["r"]	[""]	+input
+4385	687	0	4	0	4	["a"]	[""]	+input
+4497	691	0	5	0	5	["d"]	[""]	+input
+4638	695	0	6	0	6	["a"]	[""]	+input
+5003	699	0	7	0	7	[" "]	[""]	+input
+5848	702	0	7	0	8	[""]	[" "]	+delete
+6357	705	0	6	0	7	[""]	["a"]	+delete
+6387	708	0	5	0	6	[""]	["d"]	+delete
+6417	711	0	4	0	5	[""]	["a"]	+delete
+6447	714	0	3	0	4	[""]	["r"]	+delete
+6487	717	0	2	0	3	[""]	["t"]	+delete
+6519	720	0	1	0	2	[""]	["n"]	+delete
+6548	723	0	0	0	1	[""]	["E"]	+delete
+7230	732	0	0	0	0	["e"]	[""]	+input
+7436	736	0	1	0	1	["n"]	[""]	+input
+7683	740	0	2	0	2	["t"]	[""]	+input
+7871	744	0	3	0	3	["r"]	[""]	+input
+7962	748	0	4	0	4	["a"]	[""]	+input
+8079	752	0	5	0	5	["d"]	[""]	+input
+8173	755	0	6	0	6	["a"]	[""]	+input
+9283	760	0	7	0	7	[" "]	[""]	+input
+10437	764	0	8	0	8	["="]	[""]	+input
+10603	768	0	9	0	9	[" "]	[""]	+input
+11279	772	0	10	0	10	["2"]	[""]	+input
+11461	776	0	11	0	11	["0"]	[""]	+input
+11643	780	0	12	0	12	["2"]	[""]	+input
+11800	784	0	13	0	13	["3"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 18796
+- raw_log_line: 788
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = 2023
+print("Em", 2023,"a Ufam completou", 2023 - 1909, "anos de fundacao.")
+```
+Run Output
+```text
+Em 2023 a Ufam completou 114 anos de fundacao.
+```
+
+Local Run 2
+- event_time_delta_ms: 38752
+- raw_log_line: 790
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+entrada = 2023
+print("Em", 2023,"a Ufam completou", 2023 - 1909, "anos de fundacao.")
+```
+Run Output
+```text
+Em 2023 a Ufam completou 114 anos de fundacao.
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 47186
+- raw_log_line: 791
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+entrada = 2023
+print("Em", 2023,"a Ufam completou", 2023 - 1909, "anos de fundacao.")
+```

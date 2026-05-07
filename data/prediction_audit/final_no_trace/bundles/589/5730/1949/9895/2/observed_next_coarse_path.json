@@ -1,0 +1,27 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "589",
+    "assessment_id": "5730",
+    "exercise_id": "1949",
+    "student_id": "9895",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "n = int(input(\"Digite o número apostado (dois dígitos): \"))\nl = int(input(\"Digite o número sorteado (dois dígitos): \"))\n\nif n == l:\n    print(\"Ganhou R$ 100.000,00\")\nelif sorted(str(n)) == sorted(str(l)):\n    print(\"Ganhou R$ 50.000,00\")\nelif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:\n    print(\"Ganhou R$ 1.000,00\")\nelse:\n    print(\"Perdeu\")",
+    "coarse_path_steps": [
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 0,
+        "target_end_line_0idx": 10
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,709 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 491
+- assessment_id: 4656
+- assessment_title: Extras 4 – Repetição por Condição (while)
+- exercise_id: 2527
+- student_id: 8244
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-05-22T09:43:24.392000
+
+Execution Result
+
+- submitted_at: 2023-05-22 12:04:05
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "496"
+    expected: "1\n2\n4\n8\n16\n31\n62\n124\n248\nPERFEITO"
+    actual: "1\n2\n4\n8\n16\n31\n62\n124\n248\n496\nNAO PERFEITO"
+  - test_index_0idx: 1 [FAIL]
+    input: "8128"
+    expected: "1\n2\n4\n8\n16\n32\n64\n127\n254\n508\n1016\n2032\n4064\nPERFEITO"
+    actual: "1\n2\n4\n8\n16\n32\n64\n127\n254\n508\n1016\n2032\n4064\n8128\nNAO PERFEITO"
+  - test_index_0idx: 2 [FAIL]
+    input: "20"
+    expected: "1\n2\n4\n5\n10\nNAO PERFEITO"
+    actual: "1\n2\n4\n5\n10\n20\nNAO PERFEITO"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 332
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	10	0	0	0	0	["n"]	[""]	*compose
+221	13	0	1	0	1	[" "]	[""]	*compose
+2364	16	0	2	0	2	["="]	[""]	+input
+2569	19	0	3	0	3	[" "]	[""]	+input
+3460	22	0	4	0	4	["i"]	[""]	*compose
+3614	25	0	5	0	5	["n"]	[""]	*compose
+3845	28	0	6	0	6	["t"]	[""]	*compose
+5798	31	0	7	0	7	["("]	[""]	*compose
+7627	34	0	8	0	8	["f"]	[""]	*compose
+7929	37	0	9	0	9	["l"]	[""]	*compose
+8043	40	0	10	0	10	["o"]	[""]	*compose
+8507	43	0	10	0	11	[""]	["o"]	*compose
+8652	46	0	9	0	10	[""]	["l"]	*compose
+9198	49	0	8	0	9	[""]	["f"]	*compose
+9550	52	0	8	0	8	["i"]	[""]	*compose
+9747	55	0	9	0	9	["n"]	[""]	*compose
+10155	58	0	10	0	10	["p"]	[""]	*compose
+10466	61	0	11	0	11	["u"]	[""]	*compose
+10707	64	0	12	0	12	["t"]	[""]	*compose
+12600	67	0	13	0	13	["("]	[""]	*compose
+12781	70	0	14	0	14	[")"]	[""]	+input
+13023	73	0	15	0	15	[")"]	[""]	+input
+16138	80	0	16	0	16	["",""]	[""]	+input
+16388	87	1	0	1	0	["",""]	[""]	+input
+48338	94	2	0	2	0	["w"]	[""]	*compose
+48917	97	2	1	2	1	["h"]	[""]	*compose
+49119	100	2	2	2	2	["i"]	[""]	*compose
+49319	103	2	3	2	3	["l"]	[""]	*compose
+49780	106	2	4	2	4	["e"]	[""]	*compose
+59042	109	2	5	2	5	["("]	[""]	*compose
+60842	112	2	6	2	6	["n"]	[""]	*compose
+61089	115	2	7	2	7	[" "]	[""]	*compose
+63718	118	2	8	2	8	["<"]	[""]	+input
+65174	121	2	9	2	9	["d"]	[""]	*compose
+65468	124	2	10	2	10	["i"]	[""]	*compose
+65655	127	2	11	2	11	["v"]	[""]	*compose
+65864	130	2	12	2	12	["i"]	[""]	*compose
+67419	133	2	13	2	13	["s"]	[""]	*compose
+67782	136	2	14	2	14	["o"]	[""]	*compose
+68096	139	2	15	2	15	["r"]	[""]	*compose
+71666	142	2	16	2	16	[")"]	[""]	*compose
+73158	145	2	17	2	17	[":"]	[""]	+input
+76608	150	2	18	2	18	["",""]	[""]	+input
+76609	151	3	0	3	0	["\t"]	[""]	+input
+81821	156	3	1	3	1	["i"]	[""]	*compose
+82169	159	3	2	3	2	["f"]	[""]	*compose
+84687	162	3	3	3	3	["("]	[""]	*compose
+1044081	179	1	0	1	0	["d"]	[""]	*compose
+1044179	182	1	1	1	1	["i"]	[""]	*compose
+1044299	185	1	2	1	2	["v"]	[""]	*compose
+1044476	188	1	3	1	3	["i"]	[""]	*compose
+1044705	191	1	4	1	4	["s"]	[""]	*compose
+1044741	194	1	5	1	5	["o"]	[""]	*compose
+1044868	197	1	6	1	6	["r"]	[""]	*compose
+1045923	200	1	7	1	7	[" "]	[""]	*compose
+1047236	203	1	8	1	8	["="]	[""]	+input
+1048497	206	1	9	1	9	[" "]	[""]	+input
+1048700	209	1	10	1	10	["1"]	[""]	*compose
+1049233	214	1	11	1	11	[" "]	[""]	+input
+1051189	221	1	12	1	12	["",""]	[""]	+input
+1065313	231	2	0	2	0	["s"]	[""]	*compose
+1065333	234	2	1	2	1	["o"]	[""]	*compose
+1065354	237	2	2	2	2	["m"]	[""]	*compose
+1065373	240	2	3	2	3	["a"]	[""]	*compose
+1068207	243	2	4	2	4	[" "]	[""]	*compose
+1068240	246	2	5	2	5	["="]	[""]	+input
+1069160	249	2	6	2	6	[" "]	[""]	+input
+1069779	252	2	7	2	7	["0"]	[""]	*compose
+1223101	275	4	4	4	4	["n"]	[""]	*compose
+1224227	278	4	5	4	5	["%"]	[""]	*compose
+1224982	283	4	6	4	6	["d"]	[""]	+input
+1225059	286	4	7	4	7	["i"]	[""]	+input
+1225237	289	4	8	4	8	["v"]	[""]	+input
+1225476	292	4	9	4	9	["i"]	[""]	+input
+1225530	295	4	10	4	10	["s"]	[""]	+input
+1225685	298	4	11	4	11	["o"]	[""]	+input
+1225801	301	4	12	4	12	["r"]	[""]	+input
+1227339	304	4	13	4	13	["="]	[""]	+input
+1227490	307	4	14	4	14	["="]	[""]	+input
+1228504	310	4	15	4	15	["0"]	[""]	*compose
+1229350	315	4	16	4	16	[")"]	[""]	+input
+1229985	318	4	17	4	17	[":"]	[""]	+input
+1230501	323	4	18	4	18	["",""]	[""]	+input
+1230502	324	5	0	5	0	["\t\t"]	[""]	+input
+1257455	330	5	2	5	2	["s"]	[""]	*compose
+1257584	333	5	3	5	3	["o"]	[""]	*compose
+1257750	336	5	4	5	4	["k"]	[""]	*compose
+1257935	339	5	5	5	5	["a"]	[""]	*compose
+1258684	342	5	5	5	6	[""]	["a"]	*compose
+1258846	345	5	4	5	5	[""]	["k"]	*compose
+1259026	348	5	4	5	4	["m"]	[""]	*compose
+1259109	351	5	5	5	5	["a"]	[""]	*compose
+1260639	354	5	6	5	6	[" "]	[""]	*compose
+1261574	357	5	7	5	7	["="]	[""]	+input
+1274618	365	5	7	5	8	[""]	["="]	+input
+1274734	368	5	6	5	7	[""]	[" "]	+input
+1274906	371	5	5	5	6	[""]	["a"]	*compose
+1275054	374	5	4	5	5	[""]	["m"]	*compose
+1275241	377	5	3	5	4	[""]	["o"]	*compose
+1275559	380	5	2	5	3	[""]	["s"]	*compose
+1277038	383	5	2	5	2	["p"]	[""]	*compose
+1277144	386	5	3	5	3	["r"]	[""]	*compose
+1277289	389	5	4	5	4	["i"]	[""]	*compose
+1277467	392	5	5	5	5	["n"]	[""]	*compose
+1277580	395	5	6	5	6	["t"]	[""]	*compose
+1278814	398	5	7	5	7	["("]	[""]	*compose
+1279987	401	5	8	5	8	["d"]	[""]	*compose
+1280106	404	5	9	5	9	["i"]	[""]	*compose
+1280291	407	5	10	5	10	["v"]	[""]	*compose
+1280479	410	5	11	5	11	["i"]	[""]	*compose
+1280567	413	5	12	5	12	["s"]	[""]	*compose
+1280701	416	5	13	5	13	["o"]	[""]	*compose
+1280807	419	5	14	5	14	["r"]	[""]	*compose
+1281374	422	5	15	5	15	[")"]	[""]	*compose
+1288060	427	5	16	5	16	["",""]	[""]	+input
+1288061	428	6	0	6	0	["\t\t"]	[""]	+input
+1288108	435	6	2	6	2	["",""]	[""]	+input
+1288109	436	7	0	7	0	["\t\t"]	[""]	+input
+1288268	441	7	1	7	2	[""]	["\t"]	+delete
+1288904	445	7	0	7	1	[""]	["\t"]	+delete
+1292498	449	6	2	7	0	[""]	["",""]	+delete
+1297911	454	6	1	6	2	[""]	["\t"]	+delete
+1299425	458	6	1	6	1	["d"]	[""]	*compose
+1299568	461	6	2	6	2	["i"]	[""]	*compose
+1299756	464	6	3	6	3	["v"]	[""]	*compose
+1299939	467	6	4	6	4	["i"]	[""]	*compose
+1300048	470	6	5	6	5	["s"]	[""]	*compose
+1300259	473	6	6	6	6	["o"]	[""]	*compose
+1300375	476	6	7	6	7	["r"]	[""]	*compose
+1301783	479	6	8	6	8	[" "]	[""]	*compose
+1303092	482	6	9	6	9	["="]	[""]	+input
+1303644	485	6	10	6	10	[" "]	[""]	+input
+1304185	488	6	11	6	11	["d"]	[""]	*compose
+1304277	491	6	12	6	12	["i"]	[""]	*compose
+1304463	494	6	13	6	13	["v"]	[""]	*compose
+1304658	497	6	14	6	14	["i"]	[""]	*compose
+1304728	500	6	15	6	15	["s"]	[""]	*compose
+1304981	503	6	16	6	16	["r"]	[""]	*compose
+1305071	506	6	17	6	17	["o"]	[""]	*compose
+1305826	509	6	17	6	18	[""]	["o"]	*compose
+1305971	512	6	16	6	17	[""]	["r"]	*compose
+1306432	515	6	16	6	16	["o"]	[""]	*compose
+1306594	518	6	17	6	17	["r"]	[""]	*compose
+1307208	521	6	18	6	18	[" "]	[""]	*compose
+1307816	524	6	19	6	19	["+"]	[""]	+input
+1308299	527	6	20	6	20	[" "]	[""]	+input
+1308940	530	6	21	6	21	["1"]	[""]	*compose
+1329137	537	6	22	6	22	["",""]	[""]	+input
+1329138	538	7	0	7	0	["\t"]	[""]	+input
+1340273	543	7	1	7	1	["s"]	[""]	*compose
+1340360	546	7	2	7	2	["o"]	[""]	*compose
+1340507	549	7	3	7	3	["k"]	[""]	*compose
+1340616	552	7	4	7	4	["a"]	[""]	*compose
+1341290	555	7	4	7	5	[""]	["a"]	*compose
+1341442	558	7	3	7	4	[""]	["k"]	*compose
+1341626	561	7	3	7	3	["m"]	[""]	*compose
+1341752	564	7	4	7	4	["a"]	[""]	*compose
+1342291	567	7	5	7	5	[" "]	[""]	*compose
+1343552	570	7	6	7	6	["="]	[""]	+input
+1343872	573	7	7	7	7	[" "]	[""]	+input
+1346596	576	7	8	7	8	["v"]	[""]	*compose
+1346837	579	7	9	7	9	["i"]	[""]	*compose
+1347576	582	7	9	7	10	[""]	["i"]	*compose
+1347729	585	7	8	7	9	[""]	["v"]	*compose
+1347797	588	7	8	7	8	["d"]	[""]	*compose
+1347936	591	7	9	7	9	["i"]	[""]	*compose
+1348111	594	7	10	7	10	["v"]	[""]	*compose
+1348306	597	7	11	7	11	["i"]	[""]	*compose
+1348403	600	7	12	7	12	["s"]	[""]	*compose
+1348551	603	7	13	7	13	["o"]	[""]	*compose
+1348688	606	7	14	7	14	["r"]	[""]	*compose
+1349283	609	7	15	7	15	[" "]	[""]	*compose
+1350414	612	7	16	7	16	["+"]	[""]	+input
+1350857	615	7	17	7	17	[" "]	[""]	+input
+1351066	618	7	18	7	18	["s"]	[""]	*compose
+1351201	621	7	19	7	19	["o"]	[""]	*compose
+1351342	624	7	20	7	20	["m"]	[""]	*compose
+1351500	627	7	21	7	21	["a"]	[""]	*compose
+1354877	634	7	22	7	22	["",""]	[""]	+input
+1354880	635	8	0	8	0	["\t"]	[""]	+input
+1355473	642	8	1	8	1	["",""]	[""]	+input
+1355475	643	9	0	9	0	["\t"]	[""]	+input
+1356979	650	9	1	9	1	["p"]	[""]	*compose
+1357083	653	9	2	9	2	["r"]	[""]	*compose
+1357178	656	9	3	9	3	["i"]	[""]	*compose
+1357350	659	9	4	9	4	["n"]	[""]	*compose
+1357465	662	9	5	9	5	["t"]	[""]	*compose
+1357780	665	9	5	9	6	[""]	["t"]	*compose
+1357929	668	9	4	9	5	[""]	["n"]	*compose
+1358071	671	9	3	9	4	[""]	["i"]	*compose
+1358204	674	9	2	9	3	[""]	["r"]	*compose
+1358366	677	9	1	9	2	[""]	["p"]	*compose
+1358503	680	9	0	9	1	[""]	["\t"]	+delete
+1358853	684	8	1	9	0	[""]	["",""]	+delete
+1359699	691	8	1	8	1	["",""]	[""]	+input
+1359701	692	9	0	9	0	["\t"]	[""]	+input
+1362390	699	9	0	9	1	[""]	["\t"]	+delete
+1363107	703	9	0	9	0	["p"]	[""]	*compose
+1363447	706	9	1	9	1	["e"]	[""]	*compose
+1363625	709	9	2	9	2	["i"]	[""]	*compose
+1363778	712	9	3	9	3	["n"]	[""]	*compose
+1363891	715	9	4	9	4	["t"]	[""]	*compose
+1364624	718	9	1	9	5	["rint "]	["eint"]	*compose
+1365507	721	9	6	9	6	["("]	[""]	+input
+1367494	724	9	7	9	7	["s"]	[""]	*compose
+1367610	727	9	8	9	8	["o"]	[""]	*compose
+1367770	730	9	9	9	9	["m"]	[""]	*compose
+1367929	733	9	10	9	10	["a"]	[""]	*compose
+1368530	736	9	11	9	11	[")"]	[""]	*compose
+1574389	779	3	9	3	9	["="]	[""]	+input
+1579685	794	6	22	6	22	["",""]	[""]	+input
+1579688	795	7	0	7	0	["\t"]	[""]	+input
+1589907	800	7	1	7	1	["i"]	[""]	*compose
+1590127	803	7	2	7	2	["f"]	[""]	*compose
+1590476	806	7	3	7	3	["("]	[""]	*compose
+1602550	809	7	3	7	4	[""]	["("]	+input
+1602717	812	7	2	7	3	[""]	["f"]	*compose
+1603042	815	7	1	7	2	[""]	["i"]	*compose
+1603197	818	7	0	7	1	[""]	["\t"]	+delete
+1603909	822	6	22	7	0	[""]	["",""]	+delete
+1615345	836	7	22	7	22	["",""]	[""]	+input
+1615351	837	8	0	8	0	["\t"]	[""]	+input
+1619555	847	8	1	8	1	["i"]	[""]	*compose
+1619720	850	8	2	8	2	["f"]	[""]	*compose
+1620207	853	8	3	8	3	["("]	[""]	*compose
+1630659	856	8	4	8	4	["s"]	[""]	*compose
+1630833	859	8	5	8	5	["o"]	[""]	*compose
+1631001	862	8	6	8	6	["m"]	[""]	*compose
+1631202	865	8	7	8	7	["a"]	[""]	*compose
+1633427	868	8	8	8	8	["="]	[""]	*compose
+1633572	871	8	9	8	9	["="]	[""]	+input
+1636520	874	8	10	8	10	["n"]	[""]	*compose
+1637238	877	8	11	8	11	[")"]	[""]	*compose
+1643450	880	8	12	8	12	[":"]	[""]	+input
+1647311	885	8	13	8	13	["",""]	[""]	+input
+1647314	886	9	0	9	0	["\t\t"]	[""]	+input
+1648115	891	9	2	9	2	["p"]	[""]	*compose
+1648215	894	9	3	9	3	["r"]	[""]	*compose
+1648314	897	9	4	9	4	["o"]	[""]	*compose
+1648479	900	9	5	9	5	["n"]	[""]	*compose
+1648566	903	9	6	9	6	["t"]	[""]	*compose
+1649143	906	9	4	9	7	["int "]	["ont"]	*compose
+1649576	909	9	8	9	8	["("]	[""]	+input
+1650368	912	9	9	9	9	["s"]	[""]	*compose
+1650447	915	9	10	9	10	["o"]	[""]	*compose
+1650622	918	9	11	9	11	["m"]	[""]	*compose
+1650787	921	9	12	9	12	["a"]	[""]	*compose
+1651497	924	9	13	9	13	[")"]	[""]	*compose
+1655368	930	11	11	11	12	[""]	[")"]	+delete
+1655425	934	11	10	11	11	[""]	["a"]	+delete
+1655473	938	11	9	11	10	[""]	["m"]	+delete
+1655528	942	11	8	11	9	[""]	["o"]	+delete
+1655596	946	11	7	11	8	[""]	["s"]	+delete
+1655634	950	11	6	11	7	[""]	["("]	+delete
+1655687	954	11	5	11	6	[""]	[" "]	+delete
+1655736	958	11	4	11	5	[""]	["t"]	+delete
+1655785	962	11	3	11	4	[""]	["n"]	+delete
+1655838	966	11	2	11	3	[""]	["i"]	+delete
+1655887	970	11	1	11	2	[""]	["r"]	+delete
+1655939	974	11	0	11	1	[""]	["p"]	+delete
+1655990	978	10	1	11	0	[""]	["",""]	+delete
+1656041	983	10	0	10	1	[""]	["\t"]	+delete
+1697905	1003	8	0	8	1	[""]	["\t"]	+delete
+1699714	1009	7	22	8	0	[""]	["",""]	+delete
+1700504	1016	7	22	7	22	["",""]	[""]	+input
+1700508	1017	8	0	8	0	["\t"]	[""]	+input
+1706374	1025	8	1	8	1	[" "]	[""]	+input
+1708039	1028	8	1	8	2	[""]	[" "]	+input
+1714913	1035	9	12	9	13	[""]	["a"]	+delete
+1715061	1039	9	11	9	12	[""]	["m"]	+delete
+1715214	1043	9	10	9	11	[""]	["o"]	+delete
+1715336	1047	9	9	9	10	[""]	["s"]	+delete
+1717225	1052	9	9	9	9	["'"]	[""]	+input
+1718419	1055	9	10	9	10	["P"]	[""]	*compose
+1718662	1058	9	11	9	11	["E"]	[""]	*compose
+1718840	1061	9	12	9	12	["R"]	[""]	*compose
+1719046	1064	9	13	9	13	["F"]	[""]	*compose
+1719215	1067	9	14	9	14	["E"]	[""]	*compose
+1719346	1070	9	15	9	15	["I"]	[""]	*compose
+1720083	1073	9	16	9	16	["T"]	[""]	*compose
+1720204	1076	9	17	9	17	["O"]	[""]	*compose
+1721202	1079	9	18	9	18	["'"]	[""]	*compose
+1725587	1092	9	20	9	20	["",""]	[""]	+input
+1725590	1093	10	0	10	0	["\t\t"]	[""]	+input
+1726709	1099	10	1	10	2	[""]	["\t"]	+delete
+1727769	1103	10	1	10	1	["e"]	[""]	*compose
+1727874	1106	10	2	10	2	["l"]	[""]	*compose
+1728007	1109	10	3	10	3	["e"]	[""]	*compose
+1728462	1112	10	3	10	4	[""]	["e"]	*compose
+1728566	1115	10	3	10	3	["s"]	[""]	*compose
+1728731	1118	10	4	10	4	["e"]	[""]	*compose
+1729512	1121	10	5	10	5	[":"]	[""]	*compose
+1729799	1126	10	6	10	6	["",""]	[""]	+input
+1729804	1127	11	0	11	0	["\t\t"]	[""]	+input
+1730922	1132	11	2	11	2	["p"]	[""]	*compose
+1731005	1135	11	3	11	3	["r"]	[""]	*compose
+1731081	1138	11	4	11	4	["o"]	[""]	*compose
+1731251	1141	11	5	11	5	["n"]	[""]	*compose
+1731364	1144	11	6	11	6	["t"]	[""]	*compose
+1731966	1147	11	4	11	7	["int "]	["ont"]	*compose
+1733111	1150	11	8	11	8	["("]	[""]	+input
+1734243	1153	11	9	11	9	["'"]	[""]	*compose
+1741623	1162	11	10	11	10	["N"]	[""]	*compose
+1741802	1165	11	11	11	11	["A"]	[""]	*compose
+1741944	1168	11	12	11	12	["O"]	[""]	*compose
+1742966	1171	11	13	11	13	[" "]	[""]	*compose
+1743201	1174	11	14	11	14	["E"]	[""]	*compose
+1743669	1177	11	14	11	15	[""]	["E"]	*compose
+1743846	1180	11	14	11	14	["P"]	[""]	*compose
+1743930	1183	11	15	11	15	["E"]	[""]	*compose
+1744128	1186	11	16	11	16	["R"]	[""]	*compose
+1744688	1189	11	17	11	17	["F"]	[""]	*compose
+1744871	1192	11	18	11	18	["E"]	[""]	*compose
+1744992	1195	11	19	11	19	["I"]	[""]	*compose
+1745150	1198	11	20	11	20	["T"]	[""]	*compose
+1745256	1201	11	21	11	21	["O"]	[""]	*compose
+1745743	1204	11	22	11	22	[")"]	[""]	*compose
+1799011	1215	11	22	11	22	["'"]	[""]	+input
+8400276	1235	0	16	0	16	["",""]	[""]	+input
+8402628	1241	3	8	3	8	["",""]	[""]	+input
+8410292	1248	5	6	5	17	["d"]	["n <=divisor"]	+input
+8410502	1252	5	7	5	7	["i"]	[""]	+input
+8410671	1256	5	8	5	8	["v"]	[""]	+input
+8410835	1260	5	9	5	9	["i"]	[""]	+input
+8411728	1264	5	10	5	10	["s"]	[""]	+input
+8412439	1268	5	11	5	11	["o"]	[""]	+input
+8412640	1272	5	12	5	12	["r"]	[""]	+input
+8414754	1277	5	13	5	13	[">"]	[""]	+input
+8415440	1281	5	13	5	14	[""]	[">"]	+delete
+8416256	1287	5	13	5	13	["<"]	[""]	+input
+8416803	1292	5	14	5	14	["="]	[""]	+input
+8418528	1296	5	15	5	15	["n"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 8420224
+- raw_log_line: 1300
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input())
+
+divisor = 1 
+soma = 0
+
+while(divisor<=n):
+	if(n%divisor==0):
+		print(divisor)
+	divisor = divisor + 1
+	soma = divisor + soma
+	if(soma==n):
+		print ('PERFEITO')
+	else:
+		print ('NAO PERFEITO')
+
+```
+Run Output
+```text
+
+```
+
+Edit Segment 2
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+8427251	1305	10	0	10	1	[""]	["\t"]	+delete
+8430835	1318	11	1	11	2	[""]	["\t"]	+delete
+8432101	1325	12	0	12	1	[""]	["\t"]	+delete
+8434019	1338	13	1	13	2	[""]	["\t"]	+delete
+
+Local Run 2
+- event_time_delta_ms: 8436419
+- raw_log_line: 1344
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input())
+
+divisor = 1 
+soma = 0
+
+while(divisor<=n):
+	if(n%divisor==0):
+		print(divisor)
+	divisor = divisor + 1
+	soma = divisor + soma
+if(soma==n):
+	print ('PERFEITO')
+else:
+	print ('NAO PERFEITO')
+
+```
+Run Output
+```text
+
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 8441589
+- raw_log_line: 1345
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+n = int(input())
+
+divisor = 1 
+soma = 0
+
+while(divisor<=n):
+	if(n%divisor==0):
+		print(divisor)
+	divisor = divisor + 1
+	soma = divisor + soma
+if(soma==n):
+	print ('PERFEITO')
+else:
+	print ('NAO PERFEITO')
+
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-05-22T12:04:12.968000
+
+Execution Result
+
+- submitted_at: 2023-05-22 12:04:27
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "496"
+    expected: "1\n2\n4\n8\n16\n31\n62\n124\n248\nPERFEITO"
+    actual: "1\n2\n4\n8\n16\n31\n62\n124\n248\n496\nNAO PERFEITO"
+  - test_index_0idx: 1 [FAIL]
+    input: "8128"
+    expected: "1\n2\n4\n8\n16\n32\n64\n127\n254\n508\n1016\n2032\n4064\nPERFEITO"
+    actual: "1\n2\n4\n8\n16\n32\n64\n127\n254\n508\n1016\n2032\n4064\n8128\nNAO PERFEITO"
+  - test_index_0idx: 2 [FAIL]
+    input: "20"
+    expected: "1\n2\n4\n5\n10\nNAO PERFEITO"
+    actual: "1\n2\n4\n5\n10\n20\nNAO PERFEITO"
+
+Attempt Start Code
+```python
+n = int(input())
+
+divisor = 1 
+soma = 0
+
+while(divisor<=n):
+	if(n%divisor==0):
+		print(divisor)
+	divisor = divisor + 1
+	soma = divisor + soma
+if(soma==n):
+	print ('PERFEITO')
+else:
+	print ('NAO PERFEITO')
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 6
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1349	9	22	9	22	["",""]	[""]	+input
+0	1350	10	0	10	0	["\t"]	[""]	+input
+7893	1362	7	16	7	16	["",""]	[""]	+input
+7894	1363	8	0	8	0	["\t\t"]	[""]	+input
+8417	1369	8	2	8	2	["soma = divisor + soma"]	[""]	paste
+12127	1374	10	1	10	22	[""]	["soma = divisor + soma"]	+delete
+
+Submit Anchor 1
+- event_time_delta_ms: 14058
+- raw_log_line: 1379
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+n = int(input())
+
+divisor = 1 
+soma = 0
+
+while(divisor<=n):
+	if(n%divisor==0):
+		print(divisor)
+		soma = divisor + soma
+	divisor = divisor + 1
+	
+	
+if(soma==n):
+	print ('PERFEITO')
+else:
+	print ('NAO PERFEITO')
+
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-05-22T12:04:28.997000
+
+Execution Result
+
+- submitted_at: 2023-05-22 12:05:27
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "496"
+    expected: "1\n2\n4\n8\n16\n31\n62\n124\n248\nPERFEITO"
+    actual: "1\n2\n4\n8\n16\n31\n62\n124\n248\n496\nPERFEITO"
+  - test_index_0idx: 1 [FAIL]
+    input: "8128"
+    expected: "1\n2\n4\n8\n16\n32\n64\n127\n254\n508\n1016\n2032\n4064\nPERFEITO"
+    actual: "1\n2\n4\n8\n16\n32\n64\n127\n254\n508\n1016\n2032\n4064\n8128\nPERFEITO"
+  - test_index_0idx: 2 [FAIL]
+    input: "20"
+    expected: "1\n2\n4\n5\n10\nNAO PERFEITO"
+    actual: "1\n2\n4\n5\n10\n20\nNAO PERFEITO"
+
+Attempt Start Code
+```python
+n = int(input())
+
+divisor = 1 
+soma = 0
+
+while(divisor<=n):
+	if(n%divisor==0):
+		print(divisor)
+		soma = divisor + soma
+	divisor = divisor + 1
+	
+	
+if(soma==n):
+	print ('PERFEITO')
+else:
+	print ('NAO PERFEITO')
+
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1383
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+n = int(input())
+
+divisor = 1 
+soma = 0
+
+while(divisor<=n):
+	if(n%divisor==0):
+		print(divisor)
+		soma = divisor + soma
+	divisor = divisor + 1
+	
+	
+if(soma==n):
+	print ('PERFEITO')
+else:
+	print ('NAO PERFEITO')
+
+```
+Run Output
+```text
+NAO PERFEITO
+```
+
+Edit Segment 1
+- raw_change_event_count: 6
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+46949	1391	12	7	12	7	[")"]	[""]	+input
+49907	1412	12	3	12	3	["("]	[""]	+input
+52819	1429	12	8	12	8	["-"]	[""]	+input
+53683	1433	12	9	12	9	["m"]	[""]	+input
+54338	1436	12	9	12	10	[""]	["m"]	+delete
+55155	1441	12	9	12	9	["n"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 58179
+- raw_log_line: 1445
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+n = int(input())
+
+divisor = 1 
+soma = 0
+
+while(divisor<=n):
+	if(n%divisor==0):
+		print(divisor)
+		soma = divisor + soma
+	divisor = divisor + 1
+	
+	
+if((soma-n)==n):
+	print ('PERFEITO')
+else:
+	print ('NAO PERFEITO')
+
+```

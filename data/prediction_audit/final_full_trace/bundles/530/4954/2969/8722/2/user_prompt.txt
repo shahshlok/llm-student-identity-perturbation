@@ -1,0 +1,969 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 530
+- assessment_id: 4954
+- assessment_title: Lab 2 - Estrutura Condicional Composta
+- exercise_id: 2969
+- student_id: 8722
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-08-17T14:59:35.030000
+
+Execution Result
+
+- submitted_at: 2023-08-17 15:10:23
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "2\n55.50\n100.25"
+    expected: "130.69"
+    actual: "130.6875"
+  - test_index_0idx: 1 [FAIL]
+    input: "1\n72.65"
+    expected: "72.65"
+    actual: "73 2"
+  - test_index_0idx: 2 [FAIL]
+    input: "2\n99.99\n120.25"
+    expected: "190.18"
+    actual: "190.1775"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 371
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["q"]	[""]	+input
+171	11	0	1	0	1	["t"]	[""]	+input
+1454	16	0	2	0	2	["_"]	[""]	+input
+1754	21	0	3	0	3	["j"]	[""]	+input
+2724	25	0	4	0	4	["o"]	[""]	+input
+2972	29	0	5	0	5	["g"]	[""]	+input
+3115	33	0	6	0	6	["o"]	[""]	+input
+3339	37	0	7	0	7	["s"]	[""]	+input
+3454	41	0	8	0	8	[" "]	[""]	+input
+3916	45	0	9	0	9	["="]	[""]	+input
+4238	49	0	10	0	10	[" "]	[""]	+input
+6333	53	0	11	0	11	["i"]	[""]	+input
+7250	57	0	12	0	12	["t"]	[""]	+input
+8379	60	0	12	0	13	[""]	["t"]	+delete
+8602	64	0	11	0	12	[""]	["i"]	+delete
+9070	69	0	11	0	11	["f"]	[""]	+input
+9217	73	0	12	0	12	["l"]	[""]	+input
+9409	77	0	13	0	13	["o"]	[""]	+input
+9739	81	0	14	0	14	["a"]	[""]	+input
+9936	85	0	15	0	15	["t"]	[""]	+input
+11602	90	0	16	0	16	["()"]	[""]	+input
+12625	96	0	17	0	17	["i"]	[""]	+input
+12864	100	0	18	0	18	["n"]	[""]	+input
+13354	104	0	19	0	19	["p"]	[""]	+input
+13678	108	0	20	0	20	["u"]	[""]	+input
+13899	112	0	21	0	21	["t"]	[""]	+input
+14670	117	0	22	0	22	["()"]	[""]	+input
+15293	124	0	23	0	23	["\"\""]	[""]	+input
+16559	131	0	24	0	24	["Q"]	[""]	+input
+17163	136	0	25	0	25	["u"]	[""]	+input
+17276	140	0	26	0	26	["a"]	[""]	+input
+17470	144	0	27	0	27	["l"]	[""]	+input
+17754	148	0	28	0	28	[" "]	[""]	+input
+17876	152	0	29	0	29	["a"]	[""]	+input
+17981	156	0	30	0	30	[" "]	[""]	+input
+18237	160	0	31	0	31	["q"]	[""]	+input
+18347	164	0	32	0	32	["u"]	[""]	+input
+19661	168	0	33	0	33	["a"]	[""]	+input
+19806	172	0	34	0	34	["n"]	[""]	+input
+20189	176	0	35	0	35	["t"]	[""]	+input
+20299	180	0	36	0	36	["i"]	[""]	+input
+20718	184	0	37	0	37	["d"]	[""]	+input
+21010	188	0	38	0	38	["a"]	[""]	+input
+21404	192	0	39	0	39	["d"]	[""]	+input
+21627	196	0	40	0	40	["e"]	[""]	+input
+21772	200	0	41	0	41	[" "]	[""]	+input
+21899	204	0	42	0	42	["d"]	[""]	+input
+22091	208	0	43	0	43	["e"]	[""]	+input
+22139	211	0	44	0	44	[" "]	[""]	+input
+22396	216	0	45	0	45	["j"]	[""]	+input
+22624	220	0	46	0	46	["o"]	[""]	+input
+23085	224	0	47	0	47	["g"]	[""]	+input
+23260	228	0	48	0	48	["o"]	[""]	+input
+24510	232	0	49	0	49	["s"]	[""]	+input
+26686	237	0	50	0	50	[":"]	[""]	+input
+28158	241	0	50	0	51	[""]	[":"]	+delete
+28579	247	0	50	0	50	["?"]	[""]	+input
+28941	252	0	51	0	51	[" "]	[""]	+input
+31759	256	0	55	0	55	["",""]	[""]	+input
+31981	261	1	0	1	0	["",""]	[""]	+input
+33859	267	2	0	2	0	["i"]	[""]	+input
+34174	271	2	1	2	1	["f"]	[""]	+input
+34329	275	2	2	2	2	[" "]	[""]	+input
+36014	279	2	3	2	3	["q"]	[""]	+input
+36196	283	2	4	2	4	["t"]	[""]	+input
+37217	288	2	5	2	5	["_"]	[""]	+input
+37547	293	2	6	2	6	["j"]	[""]	+input
+40052	297	2	7	2	7	["o"]	[""]	+input
+40395	301	2	8	2	8	["g"]	[""]	+input
+40526	305	2	9	2	9	["o"]	[""]	+input
+40725	309	2	10	2	10	["s"]	[""]	+input
+41828	313	2	11	2	11	[" "]	[""]	+input
+41862	317	2	12	2	12	[" "]	[""]	+input
+47534	352	2	3	2	3	["("]	[""]	+input
+49617	357	2	4	2	4	[" "]	[""]	+input
+51995	362	2	14	2	15	[""]	[" "]	+delete
+62968	367	0	55	0	55	["",""]	[""]	+input
+63227	372	1	0	1	0	["",""]	[""]	+input
+64631	378	2	0	2	0	["q"]	[""]	+input
+64747	382	2	1	2	1	["u"]	[""]	+input
+64950	386	2	2	2	2	["a"]	[""]	+input
+65131	390	2	3	2	3	["l"]	[""]	+input
+65823	394	2	4	2	4	[" "]	[""]	+input
+66591	397	2	4	2	5	[""]	[" "]	+delete
+66810	401	2	3	2	4	[""]	["l"]	+delete
+66988	405	2	2	2	3	[""]	["a"]	+delete
+67162	409	2	1	2	2	[""]	["u"]	+delete
+67306	413	2	0	2	1	[""]	["q"]	+delete
+68049	418	2	0	2	0	["p"]	[""]	+input
+68415	422	2	1	2	1	["r"]	[""]	+input
+68605	426	2	2	2	2	["e"]	[""]	+input
+68910	430	2	3	2	3	["c"]	[""]	+input
+69091	434	2	4	2	4	["o"]	[""]	+input
+69484	438	2	5	2	5	["1"]	[""]	+input
+70156	442	2	6	2	6	[" "]	[""]	+input
+70508	446	2	7	2	7	["="]	[""]	+input
+70828	450	2	8	2	8	[" "]	[""]	+input
+72771	455	2	9	2	9	["\"\""]	[""]	+input
+73196	462	2	10	2	10	["Q"]	[""]	+input
+73745	467	2	11	2	11	["u"]	[""]	+input
+73921	471	2	12	2	12	["a"]	[""]	+input
+74094	475	2	13	2	13	["l"]	[""]	+input
+75117	478	2	13	2	14	[""]	["l"]	+delete
+75274	482	2	12	2	13	[""]	["a"]	+delete
+75439	486	2	11	2	12	[""]	["u"]	+delete
+75674	490	2	10	2	11	[""]	["Q"]	+delete
+75857	494	2	9	2	11	[""]	["\"\""]	+delete
+77134	499	2	9	2	9	["f"]	[""]	+input
+77328	503	2	10	2	10	["l"]	[""]	+input
+77517	507	2	11	2	11	["o"]	[""]	+input
+77743	511	2	12	2	12	["a"]	[""]	+input
+77901	515	2	13	2	13	["t"]	[""]	+input
+84589	519	2	5	2	6	[""]	["1"]	+delete
+93253	524	2	5	2	5	["1"]	[""]	+input
+95344	530	2	14	2	14	["()"]	[""]	+input
+95777	536	2	15	2	15	["i"]	[""]	+input
+96029	540	2	16	2	16	["n"]	[""]	+input
+96509	544	2	17	2	17	["p"]	[""]	+input
+96876	548	2	18	2	18	["u"]	[""]	+input
+97100	552	2	19	2	19	["t"]	[""]	+input
+97877	557	2	20	2	20	["()"]	[""]	+input
+98399	564	2	21	2	21	["\"\""]	[""]	+input
+98736	569	2	22	2	22	["Q"]	[""]	+input
+99292	574	2	23	2	23	["u"]	[""]	+input
+99515	578	2	24	2	24	["a"]	[""]	+input
+99628	582	2	25	2	25	["l"]	[""]	+input
+99854	586	2	26	2	26	[" "]	[""]	+input
+100091	590	2	27	2	27	["o"]	[""]	+input
+100332	594	2	28	2	28	[" "]	[""]	+input
+100750	598	2	29	2	29	["p"]	[""]	+input
+100957	602	2	30	2	30	["r"]	[""]	+input
+101170	606	2	31	2	31	["e"]	[""]	+input
+101790	609	2	31	2	32	[""]	["e"]	+delete
+101946	613	2	30	2	31	[""]	["r"]	+delete
+102107	617	2	29	2	30	[""]	["p"]	+delete
+103296	622	2	29	2	29	["v"]	[""]	+input
+103461	626	2	30	2	30	["a"]	[""]	+input
+103762	630	2	31	2	31	["l"]	[""]	+input
+103933	634	2	32	2	32	["o"]	[""]	+input
+104173	638	2	33	2	33	["r"]	[""]	+input
+104282	642	2	34	2	34	[" "]	[""]	+input
+104496	646	2	35	2	35	["d"]	[""]	+input
+104608	650	2	36	2	36	["o"]	[""]	+input
+104860	654	2	37	2	37	[" "]	[""]	+input
+105131	658	2	38	2	38	["p"]	[""]	+input
+105327	662	2	39	2	39	["r"]	[""]	+input
+105473	666	2	40	2	40	["i"]	[""]	+input
+105723	670	2	41	2	41	["m"]	[""]	+input
+105874	674	2	42	2	42	["e"]	[""]	+input
+105998	678	2	43	2	43	["i"]	[""]	+input
+106107	682	2	44	2	44	["r"]	[""]	+input
+106241	686	2	45	2	45	["o"]	[""]	+input
+106949	690	2	46	2	46	[" "]	[""]	+input
+108308	694	2	47	2	47	["j"]	[""]	+input
+108747	698	2	48	2	48	["o"]	[""]	+input
+108862	702	2	49	2	49	["g"]	[""]	+input
+108971	706	2	50	2	50	["o"]	[""]	+input
+109790	711	2	51	2	51	["?"]	[""]	+input
+110048	716	2	52	2	52	[" "]	[""]	+input
+112365	728	2	56	2	56	["",""]	[""]	+input
+112558	733	3	0	3	0	["",""]	[""]	+input
+113966	738	4	0	4	0	["´"]	[""]	*compose
+114284	741	4	0	4	1	["ṕ"]	["´"]	*compose
+114443	745	4	1	4	1	["r"]	[""]	+input
+115484	748	4	1	4	2	[""]	["r"]	+delete
+115658	752	4	0	4	1	[""]	["ṕ"]	+delete
+116674	757	4	0	4	0	["p"]	[""]	+input
+116863	761	4	1	4	1	["r"]	[""]	+input
+117060	765	4	2	4	2	["e"]	[""]	+input
+117316	769	4	3	4	3	["c"]	[""]	+input
+117810	773	4	4	4	4	["o"]	[""]	+input
+120862	777	4	5	4	5	["2"]	[""]	+input
+124287	780	4	5	4	6	[""]	["2"]	+delete
+124442	784	4	4	4	5	[""]	["o"]	+delete
+124636	788	4	3	4	4	[""]	["c"]	+delete
+124858	792	4	2	4	3	[""]	["e"]	+delete
+125098	796	4	1	4	2	[""]	["r"]	+delete
+125422	800	4	0	4	1	[""]	["p"]	+delete
+125708	804	3	0	4	0	[""]	["",""]	+delete
+126254	809	2	56	3	0	[""]	["",""]	+delete
+129534	815	4	13	4	14	[""]	[" "]	+delete
+130044	820	4	13	4	13	[" "]	[""]	+input
+136749	827	4	14	4	14	[">"]	[""]	+input
+137199	832	4	15	4	15	[" "]	[""]	+input
+137444	836	4	16	4	16	["2"]	[""]	+input
+138028	840	4	17	4	17	[" "]	[""]	+input
+139323	845	4	18	4	18	[")"]	[""]	+input
+140912	851	4	19	4	19	[":"]	[""]	+input
+141341	855	4	20	4	20	["",""]	[""]	+input
+141342	856	5	0	5	0	["\t"]	[""]	+input
+142525	861	5	0	5	1	[""]	["\t"]	+delete
+143739	865	5	0	5	0	["\t"]	[""]	+input
+148324	870	5	1	5	1	["f"]	[""]	+input
+148446	874	5	2	5	2	["l"]	[""]	+input
+148656	878	5	3	5	3	["o"]	[""]	+input
+149902	881	5	3	5	4	[""]	["o"]	+delete
+150059	885	5	2	5	3	[""]	["l"]	+delete
+150490	889	5	1	5	2	[""]	["f"]	+delete
+151222	894	5	1	5	1	["p"]	[""]	+input
+151455	898	5	2	5	2	["r"]	[""]	+input
+151651	902	5	3	5	3	["e"]	[""]	+input
+151932	906	5	4	5	4	["c"]	[""]	+input
+152111	910	5	5	5	5	["o"]	[""]	+input
+152796	914	5	6	5	6	["2"]	[""]	+input
+156984	918	5	7	5	7	[" "]	[""]	+input
+157075	922	5	8	5	8	["="]	[""]	+input
+157869	926	5	9	5	9	[" "]	[""]	+input
+158421	930	5	10	5	10	["f"]	[""]	+input
+158524	934	5	11	5	11	["l"]	[""]	+input
+158716	938	5	12	5	12	["i"]	[""]	+input
+158721	941	5	13	5	13	["o"]	[""]	+input
+160155	945	5	13	5	14	[""]	["o"]	+delete
+160297	949	5	12	5	13	[""]	["i"]	+delete
+161083	954	5	12	5	12	["o"]	[""]	+input
+161284	958	5	13	5	13	["a"]	[""]	+input
+161470	962	5	14	5	14	["t"]	[""]	+input
+163262	967	5	15	5	15	["()"]	[""]	+input
+163611	973	5	16	5	16	["i"]	[""]	+input
+163856	977	5	17	5	17	["n"]	[""]	+input
+164379	981	5	18	5	18	["p"]	[""]	+input
+164715	985	5	19	5	19	["u"]	[""]	+input
+164973	989	5	20	5	20	["t"]	[""]	+input
+165584	994	5	21	5	21	["()"]	[""]	+input
+166949	1001	5	22	5	22	["\"\""]	[""]	+input
+168013	1008	5	23	5	23	["Q"]	[""]	+input
+168800	1013	5	24	5	24	["u"]	[""]	+input
+168971	1017	5	25	5	25	["a"]	[""]	+input
+169114	1021	5	26	5	26	["l"]	[""]	+input
+169342	1025	5	27	5	27	[" "]	[""]	+input
+169568	1029	5	28	5	28	["o"]	[""]	+input
+169849	1033	5	29	5	29	[" "]	[""]	+input
+170109	1037	5	30	5	30	["v"]	[""]	+input
+170267	1041	5	31	5	31	["a"]	[""]	+input
+170506	1045	5	32	5	32	["l"]	[""]	+input
+170698	1049	5	33	5	33	["o"]	[""]	+input
+170893	1053	5	34	5	34	["r"]	[""]	+input
+171026	1057	5	35	5	35	[" "]	[""]	+input
+171227	1061	5	36	5	36	["d"]	[""]	+input
+171351	1065	5	37	5	37	["o"]	[""]	+input
+171603	1069	5	38	5	38	[" "]	[""]	+input
+171692	1073	5	39	5	39	["s"]	[""]	+input
+171900	1077	5	40	5	40	["e"]	[""]	+input
+172011	1081	5	41	5	41	["g"]	[""]	+input
+172290	1085	5	42	5	42	["u"]	[""]	+input
+174348	1089	5	43	5	43	["n"]	[""]	+input
+174570	1093	5	44	5	44	["d"]	[""]	+input
+174653	1096	5	45	5	45	["o"]	[""]	+input
+174940	1101	5	46	5	46	[" "]	[""]	+input
+175147	1105	5	47	5	47	["j"]	[""]	+input
+175404	1109	5	48	5	48	["o"]	[""]	+input
+175773	1113	5	49	5	49	["g"]	[""]	+input
+176187	1117	5	50	5	50	["o"]	[""]	+input
+176958	1122	5	51	5	51	["?"]	[""]	+input
+177314	1127	5	52	5	52	[" "]	[""]	+input
+179668	1139	5	56	5	56	["",""]	[""]	+input
+179670	1140	6	0	6	0	["\t"]	[""]	+input
+180204	1146	6	1	6	1	["p"]	[""]	+input
+180432	1150	6	2	6	2	["r"]	[""]	+input
+180615	1154	6	3	6	3	["e"]	[""]	+input
+180897	1158	6	4	6	4	["c"]	[""]	+input
+181059	1162	6	5	6	5	["o"]	[""]	+input
+182445	1166	6	6	6	6	["2"]	[""]	+input
+183115	1170	6	7	6	7	[" "]	[""]	+input
+184503	1174	6	8	6	8	["="]	[""]	+input
+184853	1178	6	9	6	9	[" "]	[""]	+input
+185428	1182	6	10	6	10	["p"]	[""]	+input
+185584	1186	6	11	6	11	["r"]	[""]	+input
+185804	1190	6	12	6	12	["e"]	[""]	+input
+205154	1194	6	13	6	13	["c"]	[""]	+input
+205312	1198	6	14	6	14	["o"]	[""]	+input
+222114	1202	6	15	6	15	["2"]	[""]	+input
+222300	1206	6	16	6	16	[" "]	[""]	+input
+229057	1210	6	17	6	17	["-"]	[""]	+input
+229729	1214	6	18	6	18	["m"]	[""]	+input
+231165	1217	6	18	6	19	[""]	["m"]	+delete
+231424	1222	6	18	6	18	["v"]	[""]	+input
+232701	1225	6	18	6	19	[""]	["v"]	+delete
+232844	1230	6	18	6	18	[" "]	[""]	+input
+233148	1234	6	19	6	19	["p"]	[""]	+input
+233408	1238	6	20	6	20	["r"]	[""]	+input
+233595	1242	6	21	6	21	["e"]	[""]	+input
+233775	1246	6	22	6	22	["c"]	[""]	+input
+235052	1249	6	22	6	23	[""]	["c"]	+delete
+235242	1253	6	21	6	22	[""]	["e"]	+delete
+235402	1257	6	20	6	21	[""]	["r"]	+delete
+235578	1261	6	19	6	20	[""]	["p"]	+delete
+237215	1267	6	19	6	19	["()"]	[""]	+input
+237669	1273	6	20	6	20	["p"]	[""]	+input
+237965	1277	6	21	6	21	["r"]	[""]	+input
+238157	1281	6	22	6	22	["e"]	[""]	+input
+238333	1285	6	23	6	23	["c"]	[""]	+input
+238798	1289	6	24	6	24	["o"]	[""]	+input
+239277	1293	6	25	6	25	["2"]	[""]	+input
+240952	1297	6	26	6	26	[" "]	[""]	+input
+242355	1304	6	27	6	27	["*"]	[""]	+input
+242787	1309	6	28	6	28	[" "]	[""]	+input
+243794	1313	6	29	6	29	["2"]	[""]	+input
+244253	1317	6	30	6	30	["5"]	[""]	+input
+245795	1322	6	31	6	31	["?"]	[""]	+input
+246351	1327	6	32	6	32	["1"]	[""]	+input
+246590	1331	6	33	6	33	["0"]	[""]	+input
+246781	1335	6	34	6	34	["0"]	[""]	+input
+248436	1338	6	34	6	35	[""]	["0"]	+delete
+248590	1342	6	33	6	34	[""]	["0"]	+delete
+248762	1346	6	32	6	33	[""]	["1"]	+delete
+249098	1350	6	31	6	32	[""]	["?"]	+delete
+249902	1355	6	31	6	31	["/"]	[""]	+input
+250412	1359	6	32	6	32	["1"]	[""]	+input
+250649	1363	6	33	6	33	["0"]	[""]	+input
+250819	1367	6	34	6	34	["0"]	[""]	+input
+256649	1371	6	36	6	36	["",""]	[""]	+input
+256651	1372	7	0	7	0	["\t"]	[""]	+input
+257741	1377	7	1	7	1	["",""]	[""]	+input
+257741	1378	8	0	8	0	["\t"]	[""]	+input
+258000	1383	8	0	8	1	[""]	["\t"]	+delete
+259435	1388	8	0	8	0	["e"]	[""]	+input
+259514	1391	8	1	8	1	["l"]	[""]	+input
+259827	1396	8	2	8	2	["s"]	[""]	+input
+260076	1400	8	3	8	3	["e"]	[""]	+input
+260237	1404	8	4	8	4	[" "]	[""]	+input
+265083	1407	8	4	8	5	[""]	[" "]	+delete
+265259	1411	8	3	8	4	[""]	["e"]	+delete
+265420	1415	8	2	8	3	[""]	["s"]	+delete
+265578	1419	8	1	8	2	[""]	["l"]	+delete
+265806	1423	8	0	8	1	[""]	["e"]	+delete
+267647	1428	8	0	8	0	["p"]	[""]	+input
+267842	1432	8	1	8	1	["r"]	[""]	+input
+267965	1436	8	2	8	2	["i"]	[""]	+input
+268253	1440	8	3	8	3	["n"]	[""]	+input
+268380	1444	8	4	8	4	["t"]	[""]	+input
+269502	1449	8	5	8	5	["()"]	[""]	+input
+279901	1456	7	0	7	0	["",""]	[""]	+input
+281731	1461	8	0	8	1	[""]	["\t"]	+delete
+282717	1466	8	0	8	0	["v"]	[""]	+input
+282861	1470	8	1	8	1	["a"]	[""]	+input
+283260	1474	8	2	8	2	["l"]	[""]	+input
+283455	1478	8	3	8	3	["o"]	[""]	+input
+283579	1482	8	4	8	4	["r"]	[""]	+input
+284224	1486	8	5	8	5	["t"]	[""]	+input
+284331	1490	8	6	8	6	["o"]	[""]	+input
+284428	1494	8	7	8	7	["t"]	[""]	+input
+284867	1498	8	8	8	8	["a"]	[""]	+input
+284975	1502	8	9	8	9	["l"]	[""]	+input
+285613	1506	8	10	8	10	[" "]	[""]	+input
+286647	1510	8	11	8	11	["="]	[""]	+input
+287168	1514	8	12	8	12	[" "]	[""]	+input
+287613	1518	8	13	8	13	["p"]	[""]	+input
+287771	1522	8	14	8	14	["r"]	[""]	+input
+287963	1526	8	15	8	15	["e"]	[""]	+input
+288258	1530	8	16	8	16	["c"]	[""]	+input
+288401	1534	8	17	8	17	["o"]	[""]	+input
+288846	1538	8	18	8	18	["1"]	[""]	+input
+289244	1542	8	19	8	19	[" "]	[""]	+input
+290123	1547	8	20	8	20	["+"]	[""]	+input
+290427	1552	8	21	8	21	[" "]	[""]	+input
+290779	1556	8	22	8	22	["p"]	[""]	+input
+290988	1560	8	23	8	23	["r"]	[""]	+input
+291164	1564	8	24	8	24	["e"]	[""]	+input
+291404	1568	8	25	8	25	["c"]	[""]	+input
+291548	1572	8	26	8	26	["o"]	[""]	+input
+291983	1576	8	27	8	27	["2"]	[""]	+input
+295544	1581	9	6	9	6	["v"]	[""]	+input
+295677	1585	9	7	9	7	["a"]	[""]	+input
+296046	1589	9	8	9	8	["l"]	[""]	+input
+296242	1593	9	9	9	9	["o"]	[""]	+input
+296399	1597	9	10	9	10	["r"]	[""]	+input
+296733	1601	9	11	9	11	["t"]	[""]	+input
+296893	1605	9	12	9	12	["o"]	[""]	+input
+297004	1609	9	13	9	13	["t"]	[""]	+input
+297441	1613	9	14	9	14	["a"]	[""]	+input
+297646	1616	9	15	9	15	["l"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 306716
+- raw_log_line: 1620
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qt_jogos = float(input("Qual a quantidade de jogos? "))
+
+preco1 = float(input("Qual o valor do primeiro jogo? "))
+
+if ( qt_jogos > 2 ):
+	preco2 = float(input("Qual o valor do segundo jogo? "))
+	preco2 = preco2 - (preco2 * 25/100)
+
+valortotal = preco1 + preco2
+print(valortotal)
+```
+Run Output
+```text
+
+```
+
+Edit Segment 2
+- raw_change_event_count: 26
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+340514	1625	8	0	9	17	[""]	["valortotal = preco1 + preco2","print(valortotal)"]	cut
+343073	1632	7	0	7	0	["valortotal = preco1 + preco2","print(valortotal)"]	[""]	paste
+345724	1638	7	0	7	0	["\t"]	[""]	+input
+346972	1643	8	0	8	0	["\t"]	[""]	+input
+349214	1648	9	0	9	0	["",""]	[""]	+input
+349215	1649	10	0	10	0	["\t"]	[""]	+input
+350380	1654	10	0	10	1	[""]	["\t"]	+delete
+352673	1659	10	0	10	0	["e"]	[""]	+input
+352844	1663	10	1	10	1	["l"]	[""]	+input
+353199	1667	10	2	10	2	["s"]	[""]	+input
+353370	1671	10	3	10	3	["e"]	[""]	+input
+355631	1676	10	4	10	4	[":"]	[""]	+input
+356558	1680	10	5	10	5	["",""]	[""]	+input
+356559	1681	11	0	11	0	["\t"]	[""]	+input
+362260	1687	11	1	11	1	["p"]	[""]	+input
+363458	1691	11	2	11	2	["r"]	[""]	+input
+363629	1695	11	3	11	3	["i"]	[""]	+input
+363917	1699	11	4	11	4	["n"]	[""]	+input
+364110	1703	11	5	11	5	["t"]	[""]	+input
+364946	1708	11	6	11	6	["()"]	[""]	+input
+365469	1714	11	7	11	7	["p"]	[""]	+input
+365662	1718	11	8	11	8	["r"]	[""]	+input
+365862	1722	11	9	11	9	["e"]	[""]	+input
+366126	1726	11	10	11	10	["c"]	[""]	+input
+366265	1730	11	11	11	11	["o"]	[""]	+input
+366607	1734	11	12	11	12	["1"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 372554
+- raw_log_line: 1743
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qt_jogos = float(input("Qual a quantidade de jogos? "))
+
+preco1 = float(input("Qual o valor do primeiro jogo? "))
+
+if ( qt_jogos > 2 ):
+	preco2 = float(input("Qual o valor do segundo jogo? "))
+	preco2 = preco2 - (preco2 * 25/100)
+	valortotal = preco1 + preco2
+	print(valortotal)
+
+else:
+	print(preco1)
+```
+Run Output
+```text
+Qual a quantidade de jogos? 2
+Qual o valor do primeiro jogo? 50.00
+Traceback (most recent call last):
+File "main.py", line 9, in <module>
+valortotal = preco1 + preco2
+NameError: name 'preco2' is not defined
+```
+
+Edit Segment 3
+- raw_change_event_count: 26
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+404128	1748	8	7	8	7	["r"]	[""]	+input
+404253	1751	8	8	8	8	["o"]	[""]	+input
+404550	1756	8	9	8	9	["u"]	[""]	+input
+404944	1760	8	10	8	10	["n"]	[""]	+input
+405088	1764	8	11	8	11	["d"]	[""]	+input
+407292	1769	8	12	8	12	["("]	[""]	+input
+411246	1781	8	24	8	24	[","]	[""]	+input
+411758	1785	8	25	8	25	["2"]	[""]	+input
+412657	1788	8	25	8	26	[""]	["2"]	+delete
+412958	1792	8	24	8	25	[""]	[","]	+delete
+413324	1796	8	23	8	24	[""]	[")"]	+delete
+414701	1801	8	23	8	23	[","]	[""]	+input
+420767	1804	8	23	8	24	[""]	[","]	+delete
+421664	1810	8	23	8	23	[")"]	[""]	+input
+422449	1815	8	24	8	24	[","]	[""]	+input
+423564	1819	8	25	8	25	["2"]	[""]	+input
+425694	1824	8	26	8	26	[")"]	[""]	+input
+429855	1830	11	7	11	7	["r"]	[""]	+input
+429917	1833	11	8	11	8	["o"]	[""]	+input
+430188	1838	11	9	11	9	["u"]	[""]	+input
+430573	1842	11	10	11	10	["n"]	[""]	+input
+430684	1846	11	11	11	11	["d"]	[""]	+input
+431629	1851	11	12	11	12	["("]	[""]	+input
+434829	1863	11	20	11	20	[","]	[""]	+input
+435277	1867	11	21	11	21	["2"]	[""]	+input
+442064	1872	11	22	11	22	[")"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 446355
+- raw_log_line: 1880
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qt_jogos = float(input("Qual a quantidade de jogos? "))
+
+preco1 = float(input("Qual o valor do primeiro jogo? "))
+
+if ( qt_jogos > 2 ):
+	preco2 = float(input("Qual o valor do segundo jogo? "))
+	preco2 = preco2 - (preco2 * 25/100)
+	valortotal = preco1 + preco2
+	print(round(valortotal),2)
+
+else:
+	print(round(preco1),2)
+```
+Run Output
+```text
+Qual a quantidade de jogos? 1
+Qual o valor do primeiro jogo? 100.50
+100.5
+```
+
+Edit Segment 4
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+462913	1886	4	15	4	15	["+"]	[""]	+input
+464154	1890	4	15	4	16	[""]	["+"]	+delete
+464379	1895	4	15	4	15	["="]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 478395
+- raw_log_line: 1902
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qt_jogos = float(input("Qual a quantidade de jogos? "))
+
+preco1 = float(input("Qual o valor do primeiro jogo? "))
+
+if ( qt_jogos >= 2 ):
+	preco2 = float(input("Qual o valor do segundo jogo? "))
+	preco2 = preco2 - (preco2 * 25/100)
+	valortotal = preco1 + preco2
+	print(round(valortotal),2)
+
+else:
+	print(round(preco1),2)
+```
+Run Output
+```text
+Qual a quantidade de jogos? 2
+Qual o valor do primeiro jogo? 50.00
+Qual o valor do segundo jogo? 100.00
+125 2
+```
+
+Edit Segment 5
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+593391	1912	8	24	8	25	[""]	[","]	+delete
+595245	1917	8	24	8	24	[","]	[""]	+input
+
+Local Run 5
+- event_time_delta_ms: 602440
+- raw_log_line: 1921
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qt_jogos = float(input("Qual a quantidade de jogos? "))
+
+preco1 = float(input("Qual o valor do primeiro jogo? "))
+
+if ( qt_jogos >= 2 ):
+	preco2 = float(input("Qual o valor do segundo jogo? "))
+	preco2 = preco2 - (preco2 * 25/100)
+	valortotal = preco1 + preco2
+	print(round(valortotal),2)
+
+else:
+	print(round(preco1),2)
+```
+Run Output
+```text
+Qual a quantidade de jogos? 50.00
+```
+
+Edit Segment 6
+- raw_change_event_count: 9
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+619138	1925	8	25	8	26	[""]	["2"]	+delete
+619562	1929	8	24	8	25	[""]	[","]	+delete
+619934	1933	8	23	8	24	[""]	[")"]	+delete
+622525	1938	8	12	8	13	[""]	["("]	+delete
+622736	1942	8	11	8	12	[""]	["d"]	+delete
+623034	1946	8	10	8	11	[""]	["n"]	+delete
+623210	1950	8	9	8	10	[""]	["u"]	+delete
+624733	1954	8	8	8	9	[""]	["o"]	+delete
+625545	1958	8	7	8	8	[""]	["r"]	+delete
+
+Local Run 6
+- event_time_delta_ms: 646509
+- raw_log_line: 1966
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qt_jogos = float(input("Qual a quantidade de jogos? "))
+
+preco1 = float(input("Qual o valor do primeiro jogo? "))
+
+if ( qt_jogos >= 2 ):
+	preco2 = float(input("Qual o valor do segundo jogo? "))
+	preco2 = preco2 - (preco2 * 25/100)
+	valortotal = preco1 + preco2
+	print(valortotal)
+
+else:
+	print(round(preco1),2)
+```
+Run Output
+```text
+Qual a quantidade de jogos? 2
+Qual o valor do primeiro jogo? 50.0
+Qual o valor do segundo jogo? 100.0
+125.0
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 648637
+- raw_log_line: 1967
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+qt_jogos = float(input("Qual a quantidade de jogos? "))
+
+preco1 = float(input("Qual o valor do primeiro jogo? "))
+
+if ( qt_jogos >= 2 ):
+	preco2 = float(input("Qual o valor do segundo jogo? "))
+	preco2 = preco2 - (preco2 * 25/100)
+	valortotal = preco1 + preco2
+	print(valortotal)
+
+else:
+	print(round(preco1),2)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-08-17T15:10:54.153000
+
+Execution Result
+
+- submitted_at: 2023-08-17 15:10:54
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "2\n55.50\n100.25"
+    expected: "130.69"
+    actual: "130.6875"
+  - test_index_0idx: 1 [FAIL]
+    input: "1\n72.65"
+    expected: "72.65"
+    actual: "73 2"
+  - test_index_0idx: 2 [FAIL]
+    input: "2\n99.99\n120.25"
+    expected: "190.18"
+    actual: "190.1775"
+
+Attempt Start Code
+```python
+qt_jogos = float(input("Qual a quantidade de jogos? "))
+
+preco1 = float(input("Qual o valor do primeiro jogo? "))
+
+if ( qt_jogos >= 2 ):
+	preco2 = float(input("Qual o valor do segundo jogo? "))
+	preco2 = preco2 - (preco2 * 25/100)
+	valortotal = preco1 + preco2
+	print(valortotal)
+
+else:
+	print(round(preco1),2)
+```
+
+Trace Timeline
+
+Submit Anchor 1
+- event_time_delta_ms: 0
+- raw_log_line: 1968
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+qt_jogos = float(input("Qual a quantidade de jogos? "))
+
+preco1 = float(input("Qual o valor do primeiro jogo? "))
+
+if ( qt_jogos >= 2 ):
+	preco2 = float(input("Qual o valor do segundo jogo? "))
+	preco2 = preco2 - (preco2 * 25/100)
+	valortotal = preco1 + preco2
+	print(valortotal)
+
+else:
+	print(round(preco1),2)
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-08-17T15:11:25.575000
+
+Execution Result
+
+- submitted_at: 2023-08-17 15:15:08
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "2\n55.50\n100.25"
+    expected: "130.69"
+    actual: "130.6875"
+  - test_index_0idx: 1 [FAIL]
+    input: "1\n72.65"
+    expected: "72.65"
+    actual: "73 2"
+  - test_index_0idx: 2 [FAIL]
+    input: "2\n99.99\n120.25"
+    expected: "190.18"
+    actual: "190.1775"
+
+Attempt Start Code
+```python
+qt_jogos = float(input("Qual a quantidade de jogos? "))
+
+preco1 = float(input("Qual o valor do primeiro jogo? "))
+
+if ( qt_jogos >= 2 ):
+	preco2 = float(input("Qual o valor do segundo jogo? "))
+	preco2 = preco2 - (preco2 * 25/100)
+	valortotal = preco1 + preco2
+	print(valortotal)
+
+else:
+	print(round(preco1),2)
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 10
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1973	8	7	8	7	["r"]	[""]	+input
+89	1976	8	8	8	8	["o"]	[""]	+input
+395	1981	8	9	8	9	["u"]	[""]	+input
+898	1985	8	10	8	10	["n"]	[""]	+input
+1183	1989	8	11	8	11	["d"]	[""]	+input
+3769	1994	8	12	8	12	["("]	[""]	+input
+7963	2006	8	24	8	24	[","]	[""]	+input
+8651	2010	8	25	8	25	[" "]	[""]	+input
+8809	2014	8	26	8	26	["2"]	[""]	+input
+11202	2019	8	27	8	27	[")"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 28237
+- raw_log_line: 2027
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qt_jogos = float(input("Qual a quantidade de jogos? "))
+
+preco1 = float(input("Qual o valor do primeiro jogo? "))
+
+if ( qt_jogos >= 2 ):
+	preco2 = float(input("Qual o valor do segundo jogo? "))
+	preco2 = preco2 - (preco2 * 25/100)
+	valortotal = preco1 + preco2
+	print(round(valortotal), 2)
+
+else:
+	print(round(preco1),2)
+```
+Run Output
+```text
+Qual a quantidade de jogos? 2
+Qual o valor do primeiro jogo? 50.00
+Qual o valor do segundo jogo? 100.00
+125 2
+```
+
+Edit Segment 2
+- raw_change_event_count: 34
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+109580	2033	8	26	8	27	[""]	["2"]	+delete
+109830	2038	8	26	8	26	["1"]	[""]	+input
+163033	2047	8	12	8	13	[""]	["("]	+delete
+163244	2051	8	11	8	12	[""]	["d"]	+delete
+163399	2055	8	10	8	11	[""]	["n"]	+delete
+163591	2059	8	9	8	10	[""]	["u"]	+delete
+163752	2063	8	8	8	9	[""]	["o"]	+delete
+163943	2067	8	7	8	8	[""]	["r"]	+delete
+164428	2071	8	6	8	7	[""]	["("]	+delete
+166369	2077	8	6	8	6	["("]	[""]	+input
+169057	2082	8	18	8	19	[""]	[","]	+delete
+169272	2086	8	17	8	18	[""]	[")"]	+delete
+172253	2096	8	18	8	19	[""]	["1"]	+delete
+173035	2100	8	17	8	18	[""]	[" "]	+delete
+184976	2106	7	29	7	29	["",""]	[""]	+input
+184979	2107	8	0	8	0	["\t"]	[""]	+input
+188641	2113	8	1	8	1	["r"]	[""]	+input
+188778	2117	8	2	8	2	["o"]	[""]	+input
+189085	2121	8	3	8	3	["u"]	[""]	+input
+189867	2125	8	4	8	4	["n"]	[""]	+input
+190073	2129	8	5	8	5	["d"]	[""]	+input
+191899	2134	8	6	8	6	["()"]	[""]	+input
+192475	2140	8	7	8	7	["v"]	[""]	+input
+192589	2144	8	8	8	8	["a"]	[""]	+input
+193052	2148	8	9	8	9	["l"]	[""]	+input
+193288	2152	8	10	8	10	["o"]	[""]	+input
+193419	2156	8	11	8	11	["r"]	[""]	+input
+193643	2160	8	12	8	12	["t"]	[""]	+input
+193757	2164	8	13	8	13	["o"]	[""]	+input
+193873	2168	8	14	8	14	["t"]	[""]	+input
+194345	2172	8	15	8	15	["a"]	[""]	+input
+194671	2176	8	16	8	16	["l"]	[""]	+input
+197758	2180	8	17	8	17	[","]	[""]	+input
+198092	2184	8	18	8	18	["1"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 217873
+- raw_log_line: 2191
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+qt_jogos = float(input("Qual a quantidade de jogos? "))
+
+preco1 = float(input("Qual o valor do primeiro jogo? "))
+
+if ( qt_jogos >= 2 ):
+	preco2 = float(input("Qual o valor do segundo jogo? "))
+	preco2 = preco2 - (preco2 * 25/100)
+	valortotal = preco1 + preco2
+	round(valortotal,1)
+	print(valortotal)
+
+else:
+	print(round(preco1),2)
+```
+Run Output
+```text
+Qual a quantidade de jogos? 2
+Qual o valor do primeiro jogo? 10.00
+Qual o valor do segundo jogo? 20.00
+25.0
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 222809
+- raw_log_line: 2192
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+qt_jogos = float(input("Qual a quantidade de jogos? "))
+
+preco1 = float(input("Qual o valor do primeiro jogo? "))
+
+if ( qt_jogos >= 2 ):
+	preco2 = float(input("Qual o valor do segundo jogo? "))
+	preco2 = preco2 - (preco2 * 25/100)
+	valortotal = preco1 + preco2
+	round(valortotal,1)
+	print(valortotal)
+
+else:
+	print(round(preco1),2)
+```

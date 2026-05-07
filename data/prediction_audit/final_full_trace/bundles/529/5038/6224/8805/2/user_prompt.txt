@@ -1,0 +1,352 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 529
+- assessment_id: 5038
+- assessment_title: Lab 4 – Repetição por Condição (while)
+- exercise_id: 6224
+- student_id: 8805
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-09-25T14:29:31.097000
+
+Execution Result
+
+- submitted_at: 2023-09-25 14:41:05
+- grade: 100.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "8.5\n10.0\n7.0\n5.5\n4.5\n-1"
+    expected: "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 4.5"
+    actual: "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota:  10.0\nMenor nota:  4.5"
+  - test_index_0idx: 1 [FAIL]
+    input: "9.0\n5.0\n6.0\n-1"
+    expected: "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 9.0\nMenor nota: 5.0"
+    actual: "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota:  9.0\nMenor nota:  5.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "10.0\n8.5\n-1"
+    expected: "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 8.5"
+    actual: "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota:  10.0\nMenor nota:  8.5"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["nota  = float(input(\"Sua nota: \"))","","apr = 0","media = 0","maior = -1","menor = 11","","while (nota >= 0):","\tif(nota >=5.0):","\t\tapr = apr + 1","\telse:","\t\tmedia = media + 1","\tif (nota >maior):","\t\tmaior = nota","\tif(nota < menor):","\t\tmenor = nota","\tnota  = float(input(\"Sua nota: \"))","print(apr, \"alunos passaram\")","print(media, \"alunos ficaram abaixo da media\")","print(\"Maior nota: \",round(maior,2))","print(\"Menor nota: \",round(menor,2))"]	[""]	paste
+79800	17	8	11	8	11	[" "]	[""]	+input
+83691	23	12	11	12	11	[" "]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 667594
+- raw_log_line: 40
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+nota  = float(input("Sua nota: "))
+
+apr = 0
+media = 0
+maior = -1
+menor = 11
+
+while (nota >= 0):
+	if(nota >= 5.0):
+		apr = apr + 1
+	else:
+		media = media + 1
+	if (nota > maior):
+		maior = nota
+	if(nota < menor):
+		menor = nota
+	nota  = float(input("Sua nota: "))
+print(apr, "alunos passaram")
+print(media, "alunos ficaram abaixo da media")
+print("Maior nota: ",round(maior,2))
+print("Menor nota: ",round(menor,2))
+```
+Run Output
+```text
+Sua nota: 4.5
+Sua nota: 6
+Sua nota: 3
+Sua nota: -1
+1 alunos passaram
+2 alunos ficaram abaixo da media
+Maior nota:  6.0
+Menor nota:  3.0
+```
+
+Edit Segment 2
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+689414	44	5	9	5	10	[""]	["1"]	+delete
+689679	49	5	9	5	9	["0"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 693974
+- raw_log_line: 52
+- feedback: "Congratulations, your code is correct!"
+Code At This Submit
+```python
+nota  = float(input("Sua nota: "))
+
+apr = 0
+media = 0
+maior = -1
+menor = 10
+
+while (nota >= 0):
+	if(nota >= 5.0):
+		apr = apr + 1
+	else:
+		media = media + 1
+	if (nota > maior):
+		maior = nota
+	if(nota < menor):
+		menor = nota
+	nota  = float(input("Sua nota: "))
+print(apr, "alunos passaram")
+print(media, "alunos ficaram abaixo da media")
+print("Maior nota: ",round(maior,2))
+print("Menor nota: ",round(menor,2))
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-09-25T14:41:14.889000
+
+Execution Result
+
+- submitted_at: 2023-09-25 14:41:18
+- grade: 100.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "8.5\n10.0\n7.0\n5.5\n4.5\n-1"
+    expected: "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 4.5"
+    actual: "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota:  10.0\nMenor nota:  4.5"
+  - test_index_0idx: 1 [FAIL]
+    input: "9.0\n5.0\n6.0\n-1"
+    expected: "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 9.0\nMenor nota: 5.0"
+    actual: "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota:  9.0\nMenor nota:  5.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "10.0\n8.5\n-1"
+    expected: "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 8.5"
+    actual: "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota:  10.0\nMenor nota:  8.5"
+
+Attempt Start Code
+```python
+nota  = float(input("Sua nota: "))
+
+apr = 0
+media = 0
+maior = -1
+menor = 10
+
+while (nota >= 0):
+	if(nota >= 5.0):
+		apr = apr + 1
+	else:
+		media = media + 1
+	if (nota > maior):
+		maior = nota
+	if(nota < menor):
+		menor = nota
+	nota  = float(input("Sua nota: "))
+print(apr, "alunos passaram")
+print(media, "alunos ficaram abaixo da media")
+print("Maior nota: ",round(maior,2))
+print("Menor nota: ",round(menor,2))
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	56	4	9	4	10	[""]	["1"]	+delete
+126	60	4	8	4	9	[""]	["-"]	+delete
+419	65	4	8	4	8	["0"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 3330
+- raw_log_line: 68
+- feedback: "Congratulations, your code is correct!"
+Code At This Submit
+```python
+nota  = float(input("Sua nota: "))
+
+apr = 0
+media = 0
+maior = 0
+menor = 10
+
+while (nota >= 0):
+	if(nota >= 5.0):
+		apr = apr + 1
+	else:
+		media = media + 1
+	if (nota > maior):
+		maior = nota
+	if(nota < menor):
+		menor = nota
+	nota  = float(input("Sua nota: "))
+print(apr, "alunos passaram")
+print(media, "alunos ficaram abaixo da media")
+print("Maior nota: ",round(maior,2))
+print("Menor nota: ",round(menor,2))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-09-25T14:41:25.213000
+
+Execution Result
+
+- submitted_at: 2023-09-25 14:41:29
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "8.5\n10.0\n7.0\n5.5\n4.5\n-1"
+    expected: "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 4.5"
+    actual: "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota:  10.0\nMenor nota:  0"
+  - test_index_0idx: 1 [FAIL]
+    input: "9.0\n5.0\n6.0\n-1"
+    expected: "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 9.0\nMenor nota: 5.0"
+    actual: "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota:  9.0\nMenor nota:  0"
+  - test_index_0idx: 2 [FAIL]
+    input: "10.0\n8.5\n-1"
+    expected: "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 8.5"
+    actual: "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota:  10.0\nMenor nota:  0"
+
+Attempt Start Code
+```python
+nota  = float(input("Sua nota: "))
+
+apr = 0
+media = 0
+maior = 0
+menor = 10
+
+while (nota >= 0):
+	if(nota >= 5.0):
+		apr = apr + 1
+	else:
+		media = media + 1
+	if (nota > maior):
+		maior = nota
+	if(nota < menor):
+		menor = nota
+	nota  = float(input("Sua nota: "))
+print(apr, "alunos passaram")
+print(media, "alunos ficaram abaixo da media")
+print("Maior nota: ",round(maior,2))
+print("Menor nota: ",round(menor,2))
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	72	5	8	5	10	[""]	["10"]	+delete
+272	77	5	8	5	8	["0"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 4742
+- raw_log_line: 80
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+nota  = float(input("Sua nota: "))
+
+apr = 0
+media = 0
+maior = 0
+menor = 0
+
+while (nota >= 0):
+	if(nota >= 5.0):
+		apr = apr + 1
+	else:
+		media = media + 1
+	if (nota > maior):
+		maior = nota
+	if(nota < menor):
+		menor = nota
+	nota  = float(input("Sua nota: "))
+print(apr, "alunos passaram")
+print(media, "alunos ficaram abaixo da media")
+print("Maior nota: ",round(maior,2))
+print("Menor nota: ",round(menor,2))
+```

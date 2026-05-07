@@ -1,0 +1,177 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the authoritative execution result for that submitted attempt.
+- Each attempt includes the submitted code for that attempt.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 559
+- assessment_id: 5323
+- assessment_title: Lab 3: Estrutura Condicional Encadeada
+- exercise_id: 6094
+- student_id: 9296
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+Execution Result
+
+- submitted_at: 2024-01-26 15:55:43
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "200.0\n3"
+    expected: "R$ 450.0"
+    actual: "450.0"
+  - test_index_0idx: 1 [FAIL]
+    input: "400.0\n4"
+    expected: "R$ 1040.0"
+    actual: "1040.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "1200\n1"
+    expected: "R$ 1200.0"
+    actual: "1200.0"
+
+Submitted Code
+```python
+mens = float(input("Qual o valor do plano de saude? "))
+memb = int(input("Qual o numero de membros da familia para adesao do plano? "))
+desc = mens * memb
+if (memb == 1):
+	desc1 = desc
+	print(round(desc1, 2))
+elif (memb == 2):
+	desc1 = desc * 0.85
+	print(round(desc1, 2))
+elif (memb == 3):
+	desc1 = desc * 0.75
+	print(round(desc1, 2))
+elif (memb >= 4):
+	desc1 = desc * 0.65
+	print(round(desc1, 2))
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+Execution Result
+
+- submitted_at: 2024-01-26 15:59:21
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "200.0\n3"
+    expected: "R$ 450.0"
+    actual: "450.0"
+  - test_index_0idx: 1 [FAIL]
+    input: "400.0\n4"
+    expected: "R$ 1040.0"
+    actual: "1040.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "1200\n1"
+    expected: "R$ 1200.0"
+    actual: "1200.0"
+
+Submitted Code
+```python
+mens = float(input("Qual o valor do plano de saude? "))
+memb = int(input("Qual o numero de membros da familia para adesao do plano? "))
+desc = mens * memb
+if (memb == 1):
+	desc1 = mens * memb
+	print(round(desc1, 2))
+elif (memb == 2):
+	desc1 = (mens * memb) * 0.85
+	print(round(desc1, 2))
+elif (memb == 3):
+	desc1 = (mens * memb) * 0.75
+	print(round(desc1, 2))
+elif (memb >= 4):
+	desc1 = (mens * memb) * 0.65
+	print(round(desc1, 2))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+Execution Result
+
+- submitted_at: 2024-01-26 16:04:45
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "200.0\n3"
+    expected: "R$ 450.0"
+    actual: "450.0"
+  - test_index_0idx: 1 [FAIL]
+    input: "400.0\n4"
+    expected: "R$ 1040.0"
+    actual: "1040.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "1200\n1"
+    expected: "R$ 1200.0"
+    actual: "1200.0"
+
+Submitted Code
+```python
+mens = float(input("Qual o valor do plano de saude? "))
+memb = int(input("Qual o numero de membros da familia para adesao do plano? "))
+desc = mens * memb
+if (memb == 1):
+	desc1 = mens * memb
+	print(round(desc1, 2))
+elif (memb == 2):
+	desc1 = (mens * memb) * 0.85
+	print(round(desc1, 2))
+elif (memb == 3):
+	desc1 = (mens * memb) * 0.75
+	print(round(desc1, 2))
+elif (memb >= 4):
+	desc1 = (mens * memb) * 0.65
+	print(round(desc1, 2))
+```

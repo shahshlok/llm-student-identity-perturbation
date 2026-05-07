@@ -1,0 +1,579 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 557
+- assessment_id: 5278
+- assessment_title: Lab 2: Estrutura Condicional Composta
+- exercise_id: 1395
+- student_id: 6141
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-01-17T14:32:01.883000
+
+Execution Result
+
+- submitted_at: 2024-01-17 14:35:20
+- grade: 0.0
+- pass_count: 1
+- failed_test_indices_0idx: [0,1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "995.58"
+    expected: "49.78"
+    actual: "49.779"
+  - test_index_0idx: 1 [FAIL]
+    input: "4500.86"
+    expected: "400.09"
+    actual: "400 2"
+  - test_index_0idx: 2 [PASS]
+    input: "100"
+    expected: "5.0"
+    actual: "5.0"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 148
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	6	0	0	0	0	["",""]	[""]	+input
+154	11	1	0	1	0	["",""]	[""]	+input
+1534	17	2	0	2	0	["v"]	[""]	+input
+1666	20	2	1	2	1	["a"]	[""]	+input
+1707	24	2	2	2	2	["l"]	[""]	+input
+1894	29	2	3	2	3	["o"]	[""]	+input
+2015	32	2	4	2	4	["r"]	[""]	+input
+2912	37	2	5	2	5	[" "]	[""]	+input
+3019	41	2	6	2	6	["="]	[""]	+input
+3148	45	2	7	2	7	[" "]	[""]	+input
+3396	48	2	8	2	8	["",""]	[""]	+input
+4027	53	2	8	3	0	[""]	["",""]	+delete
+6699	59	2	8	2	8	["f"]	[""]	+input
+6764	62	2	9	2	9	["l"]	[""]	+input
+6924	67	2	10	2	10	["o"]	[""]	+input
+7313	71	2	11	2	11	["a"]	[""]	+input
+7421	74	2	12	2	12	["t"]	[""]	+input
+8772	80	2	13	2	13	["()"]	[""]	+input
+9053	86	2	14	2	14	["i"]	[""]	+input
+9211	90	2	15	2	15	["n"]	[""]	+input
+9357	94	2	16	2	16	["p"]	[""]	+input
+9580	98	2	17	2	17	["u"]	[""]	+input
+9794	102	2	18	2	18	["t"]	[""]	+input
+10155	107	2	19	2	19	["()"]	[""]	+input
+10929	114	2	20	2	20	["\"\""]	[""]	+input
+11932	121	2	21	2	21	["D"]	[""]	+input
+12124	126	2	22	2	22	["i"]	[""]	+input
+12395	130	2	23	2	23	["g"]	[""]	+input
+12459	133	2	24	2	24	["i"]	[""]	+input
+12704	138	2	25	2	25	["t"]	[""]	+input
+12827	142	2	26	2	26	["e"]	[""]	+input
+12939	146	2	27	2	27	[" "]	[""]	+input
+13163	150	2	28	2	28	["o"]	[""]	+input
+13339	154	2	29	2	29	[" "]	[""]	+input
+13553	158	2	30	2	30	["v"]	[""]	+input
+13627	162	2	31	2	31	["a"]	[""]	+input
+13810	166	2	32	2	32	["l"]	[""]	+input
+14059	170	2	33	2	33	["r"]	[""]	+input
+15164	173	2	33	2	34	[""]	["r"]	+delete
+15761	178	2	33	2	33	["o"]	[""]	+input
+15851	182	2	34	2	34	["r"]	[""]	+input
+15964	186	2	35	2	35	[" "]	[""]	+input
+16123	190	2	36	2	36	["f"]	[""]	+input
+16203	193	2	37	2	37	["a"]	[""]	+input
+16685	197	2	37	2	38	[""]	["a"]	+delete
+16858	201	2	36	2	37	[""]	["f"]	+delete
+16987	206	2	36	2	36	["d"]	[""]	+input
+17085	209	2	37	2	37	["a"]	[""]	+input
+17263	213	2	38	2	38	["s"]	[""]	+input
+17567	218	2	39	2	39	[" "]	[""]	+input
+18091	222	2	40	2	40	["v"]	[""]	+input
+18193	226	2	41	2	41	["e"]	[""]	+input
+18364	230	2	42	2	42	["n"]	[""]	+input
+18575	234	2	43	2	43	["d"]	[""]	+input
+18619	237	2	44	2	44	["a"]	[""]	+input
+18779	241	2	45	2	45	["s"]	[""]	+input
+22223	246	2	46	2	46	[" "]	[""]	+input
+27776	249	2	46	2	47	[""]	[" "]	+delete
+28159	255	2	46	2	46	[":"]	[""]	+input
+28733	260	2	47	2	47	[" "]	[""]	+input
+30909	264	2	51	2	51	["",""]	[""]	+input
+31418	269	3	0	3	0	["",""]	[""]	+input
+32141	274	3	0	4	0	[""]	["",""]	+delete
+34849	279	3	0	3	0	["",""]	[""]	+input
+35549	285	4	0	4	0	["i"]	[""]	+input
+35692	289	4	1	4	1	["f"]	[""]	+input
+35803	293	4	2	4	2	[" "]	[""]	+input
+37788	297	4	3	4	3	["v"]	[""]	+input
+37903	301	4	4	4	4	["a"]	[""]	+input
+38380	305	4	5	4	5	["l"]	[""]	+input
+38561	309	4	6	4	6	["o"]	[""]	+input
+38644	312	4	7	4	7	["r"]	[""]	+input
+38908	317	4	8	4	8	[" "]	[""]	+input
+41660	324	4	9	4	9	["<"]	[""]	+input
+43455	329	4	10	4	10	["="]	[""]	+input
+43547	333	4	11	4	11	[" "]	[""]	+input
+44657	337	4	12	4	12	["1"]	[""]	+input
+44844	341	4	13	4	13	["0"]	[""]	+input
+45023	345	4	14	4	14	["0"]	[""]	+input
+46178	349	4	15	4	15	["0"]	[""]	+input
+48445	354	4	16	4	16	[":"]	[""]	+input
+48749	358	4	17	4	17	["",""]	[""]	+input
+48749	359	5	0	5	0	["\t"]	[""]	+input
+53261	365	5	1	5	1	["p"]	[""]	+input
+53485	369	5	2	5	2	["r"]	[""]	+input
+53631	372	5	3	5	3	["i"]	[""]	+input
+53724	376	5	4	5	4	["n"]	[""]	+input
+54141	381	5	5	5	5	["t"]	[""]	+input
+55361	386	5	6	5	6	["()"]	[""]	+input
+58451	392	5	7	5	7	["v"]	[""]	+input
+58589	396	5	8	5	8	["a"]	[""]	+input
+58764	400	5	9	5	9	["l"]	[""]	+input
+58955	404	5	10	5	10	["o"]	[""]	+input
+59086	408	5	11	5	11	["r"]	[""]	+input
+65231	412	5	12	5	12	["*"]	[""]	+input
+65838	416	5	13	5	13	["0"]	[""]	+input
+66127	420	5	14	5	14	["."]	[""]	+input
+67281	424	5	15	5	15	["0"]	[""]	+input
+67981	428	5	16	5	16	["5"]	[""]	+input
+69921	432	5	18	5	18	["",""]	[""]	+input
+69921	433	6	0	6	0	["\t"]	[""]	+input
+70348	438	6	0	6	1	[""]	["\t"]	+delete
+71128	443	6	0	6	0	["e"]	[""]	+input
+71164	446	6	1	6	1	["l"]	[""]	+input
+71341	451	6	2	6	2	["s"]	[""]	+input
+71629	455	6	3	6	3	["e"]	[""]	+input
+72477	460	6	4	6	4	[":"]	[""]	+input
+72704	464	6	5	6	5	["",""]	[""]	+input
+72704	465	7	0	7	0	["\t"]	[""]	+input
+74067	471	7	1	7	1	["p"]	[""]	+input
+74210	475	7	2	7	2	["r"]	[""]	+input
+74322	478	7	3	7	3	["i"]	[""]	+input
+74492	482	7	4	7	4	["n"]	[""]	+input
+74629	486	7	5	7	5	["t"]	[""]	+input
+75757	492	7	6	7	6	["()"]	[""]	+input
+80189	498	7	7	7	7	["1"]	[""]	+input
+80388	502	7	8	7	8	["0"]	[""]	+input
+80541	506	7	9	7	9	["0"]	[""]	+input
+81246	510	7	10	7	10	["0"]	[""]	+input
+82542	514	7	11	7	11	["*"]	[""]	+input
+84381	518	7	12	7	12	["0"]	[""]	+input
+84647	522	7	13	7	13	["."]	[""]	+input
+84864	526	7	14	7	14	["0"]	[""]	+input
+85164	530	7	15	7	15	["5"]	[""]	+input
+86800	535	7	16	7	16	["()"]	[""]	+input
+88642	544	7	16	7	16	["="]	[""]	+input
+89311	547	7	16	7	17	[""]	["="]	+delete
+90331	552	7	16	7	16	[" "]	[""]	+input
+92484	558	7	17	7	17	["+"]	[""]	+input
+92604	562	7	18	7	18	[" "]	[""]	+input
+99904	569	7	20	7	20	["v"]	[""]	+input
+100065	573	7	21	7	21	["a"]	[""]	+input
+100701	577	7	22	7	22	["l"]	[""]	+input
+101057	581	7	23	7	23	["o"]	[""]	+input
+101214	585	7	24	7	24	["t"]	[""]	+input
+102134	588	7	24	7	25	[""]	["t"]	+delete
+102307	593	7	24	7	24	["r"]	[""]	+input
+103309	597	7	25	7	25	["-"]	[""]	+input
+104068	601	7	26	7	26	["1"]	[""]	+input
+104254	605	7	27	7	27	["0"]	[""]	+input
+104435	609	7	28	7	28	["0"]	[""]	+input
+104832	613	7	29	7	29	["0"]	[""]	+input
+108046	620	7	31	7	31	["*"]	[""]	+input
+116370	624	7	32	7	32	["1"]	[""]	+input
+117165	627	7	32	7	33	[""]	["1"]	+delete
+118063	632	7	32	7	32	["0"]	[""]	+input
+118321	636	7	33	7	33	["."]	[""]	+input
+118880	640	7	34	7	34	["1"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 137870
+- raw_log_line: 645
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+
+
+valor = float(input("Digite o valor das vendas: "))
+
+if valor <= 1000:
+	print(valor*0.05)
+else:
+	print(1000*0.05 + (valor-1000)*0.1)
+```
+Run Output
+```text
+Digite o valor das vendas: 2000
+150.0
+```
+
+Local Run 2
+- event_time_delta_ms: 161628
+- raw_log_line: 648
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+
+
+valor = float(input("Digite o valor das vendas: "))
+
+if valor <= 1000:
+	print(valor*0.05)
+else:
+	print(1000*0.05 + (valor-1000)*0.1)
+```
+Run Output
+```text
+Digite o valor das vendas: 10000
+950.0
+```
+
+Edit Segment 2
+- raw_change_event_count: 9
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+170711	661	7	7	7	7	["r"]	[""]	+input
+170785	664	7	8	7	8	["o"]	[""]	+input
+171064	669	7	9	7	9	["u"]	[""]	+input
+171245	673	7	10	7	10	["n"]	[""]	+input
+171582	677	7	11	7	11	["d"]	[""]	+input
+172211	682	7	12	7	12	["("]	[""]	+input
+176353	749	7	42	7	42	[","]	[""]	+input
+178883	753	7	43	7	43	["2"]	[""]	+input
+180224	758	7	44	7	44	[")"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 198518
+- raw_log_line: 762
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+
+
+valor = float(input("Digite o valor das vendas: "))
+
+if valor <= 1000:
+	print(valor*0.05)
+else:
+	print(round(1000*0.05 + (valor-1000)*0.1),2)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-01-17T14:35:29.827000
+
+Execution Result
+
+- submitted_at: 2024-01-17 14:36:08
+- grade: 0.0
+- pass_count: 1
+- failed_test_indices_0idx: [0,1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "995.58"
+    expected: "49.78"
+    actual: "49.779"
+  - test_index_0idx: 1 [FAIL]
+    input: "4500.86"
+    expected: "400.09"
+    actual: "400.086"
+  - test_index_0idx: 2 [PASS]
+    input: "100"
+    expected: "5.0"
+    actual: "5.0"
+
+Attempt Start Code
+```python
+
+
+valor = float(input("Digite o valor das vendas: "))
+
+if valor <= 1000:
+	print(valor*0.05)
+else:
+	print(round(1000*0.05 + (valor-1000)*0.1),2)
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 765
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+
+
+valor = float(input("Digite o valor das vendas: "))
+
+if valor <= 1000:
+	print(valor*0.05)
+else:
+	print(round(1000*0.05 + (valor-1000)*0.1),2)
+```
+Run Output
+```text
+Digite o valor das vendas: 835.6
+41.78
+```
+
+Edit Segment 1
+- raw_change_event_count: 9
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+29937	769	7	43	7	44	[""]	["2"]	+delete
+30167	773	7	42	7	43	[""]	[","]	+delete
+31398	778	7	42	7	43	[""]	[")"]	+delete
+33061	783	7	6	7	7	[""]	["("]	+delete
+34870	788	7	10	7	11	[""]	["d"]	+delete
+35108	792	7	9	7	10	[""]	["n"]	+delete
+35515	796	7	8	7	9	[""]	["u"]	+delete
+35685	800	7	7	7	8	[""]	["o"]	+delete
+35916	804	7	6	7	7	[""]	["r"]	+delete
+
+Submit Anchor 1
+- event_time_delta_ms: 38757
+- raw_log_line: 808
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+
+
+valor = float(input("Digite o valor das vendas: "))
+
+if valor <= 1000:
+	print(valor*0.05)
+else:
+	print(1000*0.05 + (valor-1000)*0.1)
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-01-17T14:36:19.631000
+
+Execution Result
+
+- submitted_at: 2024-01-17 14:37:14
+- grade: 0.0
+- pass_count: 1
+- failed_test_indices_0idx: [0,1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "995.58"
+    expected: "49.78"
+    actual: "49.779"
+  - test_index_0idx: 1 [FAIL]
+    input: "4500.86"
+    expected: "400.09"
+    actual: "400 2"
+  - test_index_0idx: 2 [PASS]
+    input: "100"
+    expected: "5.0"
+    actual: "5.0"
+
+Attempt Start Code
+```python
+
+
+valor = float(input("Digite o valor das vendas: "))
+
+if valor <= 1000:
+	print(valor*0.05)
+else:
+	print(1000*0.05 + (valor-1000)*0.1)
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 811
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+
+
+valor = float(input("Digite o valor das vendas: "))
+
+if valor <= 1000:
+	print(valor*0.05)
+else:
+	print(1000*0.05 + (valor-1000)*0.1)
+```
+Run Output
+```text
+Digite o valor das vendas: 10000
+950.0
+```
+
+Local Run 2
+- event_time_delta_ms: 13832
+- raw_log_line: 814
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+
+
+valor = float(input("Digite o valor das vendas: "))
+
+if valor <= 1000:
+	print(valor*0.05)
+else:
+	print(1000*0.05 + (valor-1000)*0.1)
+```
+Run Output
+```text
+Digite o valor das vendas: 1000
+50.0
+```
+
+Local Run 3
+- event_time_delta_ms: 28064
+- raw_log_line: 817
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+
+
+valor = float(input("Digite o valor das vendas: "))
+
+if valor <= 1000:
+	print(valor*0.05)
+else:
+	print(1000*0.05 + (valor-1000)*0.1)
+```
+Run Output
+```text
+Digite o valor das vendas: 10
+0.5
+```
+
+Local Run 4
+- event_time_delta_ms: 30200
+- raw_log_line: 818
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+
+
+valor = float(input("Digite o valor das vendas: "))
+
+if valor <= 1000:
+	print(valor*0.05)
+else:
+	print(1000*0.05 + (valor-1000)*0.1)
+```
+Run Output
+```text
+
+```
+
+Local Run 5
+- event_time_delta_ms: 36269
+- raw_log_line: 819
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+
+
+valor = float(input("Digite o valor das vendas: "))
+
+if valor <= 1000:
+	print(valor*0.05)
+else:
+	print(1000*0.05 + (valor-1000)*0.1)
+```
+Run Output
+```text
+
+```
+
+Edit Segment 1
+- raw_change_event_count: 10
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+45499	824	7	7	7	7	["r"]	[""]	+input
+45551	827	7	8	7	8	["o"]	[""]	+input
+45833	832	7	9	7	9	["u"]	[""]	+input
+45996	836	7	10	7	10	["n"]	[""]	+input
+46185	840	7	11	7	11	["d"]	[""]	+input
+47558	845	7	12	7	12	["("]	[""]	+input
+50520	911	7	42	7	42	[","]	[""]	+input
+50682	915	7	43	7	43	[" "]	[""]	+input
+51086	919	7	44	7	44	["2"]	[""]	+input
+51790	924	7	45	7	45	[")"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 54965
+- raw_log_line: 928
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+
+
+valor = float(input("Digite o valor das vendas: "))
+
+if valor <= 1000:
+	print(valor*0.05)
+else:
+	print(round(1000*0.05 + (valor-1000)*0.1), 2)
+```

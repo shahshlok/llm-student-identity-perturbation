@@ -1,0 +1,590 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 530
+- assessment_id: 4954
+- assessment_title: Lab 2 - Estrutura Condicional Composta
+- exercise_id: 3334
+- student_id: 8722
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-08-22T15:43:22.811000
+
+Execution Result
+
+- submitted_at: 2023-08-22 15:50:33
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [2]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "1.0\n5.0\n6.0"
+    expected: "-2.0\n-3.0"
+    actual: "-2.0\n-3.0"
+  - test_index_0idx: 1 [PASS]
+    input: "1.0\n4.0\n-5.0"
+    expected: "1.0\n-5.0"
+    actual: "1.0\n-5.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "10.0\n6.0\n10.0"
+    expected: "a equacao nao possui raizes reais"
+    actual: "a equacao nao possui produtos reais"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 267
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	8	0	0	0	0	["a"]	[""]	+input
+607	12	0	1	0	1	["="]	[""]	+input
+6944	16	0	2	0	2	["f"]	[""]	+input
+7199	20	0	3	0	3	["l"]	[""]	+input
+7408	24	0	4	0	4	["o"]	[""]	+input
+7615	28	0	5	0	5	["a"]	[""]	+input
+7888	32	0	6	0	6	["t"]	[""]	+input
+10322	37	0	7	0	7	["()"]	[""]	+input
+11807	43	0	8	0	8	["i"]	[""]	+input
+12095	47	0	9	0	9	["n"]	[""]	+input
+12647	51	0	10	0	10	["p"]	[""]	+input
+12977	55	0	11	0	11	["u"]	[""]	+input
+13185	59	0	12	0	12	["t"]	[""]	+input
+13951	63	0	13	0	13	["9"]	[""]	+input
+15375	68	0	13	0	14	[""]	["9"]	+delete
+15902	74	0	13	0	13	["()"]	[""]	+input
+16642	81	0	14	0	14	["\"\""]	[""]	+input
+17823	88	0	15	0	15	["Q"]	[""]	+input
+18417	93	0	16	0	16	["u"]	[""]	+input
+18594	97	0	17	0	17	["a"]	[""]	+input
+19120	101	0	18	0	18	["l"]	[""]	+input
+19343	105	0	19	0	19	[" "]	[""]	+input
+19615	109	0	20	0	20	["o"]	[""]	+input
+19906	113	0	21	0	21	[" "]	[""]	+input
+20145	117	0	22	0	22	["v"]	[""]	+input
+20256	121	0	23	0	23	["a"]	[""]	+input
+20527	125	0	24	0	24	["l"]	[""]	+input
+20735	129	0	25	0	25	["o"]	[""]	+input
+20850	133	0	26	0	26	["r"]	[""]	+input
+21025	137	0	27	0	27	[" "]	[""]	+input
+21169	141	0	28	0	28	["d"]	[""]	+input
+21361	145	0	29	0	29	["e"]	[""]	+input
+21458	149	0	30	0	30	[" "]	[""]	+input
+21935	153	0	31	0	31	["a"]	[""]	+input
+22751	158	0	32	0	32	[":"]	[""]	+input
+23458	163	0	33	0	33	[" "]	[""]	+input
+25810	175	0	37	0	37	["",""]	[""]	+input
+26946	181	1	0	1	0	["b"]	[""]	+input
+27730	185	1	1	1	1	["="]	[""]	+input
+28321	189	1	2	1	2	["f"]	[""]	+input
+28511	193	1	3	1	3	["l"]	[""]	+input
+28690	197	1	4	1	4	["o"]	[""]	+input
+28976	201	1	5	1	5	["a"]	[""]	+input
+29233	205	1	6	1	6	["t"]	[""]	+input
+31295	210	1	7	1	7	["()"]	[""]	+input
+31728	216	1	8	1	8	["i"]	[""]	+input
+31983	220	1	9	1	9	["n"]	[""]	+input
+32463	224	1	10	1	10	["p"]	[""]	+input
+32815	228	1	11	1	11	["u"]	[""]	+input
+33103	232	1	12	1	12	["t"]	[""]	+input
+33905	237	1	13	1	13	["()"]	[""]	+input
+36593	244	1	14	1	14	["\"\""]	[""]	+input
+36978	249	1	15	1	15	["Q"]	[""]	+input
+37534	254	1	16	1	16	["u"]	[""]	+input
+37665	258	1	17	1	17	["a"]	[""]	+input
+37905	262	1	18	1	18	["l"]	[""]	+input
+38130	266	1	19	1	19	[" "]	[""]	+input
+38385	270	1	20	1	20	["o"]	[""]	+input
+38671	274	1	21	1	21	[" "]	[""]	+input
+38879	278	1	22	1	22	["v"]	[""]	+input
+39007	282	1	23	1	23	["a"]	[""]	+input
+39263	286	1	24	1	24	["l"]	[""]	+input
+39426	290	1	25	1	25	["o"]	[""]	+input
+39599	294	1	26	1	26	["r"]	[""]	+input
+39758	298	1	27	1	27	[" "]	[""]	+input
+39951	302	1	28	1	28	["d"]	[""]	+input
+40178	306	1	29	1	29	["e"]	[""]	+input
+40690	310	1	30	1	30	[" "]	[""]	+input
+41055	314	1	31	1	31	["b"]	[""]	+input
+42833	319	1	32	1	32	["?"]	[""]	+input
+43202	324	1	33	1	33	[" "]	[""]	+input
+45807	328	0	32	0	33	[""]	[":"]	+delete
+46415	334	0	32	0	32	["?"]	[""]	+input
+49167	340	1	37	1	37	["",""]	[""]	+input
+49663	346	2	0	2	0	["c"]	[""]	+input
+51359	350	2	1	2	1	["="]	[""]	+input
+52689	354	2	2	2	2	["f"]	[""]	+input
+52834	358	2	3	2	3	["l"]	[""]	+input
+53058	362	2	4	2	4	["o"]	[""]	+input
+53618	366	2	5	2	5	["a"]	[""]	+input
+53810	370	2	6	2	6	["t"]	[""]	+input
+56270	375	2	7	2	7	["()"]	[""]	+input
+56561	381	2	8	2	8	["i"]	[""]	+input
+56866	385	2	9	2	9	["n"]	[""]	+input
+57411	389	2	10	2	10	["p"]	[""]	+input
+57794	393	2	11	2	11	["u"]	[""]	+input
+58050	397	2	12	2	12	["t"]	[""]	+input
+59070	402	2	13	2	13	["()"]	[""]	+input
+60591	409	2	14	2	14	["\"\""]	[""]	+input
+60959	414	2	15	2	15	["Q"]	[""]	+input
+61505	419	2	16	2	16	["u"]	[""]	+input
+62768	423	2	17	2	17	["a"]	[""]	+input
+62879	426	2	18	2	18	["l"]	[""]	+input
+63105	431	2	19	2	19	[" "]	[""]	+input
+63374	435	2	20	2	20	["o"]	[""]	+input
+65071	439	2	21	2	21	[" "]	[""]	+input
+65311	443	2	22	2	22	["v"]	[""]	+input
+65518	447	2	23	2	23	["a"]	[""]	+input
+66062	451	2	24	2	24	["l"]	[""]	+input
+66270	455	2	25	2	25	["o"]	[""]	+input
+66497	459	2	26	2	26	["r"]	[""]	+input
+66719	463	2	27	2	27	[" "]	[""]	+input
+66895	467	2	28	2	28	["d"]	[""]	+input
+67105	471	2	29	2	29	["e"]	[""]	+input
+67263	475	2	30	2	30	[" "]	[""]	+input
+68526	479	2	31	2	31	["c"]	[""]	+input
+70738	484	2	32	2	32	["?"]	[""]	+input
+71120	489	2	33	2	33	[" "]	[""]	+input
+84576	493	2	37	2	37	["",""]	[""]	+input
+84991	498	3	0	3	0	["",""]	[""]	+input
+85759	504	4	0	4	0	["d"]	[""]	+input
+85983	508	4	1	4	1	["e"]	[""]	+input
+86190	512	4	2	4	2	["l"]	[""]	+input
+86735	516	4	3	4	3	["t"]	[""]	+input
+86863	520	4	4	4	4	["a"]	[""]	+input
+89298	524	4	5	4	5	["="]	[""]	+input
+94816	528	4	6	4	6	["b"]	[""]	+input
+101506	533	4	7	4	7	["*"]	[""]	+input
+101650	537	4	8	4	8	["*"]	[""]	+input
+102178	542	4	9	4	9	["2"]	[""]	+input
+104513	546	4	10	4	10	["-"]	[""]	+input
+106703	551	4	11	4	11	["()"]	[""]	+input
+109887	557	4	12	4	12	["4"]	[""]	+input
+111154	562	4	13	4	13	["*"]	[""]	+input
+112241	567	4	14	4	14	["a"]	[""]	+input
+113168	572	4	15	4	15	["*"]	[""]	+input
+113601	577	4	16	4	16	["c"]	[""]	+input
+115952	581	4	18	4	18	["",""]	[""]	+input
+140466	587	5	0	5	0	["i"]	[""]	+input
+141326	591	5	1	5	1	["f"]	[""]	+input
+142286	595	5	2	5	2	[" "]	[""]	+input
+256705	603	5	3	5	3	["d"]	[""]	+input
+256942	607	5	4	5	4	["e"]	[""]	+input
+257087	611	5	5	5	5	["l"]	[""]	+input
+257534	615	5	6	5	6	["t"]	[""]	+input
+257649	619	5	7	5	7	["a"]	[""]	+input
+259279	623	5	8	5	8	[" "]	[""]	+input
+260622	628	5	9	5	9	["<"]	[""]	+input
+261246	633	5	10	5	10	[" "]	[""]	+input
+261557	637	5	11	5	11	["0"]	[""]	+input
+262894	642	5	12	5	12	[":"]	[""]	+input
+263520	646	5	13	5	13	["",""]	[""]	+input
+263520	647	6	0	6	0	["\t"]	[""]	+input
+266290	653	6	1	6	1	["p"]	[""]	+input
+266496	657	6	2	6	2	["r"]	[""]	+input
+266722	661	6	3	6	3	["i"]	[""]	+input
+267153	665	6	4	6	4	["n"]	[""]	+input
+267262	669	6	5	6	5	["t"]	[""]	+input
+268016	674	6	6	6	6	["()"]	[""]	+input
+268510	681	6	7	6	7	["\"\""]	[""]	+input
+268862	687	6	8	6	8	["a"]	[""]	+input
+269278	691	6	9	6	9	[" "]	[""]	+input
+269550	695	6	10	6	10	["e"]	[""]	+input
+269826	699	6	11	6	11	["q"]	[""]	+input
+269950	703	6	12	6	12	["u"]	[""]	+input
+270094	707	6	13	6	13	["a"]	[""]	+input
+270258	711	6	14	6	14	["c"]	[""]	+input
+270383	715	6	15	6	15	["a"]	[""]	+input
+270689	719	6	16	6	16	["o"]	[""]	+input
+270990	723	6	17	6	17	[" "]	[""]	+input
+271182	727	6	18	6	18	["n"]	[""]	+input
+271390	731	6	19	6	19	["a"]	[""]	+input
+271537	735	6	20	6	20	["o"]	[""]	+input
+271790	739	6	21	6	21	[" "]	[""]	+input
+272145	743	6	22	6	22	["p"]	[""]	+input
+272354	747	6	23	6	23	["o"]	[""]	+input
+272478	751	6	24	6	24	["s"]	[""]	+input
+272642	755	6	25	6	25	["s"]	[""]	+input
+272750	759	6	26	6	26	["u"]	[""]	+input
+272926	763	6	27	6	27	["i"]	[""]	+input
+273198	767	6	28	6	28	[" "]	[""]	+input
+273486	771	6	29	6	29	["p"]	[""]	+input
+273646	775	6	30	6	30	["r"]	[""]	+input
+273777	779	6	31	6	31	["o"]	[""]	+input
+273934	783	6	32	6	32	["d"]	[""]	+input
+274127	787	6	33	6	33	["u"]	[""]	+input
+274398	791	6	34	6	34	["t"]	[""]	+input
+274479	794	6	35	6	35	["o"]	[""]	+input
+274801	799	6	36	6	36	["s"]	[""]	+input
+275121	803	6	37	6	37	["r"]	[""]	+input
+276798	806	6	37	6	38	[""]	["r"]	+delete
+277106	811	6	37	6	37	[" "]	[""]	+input
+277217	815	6	38	6	38	["r"]	[""]	+input
+277406	819	6	39	6	39	["e"]	[""]	+input
+277630	823	6	40	6	40	["e"]	[""]	+input
+279007	826	6	40	6	41	[""]	["e"]	+delete
+279694	831	6	40	6	40	["a"]	[""]	+input
+279823	834	6	41	6	41	["i"]	[""]	+input
+280025	839	6	42	6	42	["s"]	[""]	+input
+281104	844	6	43	6	43	[":"]	[""]	+input
+282543	848	6	43	6	44	[""]	[":"]	+delete
+286560	853	6	45	6	45	["",""]	[""]	+input
+286560	854	7	0	7	0	["\t"]	[""]	+input
+287218	860	7	1	7	1	["e"]	[""]	+input
+287342	864	7	2	7	2	["l"]	[""]	+input
+287617	868	7	3	7	3	["s"]	[""]	+input
+287854	872	7	4	7	4	["e"]	[""]	+input
+288813	875	7	4	7	5	[""]	["e"]	+delete
+288975	879	7	3	7	4	[""]	["s"]	+delete
+289359	883	7	2	7	3	[""]	["l"]	+delete
+289663	887	7	1	7	2	[""]	["e"]	+delete
+290077	891	7	0	7	1	[""]	["\t"]	+delete
+291025	896	7	0	7	0	["e"]	[""]	+input
+291198	900	7	1	7	1	["l"]	[""]	+input
+291458	904	7	2	7	2	["s"]	[""]	+input
+291646	908	7	3	7	3	["e"]	[""]	+input
+294065	913	7	4	7	4	[":"]	[""]	+input
+294496	917	7	5	7	5	["",""]	[""]	+input
+294496	918	8	0	8	0	["\t"]	[""]	+input
+309425	924	8	1	8	1	["x"]	[""]	+input
+309874	928	8	2	8	2	["1"]	[""]	+input
+310461	932	8	3	8	3	["="]	[""]	+input
+314209	937	8	4	8	4	["()"]	[""]	+input
+318206	943	8	5	8	5	["-"]	[""]	+input
+322654	947	8	6	8	6	["b"]	[""]	+input
+328814	952	8	7	8	7	["+"]	[""]	+input
+340625	958	8	8	8	8	["()"]	[""]	+input
+340962	964	8	9	8	9	["d"]	[""]	+input
+341233	968	8	10	8	10	["e"]	[""]	+input
+341389	972	8	11	8	11	["l"]	[""]	+input
+341842	976	8	12	8	12	["t"]	[""]	+input
+341983	980	8	13	8	13	["a"]	[""]	+input
+343358	985	8	14	8	14	["*"]	[""]	+input
+343537	989	8	15	8	15	["*"]	[""]	+input
+349373	995	8	16	8	16	["()"]	[""]	+input
+349918	1001	8	17	8	17	["1"]	[""]	+input
+350942	1005	8	18	8	18	["/"]	[""]	+input
+351582	1009	8	19	8	19	["2"]	[""]	+input
+370064	1015	8	23	8	23	["?"]	[""]	+input
+371021	1021	8	24	8	24	["()"]	[""]	+input
+371836	1026	8	24	8	26	[""]	["()"]	+delete
+372349	1030	8	23	8	24	[""]	["?"]	+delete
+373153	1035	8	23	8	23	["/"]	[""]	+input
+373857	1040	8	24	8	24	["()"]	[""]	+input
+375438	1046	8	25	8	25	["2"]	[""]	+input
+376593	1051	8	26	8	26	["*"]	[""]	+input
+377042	1056	8	27	8	27	["a"]	[""]	+input
+379437	1062	8	29	8	29	["",""]	[""]	+input
+379438	1063	9	0	9	0	["\t"]	[""]	+input
+379966	1069	9	1	9	1	["x"]	[""]	+input
+380285	1073	9	2	9	2	["2"]	[""]	+input
+381486	1077	9	3	9	3	["="]	[""]	+input
+391327	1090	9	4	9	4	["(-b+(delta**(1/2)))/(2*a)"]	[""]	paste
+393517	1095	9	7	9	8	[""]	["+"]	+delete
+394319	1100	9	7	9	7	["-"]	[""]	+input
+396573	1104	9	29	9	29	["",""]	[""]	+input
+396574	1105	10	0	10	0	["\t"]	[""]	+input
+397296	1110	10	1	10	1	["",""]	[""]	+input
+397297	1111	11	0	11	0	["\t"]	[""]	+input
+397823	1117	11	1	11	1	["p"]	[""]	+input
+398081	1121	11	2	11	2	["r"]	[""]	+input
+398239	1125	11	3	11	3	["i"]	[""]	+input
+398594	1129	11	4	11	4	["n"]	[""]	+input
+398669	1133	11	5	11	5	["t"]	[""]	+input
+399581	1138	11	6	11	6	["()"]	[""]	+input
+400993	1144	11	7	11	7	["x"]	[""]	+input
+401166	1148	11	8	11	8	["1"]	[""]	+input
+402495	1154	11	10	11	10	["",""]	[""]	+input
+402496	1155	12	0	12	0	["\t"]	[""]	+input
+403043	1161	12	1	12	1	["p"]	[""]	+input
+403440	1165	12	2	12	2	["r"]	[""]	+input
+403549	1168	12	3	12	3	["i"]	[""]	+input
+403886	1173	12	4	12	4	["n"]	[""]	+input
+404926	1177	12	5	12	5	["t"]	[""]	+input
+406349	1182	12	6	12	6	["()"]	[""]	+input
+406754	1188	12	7	12	7	["x"]	[""]	+input
+406993	1192	12	8	12	8	["2"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 430431
+- raw_log_line: 1197
+- feedback: "You're almost there! Your code is 67% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+a=float(input("Qual o valor de a? "))
+b=float(input("Qual o valor de b? "))
+c=float(input("Qual o valor de c? "))
+
+delta=b**2-(4*a*c)
+if delta < 0:
+	print("a equacao nao possui produtos reais")
+else:
+	x1=(-b+(delta**(1/2)))/(2*a)
+	x2=(-b-(delta**(1/2)))/(2*a)
+	
+	print(x1)
+	print(x2)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-08-22T15:51:31.815000
+
+Execution Result
+
+- submitted_at: 2023-08-22 15:51:53
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [2]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "1.0\n5.0\n6.0"
+    expected: "-2.0\n-3.0"
+    actual: "-2.0\n-3.0"
+  - test_index_0idx: 1 [PASS]
+    input: "1.0\n4.0\n-5.0"
+    expected: "1.0\n-5.0"
+    actual: "1.0\n-5.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "10.0\n6.0\n10.0"
+    expected: "a equacao nao possui raizes reais"
+    actual: "a equacao nao possui produtos reais"
+
+Attempt Start Code
+```python
+a=float(input("Qual o valor de a? "))
+b=float(input("Qual o valor de b? "))
+c=float(input("Qual o valor de c? "))
+
+delta=b**2-(4*a*c)
+if delta < 0:
+	print("a equacao nao possui produtos reais")
+else:
+	x1=(-b+(delta**(1/2)))/(2*a)
+	x2=(-b-(delta**(1/2)))/(2*a)
+	
+	print(x1)
+	print(x2)
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1201	8	8	8	9	[""]	["("]	+delete
+2529	1206	9	8	9	9	[""]	["("]	+delete
+5216	1211	8	21	8	22	[""]	[")"]	+delete
+8048	1216	9	21	9	22	[""]	[")"]	+delete
+
+Local Run 1
+- event_time_delta_ms: 20547
+- raw_log_line: 1225
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+a=float(input("Qual o valor de a? "))
+b=float(input("Qual o valor de b? "))
+c=float(input("Qual o valor de c? "))
+
+delta=b**2-(4*a*c)
+if delta < 0:
+	print("a equacao nao possui produtos reais")
+else:
+	x1=(-b+delta**(1/2))/(2*a)
+	x2=(-b-delta**(1/2))/(2*a)
+	
+	print(x1)
+	print(x2)
+```
+Run Output
+```text
+Qual o valor de a? 1.0
+Qual o valor de b? -2.0
+Qual o valor de c? -3.0
+3.0
+-1.0
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 21919
+- raw_log_line: 1226
+- feedback: "You're almost there! Your code is 67% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+a=float(input("Qual o valor de a? "))
+b=float(input("Qual o valor de b? "))
+c=float(input("Qual o valor de c? "))
+
+delta=b**2-(4*a*c)
+if delta < 0:
+	print("a equacao nao possui produtos reais")
+else:
+	x1=(-b+delta**(1/2))/(2*a)
+	x2=(-b-delta**(1/2))/(2*a)
+	
+	print(x1)
+	print(x2)
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-08-22T15:52:21.448000
+
+Execution Result
+
+- submitted_at: 2023-08-22 15:52:47
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [2]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "1.0\n5.0\n6.0"
+    expected: "-2.0\n-3.0"
+    actual: "-2.0\n-3.0"
+  - test_index_0idx: 1 [PASS]
+    input: "1.0\n4.0\n-5.0"
+    expected: "1.0\n-5.0"
+    actual: "1.0\n-5.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "10.0\n6.0\n10.0"
+    expected: "a equacao nao possui raizes reais"
+    actual: "a equacao nao possui produtos reais"
+
+Attempt Start Code
+```python
+a=float(input("Qual o valor de a? "))
+b=float(input("Qual o valor de b? "))
+c=float(input("Qual o valor de c? "))
+
+delta=b**2-(4*a*c)
+if delta < 0:
+	print("a equacao nao possui produtos reais")
+else:
+	x1=(-b+delta**(1/2))/(2*a)
+	x2=(-b-delta**(1/2))/(2*a)
+	
+	print(x1)
+	print(x2)
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1230	8	26	8	27	[""]	[")"]	+delete
+1633	1243	8	22	8	23	[""]	["("]	+delete
+4161	1265	9	26	9	27	[""]	[")"]	+delete
+5791	1278	9	22	9	23	[""]	["("]	+delete
+
+Local Run 1
+- event_time_delta_ms: 24998
+- raw_log_line: 1287
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+a=float(input("Qual o valor de a? "))
+b=float(input("Qual o valor de b? "))
+c=float(input("Qual o valor de c? "))
+
+delta=b**2-(4*a*c)
+if delta < 0:
+	print("a equacao nao possui produtos reais")
+else:
+	x1=(-b+delta**(1/2))/2*a
+	x2=(-b-delta**(1/2))/2*a
+	
+	print(x1)
+	print(x2)
+```
+Run Output
+```text
+Qual o valor de a? 1.0
+Qual o valor de b? -2.0
+Qual o valor de c? -3.0
+3.0
+-1.0
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 26414
+- raw_log_line: 1288
+- feedback: "You're almost there! Your code is 67% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+a=float(input("Qual o valor de a? "))
+b=float(input("Qual o valor de b? "))
+c=float(input("Qual o valor de c? "))
+
+delta=b**2-(4*a*c)
+if delta < 0:
+	print("a equacao nao possui produtos reais")
+else:
+	x1=(-b+delta**(1/2))/2*a
+	x2=(-b-delta**(1/2))/2*a
+	
+	print(x1)
+	print(x2)
+```

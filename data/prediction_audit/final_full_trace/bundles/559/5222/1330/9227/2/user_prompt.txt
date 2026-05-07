@@ -1,0 +1,249 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 559
+- assessment_id: 5222
+- assessment_title: Lab 0 – Primeiros passos com o Python - 2020
+- exercise_id: 1330
+- student_id: 9227
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-12-05T15:08:31.172000
+
+Execution Result
+
+- submitted_at: 2023-12-05 15:10:18
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "xxx"
+    expected: "41.67"
+    actual: "75"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 60
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	8	0	0	0	0	["r"]	[""]	+input
+96	12	0	1	0	1	["o"]	[""]	+input
+304	16	0	2	0	2	["u"]	[""]	+input
+528	20	0	3	0	3	["n"]	[""]	+input
+624	24	0	4	0	4	["d"]	[""]	+input
+2240	29	0	5	0	5	["()"]	[""]	+input
+18206	34	0	5	0	7	[""]	["()"]	+delete
+18350	38	0	4	0	5	[""]	["d"]	+delete
+18510	42	0	3	0	4	[""]	["n"]	+delete
+18750	46	0	2	0	3	[""]	["u"]	+delete
+18894	50	0	1	0	2	[""]	["o"]	+delete
+19038	54	0	0	0	1	[""]	["r"]	+delete
+19888	59	0	0	0	0	["p"]	[""]	+input
+20112	63	0	1	0	1	["r"]	[""]	+input
+20304	67	0	2	0	2	["i"]	[""]	+input
+20576	71	0	3	0	3	["n"]	[""]	+input
+20672	75	0	4	0	4	["n"]	[""]	+input
+21934	78	0	4	0	5	[""]	["n"]	+delete
+22141	83	0	4	0	4	["t"]	[""]	+input
+24176	89	0	5	0	5	["9"]	[""]	+input
+25056	93	0	6	0	6	["r"]	[""]	+input
+26240	97	0	7	0	7	["o"]	[""]	+input
+26416	101	0	8	0	8	["u"]	[""]	+input
+26640	105	0	9	0	9	["n"]	[""]	+input
+26784	109	0	10	0	10	["d"]	[""]	+input
+27902	112	0	10	0	11	[""]	["d"]	+delete
+28046	116	0	9	0	10	[""]	["n"]	+delete
+28190	120	0	8	0	9	[""]	["u"]	+delete
+28318	124	0	7	0	8	[""]	["o"]	+delete
+28574	128	0	6	0	7	[""]	["r"]	+delete
+28894	132	0	5	0	6	[""]	["9"]	+delete
+29949	139	0	5	0	5	["9"]	[""]	+input
+31360	143	0	6	0	6	["r"]	[""]	+input
+33022	146	0	6	0	7	[""]	["r"]	+delete
+33198	150	0	5	0	6	[""]	["9"]	+delete
+34720	156	0	5	0	5	["()"]	[""]	+input
+35841	162	0	6	0	6	["r"]	[""]	+input
+36241	166	0	7	0	7	["o"]	[""]	+input
+36448	170	0	8	0	8	["u"]	[""]	+input
+36800	174	0	9	0	9	["n"]	[""]	+input
+36912	178	0	10	0	10	["d"]	[""]	+input
+53280	183	0	11	0	11	["()"]	[""]	+input
+54640	189	0	12	0	12	["2"]	[""]	+input
+54816	193	0	13	0	13	["5"]	[""]	+input
+55984	197	0	14	0	14	["0"]	[""]	+input
+56896	201	0	15	0	15	["/"]	[""]	+input
+58062	205	0	16	0	16	["4"]	[""]	+input
+80462	208	0	16	0	17	[""]	["4"]	+delete
+80670	212	0	15	0	16	[""]	["/"]	+delete
+80846	216	0	14	0	15	[""]	["0"]	+delete
+81198	220	0	13	0	14	[""]	["5"]	+delete
+81598	224	0	12	0	13	[""]	["2"]	+delete
+82992	229	0	12	0	12	["5"]	[""]	+input
+83152	233	0	13	0	13	["0"]	[""]	+input
+84464	237	0	14	0	14	[","]	[""]	+input
+84689	241	0	15	0	15	["0"]	[""]	+input
+94270	248	0	13	0	14	[""]	["0"]	+delete
+99950	252	0	12	0	13	[""]	["5"]	+delete
+102817	257	0	12	0	12	["7"]	[""]	+input
+103025	261	0	13	0	13	["5"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 107268
+- raw_log_line: 264
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print(round(75,0))
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-12-05T15:10:22.498000
+
+Execution Result
+
+- submitted_at: 2023-12-05 15:10:43
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "xxx"
+    expected: "41.67"
+    actual: "62.0"
+
+Attempt Start Code
+```python
+print(round(75,0))
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 7
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	268	0	13	0	14	[""]	["5"]	+delete
+144	272	0	12	0	13	[""]	["7"]	+delete
+5491	277	0	12	0	12	["2"]	[""]	+input
+5699	281	0	13	0	13	["5"]	[""]	+input
+6291	285	0	14	0	14	["0"]	[""]	+input
+11363	289	0	15	0	15	["/"]	[""]	+input
+13571	293	0	16	0	16	["4"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 20633
+- raw_log_line: 296
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print(round(250/4,0))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-12-05T15:10:45.810000
+
+Execution Result
+
+- submitted_at: 2023-12-05 15:10:58
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "xxx"
+    expected: "41.67"
+    actual: "62"
+
+Attempt Start Code
+```python
+print(round(250/4,0))
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 9
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	300	0	16	0	17	[""]	["4"]	+delete
+160	304	0	15	0	16	[""]	["/"]	+delete
+304	308	0	14	0	15	[""]	["0"]	+delete
+464	312	0	13	0	14	[""]	["5"]	+delete
+848	316	0	12	0	13	[""]	["2"]	+delete
+2771	321	0	12	0	12	["6"]	[""]	+input
+2915	325	0	13	0	13	["2"]	[""]	+input
+7152	329	0	15	0	16	[""]	["0"]	+delete
+7619	334	0	15	0	15	["5"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 12313
+- raw_log_line: 337
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print(round(62,5))
+```

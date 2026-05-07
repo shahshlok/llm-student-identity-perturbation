@@ -1,0 +1,90 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "527",
+    "assessment_id": "4992",
+    "exercise_id": "6094",
+    "student_id": "8762",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "vp = float(input(\"Informe o valor do Plano individual: \"))\nnf = int(input(\"numero de membros na familia: \"))\n\nif nf==2:\n\tdesconto1 = (vp*15)/100\n\tdesconto2 = (desconto1*15)/100\n\ttotal = (vp*nf)-desconto2\nelif nf==3:\n\tdesconto1 = (vp*25)/100\n\tdesconto2 = (desconto1*15)/100\n\ttotal = (vp*nf)-desconto2\nelif nf>=4:\n\tdesconto1 = (vp*35)/100\n\tdesconto2 = (desconto1*15)/100\n\ttotal = (vp*nf)-desconto2\nelse: \n\ttotal = vp\n\nprint(round(total,2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "vp = float(input(\"Informe o valor do Plano individual: \"))\nnf = int(input(\"numero de membros na familia: \"))\n\nif nf==2:\n\tdesconto1 = (vp*15)/100\n\ttotal = (vp*nf)-desconto1-desconto1\nelif nf==3:\n\tdesconto1 = (vp*25)/100\n\ttotal = (vp*nf)-desconto1-desconto1\nelif nf>=4:\n\tdesconto1 = (vp*35)/100\n\ttotal = (vp*nf)-desconto1-desconto1\nelse: \n\ttotal = vp\n\nprint(round(total,2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "200.0\n3",
+        "expected": "R$ 450.0",
+        "actual": "500.0"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "400.0\n4",
+        "expected": "R$ 1040.0",
+        "actual": "1320.0"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "1200\n1",
+        "expected": "R$ 1200.0",
+        "actual": "1200.0"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 8,
+        "end_line_0idx": 8,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 11,
+        "end_line_0idx": 11,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 3,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5
+      },
+      {
+        "start_line_0idx": 8,
+        "end_line_0idx": 8
+      },
+      {
+        "start_line_0idx": 11,
+        "end_line_0idx": 11
+      }
+    ]
+  }
+}

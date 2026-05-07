@@ -1,0 +1,478 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 589
+- assessment_id: 5899
+- assessment_title: Lista 6 - Exercícios em Sala
+- exercise_id: 2563
+- student_id: 9737
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-07-16T15:18:55.578000
+
+Execution Result
+
+- submitted_at: 2024-07-16 15:25:52
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "[6.3,6.4,6.0,6.9,5.5,5.2]\n[4.5,3.8,7.8,4.8,9.6,9.2,8.7,2.3,2.9]\n[5.6,4.7,3.8,7.5,8.2,8.4,7.1,6.9,6.7]\n[1.1,3.1,2.7,7.8,6.7,4.6,4.9,7.0]\n[1]"
+    expected: "6\n0\n3\n1"
+    actual: "6\n6\n9\n10"
+  - test_index_0idx: 1 [FAIL]
+    input: "[5.1,5.2,5.4,5.3,5.7,5.8,6.1,5.6,5.5,5.9,6.2]\n[2.7,6.8,4.7,5.7,3.5,6.6,7.0,5.4]\n[8.7,8.6,8.9,8.6,7.5,7.2,6.9,7.4,7.2]\n[1]"
+    expected: "11\n4\n1"
+    actual: "11\n15\n16"
+  - test_index_0idx: 2 [FAIL]
+    input: "[8.5,7.5,6.8,6.9,7.0,5.6,5.8,6.3]\n[7.3,7.1,7.0,6.8,6.0,5.0]\n[1]"
+    expected: "5\n3"
+    actual: "5\n8"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 174
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["f"]	[""]	+input
+111	10	0	1	0	1	["r"]	[""]	+input
+173	14	0	2	0	2	["o"]	[""]	+input
+428	19	0	3	0	3	["m"]	[""]	+input
+542	23	0	4	0	4	[" "]	[""]	+input
+860	27	0	5	0	5	["n"]	[""]	+input
+990	30	0	6	0	6	["u"]	[""]	+input
+1247	35	0	7	0	7	["m"]	[""]	+input
+2127	39	0	8	0	8	["p"]	[""]	+input
+2370	43	0	9	0	9	["y"]	[""]	+input
+2511	47	0	10	0	10	[" "]	[""]	+input
+2862	51	0	11	0	11	["i"]	[""]	+input
+3471	55	0	12	0	12	["m"]	[""]	+input
+3678	59	0	13	0	13	["p"]	[""]	+input
+3871	63	0	14	0	14	["o"]	[""]	+input
+4271	67	0	15	0	15	["r"]	[""]	+input
+4446	71	0	16	0	16	["t"]	[""]	+input
+5487	75	0	17	0	17	["*"]	[""]	+input
+7760	78	0	18	0	18	["",""]	[""]	+input
+8093	83	1	0	1	0	["",""]	[""]	+input
+10256	89	2	0	2	0	["t"]	[""]	+input
+10317	92	2	1	2	1	["n"]	[""]	+input
+11037	96	2	1	2	2	[""]	["n"]	+delete
+11213	100	2	0	2	1	[""]	["t"]	+delete
+11521	105	2	0	2	0	["n"]	[""]	+input
+11647	109	2	1	2	1	["t"]	[""]	+input
+12447	113	2	2	2	2	[" "]	[""]	+input
+12542	116	2	3	2	3	["="]	[""]	+input
+12687	121	2	4	2	4	[" "]	[""]	+input
+13710	125	2	5	2	5	["a"]	[""]	+input
+13920	129	2	6	2	6	["r"]	[""]	+input
+14065	133	2	7	2	7	["r"]	[""]	+input
+14371	137	2	8	2	8	["a"]	[""]	+input
+15343	141	2	9	2	9	["y"]	[""]	+input
+19277	146	2	10	2	10	["()"]	[""]	+input
+20127	152	2	11	2	11	["e"]	[""]	+input
+20413	156	2	12	2	12	["v"]	[""]	+input
+20543	160	2	13	2	13	["a"]	[""]	+input
+20863	164	2	14	2	14	["l"]	[""]	+input
+21712	169	2	15	2	15	["()"]	[""]	+input
+22031	175	2	16	2	16	["i"]	[""]	+input
+22975	179	2	17	2	17	["n"]	[""]	+input
+23231	183	2	18	2	18	["p"]	[""]	+input
+23439	187	2	19	2	19	["u"]	[""]	+input
+23599	191	2	20	2	20	["t"]	[""]	+input
+24656	196	2	21	2	21	["()"]	[""]	+input
+54378	205	2	25	2	25	[" "]	[""]	+input
+85175	208	2	25	2	26	[""]	[" "]	+delete
+120118	212	2	25	2	25	["",""]	[""]	+input
+120387	217	3	0	3	0	["",""]	[""]	+input
+142133	223	4	0	4	0	["w"]	[""]	+input
+142240	226	4	1	4	1	["h"]	[""]	+input
+142608	231	4	2	4	2	["i"]	[""]	+input
+142960	235	4	3	4	3	["k"]	[""]	+input
+143024	238	4	4	4	4	["e"]	[""]	+input
+143870	242	4	4	4	5	[""]	["e"]	+delete
+144110	246	4	3	4	4	[""]	["k"]	+delete
+144512	251	4	3	4	3	["l"]	[""]	+input
+144672	255	4	4	4	4	["w"]	[""]	+input
+145278	258	4	4	4	5	[""]	["w"]	+delete
+145376	263	4	4	4	4	["e"]	[""]	+input
+146144	267	4	5	4	5	[" "]	[""]	+input
+148783	271	4	6	4	6	["s"]	[""]	+input
+149555	275	4	7	4	7	["i"]	[""]	+input
+149632	278	4	8	4	8	["z"]	[""]	+input
+149887	283	4	9	4	9	["e"]	[""]	+input
+151378	288	4	10	4	10	["()"]	[""]	+input
+152417	294	4	11	4	11	["n"]	[""]	+input
+152494	297	4	12	4	12	["t"]	[""]	+input
+154414	305	4	14	4	14	[" "]	[""]	+input
+155200	310	4	15	4	15	[">"]	[""]	+input
+156161	315	4	16	4	16	[" "]	[""]	+input
+156417	319	4	17	4	17	["1"]	[""]	+input
+157312	324	4	18	4	18	[":"]	[""]	+input
+157682	328	4	19	4	19	["",""]	[""]	+input
+157682	329	5	0	5	0	["\t"]	[""]	+input
+169266	335	3	0	3	0	["",""]	[""]	+input
+170175	340	4	0	4	0	["",""]	[""]	+input
+173840	345	4	0	5	0	[""]	["",""]	+delete
+175745	351	4	0	4	0	["q"]	[""]	+input
+175871	355	4	1	4	1	["t"]	[""]	+input
+176078	359	4	2	4	2	["d"]	[""]	+input
+176817	363	4	3	4	3	[" "]	[""]	+input
+176912	367	4	4	4	4	["="]	[""]	+input
+177024	371	4	5	4	5	[" "]	[""]	+input
+177390	375	4	6	4	6	["o"]	[""]	+input
+178205	378	4	6	4	7	[""]	["o"]	+delete
+178401	383	4	6	4	6	["0"]	[""]	+input
+207270	388	6	1	6	1	["f"]	[""]	+input
+207390	391	6	2	6	2	["o"]	[""]	+input
+207557	396	6	3	6	3	["r"]	[""]	+input
+208451	400	6	4	6	4	[" "]	[""]	+input
+208657	404	6	5	6	5	["i"]	[""]	+input
+208756	407	6	6	6	6	[" "]	[""]	+input
+209025	412	6	7	6	7	["i"]	[""]	+input
+209189	416	6	8	6	8	["n"]	[""]	+input
+209425	420	6	9	6	9	[" "]	[""]	+input
+209556	424	6	10	6	10	[" "]	[""]	+input
+210271	427	6	10	6	11	[""]	[" "]	+delete
+211745	432	6	10	6	10	["n"]	[""]	+input
+211807	436	6	11	6	11	["t"]	[""]	+input
+213246	441	6	12	6	12	[":"]	[""]	+input
+214483	445	6	13	6	13	["",""]	[""]	+input
+214483	446	7	0	7	0	["\t\t"]	[""]	+input
+215665	452	7	2	7	2	["i"]	[""]	+input
+215729	456	7	3	7	3	["f"]	[""]	+input
+218934	460	7	4	7	4	[" "]	[""]	+input
+220562	464	7	5	7	5	["i"]	[""]	+input
+221841	468	7	6	7	6	[" "]	[""]	+input
+225334	473	7	7	7	7	[">"]	[""]	+input
+225617	478	7	8	7	8	["="]	[""]	+input
+226545	482	7	9	7	9	[" "]	[""]	+input
+226994	486	7	10	7	10	["5"]	[""]	+input
+228817	490	7	11	7	11	[" "]	[""]	+input
+229410	494	7	12	7	12	["a"]	[""]	+input
+229507	497	7	13	7	13	["n"]	[""]	+input
+229871	502	7	14	7	14	["d"]	[""]	+input
+231201	506	7	15	7	15	[" "]	[""]	+input
+231297	509	7	16	7	16	["i"]	[""]	+input
+231523	514	7	17	7	17	[" "]	[""]	+input
+245495	519	7	18	7	18	["<"]	[""]	+input
+246785	524	7	19	7	19	[" "]	[""]	+input
+246879	528	7	20	7	20	["7"]	[""]	+input
+247826	533	7	21	7	21	[":"]	[""]	+input
+253831	537	7	22	7	22	["",""]	[""]	+input
+253831	538	8	0	8	0	["\t\t\t"]	[""]	+input
+256067	544	8	3	8	3	["q"]	[""]	+input
+256434	548	8	4	8	4	["t"]	[""]	+input
+256526	552	8	5	8	5	["d"]	[""]	+input
+257378	556	8	6	8	6	[" "]	[""]	+input
+257841	561	8	7	8	7	["+"]	[""]	+input
+258007	566	8	8	8	8	["="]	[""]	+input
+258546	570	8	9	8	9	[" "]	[""]	+input
+258807	574	8	10	8	10	["1"]	[""]	+input
+296004	580	8	11	8	11	["",""]	[""]	+input
+296004	581	9	0	9	0	["\t\t\t"]	[""]	+input
+296495	586	9	2	9	3	[""]	["\t"]	+delete
+296767	590	9	1	9	2	[""]	["\t"]	+delete
+303562	595	9	1	9	1	["p"]	[""]	+input
+303682	599	9	2	9	2	["r"]	[""]	+input
+304340	603	9	3	9	3	["i"]	[""]	+input
+304642	607	9	4	9	4	["n"]	[""]	+input
+304740	610	9	5	9	5	["t"]	[""]	+input
+305664	616	9	6	9	6	["9"]	[""]	+input
+306512	620	9	6	9	7	[""]	["9"]	+delete
+306693	624	9	5	9	6	[""]	["t"]	+delete
+306880	628	9	4	9	5	[""]	["n"]	+delete
+307024	632	9	3	9	4	[""]	["i"]	+delete
+307188	636	9	2	9	3	[""]	["r"]	+delete
+307588	640	9	1	9	2	[""]	["p"]	+delete
+332469	652	9	1	9	1	["nt = array(eval(input()))"]	[""]	paste
+365028	657	8	11	8	11	["",""]	[""]	+input
+365029	658	9	0	9	0	["\t\t\t"]	[""]	+input
+365424	663	9	2	9	3	[""]	["\t"]	+delete
+366912	667	9	1	9	2	[""]	["\t"]	+delete
+367958	672	9	1	9	1	["P"]	[""]	+input
+368080	676	9	2	9	2	["R"]	[""]	+input
+368227	679	9	3	9	3	["I"]	[""]	+input
+368463	684	9	4	9	4	["N"]	[""]	+input
+368515	687	9	5	9	5	["T"]	[""]	+input
+370239	693	9	5	9	6	[""]	["T"]	+delete
+370416	697	9	4	9	5	[""]	["N"]	+delete
+370544	701	9	3	9	4	[""]	["I"]	+delete
+370704	705	9	2	9	3	[""]	["R"]	+delete
+371023	709	9	1	9	2	[""]	["P"]	+delete
+371651	714	9	1	9	1	["p"]	[""]	+input
+371810	718	9	2	9	2	["r"]	[""]	+input
+371925	721	9	3	9	3	["i"]	[""]	+input
+372163	726	9	4	9	4	["n"]	[""]	+input
+372242	729	9	5	9	5	["t"]	[""]	+input
+373174	735	9	6	9	6	["()"]	[""]	+input
+374774	741	9	7	9	7	["q"]	[""]	+input
+374915	745	9	8	9	8	["t"]	[""]	+input
+375075	749	9	9	9	9	["d"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 416878
+- raw_log_line: 753
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+from numpy import*
+
+nt = array(eval(input()))
+
+qtd = 0
+while size(nt) > 1:
+	for i in nt:
+		if i >= 5 and i < 7:
+			qtd += 1
+	print(qtd)
+	nt = array(eval(input()))
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-07-16T15:27:18.604000
+
+Execution Result
+
+- submitted_at: 2024-07-16 15:27:35
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "[6.3,6.4,6.0,6.9,5.5,5.2]\n[4.5,3.8,7.8,4.8,9.6,9.2,8.7,2.3,2.9]\n[5.6,4.7,3.8,7.5,8.2,8.4,7.1,6.9,6.7]\n[1.1,3.1,2.7,7.8,6.7,4.6,4.9,7.0]\n[1]"
+    expected: "6\n0\n3\n1"
+    actual: "10"
+  - test_index_0idx: 1 [FAIL]
+    input: "[5.1,5.2,5.4,5.3,5.7,5.8,6.1,5.6,5.5,5.9,6.2]\n[2.7,6.8,4.7,5.7,3.5,6.6,7.0,5.4]\n[8.7,8.6,8.9,8.6,7.5,7.2,6.9,7.4,7.2]\n[1]"
+    expected: "11\n4\n1"
+    actual: "16"
+  - test_index_0idx: 2 [FAIL]
+    input: "[8.5,7.5,6.8,6.9,7.0,5.6,5.8,6.3]\n[7.3,7.1,7.0,6.8,6.0,5.0]\n[1]"
+    expected: "5\n3"
+    actual: "8"
+
+Attempt Start Code
+```python
+from numpy import*
+
+nt = array(eval(input()))
+
+qtd = 0
+while size(nt) > 1:
+	for i in nt:
+		if i >= 5 and i < 7:
+			qtd += 1
+	print(qtd)
+	nt = array(eval(input()))
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 32
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	764	9	10	9	11	[""]	[")"]	+delete
+499	767	9	9	9	10	[""]	["d"]	+delete
+531	770	9	8	9	9	[""]	["t"]	+delete
+565	773	9	7	9	8	[""]	["q"]	+delete
+591	776	9	6	9	7	[""]	["("]	+delete
+620	779	9	5	9	6	[""]	["t"]	+delete
+650	782	9	4	9	5	[""]	["n"]	+delete
+947	786	9	3	9	4	[""]	["i"]	+delete
+1135	790	9	2	9	3	[""]	["r"]	+delete
+1424	794	9	1	9	2	[""]	["p"]	+delete
+2063	798	9	0	9	1	[""]	["\t"]	+delete
+2673	802	8	11	9	0	[""]	["",""]	+delete
+5439	813	9	26	9	26	["",""]	[""]	+input
+5439	814	10	0	10	0	["\t"]	[""]	+input
+5840	819	10	0	10	1	[""]	["\t"]	+delete
+6719	824	10	0	10	0	["p"]	[""]	+input
+6978	828	10	1	10	1	["r"]	[""]	+input
+7134	832	10	2	10	2	["i"]	[""]	+input
+7442	836	10	3	10	3	["n"]	[""]	+input
+7486	839	10	4	10	4	["t"]	[""]	+input
+8434	845	10	5	10	5	["9"]	[""]	+input
+9440	849	10	5	10	6	[""]	["9"]	+delete
+9780	855	10	5	10	5	["()"]	[""]	+input
+10863	861	10	6	10	6	["Q"]	[""]	+input
+11199	865	10	7	10	7	["T"]	[""]	+input
+11262	869	10	8	10	8	["D"]	[""]	+input
+12689	874	10	8	10	9	[""]	["D"]	+delete
+12864	878	10	7	10	8	[""]	["T"]	+delete
+13024	882	10	6	10	7	[""]	["Q"]	+delete
+14048	887	10	6	10	6	["q"]	[""]	+input
+14382	891	10	7	10	7	["t"]	[""]	+input
+14499	895	10	8	10	8	["d"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 16917
+- raw_log_line: 899
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+from numpy import*
+
+nt = array(eval(input()))
+
+qtd = 0
+while size(nt) > 1:
+	for i in nt:
+		if i >= 5 and i < 7:
+			qtd += 1
+	nt = array(eval(input()))
+print(qtd)
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-07-16T15:27:37.678000
+
+Execution Result
+
+- submitted_at: 2024-07-16 15:29:33
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "[6.3,6.4,6.0,6.9,5.5,5.2]\n[4.5,3.8,7.8,4.8,9.6,9.2,8.7,2.3,2.9]\n[5.6,4.7,3.8,7.5,8.2,8.4,7.1,6.9,6.7]\n[1.1,3.1,2.7,7.8,6.7,4.6,4.9,7.0]\n[1]"
+    expected: "6\n0\n3\n1"
+    actual: "6\n6\n9\n11"
+  - test_index_0idx: 1 [FAIL]
+    input: "[5.1,5.2,5.4,5.3,5.7,5.8,6.1,5.6,5.5,5.9,6.2]\n[2.7,6.8,4.7,5.7,3.5,6.6,7.0,5.4]\n[8.7,8.6,8.9,8.6,7.5,7.2,6.9,7.4,7.2]\n[1]"
+    expected: "11\n4\n1"
+    actual: "11\n16\n17"
+  - test_index_0idx: 2 [FAIL]
+    input: "[8.5,7.5,6.8,6.9,7.0,5.6,5.8,6.3]\n[7.3,7.1,7.0,6.8,6.0,5.0]\n[1]"
+    expected: "5\n3"
+    actual: "6\n10"
+
+Attempt Start Code
+```python
+from numpy import*
+
+nt = array(eval(input()))
+
+qtd = 0
+while size(nt) > 1:
+	for i in nt:
+		if i >= 5 and i < 7:
+			qtd += 1
+	nt = array(eval(input()))
+print(qtd)
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 25
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	902	10	6	10	9	[""]	["qtd"]	undo
+414	906	10	6	10	6	["Q"]	[""]	undo
+415	907	10	7	10	7	["T"]	[""]	undo
+415	908	10	8	10	8	["D"]	[""]	undo
+766	912	10	6	10	9	[""]	["QTD"]	undo
+767	913	10	5	10	7	[""]	["()"]	undo
+1134	917	10	5	10	5	["9"]	[""]	undo
+1491	921	10	0	10	6	[""]	["print9"]	undo
+1887	925	10	0	10	0	["\t"]	[""]	undo
+2277	929	9	26	10	1	[""]	["","\t"]	undo
+2687	934	8	11	8	11	["",""]	[""]	undo
+2687	935	9	0	9	0	["\t"]	[""]	undo
+2687	936	9	1	9	1	["p"]	[""]	undo
+2688	937	9	2	9	2	["r"]	[""]	undo
+2688	938	9	3	9	3	["i"]	[""]	undo
+2688	939	9	4	9	4	["n"]	[""]	undo
+2689	940	9	5	9	5	["t"]	[""]	undo
+2689	941	9	6	9	6	["("]	[""]	undo
+2689	942	9	7	9	7	["q"]	[""]	undo
+2690	943	9	8	9	8	["t"]	[""]	undo
+2690	944	9	9	9	9	["d"]	[""]	undo
+2690	945	9	10	9	10	[")"]	[""]	undo
+112295	958	7	19	7	19	["+"]	[""]	+input
+113215	962	7	19	7	20	[""]	["+"]	+delete
+113395	967	7	19	7	19	["="]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 116253
+- raw_log_line: 971
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+from numpy import*
+
+nt = array(eval(input()))
+
+qtd = 0
+while size(nt) > 1:
+	for i in nt:
+		if i >= 5 and i <= 7:
+			qtd += 1
+	print(qtd)
+	nt = array(eval(input()))
+```

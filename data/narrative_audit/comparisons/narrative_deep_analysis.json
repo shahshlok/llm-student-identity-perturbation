@@ -1,0 +1,2235 @@
+{
+  "metadata": {
+    "full_path": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_v6/hydrated_predictions.json",
+    "no_trace_path": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_no_trace_v1/hydrated_predictions.json",
+    "prompt_path": "<SOURCE_WORKTREE>/scripts/v6/v61_prompting.py",
+    "output_path": "<SOURCE_WORKTREE>/data/v61_condition_comparisons/narrative_deep_analysis.json",
+    "pair_key": "custom_id",
+    "pair_count": 117,
+    "full_prediction_count": 117,
+    "no_trace_prediction_count": 117
+  },
+  "analysis_1_prompt_vs_model_templates": {
+    "prompt_example_text": "short cautious state summary",
+    "literal_example_reuse_count": 0,
+    "outputs_with_any_prompt_phrase_reuse_count": 10,
+    "outputs_with_any_prompt_phrase_reuse_fraction": 0.042735042735042736,
+    "prompt_phrase_reuse_examples": [
+      {
+        "condition": "full",
+        "summary": "The student likely notices that the loop and append structure already match the task and that the line-4 boolean operator is the main problem. A one-token patch is the most direct next move after seeing unchanged output on every test.",
+        "matched_prompt_phrases": [
+          "is the main"
+        ]
+      },
+      {
+        "condition": "full",
+        "summary": "Likely notices the exact-output problem first. This student submitted without local testing, and the current code already computes the right count and usually the right final array, so a one-line print cleanup is the most direct next repair.",
+        "matched_prompt_phrases": [
+          "the current code"
+        ]
+      },
+      {
+        "condition": "full",
+        "summary": "The student seems close to the real bug and is likely to keep the current loop structure while fixing the comparisons on the same lines they just edited.",
+        "matched_prompt_phrases": [
+          "to keep the"
+        ]
+      },
+      {
+        "condition": "full",
+        "summary": "The student likely still suspects the comparison operator is the main bug, because attempt n repeatedly changed only line 8 and reran tests after each operator experiment.",
+        "matched_prompt_phrases": [
+          "is the main"
+        ]
+      },
+      {
+        "condition": "full",
+        "summary": "The student appears focused on the for-range syntax. In the last interval they edited only line 5 and likely turned a descending range into an empty one, so the next step is probably another local patch there followed by a quick submit.",
+        "matched_prompt_phrases": [
+          "one so the"
+        ]
+      },
+      {
+        "condition": "full",
+        "summary": "The student appears to have a nearly correct solution. All three failures are consistent with output formatting, and the current code differs most obviously from expected output on line 3, where the final message is missing an exclamation mark.",
+        "matched_prompt_phrases": [
+          "the current code"
+        ]
+      },
+      {
+        "condition": "no_trace",
+        "summary": "The student likely sees that the loop is counting upward and missing the required countdown endpoints, and may replace it with a descending inclusive range.",
+        "matched_prompt_phrases": [
+          "replace it with",
+          "replace it with a"
+        ]
+      },
+      {
+        "condition": "no_trace",
+        "summary": "Student likely suspects the line-5 condition and may replace it with explicit vowel checks, including O, then verify and submit.",
+        "matched_prompt_phrases": [
+          "replace it with"
+        ]
+      },
+      {
+        "condition": "no_trace",
+        "summary": "The student appears to understand looping over the array but not the selection rule, so a nearby conditional edit is the most likely next repair.",
+        "matched_prompt_phrases": [
+          "likely next repair"
+        ]
+      },
+      {
+        "condition": "no_trace",
+        "summary": "The student likely sees all tests passing and treats the current code as finished.",
+        "matched_prompt_phrases": [
+          "the current code"
+        ]
+      }
+    ],
+    "common_output_leading_templates": [
+      {
+        "phrase": "the student likely",
+        "count": 109,
+        "conditions": [
+          "full",
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "the student likely notices",
+        "count": 70,
+        "conditions": [
+          "full",
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "the student likely notices the",
+        "count": 38,
+        "conditions": [
+          "full",
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "the student likely notices that",
+        "count": 27,
+        "conditions": [
+          "full",
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "student likely notices",
+        "count": 19,
+        "conditions": [
+          "full",
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "the student may",
+        "count": 19,
+        "conditions": [
+          "full",
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "student likely notices the",
+        "count": 16,
+        "conditions": [
+          "full",
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "the student appears",
+        "count": 15,
+        "conditions": [
+          "full",
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "the student likely notices that the",
+        "count": 13,
+        "conditions": [
+          "full",
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "the student may notice",
+        "count": 9,
+        "conditions": [
+          "full",
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "the student likely sees",
+        "count": 8,
+        "conditions": [
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "likely notices the",
+        "count": 8,
+        "conditions": [
+          "full",
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "the student likely recognizes",
+        "count": 7,
+        "conditions": [
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "the student appears to",
+        "count": 7,
+        "conditions": [
+          "full",
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "the student likely compares expected",
+        "count": 6,
+        "conditions": [
+          "full",
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "the student likely compares",
+        "count": 6,
+        "conditions": [
+          "full",
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "the student likely compares expected and",
+        "count": 5,
+        "conditions": [
+          "full",
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "the student likely notices the countdown",
+        "count": 5,
+        "conditions": [
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "the student likely notices the program",
+        "count": 5,
+        "conditions": [
+          "full",
+          "no_trace"
+        ],
+        "prompt_derived": false
+      },
+      {
+        "phrase": "the student likely notices that only",
+        "count": 5,
+        "conditions": [
+          "full"
+        ],
+        "prompt_derived": false
+      }
+    ],
+    "template_language_fraction_prompt_derived": 0.0,
+    "template_language_fraction_model_induced": 1.0,
+    "prompt_derived_template_phrases": [],
+    "model_induced_template_phrases": [
+      [
+        "the student likely",
+        109
+      ],
+      [
+        "the student likely notices",
+        70
+      ],
+      [
+        "the student likely notices the",
+        38
+      ],
+      [
+        "the student likely notices that",
+        27
+      ],
+      [
+        "student likely notices",
+        19
+      ],
+      [
+        "the student may",
+        19
+      ],
+      [
+        "student likely notices the",
+        16
+      ],
+      [
+        "the student appears",
+        15
+      ],
+      [
+        "the student likely notices that the",
+        13
+      ],
+      [
+        "the student may notice",
+        9
+      ],
+      [
+        "likely notices the",
+        8
+      ],
+      [
+        "the student likely sees",
+        8
+      ],
+      [
+        "the student appears to",
+        7
+      ],
+      [
+        "the student likely recognizes",
+        7
+      ],
+      [
+        "the student likely compares",
+        6
+      ],
+      [
+        "the student likely compares expected",
+        6
+      ],
+      [
+        "likely notices that",
+        5
+      ],
+      [
+        "student likely recognizes",
+        5
+      ],
+      [
+        "the student appears close",
+        5
+      ],
+      [
+        "the student appears close to",
+        5
+      ]
+    ]
+  },
+  "analysis_2_paired_structural_comparison": {
+    "paired_transition_count": 117,
+    "aggregate": {
+      "cognitive_attribution": {
+        "full_mean": 0.7521367521367521,
+        "no_trace_mean": 0.9316239316239316,
+        "full_median": 1.0,
+        "no_trace_median": 1.0,
+        "paired_wilcoxon": {
+          "n_nonzero": 40,
+          "w_positive": 200.0,
+          "w_negative": 620.0,
+          "z": -3.784153875656917,
+          "p_value_two_sided": 0.00015423238342325733,
+          "median_difference": 0.0,
+          "mean_difference": -0.1794871794871795
+        }
+      },
+      "behavioral_description": {
+        "full_mean": 0.9230769230769231,
+        "no_trace_mean": 0.49572649572649574,
+        "full_median": 1.0,
+        "no_trace_median": 0.0,
+        "paired_wilcoxon": {
+          "n_nonzero": 79,
+          "w_positive": 2336.0,
+          "w_negative": 824.0,
+          "z": 4.231414107378128,
+          "p_value_two_sided": 2.322266742878513e-05,
+          "median_difference": 0.0,
+          "mean_difference": 0.42735042735042733
+        }
+      },
+      "evidence_reference": {
+        "full_mean": 1.3504273504273505,
+        "no_trace_mean": 0.9743589743589743,
+        "full_median": 1.0,
+        "no_trace_median": 1.0,
+        "paired_wilcoxon": {
+          "n_nonzero": 84,
+          "w_positive": 2469.0,
+          "w_negative": 1101.0,
+          "z": 3.410218431978001,
+          "p_value_two_sided": 0.0006491086974035212,
+          "median_difference": 0.0,
+          "mean_difference": 0.37606837606837606
+        }
+      },
+      "hedging": {
+        "full_mean": 1.3333333333333333,
+        "no_trace_mean": 1.1025641025641026,
+        "full_median": 1.0,
+        "no_trace_median": 1.0,
+        "paired_wilcoxon": {
+          "n_nonzero": 40,
+          "w_positive": 668.0,
+          "w_negative": 152.0,
+          "z": 4.399941937241318,
+          "p_value_two_sided": 1.0827984642808369e-05,
+          "median_difference": 0.0,
+          "mean_difference": 0.23076923076923078
+        }
+      },
+      "other": {
+        "full_mean": 0.5555555555555556,
+        "no_trace_mean": 0.4188034188034188,
+        "full_median": 0.0,
+        "no_trace_median": 0.0,
+        "paired_wilcoxon": {
+          "n_nonzero": 64,
+          "w_positive": 1207.5,
+          "w_negative": 872.5,
+          "z": 1.2655238041567505,
+          "p_value_two_sided": 0.20568362078564595,
+          "median_difference": 0.0,
+          "mean_difference": 0.13675213675213677
+        }
+      },
+      "total_clauses": {
+        "full_mean": 2.9914529914529915,
+        "no_trace_mean": 2.2393162393162394,
+        "full_median": 3.0,
+        "no_trace_median": 2.0,
+        "paired_wilcoxon": {
+          "n_nonzero": 75,
+          "w_positive": 2406.0,
+          "w_negative": 444.0,
+          "z": 5.419857457935249,
+          "p_value_two_sided": 5.964657405199964e-08,
+          "median_difference": 1.0,
+          "mean_difference": 0.7521367521367521
+        }
+      }
+    },
+    "sample_pairs": [
+      {
+        "custom_id": "587:5882:1227:9666:1",
+        "full": {
+          "cognitive_attribution": 1,
+          "behavioral_description": 0,
+          "evidence_reference": 3,
+          "hedging": 1,
+          "other": 0,
+          "total_clauses": 3
+        },
+        "no_trace": {
+          "cognitive_attribution": 1,
+          "behavioral_description": 1,
+          "evidence_reference": 0,
+          "hedging": 1,
+          "other": 0,
+          "total_clauses": 2
+        }
+      },
+      {
+        "custom_id": "587:5882:1639:9668:1",
+        "full": {
+          "cognitive_attribution": 1,
+          "behavioral_description": 4,
+          "evidence_reference": 2,
+          "hedging": 1,
+          "other": 0,
+          "total_clauses": 4
+        },
+        "no_trace": {
+          "cognitive_attribution": 1,
+          "behavioral_description": 1,
+          "evidence_reference": 1,
+          "hedging": 1,
+          "other": 0,
+          "total_clauses": 2
+        }
+      },
+      {
+        "custom_id": "587:5882:2588:9668:1",
+        "full": {
+          "cognitive_attribution": 1,
+          "behavioral_description": 1,
+          "evidence_reference": 0,
+          "hedging": 1,
+          "other": 1,
+          "total_clauses": 3
+        },
+        "no_trace": {
+          "cognitive_attribution": 1,
+          "behavioral_description": 2,
+          "evidence_reference": 1,
+          "hedging": 2,
+          "other": 0,
+          "total_clauses": 2
+        }
+      },
+      {
+        "custom_id": "587:5882:6353:9666:0",
+        "full": {
+          "cognitive_attribution": 1,
+          "behavioral_description": 2,
+          "evidence_reference": 4,
+          "hedging": 1,
+          "other": 0,
+          "total_clauses": 5
+        },
+        "no_trace": {
+          "cognitive_attribution": 1,
+          "behavioral_description": 1,
+          "evidence_reference": 1,
+          "hedging": 2,
+          "other": 1,
+          "total_clauses": 3
+        }
+      },
+      {
+        "custom_id": "589:5846:1187:9746:0",
+        "full": {
+          "cognitive_attribution": 1,
+          "behavioral_description": 2,
+          "evidence_reference": 2,
+          "hedging": 1,
+          "other": 0,
+          "total_clauses": 3
+        },
+        "no_trace": {
+          "cognitive_attribution": 2,
+          "behavioral_description": 0,
+          "evidence_reference": 1,
+          "hedging": 1,
+          "other": 0,
+          "total_clauses": 2
+        }
+      },
+      {
+        "custom_id": "589:5846:1187:9761:3",
+        "full": {
+          "cognitive_attribution": 0,
+          "behavioral_description": 2,
+          "evidence_reference": 1,
+          "hedging": 2,
+          "other": 1,
+          "total_clauses": 4
+        },
+        "no_trace": {
+          "cognitive_attribution": 1,
+          "behavioral_description": 1,
+          "evidence_reference": 0,
+          "hedging": 1,
+          "other": 0,
+          "total_clauses": 2
+        }
+      },
+      {
+        "custom_id": "589:5846:1605:9746:2",
+        "full": {
+          "cognitive_attribution": 1,
+          "behavioral_description": 2,
+          "evidence_reference": 2,
+          "hedging": 1,
+          "other": 3,
+          "total_clauses": 7
+        },
+        "no_trace": {
+          "cognitive_attribution": 1,
+          "behavioral_description": 1,
+          "evidence_reference": 1,
+          "hedging": 2,
+          "other": 0,
+          "total_clauses": 2
+        }
+      },
+      {
+        "custom_id": "589:5846:1605:9746:3",
+        "full": {
+          "cognitive_attribution": 0,
+          "behavioral_description": 1,
+          "evidence_reference": 1,
+          "hedging": 1,
+          "other": 1,
+          "total_clauses": 3
+        },
+        "no_trace": {
+          "cognitive_attribution": 1,
+          "behavioral_description": 1,
+          "evidence_reference": 2,
+          "hedging": 1,
+          "other": 0,
+          "total_clauses": 2
+        }
+      },
+      {
+        "custom_id": "589:5846:1605:9746:4",
+        "full": {
+          "cognitive_attribution": 0,
+          "behavioral_description": 1,
+          "evidence_reference": 0,
+          "hedging": 1,
+          "other": 2,
+          "total_clauses": 4
+        },
+        "no_trace": {
+          "cognitive_attribution": 1,
+          "behavioral_description": 0,
+          "evidence_reference": 1,
+          "hedging": 1,
+          "other": 1,
+          "total_clauses": 2
+        }
+      },
+      {
+        "custom_id": "589:5846:3232:9746:0",
+        "full": {
+          "cognitive_attribution": 1,
+          "behavioral_description": 0,
+          "evidence_reference": 1,
+          "hedging": 1,
+          "other": 1,
+          "total_clauses": 2
+        },
+        "no_trace": {
+          "cognitive_attribution": 1,
+          "behavioral_description": 0,
+          "evidence_reference": 0,
+          "hedging": 1,
+          "other": 1,
+          "total_clauses": 2
+        }
+      }
+    ]
+  },
+  "analysis_3_information_density": {
+    "aggregate": {
+      "specific_reference_count": {
+        "full_mean": 0.8376068376068376,
+        "no_trace_mean": 0.5299145299145299,
+        "full_median": 1.0,
+        "no_trace_median": 0.0,
+        "paired_wilcoxon": {
+          "n_nonzero": 71,
+          "w_positive": 1721.0,
+          "w_negative": 835.0,
+          "z": 2.776218701310188,
+          "p_value_two_sided": 0.005499520138647888,
+          "median_difference": 0.0,
+          "mean_difference": 0.3076923076923077
+        }
+      },
+      "line_reference_count": {
+        "full_mean": 0.13675213675213677,
+        "no_trace_mean": 0.008547008547008548,
+        "full_median": 0.0,
+        "no_trace_median": 0.0,
+        "paired_wilcoxon": {
+          "n_nonzero": 15,
+          "w_positive": 120.0,
+          "w_negative": 0.0,
+          "z": 4.563441683641853,
+          "p_value_two_sided": 5.032179224871795e-06,
+          "median_difference": 0.0,
+          "mean_difference": 0.1282051282051282
+        }
+      },
+      "trace_language_count": {
+        "full_mean": 0.13675213675213677,
+        "no_trace_mean": 0.06837606837606838,
+        "full_median": 0.0,
+        "no_trace_median": 0.0,
+        "paired_wilcoxon": {
+          "n_nonzero": 20,
+          "w_positive": 140.0,
+          "w_negative": 70.0,
+          "z": 1.6589222770784902,
+          "p_value_two_sided": 0.09713145501416515,
+          "median_difference": 0.0,
+          "mean_difference": 0.06837606837606838
+        }
+      },
+      "token_count": {
+        "full_mean": 28.299145299145298,
+        "no_trace_mean": 18.99145299145299,
+        "full_median": 26.0,
+        "no_trace_median": 18.0,
+        "paired_wilcoxon": {
+          "n_nonzero": 110,
+          "w_positive": 5991.5,
+          "w_negative": 113.5,
+          "z": 8.77189582601245,
+          "p_value_two_sided": 1.7568290395641584e-18,
+          "median_difference": 8.0,
+          "mean_difference": 9.307692307692308
+        }
+      },
+      "specific_reference_density_per_100_tokens": {
+        "full_mean": 2.875602134340407,
+        "no_trace_mean": 2.800989673555951,
+        "full_median": 2.857142857142857,
+        "no_trace_median": 0.0,
+        "paired_wilcoxon": {
+          "n_nonzero": 84,
+          "w_positive": 1838.0,
+          "w_negative": 1732.0,
+          "z": 0.23416683170891198,
+          "p_value_two_sided": 0.8148554636641758,
+          "median_difference": 0.0,
+          "mean_difference": 0.07461246078445621
+        }
+      },
+      "line_reference_density_per_100_tokens": {
+        "full_mean": 0.42711594654456536,
+        "no_trace_mean": 0.042735042735042736,
+        "full_median": 0.0,
+        "no_trace_median": 0.0,
+        "paired_wilcoxon": {
+          "n_nonzero": 16,
+          "w_positive": 135.0,
+          "w_negative": 1.0,
+          "z": 3.44439396197041,
+          "p_value_two_sided": 0.0005723410860186848,
+          "median_difference": 0.0,
+          "mean_difference": 0.38438090380952267
+        }
+      },
+      "trace_language_density_per_100_tokens": {
+        "full_mean": 0.4366613502090614,
+        "no_trace_mean": 0.3211090022235534,
+        "full_median": 0.0,
+        "no_trace_median": 0.0,
+        "paired_wilcoxon": {
+          "n_nonzero": 21,
+          "w_positive": 125.5,
+          "w_negative": 105.5,
+          "z": 0.33039731055853355,
+          "p_value_two_sided": 0.741099773410651,
+          "median_difference": 0.0,
+          "mean_difference": 0.11555234798550805
+        }
+      }
+    },
+    "pairs_with_new_specific_references": 57,
+    "pairs_with_new_specific_references_fraction": 0.48717948717948717,
+    "pairs_with_more_line_references_in_full": 15,
+    "pairs_with_more_trace_language_in_full": 13,
+    "qualitative_difference_signal": true,
+    "interpretation": "Full summaries add qualitatively different detail rather than only length.",
+    "sample_pairs": [
+      {
+        "custom_id": "587:5882:1227:9666:1",
+        "full": {
+          "specific_references": [
+            "condition"
+          ],
+          "specific_reference_count": 1,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 25,
+          "trace_hits": []
+        },
+        "no_trace": {
+          "specific_references": [],
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 17,
+          "trace_hits": []
+        },
+        "delta": {
+          "specific_reference_count": 1,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 8
+        },
+        "new_full_only_references": [
+          "condition"
+        ]
+      },
+      {
+        "custom_id": "587:5882:1639:9668:1",
+        "full": {
+          "specific_references": [
+            "index",
+            "line 10",
+            "line-10"
+          ],
+          "specific_reference_count": 3,
+          "line_reference_count": 1,
+          "trace_language_count": 0,
+          "token_count": 39,
+          "trace_hits": []
+        },
+        "no_trace": {
+          "specific_references": [],
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 17,
+          "trace_hits": []
+        },
+        "delta": {
+          "specific_reference_count": 3,
+          "line_reference_count": 1,
+          "trace_language_count": 0,
+          "token_count": 22
+        },
+        "new_full_only_references": [
+          "index",
+          "line 10",
+          "line-10"
+        ]
+      },
+      {
+        "custom_id": "587:5882:2588:9668:1",
+        "full": {
+          "specific_references": [
+            "index"
+          ],
+          "specific_reference_count": 1,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 30,
+          "trace_hits": []
+        },
+        "no_trace": {
+          "specific_references": [],
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 20,
+          "trace_hits": []
+        },
+        "delta": {
+          "specific_reference_count": 1,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 10
+        },
+        "new_full_only_references": [
+          "index"
+        ]
+      },
+      {
+        "custom_id": "587:5882:6353:9666:0",
+        "full": {
+          "specific_references": [
+            "line 2",
+            "logic",
+            "print"
+          ],
+          "specific_reference_count": 3,
+          "line_reference_count": 1,
+          "trace_language_count": 0,
+          "token_count": 28,
+          "trace_hits": []
+        },
+        "no_trace": {
+          "specific_references": [],
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 25,
+          "trace_hits": []
+        },
+        "delta": {
+          "specific_reference_count": 3,
+          "line_reference_count": 1,
+          "trace_language_count": 0,
+          "token_count": 3
+        },
+        "new_full_only_references": [
+          "line 2",
+          "logic",
+          "print"
+        ]
+      },
+      {
+        "custom_id": "589:5846:1187:9746:0",
+        "full": {
+          "specific_references": [
+            "output line"
+          ],
+          "specific_reference_count": 1,
+          "line_reference_count": 0,
+          "trace_language_count": 1,
+          "token_count": 35,
+          "trace_hits": [
+            "edits"
+          ]
+        },
+        "no_trace": {
+          "specific_references": [],
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 20,
+          "trace_hits": []
+        },
+        "delta": {
+          "specific_reference_count": 1,
+          "line_reference_count": 0,
+          "trace_language_count": 1,
+          "token_count": 15
+        },
+        "new_full_only_references": [
+          "output line"
+        ]
+      },
+      {
+        "custom_id": "589:5846:1187:9761:3",
+        "full": {
+          "specific_references": [],
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 24,
+          "trace_hits": []
+        },
+        "no_trace": {
+          "specific_references": [],
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 17,
+          "trace_hits": []
+        },
+        "delta": {
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 7
+        },
+        "new_full_only_references": []
+      },
+      {
+        "custom_id": "589:5846:1605:9746:2",
+        "full": {
+          "specific_references": [],
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 3,
+          "token_count": 41,
+          "trace_hits": [
+            "pause",
+            "continuing",
+            "edit"
+          ]
+        },
+        "no_trace": {
+          "specific_references": [],
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 15,
+          "trace_hits": []
+        },
+        "delta": {
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 3,
+          "token_count": 26
+        },
+        "new_full_only_references": []
+      },
+      {
+        "custom_id": "589:5846:1605:9746:3",
+        "full": {
+          "specific_references": [],
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 18,
+          "trace_hits": []
+        },
+        "no_trace": {
+          "specific_references": [],
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 14,
+          "trace_hits": []
+        },
+        "delta": {
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 4
+        },
+        "new_full_only_references": []
+      },
+      {
+        "custom_id": "589:5846:1605:9746:4",
+        "full": {
+          "specific_references": [],
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 26,
+          "trace_hits": []
+        },
+        "no_trace": {
+          "specific_references": [],
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 20,
+          "trace_hits": []
+        },
+        "delta": {
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 6
+        },
+        "new_full_only_references": []
+      },
+      {
+        "custom_id": "589:5846:3232:9746:0",
+        "full": {
+          "specific_references": [],
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 16,
+          "trace_hits": []
+        },
+        "no_trace": {
+          "specific_references": [],
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": 17,
+          "trace_hits": []
+        },
+        "delta": {
+          "specific_reference_count": 0,
+          "line_reference_count": 0,
+          "trace_language_count": 0,
+          "token_count": -1
+        },
+        "new_full_only_references": []
+      }
+    ]
+  },
+  "analysis_4_slot_filling": {
+    "exercise_count_analyzed": 14,
+    "overall_mean_template_fraction": 0.02286297290029962,
+    "overall_mean_slot_fraction": 0.9771370270997004,
+    "exercises": [
+      {
+        "exercise_id": "1187",
+        "summary_count": 6,
+        "unique_student_count": 5,
+        "shared_phrase_threshold": 3,
+        "template_phrases": [
+          "the student likely notices the"
+        ],
+        "mean_template_fraction": 0.09255250921917586,
+        "mean_slot_fraction": 0.9074474907808241,
+        "mad_libs_risk": false,
+        "summary_breakdown": [
+          {
+            "custom_id": "589:5846:1187:9746:0",
+            "student_id": "9746",
+            "summary": "The student likely notices the plain expected/actual mismatch on the fourth output line and makes that easy one-line fix first. Their prior tape shows a strong pattern of small edits followed by local testing.",
+            "template_fraction": 0.14285714285714285,
+            "slot_fraction": 0.8571428571428572
+          },
+          {
+            "custom_id": "590:5843:1187:9876:4",
+            "student_id": "9876",
+            "summary": "The student likely notices the fourth and fifth output lines are reversed and applies the smallest visible fix at the print statements.",
+            "template_fraction": 0.22727272727272727,
+            "slot_fraction": 0.7727272727272727
+          },
+          {
+            "custom_id": "597:5849:1187:9958:0",
+            "student_id": "9958",
+            "summary": "The student likely notices that the first-character index is off by one and that the upper/lower outputs are reversed, so they make a few small edits without changing the overall program shape.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "590:5843:1187:9880:0",
+            "student_id": "9880",
+            "summary": "The student appears close to a solution and may make the most local fix first. The test output makes the built-in method object text very noticeable, so they may add parentheses to both lines but keep the current upper-then-lower order.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5846:1187:9761:3",
+            "student_id": "9761",
+            "summary": "The student likely has a nearly correct solution and may next make a tiny patch on the two output lines, then verify and submit.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "590:5843:1187:9880:1",
+            "student_id": "9880",
+            "summary": "The student likely notices the remaining mismatch is the order of the case-conversion prints and applies a small fix on the same two lines they just edited.",
+            "template_fraction": 0.18518518518518517,
+            "slot_fraction": 0.8148148148148149
+          }
+        ]
+      },
+      {
+        "exercise_id": "1223",
+        "summary_count": 10,
+        "unique_student_count": 7,
+        "shared_phrase_threshold": 5,
+        "template_phrases": [
+          "student likely notices"
+        ],
+        "mean_template_fraction": 0.06202486537852392,
+        "mean_slot_fraction": 0.9379751346214761,
+        "mad_libs_risk": false,
+        "summary_breakdown": [
+          {
+            "custom_id": "589:5897:1223:5703:0",
+            "student_id": "5703",
+            "summary": "Student likely notices the second loop is printing aux after aux reached 0, and makes a focused repair using the existing i counter.",
+            "template_fraction": 0.13636363636363635,
+            "slot_fraction": 0.8636363636363636
+          },
+          {
+            "custom_id": "593:5886:1223:8870:0",
+            "student_id": "8870",
+            "summary": "The student likely notices the output is missing only the last longest line and focuses on the second for-range upper bound.",
+            "template_fraction": 0.14285714285714285,
+            "slot_fraction": 0.8571428571428572
+          },
+          {
+            "custom_id": "594:5889:1223:9690:0",
+            "student_id": "9690",
+            "summary": "The student appears likely to notice the most visible mismatch first: the current loop is fixed at 4 lines even though tests vary by input. They may keep the same single-loop pattern and only patch the bound.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "593:5886:1223:8887:0",
+            "student_id": "8887",
+            "summary": "The student likely notices that both loops are fine structurally and that the unused i should control the number of stars on each line.",
+            "template_fraction": 0.125,
+            "slot_fraction": 0.875
+          },
+          {
+            "custom_id": "594:5889:1223:9692:0",
+            "student_id": "9692",
+            "summary": "The student likely notices that the second loop is the only faulty part and makes one compact off-by-one fix on line 4. This matches the code structure, the test diff, and the fact that the rest of the pattern is already correct.",
+            "template_fraction": 0.07317073170731707,
+            "slot_fraction": 0.926829268292683
+          },
+          {
+            "custom_id": "593:5886:1223:9707:0",
+            "student_id": "9707",
+            "summary": "The student likely notices that loop counts are working and that the star repetition should depend on i in both loops.",
+            "template_fraction": 0.14285714285714285,
+            "slot_fraction": 0.8571428571428572
+          },
+          {
+            "custom_id": "594:5889:1223:9690:1",
+            "student_id": "9690",
+            "summary": "The student has already assembled a two-part pattern and may next make a focused fix on line 4, where the current output is off by one and produces an empty line at the bottom of the descending half.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "593:5886:1223:9871:0",
+            "student_id": "9871",
+            "summary": "The student likely now recognizes a pure output-shape bug and makes the most direct local fix: deleting the extra middle print line that creates the third single-asterisk row.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "593:5886:1223:8870:1",
+            "student_id": "8870",
+            "summary": "The student appears to have built the right overall two-loop pattern and is likely to focus on the second loop endpoint after seeing that the final longest line is missing.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "593:5886:1223:9871:2",
+            "student_id": "9871",
+            "summary": "The student may now notice that the standalone middle print creates the extra line and try the simplest deletion.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "exercise_id": "1227",
+        "summary_count": 3,
+        "unique_student_count": 3,
+        "shared_phrase_threshold": 2,
+        "template_phrases": [
+          "that the loop and"
+        ],
+        "mean_template_fraction": 0.08666666666666667,
+        "mean_slot_fraction": 0.9133333333333333,
+        "mad_libs_risk": false,
+        "summary_breakdown": [
+          {
+            "custom_id": "587:5882:1227:9666:1",
+            "student_id": "9666",
+            "summary": "The student likely now sees that the loop and condition are mostly correct and that the immediate problem is output formatting on the last line.",
+            "template_fraction": 0.16,
+            "slot_fraction": 0.84
+          },
+          {
+            "custom_id": "590:5896:1227:9813:0",
+            "student_id": "9813",
+            "summary": "The student likely notices that the loop and append structure already match the task and that the line-4 boolean operator is the main problem. A one-token patch is the most direct next move after seeing unchanged output on every test.",
+            "template_fraction": 0.1,
+            "slot_fraction": 0.9
+          },
+          {
+            "custom_id": "590:5896:1227:9830:0",
+            "student_id": "9830",
+            "summary": "The student likely has the core string-removal logic in place but may only now realize the grader expects exact output with no descriptive label.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "exercise_id": "1605",
+        "summary_count": 11,
+        "unique_student_count": 7,
+        "shared_phrase_threshold": 6,
+        "template_phrases": [],
+        "mean_template_fraction": 0.0,
+        "mean_slot_fraction": 1.0,
+        "mad_libs_risk": false,
+        "summary_breakdown": [
+          {
+            "custom_id": "590:5843:1605:9815:0",
+            "student_id": "9815",
+            "summary": "Likely notices that one failure comes from only processing four items and the other from printing an int when no division happens, so they may patch both visible lines at once.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "591:5853:1605:9772:0",
+            "student_id": "9772",
+            "summary": "The student likely notices that the tests use 2s while the code checks 1, and makes the smallest arithmetic patch on the first branch before resubmitting.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "597:5849:1605:9794:0",
+            "student_id": "9794",
+            "summary": "Likely to focus on the specific branch causing every failed case with 3 and patch the two nearby lines rather than rewrite the whole program.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5846:1605:9746:2",
+            "student_id": "9746",
+            "summary": "All 3 tests passed, the platform reported success, and the student ended after a short pause rather than continuing to edit. Given the heavy effort in this attempt and the successful outcome, they likely consider the task done and leave the exercise.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "590:5843:1605:9815:1",
+            "student_id": "9815",
+            "summary": "The student has two unchanged failing tests and one of them clearly uses six inputs while the code still loops with i < 4. After the print-only edit did not improve the score, they may shift attention to the hard-coded loop bound and test that specific case.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "591:5853:1605:9787:0",
+            "student_id": "9787",
+            "summary": "The student appears to have a mostly complete loop-based solution and may now notice that no value is printed.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "594:5835:1605:9686:1",
+            "student_id": "9686",
+            "summary": "The student appears close to a working solution and may now try a minimal repair aimed at hidden-case failures: stop hard-coding length 4 and force a decimal result.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5846:1605:9746:3",
+            "student_id": "9746",
+            "summary": "After two consecutive 100% submissions, the student may treat the work as finished and leave without further code changes.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "594:5835:1605:9682:1",
+            "student_id": "9682",
+            "summary": "The student appears close to the real bug: they already changed the score formula lines to compute total, and the remaining failures fit cont += total being nested too deeply. Their last nearby indentation action suggests the next repair likely targets that placement.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5846:1605:9746:4",
+            "student_id": "9746",
+            "summary": "With a correct submission and long pauses before the final submit, the student may now treat the task as finished and leave rather than keep repairing.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "594:5835:1605:9686:2",
+            "student_id": "9686",
+            "summary": "The student likely notices that the newest change on line 5 caused the blank outputs on 4-item inputs and tries a very local fix first.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "exercise_id": "1639",
+        "summary_count": 10,
+        "unique_student_count": 8,
+        "shared_phrase_threshold": 5,
+        "template_phrases": [],
+        "mean_template_fraction": 0.0,
+        "mean_slot_fraction": 1.0,
+        "mad_libs_risk": false,
+        "summary_breakdown": [
+          {
+            "custom_id": "587:5882:1639:9668:1",
+            "student_id": "9668",
+            "summary": "The code already matches the index output on 2 of 3 tests, and all tests show the repeated running count, so the student is likely to notice the obvious line-10 printing problem after this no-edit resubmit and make a minimal patch.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5897:1639:5703:1",
+            "student_id": "5703",
+            "summary": "Most recent work was concentrated on the last print line after a full-solution paste. The student likely still suspects output formatting because they changed comments and presentation but left the loop logic untouched before submitting another 67% solution.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "591:5902:1639:9785:0",
+            "student_id": "9785",
+            "summary": "The student likely notices that the second output should contain positions, not 1s, and may also realize j must move across the result array.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "593:5886:1639:9700:0",
+            "student_id": "9700",
+            "summary": "Likely notices the exact-output problem first. This student submitted without local testing, and the current code already computes the right count and usually the right final array, so a one-line print cleanup is the most direct next repair.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "594:5889:1639:9680:0",
+            "student_id": "9680",
+            "summary": "The student likely notices that their current output comes from fixed example data, while the core even-check and index collection logic appears consistent with the task. A likely next step is editing the bottom script section to process one real input and print one result.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "593:5886:1639:9710:1",
+            "student_id": "9710",
+            "summary": "Student likely notices that only the second output is wrong and applies a very local fix around the print position, then checks and resubmits.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5897:1639:9753:0",
+            "student_id": "9753",
+            "summary": "The student may now focus on the second output only, keeping the working count and patching how indices are stored and displayed.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "593:5886:1639:9710:2",
+            "student_id": "9710",
+            "summary": "Student seems to be using print statements to inspect the array and is likely to notice that the extra zero-array line is the visible cause of failure.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5897:1639:5703:2",
+            "student_id": "5703",
+            "summary": "The student likely believes the remaining problem is in the final output construction, especially the lines that turn indices into a bracketed string.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5897:1639:9741:5",
+            "student_id": "9741",
+            "summary": "The student likely notices that only the second pass is wrong and makes one focused edit before testing again.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "exercise_id": "1649",
+        "summary_count": 7,
+        "unique_student_count": 7,
+        "shared_phrase_threshold": 4,
+        "template_phrases": [],
+        "mean_template_fraction": 0.0,
+        "mean_slot_fraction": 1.0,
+        "mad_libs_risk": false,
+        "summary_breakdown": [
+          {
+            "custom_id": "590:5896:1649:9824:0",
+            "student_id": "9824",
+            "summary": "The student likely compares expected and actual arrays, notices only the first category stays at 0, and revisits the first if branch because the input is uppercased but that branch checks lowercase p.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "591:5902:1649:9789:1",
+            "student_id": "9789",
+            "summary": "Most likely the student notices that the program always uses the same string instead of test input. The repeated identical actual output across all tests points to line 1, while the frequency-counting loop already appears structurally correct.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "594:5889:1649:9675:0",
+            "student_id": "9675",
+            "summary": "The student likely notices the obvious extra text first and makes a minimal output patch, but may not yet know that the list also must be printed without commas.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "597:5913:1649:9794:0",
+            "student_id": "9794",
+            "summary": "Likely notices that all branches still store into the first slot and tries a targeted patch on the repeated assignment lines before another local run.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "590:5896:1649:9830:0",
+            "student_id": "9830",
+            "summary": "Likely notices the values are right and focuses on matching the exact required output format at the end of the program.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "597:5913:1649:9796:0",
+            "student_id": "9796",
+            "summary": "The student may notice that logic is correct and focus on the final display line, making a small targeted edit near the last print before resubmitting.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "594:5889:1649:9676:1",
+            "student_id": "9676",
+            "summary": "Most evidence points to a small semantic swap fix. The current failures are exactly a C-versus-P reversal, and earlier in the same attempt the student corrected an A/V reversal by editing the compared letters rather than redesigning the program.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "exercise_id": "2588",
+        "summary_count": 5,
+        "unique_student_count": 3,
+        "shared_phrase_threshold": 3,
+        "template_phrases": [],
+        "mean_template_fraction": 0.0,
+        "mean_slot_fraction": 1.0,
+        "mad_libs_risk": false,
+        "summary_breakdown": [
+          {
+            "custom_id": "587:5882:2588:9668:1",
+            "student_id": "9668",
+            "summary": "The student likely notices that the failing case differs by one extra printed index at the exact upper boundary, so they make a one-line comparison fix and verify it immediately.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5897:2588:9895:0",
+            "student_id": "9895",
+            "summary": "The student appears persistent and test-driven, and is likely to make a focused edit on the bound definitions after seeing total hidden-test failure.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "594:5889:2588:9841:0",
+            "student_id": "9841",
+            "summary": "Most likely the student now realizes printing every index is wrong and will keep the range loop while adding a filter, probably comparing n[i] to n[0], then test quickly.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5897:2588:9895:1",
+            "student_id": "9895",
+            "summary": "The student seems close on overall structure: they already print matching indices and the final count, and may next target the remaining fixed 60 values that explain all three failures.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5897:2588:9895:2",
+            "student_id": "9895",
+            "summary": "Student appears focused on the if-condition boundaries. The recent local run and the four tiny edits on line 9 suggest they still believe the main bug is in the comparison operators, not in the hardcoded threshold setup.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "exercise_id": "2844",
+        "summary_count": 6,
+        "unique_student_count": 5,
+        "shared_phrase_threshold": 3,
+        "template_phrases": [],
+        "mean_template_fraction": 0.0,
+        "mean_slot_fraction": 1.0,
+        "mad_libs_risk": false,
+        "summary_breakdown": [
+          {
+            "custom_id": "589:5897:2844:9742:1",
+            "student_id": "9742",
+            "summary": "The student appears close to a one-line repair and may focus on the for-loop header after seeing that every output stayed all zeros.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "590:5896:2844:9812:0",
+            "student_id": "9812",
+            "summary": "Likely focused on the if-branch after seeing zeros stay unchanged, and may now realize the 9 should go into vet1 rather than vet.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "591:5902:2844:9779:0",
+            "student_id": "9779",
+            "summary": "Student appears to have the loop, indexing, zero case, and output format working, but not the nonzero transformation. The failed tests differ only because nonzero values were copied unchanged.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "594:5889:2844:9838:0",
+            "student_id": "9838",
+            "summary": "Likely notices the blank output and that j and n never affect v, so makes a local in-place patch and resubmits quickly; the nonzero arithmetic may remain wrong.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5897:2844:9746:1",
+            "student_id": "9746",
+            "summary": "The student appears close to the solution and likely realizes the decrement is being applied to the wrong value. Because only line 7 changed from a previously passing version, they may simply restore the assignment from numb and resubmit.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "594:5889:2844:9838:1",
+            "student_id": "9838",
+            "summary": "Likely notices first that the program prints only the last element and makes a small output-focused edit before checking again.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "exercise_id": "3232",
+        "summary_count": 5,
+        "unique_student_count": 4,
+        "shared_phrase_threshold": 3,
+        "template_phrases": [],
+        "mean_template_fraction": 0.0,
+        "mean_slot_fraction": 1.0,
+        "mad_libs_risk": false,
+        "summary_breakdown": [
+          {
+            "custom_id": "590:5843:3232:9811:0",
+            "student_id": "9811",
+            "summary": "Likely notices that all failed tests have empty actual output and makes a minimal end-of-program print fix while keeping the current loop logic.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "591:5853:3232:9778:2",
+            "student_id": "9778",
+            "summary": "Student likely notices the loop never advances and makes a small targeted fix near the while block.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5846:3232:9746:0",
+            "student_id": "9746",
+            "summary": "The student likely believes the loop is finished and will target only the final display format.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "594:5835:3232:9838:0",
+            "student_id": "9838",
+            "summary": "The student may focus first on the easiest visible mismatch: their output prints as a Python list with commas, unlike the expected numpy-style format.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5846:3232:9746:12",
+            "student_id": "9746",
+            "summary": "The student may notice that the printed array is v1 and that v1 stays all ones because line 9 writes into v instead of v1.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "exercise_id": "5382",
+        "summary_count": 6,
+        "unique_student_count": 3,
+        "shared_phrase_threshold": 3,
+        "template_phrases": [],
+        "mean_template_fraction": 0.0,
+        "mean_slot_fraction": 1.0,
+        "mad_libs_risk": false,
+        "summary_breakdown": [
+          {
+            "custom_id": "589:5846:5382:9744:0",
+            "student_id": "9744",
+            "summary": "The student may notice the comparison on line 5 is the risky part and try a focused fix there, likely after briefly rechecking the prompt or examples.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "594:5835:5382:9838:0",
+            "student_id": "9838",
+            "summary": "The student is close to correct and may infer that the remaining failing word contains O, which is absent from the current vowel test on the if line.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5846:5382:9744:1",
+            "student_id": "9744",
+            "summary": "The student likely treats the problem as complete after the all-pass submit and is more likely to navigate away than to keep editing.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "594:5835:5382:9838:3",
+            "student_id": "9838",
+            "summary": "The student likely notices the vowel list is incomplete and makes one focused fix without much extra experimentation.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5846:5382:9744:2",
+            "student_id": "9744",
+            "summary": "The student appears to be one symbol away from a correct fix and is likely to keep working on the same if-condition line.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "590:5843:5382:9813:2",
+            "student_id": "9813",
+            "summary": "The student likely notices that every failing test shows the input string as output, so the bug is probably on the final print line. Their last real editing episode touched only line 11, which makes a one-line correction especially likely.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "exercise_id": "6316",
+        "summary_count": 7,
+        "unique_student_count": 4,
+        "shared_phrase_threshold": 4,
+        "template_phrases": [],
+        "mean_template_fraction": 0.0,
+        "mean_slot_fraction": 1.0,
+        "mad_libs_risk": false,
+        "summary_breakdown": [
+          {
+            "custom_id": "589:5846:6316:9753:0",
+            "student_id": "9753",
+            "summary": "The student may notice that every actual output ends with an extra 2 and make a quick output-only fix before resubmitting.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "590:5843:6316:9806:0",
+            "student_id": "9806",
+            "summary": "The student likely notices that only one purchase is being counted and revisits the while condition rather than the price branches.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "591:5853:6316:9774:0",
+            "student_id": "9774",
+            "summary": "The student may notice that only cases with D are undercounted and patch the first condition directly.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "593:5834:6316:9709:0",
+            "student_id": "9709",
+            "summary": "The student likely notices that the numeric totals already match the expected values, while the failure comes from extra text and extra lines. Given the one-shot paste and no local testing, a small patch at the final print section followed by another submit is the most plausible next move.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "590:5843:6316:9806:1",
+            "student_id": "9806",
+            "summary": "The student appears to be doing quick local patches. Because every failed test output matches only the first purchase item, they may next notice that the loop is effectively running once and change the loop bound.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "593:5834:6316:9709:1",
+            "student_id": "9709",
+            "summary": "Likely notices that only the first printed number is needed and continues the same print-section cleanup started in the last tape.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "593:5834:6316:9709:3",
+            "student_id": "9709",
+            "summary": "Student likely notices the numeric total is correct and shifts to removing the remaining extra output after already deleting several print labels character by character.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "exercise_id": "6353",
+        "summary_count": 23,
+        "unique_student_count": 17,
+        "shared_phrase_threshold": 12,
+        "template_phrases": [
+          "the student likely notices"
+        ],
+        "mean_template_fraction": 0.07883757933982821,
+        "mean_slot_fraction": 0.9211624206601718,
+        "mad_libs_risk": false,
+        "summary_breakdown": [
+          {
+            "custom_id": "587:5882:6353:9666:0",
+            "student_id": "9666",
+            "summary": "The student likely notices that only the loop logic is wrong and patches line 2 to count downward, keeping the input line and final print unchanged, then submits again.",
+            "template_fraction": 0.14285714285714285,
+            "slot_fraction": 0.8571428571428572
+          },
+          {
+            "custom_id": "589:5897:6353:9735:1",
+            "student_id": "9735",
+            "summary": "The student likely notices the only visible mismatch is the missing 0 and uses a minimal repair on the loop bounds, probably reverting toward an earlier correct version they had before this regression.",
+            "template_fraction": 0.125,
+            "slot_fraction": 0.875
+          },
+          {
+            "custom_id": "590:5896:6353:7604:0",
+            "student_id": "7604",
+            "summary": "The student likely notices the program logic is now working and focuses on the last output line, making a minimal text correction and resubmitting.",
+            "template_fraction": 0.16666666666666666,
+            "slot_fraction": 0.8333333333333334
+          },
+          {
+            "custom_id": "591:5902:6353:9778:0",
+            "student_id": "9778",
+            "summary": "Most likely they infer the remaining problem is the missing closing text and patch the last line, since the numeric countdown already matches every test output through 0.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "593:5886:6353:9843:0",
+            "student_id": "9843",
+            "summary": "The student likely reads the diff, notices that only the farewell line is repeated, and makes a focused indentation fix on the last print line before submitting again.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "594:5889:6353:9680:0",
+            "student_id": "9680",
+            "summary": "Student likely notices the output starts at n-1 instead of n and may make a small local patch in the loop plus the final message.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "597:5913:6353:9912:0",
+            "student_id": "9912",
+            "summary": "Appears focused on range syntax and numeric bounds on line 0, with no evidence yet of handling input or printing the required final message.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "589:5897:6353:9741:0",
+            "student_id": "9741",
+            "summary": "The student likely notices the loop values are correct but the output format is wrong, so they make a local patch to printing and add the required final line.",
+            "template_fraction": 0.13793103448275862,
+            "slot_fraction": 0.8620689655172413
+          },
+          {
+            "custom_id": "590:5896:6353:9807:0",
+            "student_id": "9807",
+            "summary": "The student likely notices that every test output is correct except for the missing closing message, and attempts a one-line fix after the loop.",
+            "template_fraction": 0.16666666666666666,
+            "slot_fraction": 0.8333333333333334
+          },
+          {
+            "custom_id": "591:5902:6353:9781:1",
+            "student_id": "9781",
+            "summary": "The student likely notices that only the closing message differs from expected output and applies a focused patch on the last line.",
+            "template_fraction": 0.18181818181818182,
+            "slot_fraction": 0.8181818181818181
+          },
+          {
+            "custom_id": "593:5886:6353:9843:1",
+            "student_id": "9843",
+            "summary": "The student likely notices that the countdown numbers are fine and the repeated final message comes from the last print staying inside the loop. They seem close to the right fix but were imprecise with indentation on the previous edit.",
+            "template_fraction": 0.1,
+            "slot_fraction": 0.9
+          },
+          {
+            "custom_id": "590:5896:6353:9812:0",
+            "student_id": "9812",
+            "summary": "The program is very close: the countdown logic matches the tests, and the only clear mismatch in all three tests is the missing ! at the end of the final print line. The student may make a one-character fix and submit immediately.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "591:5902:6353:9783:0",
+            "student_id": "9783",
+            "summary": "The student likely notices the extra leading 0 2 4 pattern in every failed test and then makes a direct patch to match the expected countdown format more exactly.",
+            "template_fraction": 0.15384615384615385,
+            "slot_fraction": 0.8461538461538461
+          },
+          {
+            "custom_id": "589:5897:6353:9755:3",
+            "student_id": "9755",
+            "summary": "The student appears focused on the for-range syntax. In the last interval they edited only line 5 and likely turned a descending range into an empty one, so the next step is probably another local patch there followed by a quick submit.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "590:5896:6353:9813:1",
+            "student_id": "9813",
+            "summary": "The student appears to have a nearly correct solution. All three failures are consistent with output formatting, and the current code differs most obviously from expected output on line 3, where the final message is missing an exclamation mark.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "exercise_id": "6354",
+        "summary_count": 3,
+        "unique_student_count": 3,
+        "shared_phrase_threshold": 2,
+        "template_phrases": [],
+        "mean_template_fraction": 0.0,
+        "mean_slot_fraction": 1.0,
+        "mad_libs_risk": false,
+        "summary_breakdown": [
+          {
+            "custom_id": "591:5902:6354:9955:1",
+            "student_id": "9955",
+            "summary": "The student may now notice that no token ever equals 'R', 'F', 'S', or 'T' because the input is being split on the wrong character, and may try a minimal repair on the input line.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "590:5896:6354:9959:1",
+            "student_id": "9959",
+            "summary": "The student seems close to the real bug and is likely to keep the current loop structure while fixing the comparisons on the same lines they just edited.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "593:5886:6354:9710:0",
+            "student_id": "9710",
+            "summary": "A single full-code paste after a 56-second idle gap, no prior history, no local tests, and all-zero outputs suggest the student likely used a template from a different exercise and will next try the most obvious patch: change the four string comparisons to the exercise's actual categories, then submit again.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          }
+        ]
+      },
+      {
+        "exercise_id": "6656",
+        "summary_count": 3,
+        "unique_student_count": 3,
+        "shared_phrase_threshold": 2,
+        "template_phrases": [],
+        "mean_template_fraction": 0.0,
+        "mean_slot_fraction": 1.0,
+        "mad_libs_risk": false,
+        "summary_breakdown": [
+          {
+            "custom_id": "589:5846:6656:9764:0",
+            "student_id": "9764",
+            "summary": "The student likely considers the exercise complete and moves on without further code changes.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "590:5843:6656:9806:0",
+            "student_id": "9806",
+            "summary": "The student likely suspects the loop is not advancing and makes a focused fix on the increment line after the blank-output submit.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          },
+          {
+            "custom_id": "597:5849:6656:9912:1",
+            "student_id": "9912",
+            "summary": "The student likely still suspects the comparison operator is the main bug, because attempt n repeatedly changed only line 8 and reran tests after each operator experiment.",
+            "template_fraction": 0.0,
+            "slot_fraction": 1.0
+          }
+        ]
+      }
+    ]
+  },
+  "analysis_5_conditional_entropy_of_openings": {
+    "full": {
+      "opening": "The student likely",
+      "summary_count_with_opening": 45,
+      "fourth_word_entropy_bits": 1.6592974088001424,
+      "fourth_word_perplexity": 3.1586266244772796,
+      "unique_fourth_words": 10,
+      "fourth_word_distribution": [
+        [
+          "notices",
+          33
+        ],
+        [
+          "now",
+          2
+        ],
+        [
+          "believes",
+          2
+        ],
+        [
+          "has",
+          2
+        ],
+        [
+          "considers",
+          1
+        ],
+        [
+          "suspects",
+          1
+        ],
+        [
+          "compares",
+          1
+        ],
+        [
+          "reads",
+          1
+        ],
+        [
+          "treats",
+          1
+        ],
+        [
+          "still",
+          1
+        ]
+      ]
+    },
+    "no_trace": {
+      "opening": "The student likely",
+      "summary_count_with_opening": 64,
+      "fourth_word_entropy_bits": 1.9685796959826376,
+      "fourth_word_perplexity": 3.9138262105322084,
+      "unique_fourth_words": 7,
+      "fourth_word_distribution": [
+        [
+          "notices",
+          37
+        ],
+        [
+          "sees",
+          8
+        ],
+        [
+          "recognizes",
+          7
+        ],
+        [
+          "compares",
+          5
+        ],
+        [
+          "suspects",
+          4
+        ],
+        [
+          "infers",
+          2
+        ],
+        [
+          "spots",
+          1
+        ]
+      ]
+    }
+  },
+  "analysis_6_full_only_content": {
+    "phrase_count": 22,
+    "exclusive_phrases": [
+      {
+        "phrase": "local",
+        "full_summary_count": 19,
+        "category": "structural_filler"
+      },
+      {
+        "phrase": "notice that",
+        "full_summary_count": 10,
+        "category": "cognitive_attribution"
+      },
+      {
+        "phrase": "notices that only",
+        "full_summary_count": 8,
+        "category": "cognitive_attribution"
+      },
+      {
+        "phrase": "focused on",
+        "full_summary_count": 8,
+        "category": "structural_filler"
+      },
+      {
+        "phrase": "rather than",
+        "full_summary_count": 8,
+        "category": "structural_filler"
+      },
+      {
+        "phrase": "on line",
+        "full_summary_count": 7,
+        "category": "structural_filler"
+      },
+      {
+        "phrase": "bug",
+        "full_summary_count": 7,
+        "category": "structural_filler"
+      },
+      {
+        "phrase": "pattern",
+        "full_summary_count": 7,
+        "category": "structural_filler"
+      },
+      {
+        "phrase": "working",
+        "full_summary_count": 6,
+        "category": "structural_filler"
+      },
+      {
+        "phrase": "appears close to",
+        "full_summary_count": 5,
+        "category": "structural_filler"
+      },
+      {
+        "phrase": "focused on the",
+        "full_summary_count": 5,
+        "category": "structural_filler"
+      },
+      {
+        "phrase": "may notice that",
+        "full_summary_count": 5,
+        "category": "cognitive_attribution"
+      },
+      {
+        "phrase": "notice that the",
+        "full_summary_count": 5,
+        "category": "cognitive_attribution"
+      },
+      {
+        "phrase": "student appears close",
+        "full_summary_count": 5,
+        "category": "structural_filler"
+      },
+      {
+        "phrase": "after seeing",
+        "full_summary_count": 5,
+        "category": "structural_filler"
+      },
+      {
+        "phrase": "appears close",
+        "full_summary_count": 5,
+        "category": "structural_filler"
+      },
+      {
+        "phrase": "local fix",
+        "full_summary_count": 5,
+        "category": "behavioral_observation"
+      },
+      {
+        "phrase": "tests and",
+        "full_summary_count": 5,
+        "category": "behavioral_observation"
+      },
+      {
+        "phrase": "failed",
+        "full_summary_count": 5,
+        "category": "structural_filler"
+      },
+      {
+        "phrase": "resubmitting",
+        "full_summary_count": 5,
+        "category": "structural_filler"
+      },
+      {
+        "phrase": "seeing",
+        "full_summary_count": 5,
+        "category": "structural_filler"
+      },
+      {
+        "phrase": "unchanged",
+        "full_summary_count": 5,
+        "category": "structural_filler"
+      }
+    ],
+    "by_category": {
+      "behavioral_observation": [
+        {
+          "phrase": "local fix",
+          "full_summary_count": 5,
+          "category": "behavioral_observation"
+        },
+        {
+          "phrase": "tests and",
+          "full_summary_count": 5,
+          "category": "behavioral_observation"
+        }
+      ],
+      "cognitive_attribution": [
+        {
+          "phrase": "notice that",
+          "full_summary_count": 10,
+          "category": "cognitive_attribution"
+        },
+        {
+          "phrase": "notices that only",
+          "full_summary_count": 8,
+          "category": "cognitive_attribution"
+        },
+        {
+          "phrase": "may notice that",
+          "full_summary_count": 5,
+          "category": "cognitive_attribution"
+        },
+        {
+          "phrase": "notice that the",
+          "full_summary_count": 5,
+          "category": "cognitive_attribution"
+        }
+      ],
+      "structural_filler": [
+        {
+          "phrase": "local",
+          "full_summary_count": 19,
+          "category": "structural_filler"
+        },
+        {
+          "phrase": "focused on",
+          "full_summary_count": 8,
+          "category": "structural_filler"
+        },
+        {
+          "phrase": "rather than",
+          "full_summary_count": 8,
+          "category": "structural_filler"
+        },
+        {
+          "phrase": "on line",
+          "full_summary_count": 7,
+          "category": "structural_filler"
+        },
+        {
+          "phrase": "bug",
+          "full_summary_count": 7,
+          "category": "structural_filler"
+        },
+        {
+          "phrase": "pattern",
+          "full_summary_count": 7,
+          "category": "structural_filler"
+        },
+        {
+          "phrase": "working",
+          "full_summary_count": 6,
+          "category": "structural_filler"
+        },
+        {
+          "phrase": "appears close to",
+          "full_summary_count": 5,
+          "category": "structural_filler"
+        },
+        {
+          "phrase": "focused on the",
+          "full_summary_count": 5,
+          "category": "structural_filler"
+        },
+        {
+          "phrase": "student appears close",
+          "full_summary_count": 5,
+          "category": "structural_filler"
+        },
+        {
+          "phrase": "after seeing",
+          "full_summary_count": 5,
+          "category": "structural_filler"
+        },
+        {
+          "phrase": "appears close",
+          "full_summary_count": 5,
+          "category": "structural_filler"
+        },
+        {
+          "phrase": "failed",
+          "full_summary_count": 5,
+          "category": "structural_filler"
+        },
+        {
+          "phrase": "resubmitting",
+          "full_summary_count": 5,
+          "category": "structural_filler"
+        },
+        {
+          "phrase": "seeing",
+          "full_summary_count": 5,
+          "category": "structural_filler"
+        },
+        {
+          "phrase": "unchanged",
+          "full_summary_count": 5,
+          "category": "structural_filler"
+        }
+      ]
+    }
+  }
+}

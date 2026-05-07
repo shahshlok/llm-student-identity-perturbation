@@ -1,0 +1,143 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4402",
+    "assessment_title": "Extras 1 - Variáveis e Estrutura Sequencial (2020)",
+    "exercise_id": "1801",
+    "student_id": "8170",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2022-2/485/users/8170/executions/4402_1801.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2022-2/485/users/8170/codemirror/4402_1801.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-03-28 23:05:43",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "livro\n8",
+            "expected": "Abra livro Abra livro Abra livro Abra livro Abra livro Abra livro Abra livro Abra livro",
+            "actual": "Abralivrolivrolivrolivrolivrolivrolivrolivro"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "carro\n2",
+            "expected": "Abra carro Abra carro",
+            "actual": "Abracarrocarro"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "caixa\n1",
+            "expected": "Abra caixa",
+            "actual": "Abracaixa"
+          }
+        ]
+      },
+      "submitted_code": "objeto = input(\"Digite o nome do objeto: \")\nnum = int(input(\"Digite o numero de repeticoes do feitico: \"))\n\nfeitico = \"Abra\" + objeto * num\n\nprint(feitico)"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-03-28 23:06:05",
+        "grade": 0.0,
+        "pass_count": 1,
+        "failed_test_indices_0idx": [
+          0,
+          1
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "livro\n8",
+            "expected": "Abra livro Abra livro Abra livro Abra livro Abra livro Abra livro Abra livro Abra livro",
+            "actual": "Abra livrolivrolivrolivrolivrolivrolivrolivro"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "carro\n2",
+            "expected": "Abra carro Abra carro",
+            "actual": "Abra carrocarro"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": true,
+            "input": "caixa\n1",
+            "expected": "Abra caixa",
+            "actual": "Abra caixa"
+          }
+        ]
+      },
+      "submitted_code": "objeto = input(\"Digite o nome do objeto: \")\nnum = int(input(\"Digite o numero de repeticoes do feitico: \"))\n\nfeitico = \"Abra \" + objeto * num\n\nprint(feitico)"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-03-28 23:06:57",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "livro\n8",
+            "expected": "Abra livro Abra livro Abra livro Abra livro Abra livro Abra livro Abra livro Abra livro",
+            "actual": "Abralivrolivrolivrolivrolivrolivrolivrolivro"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "carro\n2",
+            "expected": "Abra carro Abra carro",
+            "actual": "Abracarrocarro"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "caixa\n1",
+            "expected": "Abra caixa",
+            "actual": "Abracaixa"
+          }
+        ]
+      },
+      "submitted_code": "objeto = input(\"Digite o nome do objeto: \")\nnum = int(input(\"Digite o numero de repeticoes do feitico: \"))\n\nfeitico = \"Abra\" + objeto * num\n\nprint(feitico)"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

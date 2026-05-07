@@ -1,0 +1,144 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "523",
+    "assessment_id": "5018",
+    "assessment_title": "Lab 4 – Repetição por Condição (while)",
+    "exercise_id": "6224",
+    "student_id": "8715",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/523/users/8715/executions/5018_6224.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/523/users/8715/codemirror/5018_6224.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-09-27 12:52:14",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "8.5\n10.0\n7.0\n5.5\n4.5\n-1",
+            "expected": "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 4.5",
+            "actual": "3 alunos passaram\n2 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: -1.0"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "9.0\n5.0\n6.0\n-1",
+            "expected": "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 9.0\nMenor nota: 5.0",
+            "actual": "2 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota: 6.0\nMenor nota: -1.0"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "10.0\n8.5\n-1",
+            "expected": "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 8.5",
+            "actual": "1 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota: 8.5\nMenor nota: -1.0"
+          }
+        ]
+      },
+      "submitted_code": "n = float(input())\n\na = 0\nr = 0\nma = 0\nme = 0\n\nwhile (n > 0):\n\tn = float(input())\n\tif (n >= 5):\n\t\ta += 1\n\telse:\n\t\tr += 1\n\tif (n > ma):\n\t\tma = n\n\tif (n < me):\n\t\tme = n\n\nprint(a, \"alunos passaram\")\nprint(r, \"alunos ficaram abaixo da media\")\nprint(\"Maior nota:\",ma)\nprint(\"Menor nota:\",me)\n\t\n\t"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-09-27 12:52:38",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "8.5\n10.0\n7.0\n5.5\n4.5\n-1",
+            "expected": "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 4.5",
+            "actual": "3 alunos passaram\n2 alunos ficaram abaixo da media\nMaior nota:  10.0\nMenor nota:  -1.0"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "9.0\n5.0\n6.0\n-1",
+            "expected": "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 9.0\nMenor nota: 5.0",
+            "actual": "2 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota:  6.0\nMenor nota:  -1.0"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "10.0\n8.5\n-1",
+            "expected": "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 8.5",
+            "actual": "1 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota:  8.5\nMenor nota:  -1.0"
+          }
+        ]
+      },
+      "submitted_code": "n = float(input())\n\na = 0\nr = 0\nma = 0\nme = 0\n\nwhile (n > 0):\n\tn = float(input())\n\tif (n >= 5):\n\t\ta += 1\n\telse:\n\t\tr += 1\n\tif (n > ma):\n\t\tma = n\n\tif (n < me):\n\t\tme = n\n\nprint(a, \"alunos passaram\")\nprint(r, \"alunos ficaram abaixo da media\")\nprint(\"Maior nota: \",ma)\nprint(\"Menor nota: \",me)\n\t\n\t"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-09-27 12:54:49",
+        "grade": 67.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "8.5\n10.0\n7.0\n5.5\n4.5\n-1",
+            "expected": "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 4.5",
+            "actual": "4 alunos passaram\n1 alunos ficaram abaixo da media\nMaior nota:  10.0\nMenor nota:  4.5"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "9.0\n5.0\n6.0\n-1",
+            "expected": "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 9.0\nMenor nota: 5.0",
+            "actual": "3 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota:  9.0\nMenor nota:  6.0"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "10.0\n8.5\n-1",
+            "expected": "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota: 10.0\nMenor nota: 8.5",
+            "actual": "2 alunos passaram\n0 alunos ficaram abaixo da media\nMaior nota:  10.0\nMenor nota:  8.5"
+          }
+        ]
+      },
+      "submitted_code": "n = float(input())\n\na = 0\nr = 0\nma = 0\nme = 0\n\nwhile (n > 0):\n\tif (n >= 5):\n\t\ta += 1\n\telse:\n\t\tr += 1\n\tif (n > ma):\n\t\tma = n\n\tif (n > 0 ):\n\t\tme = n\n\t\t\n\tn = float(input())\n\nprint(a, \"alunos passaram\")\nprint(r, \"alunos ficaram abaixo da media\")\nprint(\"Maior nota: \",ma)\nprint(\"Menor nota: \",me)\n\t\n\t"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

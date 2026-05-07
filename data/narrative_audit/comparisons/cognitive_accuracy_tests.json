@@ -1,0 +1,200 @@
+{
+  "schema_version": "v6_1_cognitive_accuracy_tests_v1",
+  "created_at": "2026-04-13T09:33:00+00:00",
+  "conditions": {
+    "full": {
+      "run_dir": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_v6",
+      "hydrated_predictions_path": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_v6/hydrated_predictions.json",
+      "evaluation_path": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_v6/evaluation.json",
+      "n_rows": 117
+    },
+    "no_trace": {
+      "run_dir": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_no_trace_v1",
+      "hydrated_predictions_path": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_no_trace_v1/hydrated_predictions.json",
+      "evaluation_path": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_no_trace_v1/evaluation.json",
+      "n_rows": 117
+    },
+    "trace_shuffled": {
+      "run_dir": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_trace_shuffled_v1",
+      "hydrated_predictions_path": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_trace_shuffled_v1/hydrated_predictions.json",
+      "evaluation_path": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_trace_shuffled_v1/evaluation.json",
+      "n_rows": 116
+    }
+  },
+  "test1_line_matching": {
+    "description": "Whether explicit line mentions are close to the observed first changed line.",
+    "per_condition": {
+      "full": {
+        "n_rows": 117,
+        "n_line_mentions": 22,
+        "line_mention_rate": 0.18803418803418803,
+        "hit_rate_within_2": 0.8636363636363636
+      },
+      "no_trace": {
+        "n_rows": 117,
+        "n_line_mentions": 1,
+        "line_mention_rate": 0.008547008547008548,
+        "hit_rate_within_2": 1.0
+      },
+      "trace_shuffled": {
+        "n_rows": 116,
+        "n_line_mentions": 6,
+        "line_mention_rate": 0.05172413793103448,
+        "hit_rate_within_2": 0.8333333333333334
+      }
+    },
+    "pairwise": {
+      "full_vs_no_trace": {
+        "n_paired": 1,
+        "mean_left": 1.0,
+        "mean_right": 1.0,
+        "mean_delta": 0.0,
+        "wilcoxon_p": 1.0
+      },
+      "full_vs_trace_shuffled": {
+        "n_paired": 3,
+        "mean_left": 1.0,
+        "mean_right": 1.0,
+        "mean_delta": 0.0,
+        "wilcoxon_p": 1.0
+      }
+    }
+  },
+  "test2_length_accuracy_correlation": {
+    "description": "Whether longer top summaries correlate with better top-1 prediction accuracy.",
+    "per_condition": {
+      "full": {
+        "summary_word_count_vs_top1_jaccard": {
+          "n": 117,
+          "rho": 0.08970142902202986,
+          "p_value": 0.33615385538619635
+        },
+        "summary_word_count_vs_top1_similarity": {
+          "n": 117,
+          "rho": 0.09345027868395346,
+          "p_value": 0.31626556557863345
+        }
+      },
+      "no_trace": {
+        "summary_word_count_vs_top1_jaccard": {
+          "n": 117,
+          "rho": 0.008458673810257819,
+          "p_value": 0.9278789169743702
+        },
+        "summary_word_count_vs_top1_similarity": {
+          "n": 117,
+          "rho": 0.02182727303663209,
+          "p_value": 0.8153025302821806
+        }
+      },
+      "trace_shuffled": {
+        "summary_word_count_vs_top1_jaccard": {
+          "n": 116,
+          "rho": 0.12259487753731808,
+          "p_value": 0.18984450862979266
+        },
+        "summary_word_count_vs_top1_similarity": {
+          "n": 116,
+          "rho": 0.09948929951694825,
+          "p_value": 0.28797834418069296
+        }
+      }
+    }
+  },
+  "test3_action_alignment": {
+    "description": "Whether action types implied by the summary appear in the observed next episode.",
+    "per_condition": {
+      "full": {
+        "n_rows": 117,
+        "n_action_extractable": 73,
+        "action_extraction_rate": 0.6239316239316239,
+        "mean_alignment_score": 0.863013698630137
+      },
+      "no_trace": {
+        "n_rows": 117,
+        "n_action_extractable": 54,
+        "action_extraction_rate": 0.46153846153846156,
+        "mean_alignment_score": 0.8611111111111112
+      },
+      "trace_shuffled": {
+        "n_rows": 116,
+        "n_action_extractable": 72,
+        "action_extraction_rate": 0.6206896551724138,
+        "mean_alignment_score": 0.9259259259259258
+      }
+    },
+    "pairwise": {
+      "full_vs_no_trace": {
+        "n_paired": 32,
+        "mean_left": 0.9166666666666667,
+        "mean_right": 0.890625,
+        "mean_delta": 0.026041666666666657,
+        "wilcoxon_p": 0.5701580449180648
+      },
+      "full_vs_trace_shuffled": {
+        "n_paired": 50,
+        "mean_left": 0.8833333333333334,
+        "mean_right": 0.9333333333333335,
+        "mean_delta": -0.05,
+        "wilcoxon_p": 0.25963977138128647
+      }
+    }
+  },
+  "test4_specificity_accuracy_correlation": {
+    "description": "Whether more specific summaries correlate with higher composite trajectory accuracy.",
+    "per_condition": {
+      "full": {
+        "word_count_vs_composite_accuracy": {
+          "n": 117,
+          "rho": 0.09192721644208623,
+          "p_value": 0.3242518307069071
+        },
+        "code_reference_count_vs_composite_accuracy": {
+          "n": 117,
+          "rho": 0.16729390381818104,
+          "p_value": 0.07141027733485804
+        },
+        "cognitive_verb_count_vs_composite_accuracy": {
+          "n": 117,
+          "rho": 0.21753630550458478,
+          "p_value": 0.018470944603565482
+        }
+      },
+      "no_trace": {
+        "word_count_vs_composite_accuracy": {
+          "n": 117,
+          "rho": 0.014527124619400863,
+          "p_value": 0.8764618620229082
+        },
+        "code_reference_count_vs_composite_accuracy": {
+          "n": 117,
+          "rho": 0.12931627824841954,
+          "p_value": 0.16465235773054998
+        },
+        "cognitive_verb_count_vs_composite_accuracy": {
+          "n": 117,
+          "rho": 0.029328195010186724,
+          "p_value": 0.7536012044766586
+        }
+      },
+      "trace_shuffled": {
+        "word_count_vs_composite_accuracy": {
+          "n": 116,
+          "rho": 0.11338058438142118,
+          "p_value": 0.22557604583938107
+        },
+        "code_reference_count_vs_composite_accuracy": {
+          "n": 116,
+          "rho": 0.03272037138736977,
+          "p_value": 0.7273249772471695
+        },
+        "cognitive_verb_count_vs_composite_accuracy": {
+          "n": 116,
+          "rho": 0.1201386326735638,
+          "p_value": 0.19893980835954758
+        }
+      }
+    },
+    "composite_accuracy": "(event_type_overlap.top1_jaccard + event_type_edit_similarity.top1_similarity) / 2"
+  }
+}

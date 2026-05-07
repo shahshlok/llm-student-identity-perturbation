@@ -1,0 +1,1402 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 485
+- assessment_id: 4553
+- assessment_title: Lab 3 - Estrutura Condicional Encadeada
+- exercise_id: 1117
+- student_id: 8159
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-04-26T08:22:21.072000
+
+Execution Result
+
+- submitted_at: 2023-04-26 09:29:34
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "70.56\n2\nN"
+    expected: "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92"
+    actual: "Entradas , 70.56 , 2 , N\nTotal: R$ 70.56"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75"
+    actual: "Entradas , 100.75 , 6 , S\nTotal: R$ 120.75"
+  - test_index_0idx: 2 [FAIL]
+    input: "0.00\n9\nS"
+    expected: "Entradas: 0.0 , 9 , S\nDados invalidos"
+    actual: "Entradas: 0.0 9 S\nDados invalidos\nEntradas , 0.0 , 9 , S"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 537
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	13	0	0	0	0	["pn="]	[""]	+input
+7542	32	0	3	0	3	["float("]	[""]	+input
+13289	45	0	9	0	9	["input("]	[""]	+input
+14412	48	0	15	0	15	[")"]	[""]	+input
+15012	51	0	16	0	16	[")"]	[""]	+input
+25681	85	0	15	0	15	["\"\""]	[""]	+input
+30197	100	0	16	0	16	["preco"]	[""]	+input
+30764	103	0	21	0	21	[" "]	[""]	+input
+136694	118	0	22	0	22	["normal:"]	[""]	+input
+136886	121	0	29	0	29	[" "]	[""]	+input
+138871	132	0	33	0	33	["",""]	[""]	+input
+163238	144	1	0	1	0	["dia "]	[""]	+input
+163900	151	1	4	1	4	["da "]	[""]	+input
+166117	166	1	7	1	7	["semana "]	[""]	+input
+167086	168	1	13	1	14	[""]	[" "]	+delete
+167394	172	1	12	1	13	[""]	["a"]	+delete
+167803	176	1	11	1	12	[""]	["n"]	+delete
+167864	180	1	10	1	11	[""]	["a"]	+delete
+167921	184	1	9	1	10	[""]	["m"]	+delete
+167978	188	1	8	1	9	[""]	["e"]	+delete
+168035	192	1	7	1	8	[""]	["s"]	+delete
+168091	196	1	6	1	7	[""]	[" "]	+delete
+168140	200	1	5	1	6	[""]	["a"]	+delete
+168198	204	1	4	1	5	[""]	["d"]	+delete
+168258	208	1	3	1	4	[""]	[" "]	+delete
+168412	213	1	0	1	3	[""]	["dia"]	+input
+168430	215	0	33	1	0	[""]	["",""]	+delete
+168577	220	0	33	0	33	["",""]	[""]	+input
+176645	250	1	0	1	0	["ds="]	[""]	+input
+269574	267	1	3	1	3	["int("]	[""]	+input
+273108	284	1	7	1	7	["input("]	[""]	+input
+273355	287	1	13	1	13	[")"]	[""]	+input
+273475	290	1	14	1	14	[")"]	[""]	+input
+282499	299	1	13	1	13	["\""]	[""]	+input
+282605	302	1	14	1	14	["\""]	[""]	+input
+287972	314	1	14	1	14	["dia "]	[""]	+input
+289116	321	1	18	1	18	["da "]	[""]	+input
+292236	336	1	21	1	21	["semana:"]	[""]	+input
+292579	339	1	28	1	28	[" "]	[""]	+input
+443678	342	1	29	1	29	["5"]	[""]	+input
+443825	346	1	30	1	30	["5"]	[""]	+input
+444010	350	1	31	1	31	["3"]	[""]	+input
+444032	354	1	32	1	32	["3"]	[""]	+input
+444201	358	1	33	1	33	["3"]	[""]	+input
+444218	362	1	34	1	34	["3"]	[""]	+input
+444229	366	1	35	1	35	["7"]	[""]	+input
+444241	370	1	36	1	36	["7"]	[""]	+input
+444273	374	1	37	1	37	["3"]	[""]	+input
+444297	378	1	38	1	38	["3"]	[""]	+input
+444344	382	1	39	1	39	["9"]	[""]	+input
+444391	386	1	40	1	40	["9"]	[""]	+input
+518664	410	1	40	1	41	[""]	["9"]	+delete
+519075	414	1	39	1	40	[""]	["9"]	+delete
+519129	418	1	38	1	39	[""]	["3"]	+delete
+519185	422	1	37	1	38	[""]	["3"]	+delete
+519249	426	1	36	1	37	[""]	["7"]	+delete
+519299	430	1	35	1	36	[""]	["7"]	+delete
+519356	434	1	34	1	35	[""]	["3"]	+delete
+519417	438	1	33	1	34	[""]	["3"]	+delete
+519584	442	1	32	1	33	[""]	["3"]	+delete
+519684	446	1	31	1	32	[""]	["3"]	+delete
+519865	450	1	30	1	31	[""]	["5"]	+delete
+520017	454	1	29	1	30	[""]	["5"]	+delete
+520178	458	1	28	1	29	[""]	[" "]	+delete
+521302	463	1	28	1	28	[" "]	[""]	+input
+524975	476	1	32	1	32	[" "]	[""]	+input
+525495	478	1	32	1	33	[""]	[" "]	+delete
+525852	482	1	32	1	32	["",""]	[""]	+input
+534229	490	2	0	2	0	["d="]	[""]	+input
+539293	503	2	2	2	2	["input("]	[""]	+input
+539537	506	2	8	2	8	[")"]	[""]	+input
+541484	512	2	8	2	8	["\""]	[""]	+input
+541654	515	2	9	2	9	["\""]	[""]	+input
+544789	523	2	9	2	9	["e "]	[""]	+input
+546495	532	2	11	2	11	["dia "]	[""]	+input
+547073	539	2	15	2	15	["de "]	[""]	+input
+549644	554	2	18	2	18	["musica"]	[""]	+input
+553261	567	2	24	2	24	[" ao "]	[""]	+input
+555389	578	2	28	2	28	["vivo?"]	[""]	+input
+556301	580	2	32	2	33	[""]	["?"]	+delete
+557565	585	2	32	2	32	[":"]	[""]	+input
+557908	588	2	33	2	33	[" "]	[""]	+input
+567926	593	2	36	2	36	["."]	[""]	+input
+571412	604	2	37	2	37	["uppr("]	[""]	+input
+571618	607	2	42	2	42	[")"]	[""]	+input
+575489	628	2	40	2	40	["e"]	[""]	+input
+577392	639	2	44	2	44	["",""]	[""]	+input
+627126	649	3	0	3	0	["if("]	[""]	+input
+627861	652	3	3	3	3	[")"]	[""]	+input
+628893	655	3	4	3	4	[":"]	[""]	+input
+638581	668	3	3	3	3	["pn>"]	[""]	+input
+639078	671	3	6	3	6	["="]	[""]	+input
+639565	674	3	7	3	7	["0"]	[""]	+input
+641584	685	3	10	3	10	["",""]	[""]	+input
+641585	686	4	0	4	0	["\t"]	[""]	+input
+665460	696	3	8	3	8	[" "]	[""]	+input
+666571	700	3	9	3	9	["a"]	[""]	+input
+673764	713	3	10	3	10	["nd "]	[""]	+input
+693567	725	3	13	3	13	["d"]	[""]	+input
+693568	726	3	14	3	15	[""]	[")"]	+delete
+694411	730	3	13	3	14	[""]	["d"]	+delete
+697333	735	3	13	3	13	[")"]	[""]	+input
+708150	741	3	13	3	13	["1"]	[""]	+input
+715076	744	3	14	3	14	["<"]	[""]	+input
+716493	747	3	15	3	15	["="]	[""]	+input
+726152	754	3	16	3	16	["ds<"]	[""]	+input
+727565	757	3	19	3	19	["="]	[""]	+input
+731038	760	3	20	3	20	["7"]	[""]	+input
+772325	768	3	23	3	23	["",""]	[""]	+input
+772325	769	4	0	4	0	["\t"]	[""]	+input
+783495	778	5	0	5	1	[""]	["\t"]	+delete
+787672	799	5	0	5	0	["else:"]	[""]	+input
+788360	803	5	5	5	5	["",""]	[""]	+input
+788361	804	6	0	6	0	["\t"]	[""]	+input
+811646	853	6	0	6	1	[""]	["\t"]	+delete
+811769	857	5	5	6	0	[""]	["",""]	+delete
+812689	862	5	5	5	5	["",""]	[""]	+input
+812690	863	6	0	6	0	["\t"]	[""]	+input
+827580	908	5	5	5	5	["",""]	[""]	+input
+827581	909	6	0	6	0	["\t"]	[""]	+input
+858145	935	7	0	7	1	[""]	["\t"]	+delete
+858468	939	6	1	7	0	[""]	["",""]	+delete
+858903	944	6	0	6	1	[""]	["\t"]	+delete
+859316	948	5	5	6	0	[""]	["",""]	+delete
+860116	953	5	5	5	5	["",""]	[""]	+input
+860116	954	6	0	6	0	["\t"]	[""]	+input
+868459	973	6	0	6	1	[""]	["\t"]	+delete
+869094	977	5	5	6	0	[""]	["",""]	+delete
+897155	987	5	5	5	5	["",""]	[""]	+input
+897155	988	6	0	6	0	["\t"]	[""]	+input
+911015	1022	5	5	5	5	["print("]	[""]	+input
+911323	1027	5	11	5	11	["))"]	[""]	+input
+912041	1029	5	12	5	13	[""]	[")"]	+delete
+915123	1037	5	5	5	5	["",""]	[""]	+input
+915123	1038	6	0	6	0	["\t"]	[""]	+input
+919590	1049	6	7	6	7	["\""]	[""]	+input
+919758	1052	6	8	6	8	["\""]	[""]	+input
+935109	1074	6	8	6	8	["Entradas:"]	[""]	+input
+938775	1080	6	18	6	18	[","]	[""]	+input
+993660	1087	6	19	6	19	["pn,"]	[""]	+input
+999374	1094	6	22	6	22	["ds,"]	[""]	+input
+1003318	1100	6	25	6	25	["d"]	[""]	+input
+1020430	1123	6	19	6	19	["r"]	[""]	+input
+1020805	1126	6	20	6	20	["o"]	[""]	+input
+1020992	1129	6	21	6	21	["u"]	[""]	+input
+1021165	1132	6	22	6	22	["n"]	[""]	+input
+1021469	1135	6	23	6	23	["d"]	[""]	+input
+1028150	1138	6	24	6	24	["("]	[""]	+input
+1030398	1147	6	27	6	27	[")"]	[""]	+input
+1031838	1153	6	27	6	27	[","]	[""]	+input
+1033180	1156	6	28	6	28	["2"]	[""]	+input
+1045192	1168	5	5	5	5	["",""]	[""]	+input
+1045194	1169	6	0	6	0	["\t"]	[""]	+input
+1050792	1184	6	0	6	1	[""]	["\t"]	+delete
+1051485	1188	5	5	6	0	[""]	["",""]	+delete
+1056190	1202	5	5	5	5	["cont="]	[""]	+input
+1057958	1219	5	5	5	5	["",""]	[""]	+input
+1057959	1220	6	0	6	0	["\t"]	[""]	+input
+1070362	1237	6	5	6	6	[""]	["="]	+delete
+1070630	1241	6	4	6	5	[""]	["t"]	+delete
+1070924	1245	6	3	6	4	[""]	["n"]	+delete
+1071038	1249	6	2	6	3	[""]	["o"]	+delete
+1071250	1253	6	1	6	2	[""]	["c"]	+delete
+1071398	1257	6	0	6	1	[""]	["\t"]	+delete
+1071533	1261	5	5	6	0	[""]	["",""]	+delete
+1071633	1266	5	4	5	5	[""]	[":"]	+delete
+1073758	1271	5	4	5	4	[":"]	[""]	+input
+1076646	1276	6	36	6	36	["p"]	[""]	+input
+1076996	1279	6	37	6	37	["r"]	[""]	+input
+1077782	1282	6	38	6	38	["i"]	[""]	+input
+1078021	1285	6	39	6	39	["n"]	[""]	+input
+1078285	1288	6	40	6	40	["t"]	[""]	+input
+1079654	1291	6	41	6	41	["("]	[""]	+input
+1079910	1294	6	42	6	42	[")"]	[""]	+input
+1084326	1300	6	42	6	42	["\""]	[""]	+input
+1085261	1303	6	43	6	43	["\""]	[""]	+input
+1086462	1309	6	43	6	43	[" "]	[""]	+input
+1087606	1311	6	43	6	44	[""]	[" "]	+delete
+1094733	1326	6	43	6	43	["Dados "]	[""]	+input
+1098674	1348	6	49	6	49	["invalidos"]	[""]	+input
+1101397	1404	6	40	6	40	[" "]	[""]	+input
+1101621	1411	6	40	6	40	["."]	[""]	+input
+1101812	1414	6	42	6	42	[" "]	[""]	+input
+1102269	1416	6	42	6	43	[""]	[" "]	+delete
+1102369	1420	6	41	6	42	[""]	[" "]	+delete
+1102589	1424	6	40	6	41	[""]	["."]	+delete
+1105185	1440	6	36	6	36	["",""]	[""]	+input
+1105187	1441	7	0	7	0	["\t"]	[""]	+input
+1111187	1450	8	0	8	1	[""]	["\t"]	+delete
+1111389	1454	7	25	8	0	[""]	["",""]	+delete
+1114624	1463	3	23	3	23	["",""]	[""]	+input
+1114627	1464	4	0	4	0	["\t"]	[""]	+input
+1118042	1472	4	1	5	0	[""]	["",""]	+delete
+1126835	1483	4	0	4	1	[""]	["\t"]	+delete
+1127061	1487	3	23	4	0	[""]	["",""]	+delete
+1130597	1498	3	23	3	23	["if"]	[""]	+input
+1131764	1505	3	23	3	23	["",""]	[""]	+input
+1131765	1506	4	0	4	0	["\t"]	[""]	+input
+1134365	1518	4	3	4	3	["("]	[""]	+input
+1134744	1521	4	4	4	4	[")"]	[""]	+input
+1135878	1524	4	5	4	5	[":"]	[""]	+input
+1965743	1543	4	4	4	4	["d="]	[""]	+input
+1965879	1546	4	6	4	6	["="]	[""]	+input
+1969381	1551	4	7	4	7	["S "]	[""]	+input
+1972327	1560	4	9	4	9	["and "]	[""]	+input
+1975468	1565	4	13	4	13	["d="]	[""]	+input
+1975599	1568	4	15	4	15	["="]	[""]	+input
+1979907	1573	4	16	4	16	["N\""]	[""]	+input
+1981718	1582	4	16	4	16	["\""]	[""]	+input
+1984633	1612	4	8	4	8	["\""]	[""]	+input
+1986046	1621	4	7	4	7	["\""]	[""]	+input
+1988952	1625	4	23	4	24	[""]	["\t"]	+delete
+1990392	1629	4	23	4	23	["",""]	[""]	+input
+1990393	1630	5	0	5	0	["\t\t"]	[""]	+input
+2020402	1643	4	20	4	21	[""]	["\""]	+delete
+2020573	1647	4	19	4	20	[""]	["N"]	+delete
+2020727	1651	4	18	4	19	[""]	["\""]	+delete
+2020857	1655	4	17	4	18	[""]	["="]	+delete
+2021004	1659	4	16	4	17	[""]	["="]	+delete
+2021280	1663	4	15	4	16	[""]	["d"]	+delete
+2021405	1667	4	14	4	15	[""]	[" "]	+delete
+2021815	1671	4	13	4	14	[""]	["d"]	+delete
+2022041	1675	4	12	4	13	[""]	["n"]	+delete
+2022246	1679	4	11	4	12	[""]	["a"]	+delete
+2022663	1683	4	10	4	11	[""]	[" "]	+delete
+2119843	1699	5	1	5	2	[""]	["\t"]	+delete
+2119977	1703	5	0	5	1	[""]	["\t"]	+delete
+2121349	1707	4	12	5	0	[""]	["",""]	+delete
+2122128	1712	4	12	4	12	["",""]	[""]	+input
+2122129	1713	5	0	5	0	["\t\t"]	[""]	+input
+2126393	1728	5	1	5	2	[""]	["\t"]	+delete
+2126739	1732	5	0	5	1	[""]	["\t"]	+delete
+2127080	1736	4	12	5	0	[""]	["",""]	+delete
+2833388	1744	4	12	4	12	["",""]	[""]	+input
+2833389	1745	5	0	5	0	["\t\t"]	[""]	+input
+2837721	1762	5	1	5	2	[""]	["\t"]	+delete
+2838195	1766	5	0	5	1	[""]	["\t"]	+delete
+2838325	1770	4	12	5	0	[""]	["",""]	+delete
+2891985	1780	4	12	4	12	["",""]	[""]	+input
+2891985	1781	5	0	5	0	["\t\t"]	[""]	+input
+2933380	1787	5	2	5	2	["c"]	[""]	+input
+2933430	1790	5	3	5	3	["o"]	[""]	+input
+2933573	1795	5	4	5	4	["n"]	[""]	+input
+2933624	1798	5	5	5	5	["t"]	[""]	+input
+2934626	1803	5	6	5	6	["="]	[""]	+input
+2942284	1806	5	6	5	7	[""]	["="]	+delete
+2942482	1810	5	5	5	6	[""]	["t"]	+delete
+2942724	1814	5	4	5	5	[""]	["n"]	+delete
+2943026	1818	5	3	5	4	[""]	["o"]	+delete
+2943425	1822	5	2	5	3	[""]	["c"]	+delete
+2994472	1827	4	9	4	10	[""]	["\""]	+delete
+2994656	1831	4	8	4	9	[""]	["S"]	+delete
+2994823	1835	4	7	4	8	[""]	["\""]	+delete
+2994976	1839	4	6	4	7	[""]	["="]	+delete
+2995140	1843	4	5	4	6	[""]	["="]	+delete
+2995425	1847	4	4	4	5	[""]	["d"]	+delete
+3023538	1852	4	4	4	4	["d"]	[""]	+input
+3023604	1855	4	5	4	5	["e"]	[""]	+input
+3023969	1859	4	5	4	6	[""]	["e"]	+delete
+3024138	1864	4	5	4	5	["s"]	[""]	+input
+3026057	1875	4	4	4	4	["<"]	[""]	+input
+3039221	1883	4	4	4	4	["2"]	[""]	+input
+3044036	1897	4	8	4	8	["<"]	[""]	+input
+3046079	1904	4	9	4	9	["3"]	[""]	+input
+3047823	1912	4	9	4	9	["+"]	[""]	+input
+3049554	1928	4	9	4	10	[""]	["+"]	+delete
+3050659	1933	4	9	4	9	["="]	[""]	+input
+3053328	1955	4	6	4	6	["="]	[""]	+input
+3055359	1974	4	12	4	12	[" "]	[""]	+input
+3055526	1978	4	13	4	13	["a"]	[""]	+input
+3055610	1981	4	14	4	14	["n"]	[""]	+input
+3055720	1986	4	15	4	15	["d"]	[""]	+input
+3056110	1990	4	16	4	16	[" "]	[""]	+input
+3059136	1994	4	17	4	17	["d"]	[""]	+input
+3059269	1997	4	18	4	18	["s"]	[""]	+input
+3059823	2002	4	19	4	19	["="]	[""]	+input
+3059936	2006	4	20	4	20	["="]	[""]	+input
+3066655	2010	4	21	4	21	["4"]	[""]	+input
+3068607	2019	4	24	4	24	["",""]	[""]	+input
+3068607	2020	5	0	5	0	["\t\t"]	[""]	+input
+3134466	2025	5	1	5	2	[""]	["\t"]	+delete
+3135001	2030	5	1	5	1	["e"]	[""]	+input
+3135097	2034	5	2	5	2	["l"]	[""]	+input
+3135169	2038	5	3	5	3	["s"]	[""]	+input
+3135300	2041	5	4	5	4	["e"]	[""]	+input
+3136060	2047	5	5	5	5	[":"]	[""]	+input
+3140924	2058	5	5	5	6	[""]	[":"]	+delete
+3142157	2064	5	5	5	5	[":"]	[""]	+input
+3143214	2068	5	6	5	6	["",""]	[""]	+input
+3143215	2069	6	0	6	0	["\t\t"]	[""]	+input
+3143596	2074	6	1	6	2	[""]	["\t"]	+delete
+3144253	2079	6	1	6	1	["\tprint(\"Entradas:\",round(pn,2),ds,d)","\tprint(\"Dados invalidos\")"]	[""]	paste
+3148846	2150	7	1	7	1	["\t"]	[""]	+input
+3151708	2155	8	1	8	2	[""]	["\t"]	+delete
+3152076	2159	8	0	8	1	[""]	["\t"]	+delete
+3152400	2163	7	26	8	0	[""]	["",""]	+delete
+3155229	2169	4	24	4	24	["",""]	[""]	+input
+3155229	2170	5	0	5	0	["\t\t"]	[""]	+input
+3165323	2177	7	2	8	26	[""]	["print(\"Entradas:\",round(pn,2),ds,d)","\t\tprint(\"Dados invalidos\")"]	+delete
+3183275	2184	4	21	4	22	[""]	["4"]	+delete
+3183707	2189	4	21	4	21	["5"]	[""]	+input
+3195548	2194	7	2	7	2	["c"]	[""]	+input
+3195603	2197	7	3	7	3	["o"]	[""]	+input
+3195695	2202	7	4	7	4	["n"]	[""]	+input
+3195797	2206	7	5	7	5	["t"]	[""]	+input
+3196714	2210	7	6	7	6	["="]	[""]	+input
+3256218	2215	5	2	5	2	["e"]	[""]	+input
+3256334	2218	5	3	5	3	["f"]	[""]	+input
+3256979	2222	5	3	5	4	[""]	["f"]	+delete
+3257145	2226	5	2	5	3	[""]	["e"]	+delete
+3257674	2231	5	2	5	2	["i"]	[""]	+input
+3257818	2235	5	3	5	3	["f"]	[""]	+input
+3258154	2240	5	4	5	4	["()"]	[""]	+input
+3260154	2248	5	5	5	5	["S"]	[""]	+input
+3261163	2253	5	5	5	6	[""]	["S"]	+delete
+3263930	2258	5	5	5	5	["d"]	[""]	+input
+3264922	2262	5	6	5	6	["="]	[""]	+input
+3269370	2266	5	7	5	7	["="]	[""]	+input
+3271100	2273	5	8	5	8	["\"\""]	[""]	+input
+3271900	2279	5	9	5	9	["S"]	[""]	+input
+3274890	2298	5	12	5	12	[":"]	[""]	+input
+3275338	2302	5	13	5	13	["",""]	[""]	+input
+3275338	2303	6	0	6	0	["\t\t\t"]	[""]	+input
+3289677	2309	6	3	6	3	["c"]	[""]	+input
+3289788	2312	6	4	6	4	["o"]	[""]	+input
+3290284	2317	6	5	6	5	["t"]	[""]	+input
+3290523	2320	6	5	6	6	[""]	["t"]	+delete
+3290732	2325	6	5	6	5	["n"]	[""]	+input
+3290832	2328	6	6	6	6	["t"]	[""]	+input
+3297535	2335	6	7	6	7	["+"]	[""]	+input
+3298513	2339	6	7	6	8	[""]	["+"]	+delete
+3298912	2344	6	7	6	7	["="]	[""]	+input
+3339807	2348	6	8	6	8	["p"]	[""]	+input
+3339952	2351	6	9	6	9	["n"]	[""]	+input
+3344338	2356	6	10	6	10	["*"]	[""]	+input
+3345807	2360	6	11	6	11	["2"]	[""]	+input
+3345987	2364	6	12	6	12	["."]	[""]	+input
+3346175	2368	6	13	6	13	["5"]	[""]	+input
+3347404	2373	6	14	6	14	[")"]	[""]	+input
+3349668	2399	6	8	6	8	["("]	[""]	+input
+3352785	2425	6	8	6	8	["p"]	[""]	+input
+3353694	2429	6	9	6	9	["n"]	[""]	+input
+3354311	2433	6	10	6	10	["-"]	[""]	+input
+3362032	2455	6	19	6	19	["+"]	[""]	+input
+3362385	2459	6	20	6	20	["2"]	[""]	+input
+3363072	2463	6	21	6	21	["0"]	[""]	+input
+3367618	2467	11	25	11	25	["",""]	[""]	+input
+3367618	2468	12	0	12	0	["\t"]	[""]	+input
+3368055	2473	12	0	12	1	[""]	["\t"]	+delete
+3370287	2478	12	0	12	0	["p"]	[""]	+input
+3370451	2482	12	1	12	1	["r"]	[""]	+input
+3370501	2485	12	2	12	2	["i"]	[""]	+input
+3370591	2490	12	3	12	3	["n"]	[""]	+input
+3370677	2494	12	4	12	4	["t"]	[""]	+input
+3371430	2499	12	5	12	5	["()"]	[""]	+input
+3371695	2505	12	6	12	6	["c"]	[""]	+input
+3371749	2508	12	7	12	7	["o"]	[""]	+input
+3371887	2513	12	8	12	8	["n"]	[""]	+input
+3371978	2517	12	9	12	9	["t"]	[""]	+input
+3380559	2520	12	9	12	10	[""]	["t"]	+delete
+3380705	2524	12	8	12	9	[""]	["n"]	+delete
+3380814	2528	12	7	12	8	[""]	["o"]	+delete
+3381272	2532	12	6	12	7	[""]	["c"]	+delete
+3381471	2537	12	6	12	6	["r"]	[""]	+input
+3381620	2541	12	7	12	7	["o"]	[""]	+input
+3381808	2545	12	8	12	8	["u"]	[""]	+input
+3381903	2549	12	9	12	9	["n"]	[""]	+input
+3382001	2552	12	10	12	10	["d"]	[""]	+input
+3383669	2558	12	11	12	11	["()"]	[""]	+input
+3385879	2564	12	12	12	12	["c"]	[""]	+input
+3385928	2567	12	13	12	13	["o"]	[""]	+input
+3386053	2572	12	14	12	14	["n"]	[""]	+input
+3386206	2576	12	15	12	15	["t"]	[""]	+input
+3387503	2580	12	16	12	16	[","]	[""]	+input
+3388064	2584	12	17	12	17	["2"]	[""]	+input
+3394999	2589	12	0	12	0	["]"]	[""]	+input
+3394999	2590	12	0	12	0	["\t"]	[""]	+input
+3395952	2593	12	1	12	2	[""]	["]"]	+delete
+3396338	2597	12	0	12	1	[""]	["\t"]	+delete
+3396670	2601	12	0	12	0	["",""]	[""]	+input
+3396671	2602	13	0	13	0	["\t"]	[""]	+input
+3397822	2607	13	0	13	1	[""]	["\t"]	+delete
+3400879	2611	12	0	13	0	[""]	["",""]	+delete
+3460962	2619	6	22	6	22	["",""]	[""]	+input
+3460962	2620	7	0	7	0	["\t\t\t"]	[""]	+input
+3461375	2625	7	2	7	3	[""]	["\t"]	+delete
+3461973	2630	7	2	7	2	["e"]	[""]	+input
+3462036	2633	7	3	7	3	["l"]	[""]	+input
+3462113	2638	7	4	7	4	["s"]	[""]	+input
+3462242	2641	7	5	7	5	["e"]	[""]	+input
+3462897	2647	7	6	7	6	[":"]	[""]	+input
+3463408	2651	7	7	7	7	["",""]	[""]	+input
+3463408	2652	8	0	8	0	["\t\t\t"]	[""]	+input
+3464496	2658	8	3	8	3	["c"]	[""]	+input
+3464592	2662	8	4	8	4	["o"]	[""]	+input
+3464786	2666	8	5	8	5	["n"]	[""]	+input
+3464880	2669	8	6	8	6	["t"]	[""]	+input
+3469963	2674	8	7	8	7	["="]	[""]	+input
+3471329	2678	8	8	8	8	["c"]	[""]	+input
+3471359	2681	8	9	8	9	["o"]	[""]	+input
+3471487	2685	8	10	8	10	["n"]	[""]	+input
+3471597	2690	8	11	8	11	["t"]	[""]	+input
+3472737	2694	8	12	8	12	["-"]	[""]	+input
+3473637	2699	8	13	8	13	["()"]	[""]	+input
+3477169	2716	8	11	8	12	[""]	["t"]	+delete
+3477315	2720	8	10	8	11	[""]	["n"]	+delete
+3477536	2724	8	9	8	10	[""]	["o"]	+delete
+3477665	2728	8	8	8	9	[""]	["c"]	+delete
+3477695	2732	8	7	8	8	[""]	["="]	+delete
+3478673	2737	8	7	8	7	["="]	[""]	+input
+3479103	2741	8	8	8	8	["p"]	[""]	+input
+3479280	2745	8	9	8	9	["n"]	[""]	+input
+3481104	2755	8	12	8	12	["p"]	[""]	+input
+3481376	2759	8	13	8	13	["n"]	[""]	+input
+3482037	2763	8	14	8	14	["*"]	[""]	+input
+3482898	2767	8	15	8	15	["2"]	[""]	+input
+3483056	2771	8	16	8	16	["."]	[""]	+input
+3483252	2774	8	17	8	17	["5"]	[""]	+input
+3494687	2787	10	6	10	7	[""]	["="]	+delete
+3494936	2791	10	5	10	6	[""]	["t"]	+delete
+3495136	2795	10	4	10	5	[""]	["n"]	+delete
+3495375	2799	10	3	10	4	[""]	["o"]	+delete
+3495844	2803	10	2	10	3	[""]	["c"]	+delete
+3517958	2808	10	2	10	2	["i"]	[""]	+input
+3518097	2812	10	3	10	3	["f"]	[""]	+input
+3518944	2817	10	4	10	4	["()"]	[""]	+input
+3520336	2823	10	5	10	5	["d"]	[""]	+input
+3520966	2827	10	6	10	6	["="]	[""]	+input
+3521187	2831	10	7	10	7	["="]	[""]	+input
+3522853	2838	10	8	10	8	["\"\""]	[""]	+input
+3523344	2844	10	9	10	9	["S"]	[""]	+input
+3525280	2855	10	12	10	12	["",""]	[""]	+input
+3525280	2856	11	0	11	0	["\t\t"]	[""]	+input
+3527471	2861	11	1	11	2	[""]	["\t"]	+delete
+3527653	2865	11	0	11	1	[""]	["\t"]	+delete
+3527855	2869	10	12	11	0	[""]	["",""]	+delete
+3528596	2876	10	12	10	12	[":"]	[""]	+input
+3529205	2880	10	13	10	13	["",""]	[""]	+input
+3529207	2881	11	0	11	0	["\t\t\t"]	[""]	+input
+3533956	2894	11	3	11	3	["cont=pn-(pn*2.5)+20"]	[""]	paste
+3541570	2898	11	22	11	22	["",""]	[""]	+input
+3541571	2899	12	0	12	0	["\t\t\t"]	[""]	+input
+3542659	2904	12	2	12	3	[""]	["\t"]	+delete
+3542927	2909	12	2	12	2	["e"]	[""]	+input
+3543040	2913	12	3	12	3	["l"]	[""]	+input
+3543089	2916	12	4	12	4	["s"]	[""]	+input
+3543253	2921	12	5	12	5	["e"]	[""]	+input
+3544159	2926	12	6	12	6	[":"]	[""]	+input
+3547776	2938	12	7	12	7	["cont=pn-(pn*2.5)"]	[""]	paste
+3549269	2943	12	7	12	23	[""]	["cont=pn-(pn*2.5)"]	undo
+3549823	2948	12	7	12	7	["",""]	[""]	+input
+3549823	2949	13	0	13	0	["\t\t\t"]	[""]	+input
+3550288	2955	13	3	13	3	["cont=pn-(pn*2.5)"]	[""]	paste
+3578024	2962	17	6	17	6	["\""]	[""]	+input
+3579557	2968	17	7	17	7	["\""]	[""]	+input
+3581474	2978	17	7	17	7	["T"]	[""]	+input
+3581637	2983	17	8	17	8	["O"]	[""]	+input
+3581737	2988	17	9	17	9	["r"]	[""]	+input
+3581912	2992	17	10	17	10	["a"]	[""]	+input
+3582206	2995	17	10	17	11	[""]	["a"]	+delete
+3582511	2999	17	9	17	10	[""]	["r"]	+delete
+3582870	3003	17	8	17	9	[""]	["O"]	+delete
+3582998	3008	17	8	17	8	["o"]	[""]	+input
+3583137	3012	17	9	17	9	["t"]	[""]	+input
+3583253	3015	17	10	17	10	["a"]	[""]	+input
+3583407	3020	17	11	17	11	["l"]	[""]	+input
+3584208	3025	17	12	17	12	[":"]	[""]	+input
+3587377	3033	17	14	17	14	[","]	[""]	+input
+3593175	3037	16	25	16	25	["",""]	[""]	+input
+3593175	3038	17	0	17	0	["\t"]	[""]	+input
+3593598	3043	17	0	17	1	[""]	["\t"]	+delete
+3594419	3048	17	0	17	0	["p"]	[""]	+input
+3594592	3052	17	1	17	1	["r"]	[""]	+input
+3594609	3055	17	2	17	2	["i"]	[""]	+input
+3594706	3060	17	3	17	3	["n"]	[""]	+input
+3594803	3064	17	4	17	4	["t"]	[""]	+input
+3595503	3069	17	5	17	5	["()"]	[""]	+input
+3597024	3076	17	6	17	6	["\"\""]	[""]	+input
+3599503	3084	17	7	17	7	["E"]	[""]	+input
+3600036	3090	17	8	17	8	["n"]	[""]	+input
+3600143	3094	17	9	17	9	["t"]	[""]	+input
+3600399	3098	17	10	17	10	["r"]	[""]	+input
+3602591	3102	17	11	17	11	["a"]	[""]	+input
+3602736	3106	17	12	17	12	["d"]	[""]	+input
+3602819	3109	17	13	17	13	["a"]	[""]	+input
+3603152	3114	17	14	17	14	["s"]	[""]	+input
+3635854	3119	11	18	11	19	[""]	[")"]	+delete
+3636142	3123	11	17	11	18	[""]	["5"]	+delete
+3636351	3127	11	16	11	17	[""]	["."]	+delete
+3636551	3131	11	15	11	16	[""]	["2"]	+delete
+3636734	3135	11	14	11	15	[""]	["*"]	+delete
+3636945	3139	11	13	11	14	[""]	["n"]	+delete
+3637182	3143	11	12	11	13	[""]	["p"]	+delete
+3637374	3147	11	11	11	12	[""]	["("]	+delete
+3637605	3151	11	10	11	11	[""]	["-"]	+delete
+3642750	3156	13	18	13	19	[""]	[")"]	+delete
+3642926	3160	13	17	13	18	[""]	["5"]	+delete
+3643112	3164	13	16	13	17	[""]	["."]	+delete
+3643278	3168	13	15	13	16	[""]	["2"]	+delete
+3643485	3172	13	14	13	15	[""]	["*"]	+delete
+3643694	3176	13	13	13	14	[""]	["n"]	+delete
+3643903	3180	13	12	13	13	[""]	["p"]	+delete
+3644109	3184	13	11	13	12	[""]	["("]	+delete
+3644354	3188	13	10	13	11	[""]	["-"]	+delete
+3666946	3196	17	16	17	16	[","]	[""]	+input
+3672436	3200	17	17	17	17	["r"]	[""]	+input
+3672599	3204	17	18	17	18	["o"]	[""]	+input
+3672736	3208	17	19	17	19	["u"]	[""]	+input
+3672852	3212	17	20	17	20	["n"]	[""]	+input
+3672952	3216	17	21	17	21	["d"]	[""]	+input
+3677791	3225	17	22	17	22	["()"]	[""]	+input
+3679532	3231	17	23	17	23	["p"]	[""]	+input
+3680068	3235	17	24	17	24	["n"]	[""]	+input
+3680418	3239	17	25	17	25	[","]	[""]	+input
+3683918	3243	17	26	17	26	["2"]	[""]	+input
+3685790	3250	17	28	17	28	[","]	[""]	+input
+3688543	3254	17	29	17	29	["d"]	[""]	+input
+3688626	3257	17	30	17	30	["s"]	[""]	+input
+3689742	3262	17	31	17	31	[","]	[""]	+input
+3691791	3266	17	32	17	32	["s"]	[""]	+input
+3692577	3269	17	32	17	33	[""]	["s"]	+delete
+3692661	3274	17	32	17	32	["d"]	[""]	+input
+3728973	3286	18	15	18	15	["\""]	[""]	+input
+3729170	3290	18	16	18	16	["\""]	[""]	+input
+3730590	3300	18	16	18	16	["R"]	[""]	+input
+3731783	3307	18	17	18	17	["$"]	[""]	+input
+3735218	3346	18	19	18	19	[","]	[""]	+input
+3748605	3352	17	17	17	17	["\""]	[""]	+input
+3748877	3356	17	18	17	18	["\""]	[""]	+input
+3750365	3361	17	19	17	19	[","]	[""]	+input
+3751583	3364	17	19	17	20	[""]	[","]	+delete
+3752954	3372	17	18	17	18	[","]	[""]	+input
+3754525	3379	17	20	17	20	[","]	[""]	+input
+3762238	3392	17	33	17	33	["\",\""]	[""]	paste
+3763597	3397	17	36	17	36	[","]	[""]	+input
+3765268	3402	17	39	17	39	["\",\""]	[""]	paste
+3768637	3409	17	39	17	39	[","]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 3772936
+- raw_log_line: 3419
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+pn=float(input("preco normal: "))
+ds=int(input("dia da semana: "))
+d=input("e dia de musica ao vivo: ").upper()
+if(pn>=0 and 1<=ds<=7):
+	if(2<=ds<=3 and ds==5):
+		if(d=="S"):
+			cont=pn-(pn*2.5)+20
+		else:
+			cont=pn-(pn*2.5)
+	else:
+		if(d=="S"):
+			cont=pn+20
+		else:
+			cont=pn
+else:
+	print("Entradas:",round(pn,2),ds,d)
+	print("Dados invalidos")
+print("Entradas",",",round(pn,2),",",ds,",",d)
+print("Total:","R$",round(cont,2))
+```
+Run Output
+```text
+preco normal: 75.25
+dia da semana: 3
+e dia de musica ao vivo: s
+Entradas 75.25 3 S
+Total: 95.25
+```
+
+Edit Segment 2
+- raw_change_event_count: 24
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+3872499	3424	6	17	6	18	[""]	["5"]	+delete
+3872686	3428	6	16	6	17	[""]	["."]	+delete
+3872869	3432	6	15	6	16	[""]	["2"]	+delete
+3873219	3436	6	14	6	15	[""]	["*"]	+delete
+3877165	3445	6	12	6	12	["2"]	[""]	+input
+3877279	3449	6	13	6	13	["5"]	[""]	+input
+3878838	3453	6	14	6	14	["/"]	[""]	+input
+3879087	3457	6	15	6	15	["1"]	[""]	+input
+3879279	3461	6	16	6	16	["0"]	[""]	+input
+3879423	3465	6	17	6	17	["0"]	[""]	+input
+3881240	3469	6	18	6	18	["*"]	[""]	+input
+3883504	3473	8	17	8	18	[""]	["5"]	+delete
+3883552	3477	8	16	8	17	[""]	["."]	+delete
+3883710	3481	8	15	8	16	[""]	["2"]	+delete
+3883807	3485	8	14	8	15	[""]	["*"]	+delete
+3885936	3496	8	12	8	12	["2"]	[""]	+input
+3886255	3500	8	13	8	13	["5"]	[""]	+input
+3887140	3504	8	14	8	14	["/"]	[""]	+input
+3887467	3508	8	15	8	15	["1"]	[""]	+input
+3887651	3512	8	16	8	16	["0"]	[""]	+input
+3888271	3516	8	17	8	17	["0"]	[""]	+input
+3889540	3520	8	18	8	18	["*"]	[""]	+input
+3905460	3532	6	22	6	22	[")"]	[""]	+input
+3908036	3574	6	8	6	8	["("]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 4033724
+- raw_log_line: 3579
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+pn=float(input("preco normal: "))
+ds=int(input("dia da semana: "))
+d=input("e dia de musica ao vivo: ").upper()
+if(pn>=0 and 1<=ds<=7):
+	if(2<=ds<=3 and ds==5):
+		if(d=="S"):
+			cont=(pn-(25/100*pn))+20
+		else:
+			cont=pn-(25/100*pn)
+	else:
+		if(d=="S"):
+			cont=pn+20
+		else:
+			cont=pn
+else:
+	print("Entradas:",round(pn,2),ds,d)
+	print("Dados invalidos")
+print("Entradas",",",round(pn,2),",",ds,",",d)
+print("Total:","R$",round(cont,2))
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-04-26T09:29:45.396000
+
+Execution Result
+
+- submitted_at: 2023-04-26 09:31:05
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "70.56\n2\nN"
+    expected: "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92"
+    actual: "Entradas , 70.56 , 2 , N\nTotal: R$ 70.56"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75"
+    actual: "Entradas , 100.75 , 6 , S\nTotal: R$ 120.75"
+  - test_index_0idx: 2 [FAIL]
+    input: "0.00\n9\nS"
+    expected: "Entradas: 0.0 , 9 , S\nDados invalidos"
+    actual: "Entradas: 0.0 9 S\nDados invalidos\nEntradas , 0.0 , 9 , S"
+
+Attempt Start Code
+```python
+pn=float(input("preco normal: "))
+ds=int(input("dia da semana: "))
+d=input("e dia de musica ao vivo: ").upper()
+if(pn>=0 and 1<=ds<=7):
+	if(2<=ds<=3 and ds==5):
+		if(d=="S"):
+			cont=(pn-(25/100*pn))+20
+		else:
+			cont=pn-(25/100*pn)
+	else:
+		if(d=="S"):
+			cont=pn+20
+		else:
+			cont=pn
+else:
+	print("Entradas:",round(pn,2),ds,d)
+	print("Dados invalidos")
+print("Entradas",",",round(pn,2),",",ds,",",d)
+print("Total:","R$",round(cont,2))
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 3585
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+pn=float(input("preco normal: "))
+ds=int(input("dia da semana: "))
+d=input("e dia de musica ao vivo: ").upper()
+if(pn>=0 and 1<=ds<=7):
+	if(2<=ds<=3 and ds==5):
+		if(d=="S"):
+			cont=(pn-(25/100*pn))+20
+		else:
+			cont=pn-(25/100*pn)
+	else:
+		if(d=="S"):
+			cont=pn+20
+		else:
+			cont=pn
+else:
+	print("Entradas:",round(pn,2),ds,d)
+	print("Dados invalidos")
+print("Entradas",",",round(pn,2),",",ds,",",d)
+print("Total:","R$",round(cont,2))
+```
+Run Output
+```text
+preco normal: 75.25
+dia da semana: 3
+e dia de musica ao vivo: s
+Entradas , 75.25 , 3 , S
+Total: R$ 95.25
+```
+
+Edit Segment 1
+- raw_change_event_count: 10
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+8591	3590	6	8	6	9	[""]	["("]	+delete
+9484	3595	6	25	6	26	[""]	["0"]	+delete
+9695	3599	6	24	6	25	[""]	["2"]	+delete
+9855	3603	6	23	6	24	[""]	["+"]	+delete
+10044	3607	6	22	6	23	[""]	[")"]	+delete
+12173	3613	6	10	6	10	["+"]	[""]	+input
+12425	3617	6	11	6	11	["2"]	[""]	+input
+13330	3621	6	12	6	12	["0"]	[""]	+input
+14430	3626	6	13	6	13	[")"]	[""]	+input
+18483	3650	6	8	6	8	["("]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 79820
+- raw_log_line: 3658
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+pn=float(input("preco normal: "))
+ds=int(input("dia da semana: "))
+d=input("e dia de musica ao vivo: ").upper()
+if(pn>=0 and 1<=ds<=7):
+	if(2<=ds<=3 and ds==5):
+		if(d=="S"):
+			cont=(pn+20)-(25/100*pn)
+		else:
+			cont=pn-(25/100*pn)
+	else:
+		if(d=="S"):
+			cont=pn+20
+		else:
+			cont=pn
+else:
+	print("Entradas:",round(pn,2),ds,d)
+	print("Dados invalidos")
+print("Entradas",",",round(pn,2),",",ds,",",d)
+print("Total:","R$",round(cont,2))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-04-26T09:32:31.733000
+
+Execution Result
+
+- submitted_at: 2023-04-26 09:42:33
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "70.56\n2\nN"
+    expected: "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92"
+    actual: "Entradas , 70.56 , 2 , N\nTotal: R$ 52.92"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75"
+    actual: "Entradas , 100.75 , 6 , S\nTotal: R$ 120.75"
+  - test_index_0idx: 2 [FAIL]
+    input: "0.00\n9\nS"
+    expected: "Entradas: 0.0 , 9 , S\nDados invalidos"
+    actual: "Entradas: 0.0 9 S\nDados invalidos"
+
+Attempt Start Code
+```python
+pn=float(input("preco normal: "))
+ds=int(input("dia da semana: "))
+d=input("e dia de musica ao vivo: ").upper()
+if(pn>=0 and 1<=ds<=7):
+	if(2<=ds<=3 and ds==5):
+		if(d=="S"):
+			cont=(pn+20)-(25/100*pn)
+		else:
+			cont=pn-(25/100*pn)
+	else:
+		if(d=="S"):
+			cont=pn+20
+		else:
+			cont=pn
+else:
+	print("Entradas:",round(pn,2),ds,d)
+	print("Dados invalidos")
+print("Entradas",",",round(pn,2),",",ds,",",d)
+print("Total:","R$",round(cont,2))
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 3664
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+pn=float(input("preco normal: "))
+ds=int(input("dia da semana: "))
+d=input("e dia de musica ao vivo: ").upper()
+if(pn>=0 and 1<=ds<=7):
+	if(2<=ds<=3 and ds==5):
+		if(d=="S"):
+			cont=(pn+20)-(25/100*pn)
+		else:
+			cont=pn-(25/100*pn)
+	else:
+		if(d=="S"):
+			cont=pn+20
+		else:
+			cont=pn
+else:
+	print("Entradas:",round(pn,2),ds,d)
+	print("Dados invalidos")
+print("Entradas",",",round(pn,2),",",ds,",",d)
+print("Total:","R$",round(cont,2))
+```
+Run Output
+```text
+preco normal: 75.25
+dia da semana: 3
+e dia de musica ao vivo: s
+Entradas , 75.25 , 3 , S
+Total: R$ 95.25
+```
+
+Local Run 2
+- event_time_delta_ms: 64068
+- raw_log_line: 3675
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+pn=float(input("preco normal: "))
+ds=int(input("dia da semana: "))
+d=input("e dia de musica ao vivo: ").upper()
+if(pn>=0 and 1<=ds<=7):
+	if(2<=ds<=3 and ds==5):
+		if(d=="S"):
+			cont=(pn+20)-(25/100*pn)
+		else:
+			cont=pn-(25/100*pn)
+	else:
+		if(d=="S"):
+			cont=pn+20
+		else:
+			cont=pn
+else:
+	print("Entradas:",round(pn,2),ds,d)
+	print("Dados invalidos")
+print("Entradas",",",round(pn,2),",",ds,",",d)
+print("Total:","R$",round(cont,2))
+```
+Run Output
+```text
+preco normal: 1
+dia da semana: 10
+e dia de musica ao vivo: s
+Entradas: 1.0 10 S
+Dados invalidos
+Entradas , 1.0 , 10 , S
+Traceback (most recent call last):
+File "main.py", line 19, in <module>
+print("Total:","R$",round(cont,2))
+NameError: name 'cont' is not defined
+```
+
+Edit Segment 1
+- raw_change_event_count: 26
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+169536	3687	11	13	11	13	["",""]	[""]	+input
+169539	3688	12	0	12	0	["\t\t\t"]	[""]	+input
+170068	3694	12	3	12	3	["print(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)","print(\"Total:\",\"R$\",round(cont,2))"]	[""]	paste
+172606	3700	13	0	13	0	["\t"]	[""]	+input
+172940	3704	13	1	13	1	["\t"]	[""]	+input
+173193	3708	13	2	13	2	["\t"]	[""]	+input
+174410	3713	15	10	15	10	["",""]	[""]	+input
+174411	3714	16	0	16	0	["\t\t\t"]	[""]	+input
+175050	3720	16	3	16	3	["print(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)","print(\"Total:\",\"R$\",round(cont,2))"]	[""]	paste
+177741	3726	17	0	17	0	["\t"]	[""]	+input
+177989	3730	17	1	17	1	["\t"]	[""]	+input
+178297	3734	17	2	17	2	["\t"]	[""]	+input
+183112	3739	21	0	22	34	[""]	["print(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)","print(\"Total:\",\"R$\",round(cont,2))"]	+delete
+184040	3744	20	25	21	0	[""]	["",""]	+delete
+188608	3750	8	22	8	22	["",""]	[""]	+input
+188608	3751	9	0	9	0	["\t\t\t"]	[""]	+input
+189515	3757	9	3	9	3	["print(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)","print(\"Total:\",\"R$\",round(cont,2))"]	[""]	paste
+191209	3763	10	0	10	0	["\t"]	[""]	+input
+191497	3767	10	1	10	1	["\t"]	[""]	+input
+191840	3771	10	2	10	2	["\t"]	[""]	+input
+192890	3776	6	27	6	27	["",""]	[""]	+input
+192891	3777	7	0	7	0	["\t\t\t"]	[""]	+input
+193241	3783	7	3	7	3	["print(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)","print(\"Total:\",\"R$\",round(cont,2))"]	[""]	paste
+194857	3789	8	0	8	0	["\t"]	[""]	+input
+195144	3793	8	1	8	1	["\t"]	[""]	+input
+195448	3797	8	2	8	2	["\t"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 218416
+- raw_log_line: 3808
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+pn=float(input("preco normal: "))
+ds=int(input("dia da semana: "))
+d=input("e dia de musica ao vivo: ").upper()
+if(pn>=0 and 1<=ds<=7):
+	if(2<=ds<=3 and ds==5):
+		if(d=="S"):
+			cont=(pn+20)-(25/100*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+		else:
+			cont=pn-(25/100*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+	else:
+		if(d=="S"):
+			cont=pn+20
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+		else:
+			cont=pn
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+else:
+	print("Entradas:",round(pn,2),ds,d)
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco normal: 75.25
+dia da semana: 3
+e dia de musica ao vivo: s
+Entradas , 75.25 , 3 , S
+Total: R$ 95.25
+```
+
+Local Run 4
+- event_time_delta_ms: 232081
+- raw_log_line: 3814
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+pn=float(input("preco normal: "))
+ds=int(input("dia da semana: "))
+d=input("e dia de musica ao vivo: ").upper()
+if(pn>=0 and 1<=ds<=7):
+	if(2<=ds<=3 and ds==5):
+		if(d=="S"):
+			cont=(pn+20)-(25/100*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+		else:
+			cont=pn-(25/100*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+	else:
+		if(d=="S"):
+			cont=pn+20
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+		else:
+			cont=pn
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+else:
+	print("Entradas:",round(pn,2),ds,d)
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco normal: 1
+dia da semana: 10
+e dia de musica ao vivo: s
+Entradas: 1.0 10 S
+Dados invalidos
+```
+
+Edit Segment 2
+- raw_change_event_count: 24
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+266123	3822	6	15	6	27	[""]	["-(25/100*pn)"]	+delete
+266508	3826	6	14	6	15	[""]	[")"]	+delete
+267290	3831	6	8	6	9	[""]	["("]	+delete
+325290	3843	6	13	6	13	["-"]	[""]	+input
+327373	3851	6	13	6	13	[")"]	[""]	+input
+329609	3877	6	8	6	8	["("]	[""]	+input
+332377	3904	6	16	6	16	["()"]	[""]	+input
+333431	3910	6	17	6	17	["0"]	[""]	+input
+333660	3914	6	18	6	18	["."]	[""]	+input
+333864	3918	6	19	6	19	["2"]	[""]	+input
+334024	3922	6	20	6	20	["5"]	[""]	+input
+339358	3926	6	21	6	21	["*"]	[""]	+input
+342665	3930	6	22	6	22	["p"]	[""]	+input
+342976	3934	6	23	6	23	["n"]	[""]	+input
+356873	3939	10	17	10	18	[""]	["0"]	+delete
+357030	3943	10	16	10	17	[""]	["0"]	+delete
+357222	3947	10	15	10	16	[""]	["1"]	+delete
+357373	3951	10	14	10	15	[""]	["/"]	+delete
+357526	3955	10	13	10	14	[""]	["5"]	+delete
+357720	3959	10	12	10	13	[""]	["2"]	+delete
+358073	3964	10	12	10	12	["0"]	[""]	+input
+358391	3968	10	13	10	13	["."]	[""]	+input
+358616	3972	10	14	10	14	["2"]	[""]	+input
+358775	3976	10	15	10	15	["5"]	[""]	+input
+
+Local Run 5
+- event_time_delta_ms: 372175
+- raw_log_line: 3986
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+pn=float(input("preco normal: "))
+ds=int(input("dia da semana: "))
+d=input("e dia de musica ao vivo: ").upper()
+if(pn>=0 and 1<=ds<=7):
+	if(2<=ds<=3 and ds==5):
+		if(d=="S"):
+			cont=(pn+20)-(0.25*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+		else:
+			cont=pn-(0.25*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+	else:
+		if(d=="S"):
+			cont=pn+20
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+		else:
+			cont=pn
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+else:
+	print("Entradas:",round(pn,2),ds,d)
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco normal: 75.25
+dia da semana: 3
+e dia de musica ao vivo: s
+Entradas , 75.25 , 3 , S
+Total: R$ 95.25
+```
+
+Edit Segment 3
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+382105	3990	6	13	6	14	[""]	["0"]	+delete
+382342	3994	6	12	6	13	[""]	["2"]	+delete
+382678	3998	6	11	6	12	[""]	["+"]	+delete
+
+Local Run 6
+- event_time_delta_ms: 390192
+- raw_log_line: 4009
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+pn=float(input("preco normal: "))
+ds=int(input("dia da semana: "))
+d=input("e dia de musica ao vivo: ").upper()
+if(pn>=0 and 1<=ds<=7):
+	if(2<=ds<=3 and ds==5):
+		if(d=="S"):
+			cont=(pn)-(0.25*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+		else:
+			cont=pn-(0.25*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+	else:
+		if(d=="S"):
+			cont=pn+20
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+		else:
+			cont=pn
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+else:
+	print("Entradas:",round(pn,2),ds,d)
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco normal: 75.25
+dia da semana: 3
+e dia de musica ao vivo: s
+Entradas , 75.25 , 3 , S
+Total: R$ 95.25
+```
+
+Edit Segment 4
+- raw_change_event_count: 12
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+512032	4021	15	13	15	13	["-"]	[""]	+input
+513158	4025	15	14	15	14	["0"]	[""]	+input
+513462	4029	15	15	15	15	["."]	[""]	+input
+513720	4033	15	16	15	16	["2"]	[""]	+input
+513878	4037	15	17	15	17	["5"]	[""]	+input
+515895	4041	15	18	15	18	["*"]	[""]	+input
+516605	4045	15	19	15	19	["p"]	[""]	+input
+517110	4049	15	20	15	20	["n"]	[""]	+input
+518155	4054	15	21	15	21	[")"]	[""]	+input
+520138	4084	15	14	15	14	["("]	[""]	+input
+522630	4102	15	13	15	13	[")"]	[""]	+input
+524694	4126	15	8	15	8	["("]	[""]	+input
+
+Local Run 7
+- event_time_delta_ms: 526631
+- raw_log_line: 4136
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+pn=float(input("preco normal: "))
+ds=int(input("dia da semana: "))
+d=input("e dia de musica ao vivo: ").upper()
+if(pn>=0 and 1<=ds<=7):
+	if(2<=ds<=3 and ds==5):
+		if(d=="S"):
+			cont=(pn)-(0.25*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+		else:
+			cont=pn-(0.25*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+	else:
+		if(d=="S"):
+			cont=(pn+20)-(0.25*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+		else:
+			cont=pn
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+else:
+	print("Entradas:",round(pn,2),ds,d)
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco normal: 75.25
+dia da semana: 5
+e dia de musica ao vivo: s
+Entradas , 75.25 , 5 , S
+Total: R$ 95.25
+```
+
+Edit Segment 5
+- raw_change_event_count: 8
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+565061	4141	4	15	4	16	[""]	["d"]	+delete
+565220	4145	4	14	4	15	[""]	["n"]	+delete
+565877	4149	4	13	4	14	[""]	["a"]	+delete
+566070	4154	4	13	4	13	["o"]	[""]	+input
+566204	4157	4	14	4	14	["r"]	[""]	+input
+575586	4162	15	15	15	25	[""]	["-(0.25*pn)"]	+delete
+575941	4166	15	14	15	15	[""]	[")"]	+delete
+576747	4171	15	8	15	9	[""]	["("]	+delete
+
+Local Run 8
+- event_time_delta_ms: 580289
+- raw_log_line: 4183
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+pn=float(input("preco normal: "))
+ds=int(input("dia da semana: "))
+d=input("e dia de musica ao vivo: ").upper()
+if(pn>=0 and 1<=ds<=7):
+	if(2<=ds<=3 or ds==5):
+		if(d=="S"):
+			cont=(pn)-(0.25*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+		else:
+			cont=pn-(0.25*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+	else:
+		if(d=="S"):
+			cont=pn+20
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+		else:
+			cont=pn
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+else:
+	print("Entradas:",round(pn,2),ds,d)
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco normal: 75.25
+dia da semana: 3
+e dia de musica ao vivo: s
+Entradas , 75.25 , 3 , S
+Total: R$ 76.44
+```
+
+Edit Segment 6
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+591509	4189	6	11	6	11	["+"]	[""]	+input
+591878	4193	6	12	6	12	["2"]	[""]	+input
+592087	4197	6	13	6	13	["0"]	[""]	+input
+
+Local Run 9
+- event_time_delta_ms: 594571
+- raw_log_line: 4206
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+pn=float(input("preco normal: "))
+ds=int(input("dia da semana: "))
+d=input("e dia de musica ao vivo: ").upper()
+if(pn>=0 and 1<=ds<=7):
+	if(2<=ds<=3 or ds==5):
+		if(d=="S"):
+			cont=(pn+20)-(0.25*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+		else:
+			cont=pn-(0.25*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+	else:
+		if(d=="S"):
+			cont=pn+20
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+		else:
+			cont=pn
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+else:
+	print("Entradas:",round(pn,2),ds,d)
+	print("Dados invalidos")
+```
+Run Output
+```text
+preco normal: 75.25
+dia da semana: 3
+e dia de musica ao vivo: s
+Entradas , 75.25 , 3 , S
+Total: R$ 56.44
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 601358
+- raw_log_line: 4208
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+pn=float(input("preco normal: "))
+ds=int(input("dia da semana: "))
+d=input("e dia de musica ao vivo: ").upper()
+if(pn>=0 and 1<=ds<=7):
+	if(2<=ds<=3 or ds==5):
+		if(d=="S"):
+			cont=(pn+20)-(0.25*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+		else:
+			cont=pn-(0.25*pn)
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+	else:
+		if(d=="S"):
+			cont=pn+20
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+		else:
+			cont=pn
+			print("Entradas",",",round(pn,2),",",ds,",",d)
+			print("Total:","R$",round(cont,2))
+else:
+	print("Entradas:",round(pn,2),ds,d)
+	print("Dados invalidos")
+```

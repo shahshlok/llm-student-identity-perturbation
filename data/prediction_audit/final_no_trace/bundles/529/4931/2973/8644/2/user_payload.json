@@ -1,0 +1,144 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "529",
+    "assessment_id": "4931",
+    "assessment_title": "Lab 2 - Estrutura Condicional Composta",
+    "exercise_id": "2973",
+    "student_id": "8644",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/529/users/8644/executions/4931_2973.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/529/users/8644/codemirror/4931_2973.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-08-21 12:19:31",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n60\n120",
+            "expected": "7202\nOK",
+            "actual": "ACIMA"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n41\n109",
+            "expected": "4470\nOK",
+            "actual": "ACIMA"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "3\n120\n60",
+            "expected": "7203\nACIMA",
+            "actual": "ACIMA"
+          }
+        ]
+      },
+      "submitted_code": "p = int(input(\"posicao inicial: \"))\nv = int(input(\"velocidade: \"))\nt = int(input(\"tempo do deslocamento: \"))\n\ns = p + v**t\n\nif(s <= 100):\n\tprint(\"OK\")\nelse:\n\tprint(\"ACIMA\")"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-08-21 12:20:16",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n60\n120",
+            "expected": "7202\nOK",
+            "actual": "2388636399360109977557402041718133080829429159844757507642063199359529632522467783435119230976000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002\nACIMA"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n41\n109",
+            "expected": "4470\nOK",
+            "actual": "62149892595500789806469216311195036301210819731859978206490458600701945137616594710148499577439511755456410028602295578430733164351734915084248710581544030217051538190702157962\nACIMA"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "3\n120\n60",
+            "expected": "7203\nACIMA",
+            "actual": "56347514353166785389812313795980500551139163800306781874894667776000000000000000000000000000000000000000000000000000000000003\nACIMA"
+          }
+        ]
+      },
+      "submitted_code": "p = int(input(\"posicao inicial: \"))\nv = int(input(\"velocidade: \"))\nt = int(input(\"tempo do deslocamento: \"))\n\ns = p + v**t\n\nif(s <= 100):\n\tprint(s)\n\tprint(\"OK\")\nelse:\n\tprint(s)\n\tprint(\"ACIMA\")"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-08-21 12:22:30",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n60\n120",
+            "expected": "7202\nOK",
+            "actual": "2388636399360109977557402041718133080829429159844757507642063199359529632522467783435119230976000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002\nACIMA"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n41\n109",
+            "expected": "4470\nOK",
+            "actual": "62149892595500789806469216311195036301210819731859978206490458600701945137616594710148499577439511755456410028602295578430733164351734915084248710581544030217051538190702157962\nACIMA"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "3\n120\n60",
+            "expected": "7203\nACIMA",
+            "actual": "56347514353166785389812313795980500551139163800306781874894667776000000000000000000000000000000000000000000000000000000000003\nOK"
+          }
+        ]
+      },
+      "submitted_code": "p = int(input(\"posicao inicial: \"))\nv = int(input(\"velocidade: \"))\nt = int(input(\"tempo do deslocamento: \"))\n\ns = p + v**t\n\nif(v > 100):\n\tprint(s)\n\tprint(\"OK\")\nelse:\n\tprint(s)\n\tprint(\"ACIMA\")"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

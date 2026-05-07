@@ -1,0 +1,705 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "486",
+    "assessment_id": "4379",
+    "assessment_title": "Lab 0 - Primeiros passos com o Python",
+    "exercise_id": "3711",
+    "student_id": "2846",
+    "condition": "full",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2022-2/486/users/2846/executions/4379_3711.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2022-2/486/users/2846/codemirror/4379_3711.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-03-30 17:00:51",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "1959",
+            "expected": "Em 1959 a UFAM completou 50 anos de fundacao.",
+            "actual": "Em  2023 a UFAM completou 114 anos de fundacao."
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "2020",
+            "expected": "Em 2020 a UFAM completou 111 anos de fundacao.",
+            "actual": "Em  2023 a UFAM completou 114 anos de fundacao."
+          }
+        ]
+      },
+      "trace": {
+        "attempt_start_code": "",
+        "items": [
+          {
+            "item_type": "edit_segment",
+            "change_event_count": 25,
+            "changes": [
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T16:58:25.201000",
+                "line_number": 14,
+                "from": {
+                  "line": 0,
+                  "ch": 0
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 0
+                },
+                "text": [
+                  "print(\"Em \",YYYY,\"a UFAM completou\", YYYY - XXXX, \"anos de fundacao.\")"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "paste"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T16:58:32.150000",
+                "line_number": 19,
+                "from": {
+                  "line": 0,
+                  "ch": 12
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 16
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "YYYY"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T16:59:15.792000",
+                "line_number": 29,
+                "from": {
+                  "line": 0,
+                  "ch": 12
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 12
+                },
+                "text": [
+                  "print(\"Em \",YYYY,\"a UFAM completou\", YYYY - XXXX, \"anos de fundacao.\")"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "paste"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T16:59:18.312000",
+                "line_number": 34,
+                "from": {
+                  "line": 0,
+                  "ch": 12
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 82
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "print(\"Em \",YYYY,\"a UFAM completou\", YYYY - XXXX, \"anos de fundacao.\")"
+                ],
+                "origin": "undo"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T16:59:30.743000",
+                "line_number": 42,
+                "from": {
+                  "line": 0,
+                  "ch": 12
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 12
+                },
+                "text": [
+                  "2"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T16:59:30.919000",
+                "line_number": 45,
+                "from": {
+                  "line": 0,
+                  "ch": 13
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 13
+                },
+                "text": [
+                  "0"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T16:59:34.753000",
+                "line_number": 49,
+                "from": {
+                  "line": 0,
+                  "ch": 13
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 14
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "0"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T16:59:35.125000",
+                "line_number": 53,
+                "from": {
+                  "line": 0,
+                  "ch": 12
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 13
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "2"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T16:59:55.191000",
+                "line_number": 58,
+                "from": {
+                  "line": 0,
+                  "ch": 12
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 12
+                },
+                "text": [
+                  "2"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T16:59:55.366000",
+                "line_number": 62,
+                "from": {
+                  "line": 0,
+                  "ch": 13
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 13
+                },
+                "text": [
+                  "0"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T16:59:58.111000",
+                "line_number": 66,
+                "from": {
+                  "line": 0,
+                  "ch": 14
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 14
+                },
+                "text": [
+                  "2"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T16:59:58.287000",
+                "line_number": 70,
+                "from": {
+                  "line": 0,
+                  "ch": 15
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 15
+                },
+                "text": [
+                  "3"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T17:00:11.317000",
+                "line_number": 74,
+                "from": {
+                  "line": 0,
+                  "ch": 37
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 41
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "YYYY"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T17:00:12.591000",
+                "line_number": 90,
+                "from": {
+                  "line": 0,
+                  "ch": 37
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 37
+                },
+                "text": [
+                  "print(\"Em \",YYYY,\"a UFAM completou\", YYYY - XXXX, \"anos de fundacao.\")"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "paste"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T17:00:14.501000",
+                "line_number": 93,
+                "from": {
+                  "line": 0,
+                  "ch": 37
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 107
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "print(\"Em \",YYYY,\"a UFAM completou\", YYYY - XXXX, \"anos de fundacao.\")"
+                ],
+                "origin": "undo"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T17:00:23.487000",
+                "line_number": 109,
+                "from": {
+                  "line": 0,
+                  "ch": 37
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 37
+                },
+                "text": [
+                  "1909"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "paste"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T17:00:28.541000",
+                "line_number": 114,
+                "from": {
+                  "line": 0,
+                  "ch": 44
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 48
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  "XXXX"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T17:00:34.357000",
+                "line_number": 119,
+                "from": {
+                  "line": 0,
+                  "ch": 41
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 43
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  " -"
+                ],
+                "origin": "+delete"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T17:00:36.891000",
+                "line_number": 136,
+                "from": {
+                  "line": 0,
+                  "ch": 37
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 37
+                },
+                "text": [
+                  "-"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T17:00:37.038000",
+                "line_number": 140,
+                "from": {
+                  "line": 0,
+                  "ch": 38
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 38
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T17:00:39.087000",
+                "line_number": 150,
+                "from": {
+                  "line": 0,
+                  "ch": 37
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 37
+                },
+                "text": [
+                  "2"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T17:00:39.270000",
+                "line_number": 154,
+                "from": {
+                  "line": 0,
+                  "ch": 38
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 38
+                },
+                "text": [
+                  "0"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T17:00:41.814000",
+                "line_number": 158,
+                "from": {
+                  "line": 0,
+                  "ch": 39
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 39
+                },
+                "text": [
+                  "2"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T17:00:41.950000",
+                "line_number": 162,
+                "from": {
+                  "line": 0,
+                  "ch": 40
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 40
+                },
+                "text": [
+                  "3"
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              },
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T17:00:43.071000",
+                "line_number": 166,
+                "from": {
+                  "line": 0,
+                  "ch": 41
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 41
+                },
+                "text": [
+                  " "
+                ],
+                "removed": [
+                  ""
+                ],
+                "origin": "+input"
+              }
+            ]
+          },
+          {
+            "item_type": "submit",
+            "timestamp": "2023-03-30T17:00:51.394000",
+            "line_number": 171,
+            "feedback": "Your code did not produce the correct output. Please, correct your code and try again.",
+            "code_after_anchor": "print(\"Em \",2023,\"a UFAM completou\", 2023 - 1909 , \"anos de fundacao.\")"
+          }
+        ]
+      }
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-03-30 17:03:36",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "1959",
+            "expected": "Em 1959 a UFAM completou 50 anos de fundacao.",
+            "actual": "Em 2023 a UFAM completou 114 anos de fundacao."
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "2020",
+            "expected": "Em 2020 a UFAM completou 111 anos de fundacao.",
+            "actual": "Em 2023 a UFAM completou 114 anos de fundacao."
+          }
+        ]
+      },
+      "trace": {
+        "attempt_start_code": "print(\"Em \",2023,\"a UFAM completou\", 2023 - 1909 , \"anos de fundacao.\")",
+        "items": [
+          {
+            "item_type": "saida_testar",
+            "timestamp": "2023-03-30T17:01:55.188000",
+            "line_number": 179,
+            "command": "$ python3 main.py",
+            "output_lines": [
+              "Em  2023 a UFAM completou 114 anos de fundacao."
+            ],
+            "code_after_anchor": "print(\"Em \",2023,\"a UFAM completou\", 2023 - 1909 , \"anos de fundacao.\")"
+          },
+          {
+            "item_type": "edit_segment",
+            "change_event_count": 1,
+            "changes": [
+              {
+                "event_type": "change",
+                "timestamp": "2023-03-30T17:03:29.413000",
+                "line_number": 190,
+                "from": {
+                  "line": 0,
+                  "ch": 9
+                },
+                "to": {
+                  "line": 0,
+                  "ch": 10
+                },
+                "text": [
+                  ""
+                ],
+                "removed": [
+                  " "
+                ],
+                "origin": "+delete"
+              }
+            ]
+          },
+          {
+            "item_type": "saida_testar",
+            "timestamp": "2023-03-30T17:03:33.026000",
+            "line_number": 197,
+            "command": "$ python3 main.py",
+            "output_lines": [
+              "Em 2023 a UFAM completou 114 anos de fundacao."
+            ],
+            "code_after_anchor": "print(\"Em\",2023,\"a UFAM completou\", 2023 - 1909 , \"anos de fundacao.\")"
+          },
+          {
+            "item_type": "submit",
+            "timestamp": "2023-03-30T17:03:36.708000",
+            "line_number": 198,
+            "feedback": "Your code did not produce the correct output. Please, correct your code and try again.",
+            "code_after_anchor": "print(\"Em\",2023,\"a UFAM completou\", 2023 - 1909 , \"anos de fundacao.\")"
+          }
+        ]
+      }
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-03-30 17:21:32",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "1959",
+            "expected": "Em 1959 a UFAM completou 50 anos de fundacao.",
+            "actual": "Em 2023 a UFAM completou 114 anos de fundacao."
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "2020",
+            "expected": "Em 2020 a UFAM completou 111 anos de fundacao.",
+            "actual": "Em 2023 a UFAM completou 114 anos de fundacao."
+          }
+        ]
+      },
+      "trace": {
+        "attempt_start_code": "print(\"Em\",2023,\"a UFAM completou\", 2023 - 1909 , \"anos de fundacao.\")",
+        "items": [
+          {
+            "item_type": "submit",
+            "timestamp": "2023-03-30T17:21:32.329000",
+            "line_number": 199,
+            "feedback": "Your code did not produce the correct output. Please, correct your code and try again.",
+            "code_after_anchor": "print(\"Em\",2023,\"a UFAM completou\", 2023 - 1909 , \"anos de fundacao.\")"
+          }
+        ]
+      }
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

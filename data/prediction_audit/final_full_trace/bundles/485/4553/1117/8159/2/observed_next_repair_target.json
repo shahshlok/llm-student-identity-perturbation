@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4553",
+    "exercise_id": "1117",
+    "student_id": "8159",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "pn=float(input(\"preco normal: \"))\nds=int(input(\"dia da semana: \"))\nd=input(\"e dia de musica ao vivo: \").upper()\nif(pn>=0 and 1<=ds<=7):\n\tif(2<=ds<=3 or ds==5):\n\t\tif(d==\"S\"):\n\t\t\tcont=(pn+20)-(0.25*pn)\n\t\t\tprint(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)\n\t\t\tprint(\"Total:\",\"R$\",round(cont,2))\n\t\telse:\n\t\t\tcont=pn-(0.25*pn)\n\t\t\tprint(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)\n\t\t\tprint(\"Total:\",\"R$\",round(cont,2))\n\telse:\n\t\tif(d==\"S\"):\n\t\t\tcont=pn+20\n\t\t\tprint(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)\n\t\t\tprint(\"Total:\",\"R$\",round(cont,2))\n\t\telse:\n\t\t\tcont=pn\n\t\t\tprint(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)\n\t\t\tprint(\"Total:\",\"R$\",round(cont,2))\nelse:\n\tprint(\"Entradas:\",round(pn,2),ds,d)\n\tprint(\"Dados invalidos\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "pn=float(input(\"preco normal: \"))\nds=int(input(\"dia da semana: \"))\nd=input(\"e dia de musica ao vivo: \").upper()\nif(pn>=0 and 1<=ds<=7):\n\tif(2<=ds<=3 or ds==5):\n\t\tif(d==\"S\"):\n\t\t\tcont=(pn+20)-(0.25*pn)\n\t\t\tprint(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)\n\t\t\tprint(\"Total:\",\"R$\",round(cont,2))\n\t\telse:\n\t\t\tcont=pn-(0.25*pn)\n\t\t\tprint(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)\n\t\t\tprint(\"Total:\",\"R$\",round(cont,2))\n\telse:\n\t\tif(d==\"S\"):\n\t\t\tcont=pn+20\n\t\t\tprint(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)\n\t\t\tprint(\"Total:\",\"R$\",round(cont,2))\n\t\telse:\n\t\t\tcont=pn\n\t\t\tprint(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)\n\t\t\tprint(\"Total:\",\"R$\",round(cont,2))\nelse:\n\tprint(\"Entradas:\",\",\",round(pn,2),\",\",ds,\",\",d)\n\tprint(\"Dados invalidos\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "70.56\n2\nN",
+        "expected": "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92",
+        "actual": "Entradas , 70.56 , 2 , N\nTotal: R$ 52.92"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "100.75\n6\nS",
+        "expected": "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75",
+        "actual": "Entradas , 100.75 , 6 , S\nTotal: R$ 120.75"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "0.00\n9\nS",
+        "expected": "Entradas: 0.0 , 9 , S\nDados invalidos",
+        "actual": "Entradas: , 0.0 , 9 , S\nDados invalidos"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 23,
+        "end_line_0idx": 23,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 23,
+        "end_line_0idx": 23
+      }
+    ]
+  }
+}

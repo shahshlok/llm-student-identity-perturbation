@@ -1,0 +1,666 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 528
+- assessment_id: 4981
+- assessment_title: Lab 3 - Estrutura Condicional Encadeada
+- exercise_id: 3056
+- student_id: 8783
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-08-30T07:00:08.051000
+
+Execution Result
+
+- submitted_at: 2023-08-30 09:51:09
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [0]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "256.8"
+    expected: "1640.8"
+    actual: "1640.8000000000002"
+  - test_index_0idx: 1 [PASS]
+    input: "11"
+    expected: "166.0"
+    actual: "166.0"
+  - test_index_0idx: 2 [PASS]
+    input: "9638.75"
+    expected: "57932.5"
+    actual: "57932.5"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 259
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["v"]	[""]	+input
+213	11	0	1	0	1	["a"]	[""]	+input
+379	14	0	2	0	2	["l"]	[""]	+input
+736	19	0	3	0	3	["o"]	[""]	+input
+1757	23	0	4	0	4	["r"]	[""]	+input
+2861	27	0	5	0	5	["="]	[""]	+input
+3661	31	0	6	0	6	["a"]	[""]	+input
+3777	34	0	7	0	7	["r"]	[""]	+input
+4049	38	0	8	0	8	["e"]	[""]	+input
+4332	43	0	9	0	9	["a"]	[""]	+input
+7230	57	0	10	0	10	["*"]	[""]	+input
+7904	62	0	11	0	11	["c"]	[""]	+input
+8013	65	0	12	0	12	["u"]	[""]	+input
+8153	69	0	13	0	13	["s"]	[""]	+input
+8539	74	0	14	0	14	["t"]	[""]	+input
+8653	77	0	15	0	15	["o"]	[""]	+input
+11433	82	0	16	0	16	[" "]	[""]	+input
+12133	87	0	16	0	17	[""]	[" "]	+delete
+13023	93	0	16	0	16	["+"]	[""]	+input
+13459	98	0	17	0	17	["f"]	[""]	+input
+13639	101	0	18	0	18	["e"]	[""]	+input
+13852	105	0	19	0	19	["r"]	[""]	+input
+14117	110	0	20	0	20	["t"]	[""]	+input
+14224	114	0	21	0	21	["i"]	[""]	+input
+14463	118	0	22	0	22	["l"]	[""]	+input
+14643	122	0	23	0	23	["i"]	[""]	+input
+15062	126	0	24	0	24	["z"]	[""]	+input
+15563	129	0	25	0	25	["a"]	[""]	+input
+15732	134	0	26	0	26	["n"]	[""]	+input
+15956	138	0	27	0	27	["d"]	[""]	+input
+16866	141	0	27	0	28	[""]	["d"]	+delete
+17594	146	0	27	0	27	["t"]	[""]	+input
+17703	150	0	28	0	28	["e"]	[""]	+input
+9844716	158	0	0	0	0	["",""]	[""]	+input
+9849432	167	0	0	0	0	["a"]	[""]	+input
+9849599	170	0	1	0	1	["r"]	[""]	+input
+9849775	174	0	2	0	2	["e"]	[""]	+input
+9850014	179	0	3	0	3	["a"]	[""]	+input
+9851289	183	0	4	0	4	["="]	[""]	+input
+9855288	187	0	5	0	5	["f"]	[""]	+input
+9855438	191	0	6	0	6	["l"]	[""]	+input
+9855648	195	0	7	0	7	["o"]	[""]	+input
+9855849	199	0	8	0	8	["a"]	[""]	+input
+9856023	203	0	9	0	9	["t"]	[""]	+input
+9856911	208	0	10	0	10	["()"]	[""]	+input
+9857220	214	0	11	0	11	["i"]	[""]	+input
+9857383	218	0	12	0	12	["n"]	[""]	+input
+9857681	222	0	13	0	13	["p"]	[""]	+input
+9858026	226	0	14	0	14	["u"]	[""]	+input
+9858300	230	0	15	0	15	["t"]	[""]	+input
+9859375	235	0	16	0	16	["()"]	[""]	+input
+9868301	241	0	19	0	19	["",""]	[""]	+input
+9886865	247	1	0	1	0	["i"]	[""]	+input
+9887008	250	1	1	1	1	["f"]	[""]	+input
+9887782	255	1	2	1	2	[" "]	[""]	+input
+9888452	259	1	3	1	3	["a"]	[""]	+input
+9888790	263	1	4	1	4	["r"]	[""]	+input
+9889019	266	1	5	1	5	["e"]	[""]	+input
+9889772	272	1	6	1	6	[">"]	[""]	+input
+9890281	277	1	7	1	7	["="]	[""]	+input
+9890679	281	1	8	1	8	["0"]	[""]	+input
+9892001	286	1	9	1	9	[":"]	[""]	+input
+9894610	292	1	6	1	6	["a"]	[""]	+input
+9897467	296	2	0	2	0	["\t"]	[""]	+input
+9923007	301	1	11	1	11	["",""]	[""]	+input
+9923007	302	2	0	2	0	["\t"]	[""]	+input
+9923867	308	2	1	2	1	["i"]	[""]	+input
+9923996	312	2	2	2	2	["f"]	[""]	+input
+9926666	316	2	3	2	3	[" "]	[""]	+input
+9926929	320	2	4	2	4	["a"]	[""]	+input
+9927087	323	2	5	2	5	["r"]	[""]	+input
+9927322	327	2	6	2	6	["e"]	[""]	+input
+9927545	332	2	7	2	7	["a"]	[""]	+input
+9949909	336	2	8	2	8	["="]	[""]	+input
+9950187	340	2	9	2	9	["="]	[""]	+input
+9951277	344	2	10	2	10	["0"]	[""]	+input
+9953258	348	2	11	2	11	[" "]	[""]	+input
+9953534	352	2	12	2	12	["a"]	[""]	+input
+9953708	355	2	13	2	13	["n"]	[""]	+input
+9953838	358	2	14	2	14	["d"]	[""]	+input
+9954046	364	2	15	2	15	["a"]	[""]	+input
+9954645	367	2	15	2	16	[""]	["a"]	+delete
+9955090	372	2	15	2	15	[" "]	[""]	+input
+9955844	376	2	16	2	16	["a"]	[""]	+input
+9956081	380	2	17	2	17	["r"]	[""]	+input
+9956281	384	2	18	2	18	["e"]	[""]	+input
+9956467	388	2	19	2	19	["a"]	[""]	+input
+9958629	391	2	19	2	20	[""]	["a"]	+delete
+9959277	394	2	18	2	19	[""]	["e"]	+delete
+9959445	398	2	17	2	18	[""]	["r"]	+delete
+9959698	402	2	16	2	17	[""]	["a"]	+delete
+9959879	406	2	15	2	16	[""]	[" "]	+delete
+9960085	410	2	14	2	15	[""]	["d"]	+delete
+9960223	414	2	13	2	14	[""]	["n"]	+delete
+9961425	418	2	12	2	13	[""]	["a"]	+delete
+9961883	422	2	11	2	12	[""]	[" "]	+delete
+9962108	426	2	10	2	11	[""]	["0"]	+delete
+9962326	430	2	9	2	10	[""]	["="]	+delete
+9962551	434	2	8	2	9	[""]	["="]	+delete
+9965121	439	2	8	2	8	["."]	[""]	+input
+9966177	443	2	9	2	9	["="]	[""]	+input
+9966943	446	2	9	2	10	[""]	["="]	+delete
+9967459	450	2	8	2	9	[""]	["."]	+delete
+9968567	456	2	8	2	8	[">"]	[""]	+input
+9969532	461	2	9	2	9	["="]	[""]	+input
+9969868	465	2	10	2	10	["0"]	[""]	+input
+9971620	469	2	11	2	11	[" "]	[""]	+input
+9972500	473	2	12	2	12	["a"]	[""]	+input
+9972702	476	2	13	2	13	["n"]	[""]	+input
+9972751	479	2	14	2	14	["d"]	[""]	+input
+9972960	485	2	15	2	15	["a"]	[""]	+input
+9973515	488	2	15	2	16	[""]	["a"]	+delete
+9974317	493	2	15	2	15	[" "]	[""]	+input
+9974573	497	2	16	2	16	["a"]	[""]	+input
+9974830	501	2	17	2	17	["r"]	[""]	+input
+9974989	505	2	18	2	18	["e"]	[""]	+input
+9975298	509	2	19	2	19	["a"]	[""]	+input
+9976812	514	2	20	2	20	["<"]	[""]	+input
+9977524	519	2	21	2	21	["1"]	[""]	+input
+9977722	523	2	22	2	22	["0"]	[""]	+input
+9978035	526	2	22	2	23	[""]	["0"]	+delete
+9978244	530	2	21	2	22	[""]	["1"]	+delete
+9978913	535	2	21	2	21	["="]	[""]	+input
+9979600	539	2	22	2	22	["1"]	[""]	+input
+9979730	543	2	23	2	23	["0"]	[""]	+input
+9979912	547	2	24	2	24	["0"]	[""]	+input
+9980145	551	2	25	2	25	["0"]	[""]	+input
+9985769	555	2	26	2	26	["0"]	[""]	+input
+9987233	560	2	27	2	27	[":"]	[""]	+input
+9990240	565	3	1	3	1	["\t"]	[""]	+input
+9995554	570	3	16	3	17	[""]	["t"]	+delete
+9995768	574	3	15	3	16	[""]	["s"]	+delete
+9996076	578	3	14	3	15	[""]	["u"]	+delete
+9996402	582	3	13	3	14	[""]	["c"]	+delete
+9996798	586	3	13	3	14	[""]	["o"]	+delete
+9998630	591	3	13	3	13	["6"]	[""]	+input
+10001806	595	3	15	3	27	[""]	["fertilizante"]	+delete
+10002177	600	3	15	3	15	["1"]	[""]	+input
+10002388	604	3	16	3	16	["0"]	[""]	+input
+10002588	608	3	17	3	17	["0"]	[""]	+input
+10004468	611	3	18	3	18	["",""]	[""]	+input
+10004469	612	4	0	4	0	["\t\t"]	[""]	+input
+10005222	618	4	2	4	2	["p"]	[""]	+input
+10005448	622	4	3	4	3	["r"]	[""]	+input
+10005569	625	4	4	4	4	["i"]	[""]	+input
+10005716	628	4	5	4	5	["n"]	[""]	+input
+10005848	633	4	6	4	6	["t"]	[""]	+input
+10006455	639	4	7	4	7	["()"]	[""]	+input
+10008277	645	4	8	4	8	["v"]	[""]	+input
+10008430	648	4	9	4	9	["a"]	[""]	+input
+10008560	652	4	10	4	10	["l"]	[""]	+input
+10008725	657	4	11	4	11	["o"]	[""]	+input
+10008870	661	4	12	4	12	["r"]	[""]	+input
+10021879	670	4	14	4	14	["",""]	[""]	+input
+10021879	671	5	0	5	0	["\t\t"]	[""]	+input
+10022165	676	5	1	5	2	[""]	["\t"]	+delete
+10023822	682	5	1	5	1	["V"]	[""]	+input
+10024632	686	5	1	5	2	[""]	["V"]	+delete
+10025373	691	5	1	5	1	["if area>=0 and area<=10000:"]	[""]	paste
+10029157	697	5	1	5	1	["e"]	[""]	+input
+10029317	701	5	2	5	2	["l"]	[""]	+input
+10057471	706	5	28	5	29	[""]	["0"]	+delete
+10057697	710	5	27	5	28	[""]	["0"]	+delete
+10057871	714	5	26	5	27	[""]	["0"]	+delete
+10058136	718	5	25	5	26	[""]	["0"]	+delete
+10058364	722	5	24	5	25	[""]	["1"]	+delete
+10059062	727	5	24	5	24	["2"]	[""]	+input
+10059388	731	5	25	5	25	["0"]	[""]	+input
+10059673	735	5	26	5	26	["0"]	[""]	+input
+10059955	739	5	27	5	27	["0"]	[""]	+input
+10060471	743	5	28	5	28	["0"]	[""]	+input
+10067468	747	5	12	5	13	[""]	["0"]	+delete
+10067859	751	5	11	5	12	[""]	["="]	+delete
+10069435	756	5	11	5	11	["1"]	[""]	+input
+10069684	760	5	12	5	12	["0"]	[""]	+input
+10070162	764	5	13	5	13	["0"]	[""]	+input
+10070377	768	5	14	5	14	["0"]	[""]	+input
+10070576	772	5	15	5	15	["0"]	[""]	+input
+10075940	777	5	11	5	11	["="]	[""]	+input
+10077694	782	5	11	5	12	[""]	["="]	+delete
+10093764	794	5	33	5	33	["",""]	[""]	+input
+10093764	795	6	0	6	0	["\t\t"]	[""]	+input
+10095282	801	6	2	6	2	["valor=area*6+100","\t\tprint(valor)"]	[""]	paste
+10098894	807	6	13	6	14	[""]	["6"]	+delete
+10099700	812	6	13	6	13	["5"]	[""]	+input
+10100385	816	6	14	6	14	["."]	[""]	+input
+10100862	820	6	15	6	15	["5"]	[""]	+input
+10104352	824	6	18	6	19	[""]	["0"]	+delete
+10104692	829	6	18	6	18	["5"]	[""]	+input
+10144284	848	7	14	7	14	["",""]	[""]	+input
+10144284	849	8	0	8	0	["\t\t"]	[""]	+input
+10145141	854	8	1	8	2	[""]	["\t"]	+delete
+10146271	859	8	1	8	1	["elif area>10000 and area<=20000:","\t\tvalor=area*5.5+150","\t\tprint(valor)"]	[""]	paste
+10153540	865	8	11	8	12	[""]	["1"]	+delete
+10154204	870	8	11	8	11	["2"]	[""]	+input
+10158664	877	8	27	8	28	[""]	["2"]	+delete
+10159616	882	8	27	8	27	["3"]	[""]	+input
+10164662	886	9	15	9	16	[""]	["5"]	+delete
+10164849	890	9	14	9	15	[""]	["."]	+delete
+10168641	895	9	16	9	17	[""]	["5"]	+delete
+10168814	899	9	15	9	16	[""]	["1"]	+delete
+10169467	904	9	15	9	15	["2"]	[""]	+input
+10170281	908	9	16	9	16	["0"]	[""]	+input
+10173147	912	10	14	10	14	["",""]	[""]	+input
+10173147	913	11	0	11	0	["\t\t"]	[""]	+input
+10174559	918	11	1	11	2	[""]	["\t"]	+delete
+10181520	930	11	1	11	1	["elif area>20000 and area<=30000:","\t\tvalor=area*5+200","\t\tprint(valor)"]	[""]	paste
+10188859	936	11	11	11	12	[""]	["2"]	+delete
+10189711	941	11	11	11	11	["3"]	[""]	+input
+10206002	945	11	26	11	32	[""]	["=30000"]	+delete
+10294496	954	0	0	0	0	["",""]	[""]	+input
+10296407	963	0	0	0	0	["f"]	[""]	+input
+10296571	966	0	1	0	1	["r"]	[""]	+input
+10296701	970	0	2	0	2	["o"]	[""]	+input
+10296819	974	0	3	0	3	["m"]	[""]	+input
+10297119	979	0	4	0	4	[" "]	[""]	+input
+10297385	983	0	5	0	5	["m"]	[""]	+input
+10297698	987	0	6	0	6	["a"]	[""]	+input
+10297875	990	0	7	0	7	["t"]	[""]	+input
+10298192	995	0	8	0	8	["h"]	[""]	+input
+10315284	1002	12	26	12	26	["m"]	[""]	+input
+10315444	1006	12	27	12	27	["a"]	[""]	+input
+10315828	1010	12	28	12	28	["t"]	[""]	+input
+10315938	1013	12	29	12	29	["h"]	[""]	+input
+10317270	1018	12	30	12	30	["."]	[""]	+input
+10317736	1022	12	31	12	31	["i"]	[""]	+input
+10317987	1026	12	32	12	32	["n"]	[""]	+input
+10318593	1030	12	33	12	33	["f"]	[""]	+input
+10347325	1034	14	14	14	14	["",""]	[""]	+input
+10347327	1035	15	0	15	0	["\t\t"]	[""]	+input
+10347607	1040	15	1	15	2	[""]	["\t"]	+delete
+10347911	1044	15	0	15	1	[""]	["\t"]	+delete
+10353804	1049	15	0	15	0	["e"]	[""]	+input
+10353942	1053	15	1	15	1	["l"]	[""]	+input
+10354094	1057	15	2	15	2	["s"]	[""]	+input
+10354314	1061	15	3	15	3	["e"]	[""]	+input
+10355342	1065	15	4	15	4	[";"]	[""]	+input
+10356392	1068	15	4	15	5	[""]	[";"]	+delete
+10356915	1074	15	4	15	4	[":"]	[""]	+input
+10357227	1078	15	5	15	5	["",""]	[""]	+input
+10357227	1079	16	0	16	0	["\t"]	[""]	+input
+10361065	1085	16	1	16	1	["p"]	[""]	+input
+10361246	1089	16	2	16	2	["r"]	[""]	+input
+10361967	1093	16	3	16	3	["i"]	[""]	+input
+10362178	1096	16	4	16	4	["n"]	[""]	+input
+10362314	1100	16	5	16	5	["t"]	[""]	+input
+10364591	1106	16	5	16	6	[""]	["t"]	+delete
+10364842	1110	16	4	16	5	[""]	["n"]	+delete
+10365009	1114	16	3	16	4	[""]	["i"]	+delete
+10365163	1118	16	2	16	3	[""]	["r"]	+delete
+10365325	1122	16	1	16	2	[""]	["p"]	+delete
+10365475	1126	16	0	16	1	[""]	["\t"]	+delete
+10365591	1130	15	5	16	0	[""]	["",""]	+delete
+10365811	1135	15	4	15	5	[""]	[":"]	+delete
+10366000	1139	15	3	15	4	[""]	["e"]	+delete
+10366184	1143	15	2	15	3	[""]	["s"]	+delete
+10366365	1147	15	1	15	2	[""]	["l"]	+delete
+10366656	1151	15	0	15	1	[""]	["e"]	+delete
+10366984	1155	14	14	15	0	[""]	["",""]	+delete
+
+Local Run 1
+- event_time_delta_ms: 10373575
+- raw_log_line: 1162
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+from math
+area=float(input())
+if area>=0:
+	if area>=0 and area<=10000:
+		valor=area*6+100
+		print(valor)
+	elif area>10000 and area<=20000:
+		valor=area*5.5+150
+		print(valor)
+	elif area>20000 and area<=30000:
+		valor=area*5+200
+		print(valor)
+	elif area>30000 and area<math.inf:
+		valor=area*5+200
+		print(valor)
+```
+Run Output
+```text
+12000
+66150.0
+```
+
+Edit Segment 2
+- raw_change_event_count: 10
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+10387186	1166	0	3	0	4	[""]	["m"]	+delete
+10387359	1170	0	2	0	3	[""]	["o"]	+delete
+10387511	1174	0	1	0	2	[""]	["r"]	+delete
+10387655	1178	0	0	0	1	[""]	["f"]	+delete
+10388401	1183	0	0	0	0	["i"]	[""]	+input
+10388590	1187	0	1	0	1	["m"]	[""]	+input
+10388851	1191	0	2	0	2	["p"]	[""]	+input
+10389015	1194	0	3	0	3	["o"]	[""]	+input
+10389152	1199	0	4	0	4	["r"]	[""]	+input
+10389260	1202	0	5	0	5	["t"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 10393878
+- raw_log_line: 1209
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+import math
+area=float(input())
+if area>=0:
+	if area>=0 and area<=10000:
+		valor=area*6+100
+		print(valor)
+	elif area>10000 and area<=20000:
+		valor=area*5.5+150
+		print(valor)
+	elif area>20000 and area<=30000:
+		valor=area*5+200
+		print(valor)
+	elif area>30000 and area<math.inf:
+		valor=area*5+200
+		print(valor)
+```
+Run Output
+```text
+File "main.py", line 1
+from math
+SyntaxError: invalid syntax
+```
+
+Local Run 3
+- event_time_delta_ms: 10407745
+- raw_log_line: 1212
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+import math
+area=float(input())
+if area>=0:
+	if area>=0 and area<=10000:
+		valor=area*6+100
+		print(valor)
+	elif area>10000 and area<=20000:
+		valor=area*5.5+150
+		print(valor)
+	elif area>20000 and area<=30000:
+		valor=area*5+200
+		print(valor)
+	elif area>30000 and area<math.inf:
+		valor=area*5+200
+		print(valor)
+```
+Run Output
+```text
+12000
+66150.0
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 10427684
+- raw_log_line: 1213
+- feedback: "You're almost there! Your code is 67% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+import math
+area=float(input())
+if area>=0:
+	if area>=0 and area<=10000:
+		valor=area*6+100
+		print(valor)
+	elif area>10000 and area<=20000:
+		valor=area*5.5+150
+		print(valor)
+	elif area>20000 and area<=30000:
+		valor=area*5+200
+		print(valor)
+	elif area>30000 and area<math.inf:
+		valor=area*5+200
+		print(valor)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-08-30T09:54:01.752000
+
+Execution Result
+
+- submitted_at: 2023-08-30 09:52:16
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [0]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "256.8"
+    expected: "1640.8"
+    actual: "1640.8000000000002"
+  - test_index_0idx: 1 [PASS]
+    input: "11"
+    expected: "166.0"
+    actual: "166.0"
+  - test_index_0idx: 2 [PASS]
+    input: "9638.75"
+    expected: "57932.5"
+    actual: "57932.5"
+
+Attempt Start Code
+```python
+import math
+area=float(input())
+if area>=0:
+	if area>=0 and area<=10000:
+		valor=area*6+100
+		print(valor)
+	elif area>10000 and area<=20000:
+		valor=area*5.5+150
+		print(valor)
+	elif area>20000 and area<=30000:
+		valor=area*5+200
+		print(valor)
+	elif area>30000 and area<math.inf:
+		valor=area*5+200
+		print(valor)
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1216
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+import math
+area=float(input())
+if area>=0:
+	if area>=0 and area<=10000:
+		valor=area*6+100
+		print(valor)
+	elif area>10000 and area<=20000:
+		valor=area*5.5+150
+		print(valor)
+	elif area>20000 and area<=30000:
+		valor=area*5+200
+		print(valor)
+	elif area>30000 and area<math.inf:
+		valor=area*5+200
+		print(valor)
+```
+Run Output
+```text
+5500.75
+33104.5
+```
+
+Edit Segment 1
+- raw_change_event_count: 10
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+28206	1220	12	25	12	26	[""]	["<"]	+delete
+28908	1225	12	25	12	25	["."]	[""]	+input
+30024	1228	12	25	12	26	[""]	["."]	+delete
+45636	1233	12	25	12	25	["."]	[""]	undo
+50843	1237	13	13	13	14	[""]	["5"]	+delete
+52603	1242	13	13	13	13	["4"]	[""]	+input
+52759	1245	13	14	13	14	["."]	[""]	+input
+53011	1250	13	15	13	15	["5"]	[""]	+input
+55773	1254	13	18	13	19	[""]	["0"]	+delete
+56141	1259	13	18	13	18	["5"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 61102
+- raw_log_line: 1264
+- feedback: "You're almost there! Your code is 67% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+import math
+area=float(input())
+if area>=0:
+	if area>=0 and area<=10000:
+		valor=area*6+100
+		print(valor)
+	elif area>10000 and area<=20000:
+		valor=area*5.5+150
+		print(valor)
+	elif area>20000 and area<=30000:
+		valor=area*5+200
+		print(valor)
+	elif area>30000 and area.math.inf:
+		valor=area*4.5+250
+		print(valor)
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-08-30T09:55:03.103000
+
+Execution Result
+
+- submitted_at: 2023-08-30 09:52:26
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [0]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "256.8"
+    expected: "1640.8"
+    actual: "1640.8000000000002"
+  - test_index_0idx: 1 [PASS]
+    input: "11"
+    expected: "166.0"
+    actual: "166.0"
+  - test_index_0idx: 2 [PASS]
+    input: "9638.75"
+    expected: "57932.5"
+    actual: "57932.5"
+
+Attempt Start Code
+```python
+import math
+area=float(input())
+if area>=0:
+	if area>=0 and area<=10000:
+		valor=area*6+100
+		print(valor)
+	elif area>10000 and area<=20000:
+		valor=area*5.5+150
+		print(valor)
+	elif area>20000 and area<=30000:
+		valor=area*5+200
+		print(valor)
+	elif area>30000 and area.math.inf:
+		valor=area*4.5+250
+		print(valor)
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1266	12	25	12	26	[""]	["."]	+delete
+4525	1336	12	25	12	25	["<"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 9405
+- raw_log_line: 1340
+- feedback: "You're almost there! Your code is 67% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+import math
+area=float(input())
+if area>=0:
+	if area>=0 and area<=10000:
+		valor=area*6+100
+		print(valor)
+	elif area>10000 and area<=20000:
+		valor=area*5.5+150
+		print(valor)
+	elif area>20000 and area<=30000:
+		valor=area*5+200
+		print(valor)
+	elif area>30000 and area<math.inf:
+		valor=area*4.5+250
+		print(valor)
+```

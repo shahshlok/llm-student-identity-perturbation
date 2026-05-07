@@ -1,0 +1,27 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4554",
+    "exercise_id": "1950",
+    "student_id": "8170",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "tar = float(input(\"Temperatura do ar em graus Celsius: \"))\nv = float(input(\"Velocidade do vento em km/h: \"))\n\nif (tar<-50):\n\tprint(\"Temperatura invalida\")\nelif (tar>10):\n\tprint(\"Temperatura invalida\")\nelif (v<4.8):\n\tprint(\"Velocidade invalida\")\nelse:\n\to = 13.12 + 0.6215 * tar - (11.37+(v**0.16)) + (0.3965 * tar * (v**0.16))\n\tprint(round(o,4))",
+    "coarse_path_steps": [
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 11,
+        "target_end_line_0idx": 11
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

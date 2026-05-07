@@ -1,0 +1,79 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "562",
+    "assessment_id": "5321",
+    "exercise_id": "6094",
+    "student_id": "6903",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "plano = float(input(\"Valor do palno de saude: \"))\nnum = int(input(\"Numero de membros da familia: \"))\nif num == 1:\n\tprint(\"R$ \",round(num, 2))\nelif num == 2:\n\t\tt = (plano * 0.85)*num\n\t\tprint(\"R$ \",round(t, 2))\nelif num == 3:\n\t\tt = (plano * 0.75)*num\n\t\tprint(\"R$\",round(t, 2))\nelse:\n\t\tt = (plano * 0.65)*num\n\t\tprint(\"R$\",round(t, 2))",
+    "grade": 0.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "plano = float(input(\"Valor do palno de saude: \"))\nnum = int(input(\"Numero de membros da familia: \"))\nif num == 1:\n\tprint(\"R$ \",round(num, 2))\nelif num == 2:\n\t\tt = (plano * 0.85)*num\n\t\tprint(\"R$ \",round(t, 2))\nelif num == 3:\n\t\tt = (plano * 0.75)*num\n\t\tprint(\"R$ \",round(t, 2))\nelse:\n\t\tt = (plano * 0.65)*num\n\t\tprint(\"R$ \",round(t, 2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "200.0\n3",
+        "expected": "R$ 450.0",
+        "actual": "R$  450.0"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "400.0\n4",
+        "expected": "R$ 1040.0",
+        "actual": "R$  1040.0"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "1200\n1",
+        "expected": "R$ 1200.0",
+        "actual": "R$  1"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "regressed",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 9,
+        "end_line_0idx": 9,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 12,
+        "end_line_0idx": 12,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 2,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 9,
+        "end_line_0idx": 9
+      },
+      {
+        "start_line_0idx": 12,
+        "end_line_0idx": 12
+      }
+    ]
+  }
+}

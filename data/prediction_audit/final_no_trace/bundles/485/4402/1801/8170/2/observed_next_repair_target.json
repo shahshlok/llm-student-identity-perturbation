@@ -1,0 +1,71 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4402",
+    "exercise_id": "1801",
+    "student_id": "8170",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "objeto = input(\"Digite o nome do objeto: \")\nnum = int(input(\"Digite o numero de repeticoes do feitico: \"))\n\nfeitico = \"Abra\" + objeto * num\n\nprint(feitico)",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "objeto = input(\"Digite o nome do objeto: \")\nnum = int(input(\"Digite o numero de repeticoes do feitico: \"))\n\nfeitico = (\"Abra \" + objeto) * num\n\nprint(feitico)",
+    "grade": 0.0,
+    "pass_count": 1,
+    "failed_test_indices_0idx": [
+      0,
+      1
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "livro\n8",
+        "expected": "Abra livro Abra livro Abra livro Abra livro Abra livro Abra livro Abra livro Abra livro",
+        "actual": "Abra livroAbra livroAbra livroAbra livroAbra livroAbra livroAbra livroAbra livro"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "carro\n2",
+        "expected": "Abra carro Abra carro",
+        "actual": "Abra carroAbra carro"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "caixa\n1",
+        "expected": "Abra caixa",
+        "actual": "Abra caixa"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "partial_fix",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 3,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 3
+      }
+    ]
+  }
+}

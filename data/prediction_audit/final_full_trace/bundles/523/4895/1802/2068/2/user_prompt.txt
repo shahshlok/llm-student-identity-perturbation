@@ -1,0 +1,682 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 523
+- assessment_id: 4895
+- assessment_title: Extras 1 - Variáveis e Estrutura Sequencial (2020)
+- exercise_id: 1802
+- student_id: 2068
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-08-08T09:40:17.696000
+
+Execution Result
+
+- submitted_at: 2023-08-09 16:39:25
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "200\n1\n6"
+    expected: "188"
+    actual: "197"
+  - test_index_0idx: 1 [FAIL]
+    input: "300\n6\n6"
+    expected: "285"
+    actual: "294"
+  - test_index_0idx: 2 [FAIL]
+    input: "500\n1\n1"
+    expected: "497"
+    actual: "498"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 284
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["i"]	[""]	+input
+223	11	0	1	0	1	["m"]	[""]	+input
+431	15	0	2	0	2	["p"]	[""]	+input
+652	19	0	3	0	3	["o"]	[""]	+input
+735	23	0	4	0	4	["r"]	[""]	+input
+943	27	0	5	0	5	["t"]	[""]	+input
+1069	31	0	6	0	6	[" "]	[""]	+input
+1247	35	0	7	0	7	["m"]	[""]	+input
+1374	39	0	8	0	8	["a"]	[""]	+input
+1839	43	0	9	0	9	["t"]	[""]	+input
+1983	47	0	10	0	10	["h"]	[""]	+input
+2526	50	0	11	0	11	["",""]	[""]	+input
+2717	55	1	0	1	0	["",""]	[""]	+input
+14111	61	2	0	2	0	["p"]	[""]	+input
+14303	65	2	1	2	1	["o"]	[""]	+input
+14479	69	2	2	2	2	["n"]	[""]	+input
+14591	73	2	3	2	3	["t"]	[""]	+input
+15103	77	2	4	2	4	["i"]	[""]	+input
+15263	81	2	5	2	5	["s"]	[""]	+input
+15871	87	2	6	2	6	["V"]	[""]	+input
+16223	93	2	7	2	7	["i"]	[""]	+input
+16351	97	2	8	2	8	["d"]	[""]	+input
+16607	101	2	9	2	9	["a"]	[""]	+input
+16847	105	2	10	2	10	["s"]	[""]	+input
+17167	109	2	11	2	11	[" "]	[""]	+input
+17503	113	2	12	2	12	["="]	[""]	+input
+18559	117	2	13	2	13	[" "]	[""]	+input
+19122	120	2	13	2	14	[""]	[" "]	+delete
+19487	125	2	13	2	13	[" "]	[""]	+input
+19757	128	2	13	2	14	[""]	[" "]	+delete
+20031	133	2	13	2	13	[" "]	[""]	+input
+20621	136	2	13	2	14	[""]	[" "]	+delete
+20895	141	2	13	2	13	[" "]	[""]	+input
+21229	144	2	13	2	14	[""]	[" "]	+delete
+21519	149	2	13	2	13	[" "]	[""]	+input
+32048	153	2	14	2	14	["n"]	[""]	+input
+32781	156	2	14	2	15	[""]	["n"]	+delete
+33295	161	2	14	2	14	["i"]	[""]	+input
+33503	165	2	15	2	15	["n"]	[""]	+input
+33599	169	2	16	2	16	["t"]	[""]	+input
+34259	174	2	17	2	17	["()"]	[""]	+input
+35568	180	2	18	2	18	["i"]	[""]	+input
+36253	183	2	18	2	19	[""]	["i"]	+delete
+38767	188	2	18	2	18	["f"]	[""]	+input
+38880	192	2	19	2	19	["l"]	[""]	+input
+39040	196	2	20	2	20	["o"]	[""]	+input
+39280	200	2	21	2	21	["a"]	[""]	+input
+39393	204	2	22	2	22	["t"]	[""]	+input
+40591	209	2	23	2	23	["()"]	[""]	+input
+41555	216	2	24	2	24	["\"\""]	[""]	+input
+43200	224	2	25	2	25	["P"]	[""]	+input
+43536	230	2	26	2	26	["o"]	[""]	+input
+43759	234	2	27	2	27	["n"]	[""]	+input
+43904	238	2	28	2	28	["t"]	[""]	+input
+44128	242	2	29	2	29	["o"]	[""]	+input
+44272	246	2	30	2	30	["s"]	[""]	+input
+44432	250	2	31	2	31	[" "]	[""]	+input
+44560	254	2	32	2	32	["d"]	[""]	+input
+44773	258	2	33	2	33	["e"]	[""]	+input
+44896	262	2	34	2	34	[" "]	[""]	+input
+45100	266	2	35	2	35	["v"]	[""]	+input
+45280	270	2	36	2	36	["i"]	[""]	+input
+45408	274	2	37	2	37	["d"]	[""]	+input
+45904	278	2	38	2	38	["a"]	[""]	+input
+46128	282	2	39	2	39	["s"]	[""]	+input
+46320	286	2	40	2	40	[" "]	[""]	+input
+46704	290	2	41	2	41	["i"]	[""]	+input
+46880	294	2	42	2	42	["n"]	[""]	+input
+47056	298	2	43	2	43	["c"]	[""]	+input
+47184	301	2	44	2	44	["i"]	[""]	+input
+47822	305	2	44	2	45	[""]	["i"]	+delete
+47982	309	2	43	2	44	[""]	["c"]	+delete
+48656	314	2	43	2	43	["i"]	[""]	+input
+48816	318	2	44	2	44	["c"]	[""]	+input
+48928	322	2	45	2	45	["i"]	[""]	+input
+49101	326	2	46	2	46	["a"]	[""]	+input
+49280	330	2	47	2	47	["i"]	[""]	+input
+49376	334	2	48	2	48	["s"]	[""]	+input
+50125	339	2	49	2	49	[":"]	[""]	+input
+50289	343	2	50	2	50	[" "]	[""]	+input
+51695	356	2	54	2	54	["",""]	[""]	+input
+53856	362	3	0	3	0	["v"]	[""]	+input
+54208	366	3	1	3	1	["a"]	[""]	+input
+54848	370	3	2	3	2	["l"]	[""]	+input
+55104	374	3	3	3	3	["o"]	[""]	+input
+55264	378	3	4	3	4	["r"]	[""]	+input
+55936	384	3	5	3	5	["S"]	[""]	+input
+56336	390	3	6	3	6	["o"]	[""]	+input
+56512	394	3	7	3	7	["r"]	[""]	+input
+56720	398	3	8	3	8	["t"]	[""]	+input
+56832	402	3	9	3	9	["e"]	[""]	+input
+57104	406	3	10	3	10	["a"]	[""]	+input
+57376	410	3	11	3	11	["d"]	[""]	+input
+57920	414	3	12	3	12	["o"]	[""]	+input
+58367	418	3	13	3	13	[" "]	[""]	+input
+58768	422	3	14	3	14	["="]	[""]	+input
+58941	426	3	15	3	15	[" "]	[""]	+input
+61264	430	3	16	3	16	["i"]	[""]	+input
+61440	434	3	17	3	17	["n"]	[""]	+input
+62047	438	3	18	3	18	["t"]	[""]	+input
+62992	443	3	19	3	19	["()"]	[""]	+input
+65836	460	2	22	2	23	[""]	["t"]	+delete
+66014	464	2	21	2	22	[""]	["a"]	+delete
+66158	468	2	20	2	21	[""]	["o"]	+delete
+66302	472	2	19	2	20	[""]	["l"]	+delete
+66654	476	2	18	2	19	[""]	["f"]	+delete
+67104	481	2	18	2	18	["i"]	[""]	+input
+67281	485	2	19	2	19	["n"]	[""]	+input
+67537	489	2	20	2	20	["p"]	[""]	+input
+67872	493	2	21	2	21	["u"]	[""]	+input
+67985	497	2	22	2	22	["t"]	[""]	+input
+69505	507	3	20	3	20	["i"]	[""]	+input
+69680	511	3	21	3	21	["n"]	[""]	+input
+69921	515	3	22	3	22	["p"]	[""]	+input
+70209	519	3	23	3	23	["u"]	[""]	+input
+70289	523	3	24	3	24	["t"]	[""]	+input
+71168	528	3	25	3	25	["()"]	[""]	+input
+71297	532	3	26	3	26	["\"\""]	[""]	+input
+74049	541	3	27	3	27	["V"]	[""]	+input
+74497	547	3	28	3	28	["a"]	[""]	+input
+74609	550	3	29	3	29	["l"]	[""]	+input
+74785	555	3	30	3	30	["o"]	[""]	+input
+75041	559	3	31	3	31	["r"]	[""]	+input
+75793	563	3	32	3	32	[" "]	[""]	+input
+76366	567	3	33	3	33	["s"]	[""]	+input
+76497	571	3	34	3	34	["o"]	[""]	+input
+76765	575	3	35	3	35	["r"]	[""]	+input
+76941	579	3	36	3	36	["t"]	[""]	+input
+77070	583	3	37	3	37	["e"]	[""]	+input
+77389	587	3	38	3	38	["a"]	[""]	+input
+77661	591	3	39	3	39	["d"]	[""]	+input
+77825	595	3	40	3	40	["o"]	[""]	+input
+78113	599	3	41	3	41	[" "]	[""]	+input
+78257	603	3	42	3	42	["1"]	[""]	+input
+82014	675	3	12	3	13	[""]	["o"]	+delete
+82142	679	3	11	3	12	[""]	["d"]	+delete
+82302	683	3	10	3	11	[""]	["a"]	+delete
+82430	687	3	9	3	10	[""]	["e"]	+delete
+82589	691	3	8	3	9	[""]	["t"]	+delete
+82719	695	3	7	3	8	[""]	["r"]	+delete
+82878	699	3	6	3	7	[""]	["o"]	+delete
+83038	703	3	5	3	6	[""]	["S"]	+delete
+83345	708	3	5	3	5	["1"]	[""]	+input
+88831	718	3	39	3	39	["",""]	[""]	+input
+89042	724	4	0	4	0	["valor1 = int(input(\"Valor sorteado 1\"))"]	[""]	paste
+91697	800	4	5	4	6	[""]	["1"]	+delete
+91789	805	4	5	4	5	["2"]	[""]	+input
+94495	870	4	35	4	36	[""]	["1"]	+delete
+94609	875	4	35	4	35	["2"]	[""]	+input
+98096	893	4	39	4	39	["",""]	[""]	+input
+98253	898	5	0	5	0	["",""]	[""]	+input
+110674	904	6	0	6	0	["d"]	[""]	+input
+111199	908	6	1	6	1	["a"]	[""]	+input
+111310	912	6	2	6	2	["n"]	[""]	+input
+111506	916	6	3	6	3	["o"]	[""]	+input
+112896	919	6	4	6	4	["",""]	[""]	+input
+113525	924	6	4	7	0	[""]	["",""]	+delete
+113695	929	6	3	6	4	[""]	["o"]	+delete
+113871	933	6	2	6	3	[""]	["n"]	+delete
+114031	937	6	1	6	2	[""]	["a"]	+delete
+114191	941	6	0	6	1	[""]	["d"]	+delete
+111073299	986	3	0	3	6	[""]	["valor1"]	+delete
+111073541	991	3	0	3	0	["d"]	[""]	+input
+111073818	995	3	1	3	1	["1"]	[""]	+input
+111082917	1010	4	4	4	5	[""]	["r"]	+delete
+111083048	1014	4	3	4	4	[""]	["o"]	+delete
+111083200	1018	4	2	4	3	[""]	["l"]	+delete
+111083341	1022	4	1	4	2	[""]	["a"]	+delete
+111083744	1026	4	0	4	1	[""]	["v"]	+delete
+111084050	1031	4	0	4	0	["d"]	[""]	+input
+111306971	1044	6	0	6	0	["d"]	[""]	+input
+111307186	1048	6	1	6	1	["a"]	[""]	+input
+111307348	1051	6	2	6	2	["n"]	[""]	+input
+111307588	1056	6	3	6	3	["o"]	[""]	+input
+111307844	1060	6	4	6	4	[" "]	[""]	+input
+111312514	1067	2	4	2	5	[""]	["i"]	+delete
+111312674	1072	2	4	2	4	["p"]	[""]	+input
+111314602	1081	2	4	2	5	[""]	["p"]	+delete
+111314722	1086	2	4	2	4	["o"]	[""]	+input
+111318457	1102	6	5	6	5	["="]	[""]	+input
+111319152	1106	6	6	6	6	[" "]	[""]	+input
+111319369	1110	6	7	6	7	["m"]	[""]	+input
+111319499	1113	6	8	6	8	["a"]	[""]	+input
+111319869	1118	6	9	6	9	["t"]	[""]	+input
+111320017	1122	6	10	6	10	["h"]	[""]	+input
+111320524	1126	6	11	6	11	["."]	[""]	+input
+111320798	1130	6	12	6	12	["f"]	[""]	+input
+111320969	1134	6	13	6	13	["l"]	[""]	+input
+111321218	1138	6	14	6	14	["o"]	[""]	+input
+111322332	1142	6	15	6	15	["o"]	[""]	+input
+111322516	1145	6	16	6	16	["r"]	[""]	+input
+111324195	1151	6	17	6	17	["()"]	[""]	+input
+111325299	1157	6	18	6	18	["m"]	[""]	+input
+111325413	1161	6	19	6	19	["a"]	[""]	+input
+111325920	1165	6	20	6	20	["t"]	[""]	+input
+111326114	1169	6	21	6	21	["h"]	[""]	+input
+111327162	1173	6	22	6	22	["."]	[""]	+input
+111327431	1177	6	23	6	23	["s"]	[""]	+input
+111327765	1181	6	24	6	24	["q"]	[""]	+input
+111329059	1185	6	25	6	25	["r"]	[""]	+input
+111329298	1189	6	26	6	26	["t"]	[""]	+input
+111333233	1194	6	27	6	27	["()"]	[""]	+input
+111334410	1200	6	28	6	28	["5"]	[""]	+input
+111334716	1204	6	29	6	29	[" "]	[""]	+input
+111335316	1209	6	30	6	30	["*"]	[""]	+input
+111336027	1214	6	31	6	31	[" "]	[""]	+input
+111336676	1218	6	32	6	32	["d"]	[""]	+input
+111337757	1222	6	33	6	33	["1"]	[""]	+input
+111339192	1226	6	34	6	34	[" "]	[""]	+input
+111339894	1231	6	35	6	35	["+"]	[""]	+input
+111349599	1245	6	36	6	36	[" "]	[""]	+input
+111349888	1249	6	37	6	37	["m"]	[""]	+input
+111350744	1253	6	38	6	38	["a"]	[""]	+input
+111350891	1257	6	39	6	39	["t"]	[""]	+input
+111351349	1261	6	40	6	40	["h"]	[""]	+input
+111352668	1265	6	41	6	41	["."]	[""]	+input
+111353300	1269	6	42	6	42	["p"]	[""]	+input
+111353843	1273	6	43	6	43	["i"]	[""]	+input
+111354449	1277	6	44	6	44	[" "]	[""]	+input
+111355435	1282	6	45	6	45	["*"]	[""]	+input
+111356026	1287	6	46	6	46	[" "]	[""]	+input
+111356218	1291	6	47	6	47	["d"]	[""]	+input
+111356702	1295	6	48	6	48	["2"]	[""]	+input
+111357025	1299	6	49	6	49	[" "]	[""]	+input
+111358183	1305	6	50	6	50	["/"]	[""]	+input
+111358892	1311	6	51	6	51	[" "]	[""]	+input
+111360262	1315	6	52	6	52	["3"]	[""]	+input
+111371653	1322	6	55	6	55	["",""]	[""]	+input
+111374161	1328	7	0	7	0	["p"]	[""]	+input
+111374400	1332	7	1	7	1	["o"]	[""]	+input
+111374642	1336	7	2	7	2	["n"]	[""]	+input
+111374874	1340	7	3	7	3	["s"]	[""]	+input
+111375810	1343	7	3	7	4	[""]	["s"]	+delete
+111376726	1348	7	3	7	3	["t"]	[""]	+input
+111376883	1352	7	4	7	4	["o"]	[""]	+input
+111377093	1356	7	5	7	5	["s"]	[""]	+input
+111377607	1362	7	6	7	6	["R"]	[""]	+input
+111377875	1368	7	7	7	7	["e"]	[""]	+input
+111378059	1372	7	8	7	8	["s"]	[""]	+input
+111378329	1376	7	9	7	9	["t"]	[""]	+input
+111378533	1380	7	10	7	10	["a"]	[""]	+input
+111378787	1384	7	11	7	11	["n"]	[""]	+input
+111379060	1388	7	12	7	12	["t"]	[""]	+input
+111379148	1392	7	13	7	13	["e"]	[""]	+input
+111379348	1396	7	14	7	14	["s"]	[""]	+input
+111379472	1399	7	15	7	15	[" "]	[""]	+input
+111379955	1404	7	16	7	16	["="]	[""]	+input
+111380189	1408	7	17	7	17	[" "]	[""]	+input
+111388682	1418	7	18	7	18	["p"]	[""]	+input
+111389047	1422	7	19	7	19	["o"]	[""]	+input
+111389238	1426	7	20	7	20	["n"]	[""]	+input
+111389405	1430	7	21	7	21	["t"]	[""]	+input
+111389680	1434	7	22	7	22	["o"]	[""]	+input
+111389902	1438	7	23	7	23	["s"]	[""]	+input
+111390347	1443	7	24	7	24	["V"]	[""]	+input
+111390878	1450	7	25	7	25	["i"]	[""]	+input
+111391220	1454	7	26	7	26	["d"]	[""]	+input
+111391347	1458	7	27	7	27	["a"]	[""]	+input
+111391565	1462	7	28	7	28	["s"]	[""]	+input
+111392223	1466	7	29	7	29	[" "]	[""]	+input
+111393683	1470	7	30	7	30	["-"]	[""]	+input
+111393989	1474	7	31	7	31	[" "]	[""]	+input
+111394199	1478	7	32	7	32	["d"]	[""]	+input
+111394471	1482	7	33	7	33	["a"]	[""]	+input
+111394703	1486	7	34	7	34	["n"]	[""]	+input
+111395241	1490	7	35	7	35	["o"]	[""]	+input
+111397592	1493	7	36	7	36	["",""]	[""]	+input
+111397737	1498	8	0	8	0	["",""]	[""]	+input
+111398247	1504	9	0	9	0	["p"]	[""]	+input
+111398476	1508	9	1	9	1	["r"]	[""]	+input
+111398710	1512	9	2	9	2	["i"]	[""]	+input
+111398877	1516	9	3	9	3	["n"]	[""]	+input
+111398999	1519	9	4	9	4	["t"]	[""]	+input
+111400086	1525	9	5	9	5	["()"]	[""]	+input
+111420734	1540	9	6	9	6	["d"]	[""]	+input
+111421168	1544	9	7	9	7	["a"]	[""]	+input
+111421324	1547	9	8	9	8	["n"]	[""]	+input
+111421480	1551	9	9	9	9	["o"]	[""]	+input
+111451932	1573	6	55	6	55	["",""]	[""]	+input
+111459502	1596	8	18	8	29	["pontosVidas"]	["pontosVidas"]	paste
+111464142	1608	3	32	3	32	[":"]	[""]	+input
+111464446	1613	3	33	3	33	[" "]	[""]	+input
+111466406	1627	4	32	4	32	[":"]	[""]	+input
+111466620	1632	4	33	4	33	[" "]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 111470886
+- raw_log_line: 1644
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+import math
+
+pontosVidas = int(input("Pontos de vidas iniciais: "))
+d1 = int(input("Valor sorteado 1: "))
+d2 = int(input("Valor sorteado 2: "))
+
+dano = math.floor(math.sqrt(5 * d1 + math.pi * d2 / 3))
+
+pontosRestantes = pontosVidas - dano
+
+print(dano)
+```
+Run Output
+```text
+Pontos de vidas iniciais: 100
+Valor sorteado 18
+Valor sorteado 24
+```
+
+Edit Segment 2
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+111492876	1661	10	6	10	10	["pontosRestantes"]	["dano"]	paste
+
+Local Run 2
+- event_time_delta_ms: 111496652
+- raw_log_line: 1667
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+import math
+
+pontosVidas = int(input("Pontos de vidas iniciais: "))
+d1 = int(input("Valor sorteado 1: "))
+d2 = int(input("Valor sorteado 2: "))
+
+dano = math.floor(math.sqrt(5 * d1 + math.pi * d2 / 3))
+
+pontosRestantes = pontosVidas - dano
+
+print(pontosRestantes)
+```
+Run Output
+```text
+
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 111547724
+- raw_log_line: 1674
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+import math
+
+pontosVidas = int(input("Pontos de vidas iniciais: "))
+d1 = int(input("Valor sorteado 1: "))
+d2 = int(input("Valor sorteado 2: "))
+
+dano = math.floor(math.sqrt(5 * d1 + math.pi * d2 / 3))
+
+pontosRestantes = pontosVidas - dano
+
+print(pontosRestantes)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-08-09T16:40:45.390000
+
+Execution Result
+
+- submitted_at: 2023-08-09 16:43:47
+- grade: 0.0
+- pass_count: 1
+- failed_test_indices_0idx: [0,1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "200\n1\n6"
+    expected: "188"
+    actual: "192"
+  - test_index_0idx: 1 [FAIL]
+    input: "300\n6\n6"
+    expected: "285"
+    actual: "289"
+  - test_index_0idx: 2 [PASS]
+    input: "500\n1\n1"
+    expected: "497"
+    actual: "497"
+
+Attempt Start Code
+```python
+import math
+
+pontosVidas = int(input("Pontos de vidas iniciais: "))
+d1 = int(input("Valor sorteado 1: "))
+d2 = int(input("Valor sorteado 2: "))
+
+dano = math.floor(math.sqrt(5 * d1 + math.pi * d2 / 3))
+
+pontosRestantes = pontosVidas - dano
+
+print(pontosRestantes)
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1747	6	18	6	18	["("]	[""]	+input
+6356	1832	6	51	6	51	[")"]	[""]	+input
+7681	1839	6	50	6	51	[""]	[" "]	+delete
+8870	1847	6	51	6	51	[" "]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 19154
+- raw_log_line: 1864
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+import math
+
+pontosVidas = int(input("Pontos de vidas iniciais: "))
+d1 = int(input("Valor sorteado 1: "))
+d2 = int(input("Valor sorteado 2: "))
+
+dano = math.floor((math.sqrt(5 * d1 + math.pi * d2) / 3))
+
+pontosRestantes = pontosVidas - dano
+
+print(pontosRestantes)
+```
+Run Output
+```text
+Pontos de vidas iniciais: 100
+Valor sorteado 1: 8
+Valor sorteado 2: 4
+```
+
+Local Run 2
+- event_time_delta_ms: 46807
+- raw_log_line: 1869
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+import math
+
+pontosVidas = int(input("Pontos de vidas iniciais: "))
+d1 = int(input("Valor sorteado 1: "))
+d2 = int(input("Valor sorteado 2: "))
+
+dano = math.floor((math.sqrt(5 * d1 + math.pi * d2) / 3))
+
+pontosRestantes = pontosVidas - dano
+
+print(pontosRestantes)
+```
+Run Output
+```text
+Pontos de vidas iniciais: 100
+Valor sorteado 1: 8
+Valor sorteado 2: 4
+```
+
+Edit Segment 2
+- raw_change_event_count: 18
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+84395	1961	6	18	6	19	[""]	["("]	+delete
+89474	2052	6	55	6	56	[""]	[")"]	+delete
+94359	2114	6	34	6	34	[")"]	[""]	+input
+113837	2368	6	38	6	38	["]"]	[""]	+input
+114011	2371	6	39	6	39	["9"]	[""]	+input
+116346	2381	6	39	6	40	[""]	["9"]	+delete
+116523	2385	6	38	6	39	[""]	["]"]	+delete
+116880	2390	6	38	6	38	["]"]	[""]	+input
+117061	2393	6	39	6	39	["9"]	[""]	+input
+117851	2397	6	39	6	40	[""]	["9"]	+delete
+118002	2401	6	38	6	39	[""]	["]"]	+delete
+118579	2407	6	38	6	38	["("]	[""]	+input
+120927	2444	6	52	6	52	["()"]	[""]	+input
+122232	2449	6	52	6	54	[""]	["()"]	+delete
+122891	2455	6	52	6	52	["()"]	[""]	+input
+125029	2466	6	52	6	54	[""]	["()"]	+delete
+126338	2472	6	52	6	52	[")"]	[""]	+input
+127969	2476	6	52	6	53	[""]	[")"]	+delete
+
+Local Run 3
+- event_time_delta_ms: 160923
+- raw_log_line: 2638
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+import math
+
+pontosVidas = int(input("Pontos de vidas iniciais: "))
+d1 = int(input("Valor sorteado 1: "))
+d2 = int(input("Valor sorteado 2: "))
+
+dano = math.floor(math.sqrt(5 * d1) + (math.pi * d2) / 3)
+
+pontosRestantes = pontosVidas - dano
+
+print(pontosRestantes)
+```
+Run Output
+```text
+Pontos de vidas iniciais: 30
+Valor sorteado 1: 7
+Valor sorteado 2: 5
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 182484
+- raw_log_line: 2640
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+import math
+
+pontosVidas = int(input("Pontos de vidas iniciais: "))
+d1 = int(input("Valor sorteado 1: "))
+d2 = int(input("Valor sorteado 2: "))
+
+dano = math.floor(math.sqrt(5 * d1) + (math.pi * d2) / 3)
+
+pontosRestantes = pontosVidas - dano
+
+print(pontosRestantes)
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-08-09T16:43:58.719000
+
+Execution Result
+
+- submitted_at: 2023-08-09 16:43:58
+- grade: 0.0
+- pass_count: 1
+- failed_test_indices_0idx: [0,1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "200\n1\n6"
+    expected: "188"
+    actual: "192"
+  - test_index_0idx: 1 [FAIL]
+    input: "300\n6\n6"
+    expected: "285"
+    actual: "289"
+  - test_index_0idx: 2 [PASS]
+    input: "500\n1\n1"
+    expected: "497"
+    actual: "497"
+
+Attempt Start Code
+```python
+import math
+
+pontosVidas = int(input("Pontos de vidas iniciais: "))
+d1 = int(input("Valor sorteado 1: "))
+d2 = int(input("Valor sorteado 2: "))
+
+dano = math.floor(math.sqrt(5 * d1) + (math.pi * d2) / 3)
+
+pontosRestantes = pontosVidas - dano
+
+print(pontosRestantes)
+```
+
+Trace Timeline
+
+Submit Anchor 1
+- event_time_delta_ms: 0
+- raw_log_line: 2650
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+import math
+
+pontosVidas = int(input("Pontos de vidas iniciais: "))
+d1 = int(input("Valor sorteado 1: "))
+d2 = int(input("Valor sorteado 2: "))
+
+dano = math.floor(math.sqrt(5 * d1) + (math.pi * d2) / 3)
+
+pontosRestantes = pontosVidas - dano
+
+print(pontosRestantes)
+```

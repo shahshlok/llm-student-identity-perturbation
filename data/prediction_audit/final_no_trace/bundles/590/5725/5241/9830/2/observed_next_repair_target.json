@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "590",
+    "assessment_id": "5725",
+    "exercise_id": "5241",
+    "student_id": "9830",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "a = int(input(\"digite o valor de a: \"))\nif a < 10:\n\tb = 20 + a * 2\n\tprint(b)\nelif a >= 10 or a < 20:\n\tc = 20 + a * 2.5\n\tprint(c)\nelif a >= 20 or a < 39:\n\td = 20 + a * 2.75\n\tprint(d)\nelif a >= 40:\n\te = 20 + a * 3\n\tprint(e)\n\t",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "a = int(input(\"digite o valor de a: \"))\nif a < 10:\n\tb = 20 + a * 2\n\tprint(b)\nelif a >= 10 or a < 20:\n\tc = 20 + a * 2.5\n\tprint(c)\nelif a >= 20 or a < 39:\n\td = 20 + a * 2.75\n\tprint(d)\nelse:\n\te = 20 + a * 3\n\tprint(e)\n\t",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "400",
+        "expected": "1220.0",
+        "actual": "1020.0"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "50",
+        "expected": "170.0",
+        "actual": "145.0"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "20",
+        "expected": "75.0",
+        "actual": "70.0"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 10,
+        "end_line_0idx": 10,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 10,
+        "end_line_0idx": 10
+      }
+    ]
+  }
+}

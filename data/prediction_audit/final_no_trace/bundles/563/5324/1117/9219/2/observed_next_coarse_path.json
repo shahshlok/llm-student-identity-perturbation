@@ -1,0 +1,42 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "563",
+    "assessment_id": "5324",
+    "exercise_id": "1117",
+    "student_id": "9219",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "p = float(input(\"VALOR:  \"))\nds = input(\"( 1 / 2 / 3 / 4 / 5 / 6 / 7 )\")\nv = input (\"(S/N)\")\n \nprint(\"Entradas: \", p, \",\", ds, \",\", v)\n\t\nif ((ds == \"2\") or (ds == \"3\") or (ds == \"5\")) and (v == \"N\"):\n\tt = p - p*0.25\n\tprint(\"Total: R$\", round(t, 2))\n\t\nelif ((ds == \"2\") or (ds == \"3\") or (ds == \"5\")) and (v == \"S\"):\n\tt = p - p*0.25 + 20\n\tprint(\"Total: R$\", round(t, 2))\n\t\nelif ((ds == \"1\") or (ds == \"4\") or (ds == \"6\") or (ds == \"7\")) and (v == \"N\"):\n\tprint(\"Total: R$\", round(p, 2))\n\t\nelif ((ds == \"1\") or (ds == \"4\") or (ds == \"6\") or (ds == \"7\")) and (v == \"S\"):\n\tt = p + 20\n\tprint(\"Total: R$\", round(p, 2))\nelse:\n\tprint(\"Dados invalidos\")",
+    "coarse_path_steps": [
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 8,
+        "target_end_line_0idx": 15
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

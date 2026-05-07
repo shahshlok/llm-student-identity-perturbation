@@ -1,0 +1,410 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 589
+- assessment_id: 5675
+- assessment_title: Lista 2: Exercícios em Sala
+- exercise_id: 6911
+- student_id: 9751
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-05-14T14:17:38.886000
+
+Execution Result
+
+- submitted_at: 2024-05-14 14:22:27
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "10"
+    expected: "10\nMenor_de_idade"
+    actual: "menor de idade"
+  - test_index_0idx: 1 [FAIL]
+    input: "18"
+    expected: "18\nMaior_de_idade"
+    actual: "maior de idade"
+  - test_index_0idx: 2 [FAIL]
+    input: "22"
+    expected: "22\nMaior_de_idade"
+    actual: "maior de idade"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 111
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["i"]	[""]	+input
+464	11	0	1	0	1	["d"]	[""]	+input
+607	15	0	2	0	2	["a"]	[""]	+input
+798	19	0	3	0	3	["d"]	[""]	+input
+2478	23	0	4	0	4	["e"]	[""]	+input
+3188	27	0	5	0	5	["="]	[""]	+input
+4785	31	0	6	0	6	[" "]	[""]	+input
+5084	35	0	7	0	7	["i"]	[""]	+input
+5326	39	0	8	0	8	["n"]	[""]	+input
+5785	43	0	9	0	9	["t"]	[""]	+input
+8586	48	0	10	0	10	["()"]	[""]	+input
+9344	54	0	11	0	11	["i"]	[""]	+input
+9584	58	0	12	0	12	["n"]	[""]	+input
+10398	62	0	13	0	13	["p"]	[""]	+input
+10722	66	0	14	0	14	["u"]	[""]	+input
+11106	70	0	15	0	15	["t"]	[""]	+input
+12865	75	0	16	0	16	["()"]	[""]	+input
+13399	80	0	17	0	17	["\"\""]	[""]	+input
+14423	86	0	18	0	18	["i"]	[""]	+input
+14801	90	0	19	0	19	["n"]	[""]	+input
+15214	94	0	20	0	20	["f"]	[""]	+input
+15727	98	0	21	0	21	["o"]	[""]	+input
+16160	102	0	22	0	22	["r"]	[""]	+input
+16656	106	0	23	0	23	["m"]	[""]	+input
+17039	110	0	24	0	24	["e"]	[""]	+input
+17327	114	0	25	0	25	[" "]	[""]	+input
+18095	118	0	26	0	26	["i"]	[""]	+input
+18446	122	0	27	0	27	["d"]	[""]	+input
+18640	126	0	28	0	28	["a"]	[""]	+input
+18801	130	0	29	0	29	["d"]	[""]	+input
+19009	134	0	30	0	30	["e"]	[""]	+input
+20703	139	0	31	0	31	[":"]	[""]	+input
+25426	144	0	35	0	35	["",""]	[""]	+input
+27968	149	1	0	1	0	["",""]	[""]	+input
+132688	155	2	0	2	0	["i"]	[""]	+input
+133012	159	2	1	2	1	["f"]	[""]	+input
+133359	163	2	2	2	2	[" "]	[""]	+input
+134699	167	2	3	2	3	["i"]	[""]	+input
+135065	171	2	4	2	4	["d"]	[""]	+input
+135232	175	2	5	2	5	["a"]	[""]	+input
+135408	179	2	6	2	6	["d"]	[""]	+input
+135583	183	2	7	2	7	["e"]	[""]	+input
+135952	187	2	8	2	8	[" "]	[""]	+input
+137343	190	2	8	2	9	[""]	[" "]	+delete
+138972	196	2	8	2	8	[">"]	[""]	+input
+139491	201	2	9	2	9	["="]	[""]	+input
+140241	205	2	10	2	10	[" "]	[""]	+input
+141235	209	2	11	2	11	["1"]	[""]	+input
+141599	213	2	12	2	12	["8"]	[""]	+input
+146593	232	2	8	2	8	[" "]	[""]	+input
+151408	252	2	14	2	14	[":"]	[""]	+input
+153775	256	2	14	2	15	[""]	[":"]	+delete
+155808	262	2	14	2	14	[":"]	[""]	+input
+156224	266	2	15	2	15	["",""]	[""]	+input
+156224	267	3	0	3	0	["\t"]	[""]	+input
+158432	273	3	1	3	1	["p"]	[""]	+input
+159104	277	3	2	3	2	["r"]	[""]	+input
+159868	281	3	3	3	3	["i"]	[""]	+input
+160114	285	3	4	3	4	["n"]	[""]	+input
+160368	289	3	5	3	5	["t"]	[""]	+input
+163494	294	3	6	3	6	["()"]	[""]	+input
+163952	299	3	7	3	7	["\"\""]	[""]	+input
+164770	305	3	8	3	8	["m"]	[""]	+input
+164950	309	3	9	3	9	["a"]	[""]	+input
+165392	313	3	10	3	10	["i"]	[""]	+input
+165600	317	3	11	3	11	["o"]	[""]	+input
+165936	321	3	12	3	12	["r"]	[""]	+input
+169904	325	3	13	3	13	["d"]	[""]	+input
+170081	329	3	14	3	14	["e"]	[""]	+input
+170513	333	3	15	3	15	[" "]	[""]	+input
+172464	337	3	16	3	16	["i"]	[""]	+input
+173376	341	3	17	3	17	["d"]	[""]	+input
+173517	345	3	18	3	18	["a"]	[""]	+input
+173652	349	3	19	3	19	["d"]	[""]	+input
+173823	353	3	20	3	20	["e"]	[""]	+input
+205078	357	3	23	3	23	["",""]	[""]	+input
+205078	358	4	0	4	0	["\t"]	[""]	+input
+207921	363	4	0	4	1	[""]	["\t"]	+delete
+208143	367	3	23	4	0	[""]	["",""]	+delete
+209447	372	3	23	3	23	["",""]	[""]	+input
+209447	373	4	0	4	0	["\t"]	[""]	+input
+209904	378	4	0	4	1	[""]	["\t"]	+delete
+210849	383	4	0	4	0	["e"]	[""]	+input
+212582	387	4	1	4	1	["l"]	[""]	+input
+213313	391	4	2	4	2	["s"]	[""]	+input
+213467	395	4	3	4	3	["e"]	[""]	+input
+216680	400	4	4	4	4	[":"]	[""]	+input
+217616	404	4	5	4	5	["",""]	[""]	+input
+217616	405	5	0	5	0	["\t"]	[""]	+input
+219792	411	5	1	5	1	["p"]	[""]	+input
+220241	415	5	2	5	2	["r"]	[""]	+input
+220810	419	5	3	5	3	["i"]	[""]	+input
+221017	423	5	4	5	4	["n"]	[""]	+input
+221312	427	5	5	5	5	["t"]	[""]	+input
+222369	432	5	6	5	6	["()"]	[""]	+input
+222896	437	5	7	5	7	["\"\""]	[""]	+input
+223681	443	5	8	5	8	["m"]	[""]	+input
+224096	447	5	9	5	9	["e"]	[""]	+input
+224674	451	5	10	5	10	["n"]	[""]	+input
+224944	455	5	11	5	11	["o"]	[""]	+input
+225377	459	5	12	5	12	["r"]	[""]	+input
+225651	463	5	13	5	13	[" "]	[""]	+input
+225883	467	5	14	5	14	["d"]	[""]	+input
+226128	471	5	15	5	15	["e"]	[""]	+input
+226352	475	5	16	5	16	[" "]	[""]	+input
+226976	479	5	17	5	17	["i"]	[""]	+input
+227332	483	5	18	5	18	["d"]	[""]	+input
+227458	487	5	19	5	19	["a"]	[""]	+input
+227650	491	5	20	5	20	["d"]	[""]	+input
+227777	495	5	21	5	21	["e"]	[""]	+input
+254833	502	3	13	3	13	[" "]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 288149
+- raw_log_line: 505
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+idade= int(input("informe idade:"))
+
+if idade >= 18:
+	print("maior de idade")
+else:
+	print("menor de idade")
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-05-14T14:22:29.844000
+
+Execution Result
+
+- submitted_at: 2024-05-14 14:24:06
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "10"
+    expected: "10\nMenor_de_idade"
+    actual: "10\nmenor de idade"
+  - test_index_0idx: 1 [FAIL]
+    input: "18"
+    expected: "18\nMaior_de_idade"
+    actual: "18\nmaior de idade"
+  - test_index_0idx: 2 [FAIL]
+    input: "22"
+    expected: "22\nMaior_de_idade"
+    actual: "22\nmaior de idade"
+
+Attempt Start Code
+```python
+idade= int(input("informe idade:"))
+
+if idade >= 18:
+	print("maior de idade")
+else:
+	print("menor de idade")
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 508
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+idade= int(input("informe idade:"))
+
+if idade >= 18:
+	print("maior de idade")
+else:
+	print("menor de idade")
+```
+Run Output
+```text
+informe idade:17
+menor de idade
+```
+
+Edit Segment 1
+- raw_change_event_count: 28
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+23939	514	2	0	2	0	["",""]	[""]	+input
+24196	519	3	0	3	0	["",""]	[""]	+input
+32252	525	4	15	4	15	["",""]	[""]	+input
+32254	526	5	0	5	0	["\t"]	[""]	+input
+35652	532	5	1	5	1	["p"]	[""]	+input
+36867	536	5	2	5	2	["i"]	[""]	+input
+37125	540	5	3	5	3	["n"]	[""]	+input
+37445	544	5	4	5	4	["t"]	[""]	+input
+39443	549	5	5	5	5	["()"]	[""]	+input
+41925	555	5	6	5	6	["i"]	[""]	+input
+42511	559	5	7	5	7	["d"]	[""]	+input
+42643	563	5	8	5	8	["a"]	[""]	+input
+42792	567	5	9	5	9	["d"]	[""]	+input
+42963	571	5	10	5	10	["e"]	[""]	+input
+50694	576	5	2	5	2	["r"]	[""]	+input
+78807	580	7	5	7	5	["",""]	[""]	+input
+78807	581	8	0	8	0	["\t"]	[""]	+input
+80069	587	8	1	8	1	["p"]	[""]	+input
+80540	591	8	2	8	2	["r"]	[""]	+input
+81075	595	8	3	8	3	["i"]	[""]	+input
+81334	599	8	4	8	4	["n"]	[""]	+input
+81571	603	8	5	8	5	["t"]	[""]	+input
+82617	608	8	6	8	6	["()"]	[""]	+input
+83492	614	8	7	8	7	["i"]	[""]	+input
+83843	618	8	8	8	8	["d"]	[""]	+input
+83991	622	8	9	8	9	["a"]	[""]	+input
+84167	626	8	10	8	10	["d"]	[""]	+input
+84344	630	8	11	8	11	["e"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 94051
+- raw_log_line: 635
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+idade= int(input("informe idade:"))
+
+
+
+if idade >= 18:
+	print(idade)
+	print("maior de idade")
+else:
+	print(idade)
+	print("menor de idade")
+```
+Run Output
+```text
+informe idade:17
+menor de idade
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 96826
+- raw_log_line: 636
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+idade= int(input("informe idade:"))
+
+
+
+if idade >= 18:
+	print(idade)
+	print("maior de idade")
+else:
+	print(idade)
+	print("menor de idade")
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-05-14T14:24:39.359000
+
+Execution Result
+
+- submitted_at: 2024-05-14 14:24:39
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "10"
+    expected: "10\nMenor_de_idade"
+    actual: "10\nmenor de idade"
+  - test_index_0idx: 1 [FAIL]
+    input: "18"
+    expected: "18\nMaior_de_idade"
+    actual: "18\nmaior de idade"
+  - test_index_0idx: 2 [FAIL]
+    input: "22"
+    expected: "22\nMaior_de_idade"
+    actual: "22\nmaior de idade"
+
+Attempt Start Code
+```python
+idade= int(input("informe idade:"))
+
+
+
+if idade >= 18:
+	print(idade)
+	print("maior de idade")
+else:
+	print(idade)
+	print("menor de idade")
+```
+
+Trace Timeline
+
+Submit Anchor 1
+- event_time_delta_ms: 0
+- raw_log_line: 640
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+idade= int(input("informe idade:"))
+
+
+
+if idade >= 18:
+	print(idade)
+	print("maior de idade")
+else:
+	print(idade)
+	print("menor de idade")
+```

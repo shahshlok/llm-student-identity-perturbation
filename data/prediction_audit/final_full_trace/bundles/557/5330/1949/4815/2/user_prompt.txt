@@ -1,0 +1,1102 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 557
+- assessment_id: 5330
+- assessment_title: Extras 3: Condicionais Encadeados (if/elif)
+- exercise_id: 1949
+- student_id: 4815
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-01-29T20:17:04.540000
+
+Execution Result
+
+- submitted_at: 2024-01-29 20:31:37
+- grade: 0.0
+- pass_count: 2
+- failed_test_indices_0idx: [2]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "55\n55"
+    expected: "Ganhou R$ 100.000,00"
+    actual: "Ganhou R$ 100.000,00"
+  - test_index_0idx: 1 [PASS]
+    input: "78\n89"
+    expected: "Ganhou R$ 1.000,00"
+    actual: "Ganhou R$ 1.000,00"
+  - test_index_0idx: 2 [FAIL]
+    input: "12\n56"
+    expected: "Perdeu"
+    actual: "Ganhou R$ 1.000,00"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 288
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["j"]	[""]	+input
+92	11	0	1	0	1	["o"]	[""]	+input
+291	15	0	2	0	2	["g"]	[""]	+input
+378	19	0	3	0	3	["a"]	[""]	+input
+570	23	0	4	0	4	["d"]	[""]	+input
+687	27	0	5	0	5	["o"]	[""]	+input
+769	31	0	6	0	6	["r"]	[""]	+input
+1533	35	0	7	0	7	[" "]	[""]	+input
+1625	39	0	8	0	8	["="]	[""]	+input
+1738	43	0	9	0	9	[" "]	[""]	+input
+2575	47	0	10	0	10	["i"]	[""]	+input
+2645	50	0	11	0	11	["n"]	[""]	+input
+2712	54	0	12	0	12	["t"]	[""]	+input
+4961	60	0	13	0	13	["()"]	[""]	+input
+5253	66	0	14	0	14	["i"]	[""]	+input
+5310	69	0	15	0	15	["n"]	[""]	+input
+5525	74	0	16	0	16	["p"]	[""]	+input
+5776	78	0	17	0	17	["u"]	[""]	+input
+5916	82	0	18	0	18	["t"]	[""]	+input
+7078	87	0	19	0	19	["()"]	[""]	+input
+7962	101	0	22	0	22	["",""]	[""]	+input
+11377	107	1	0	1	0	["l"]	[""]	+input
+11533	111	1	1	1	1	["o"]	[""]	+input
+13364	115	1	2	1	2	["t"]	[""]	+input
+14129	119	1	3	1	3	["e"]	[""]	+input
+14349	123	1	4	1	4	["r"]	[""]	+input
+14521	127	1	5	1	5	["i"]	[""]	+input
+14636	131	1	6	1	6	["a"]	[""]	+input
+15008	135	1	7	1	7	[" "]	[""]	+input
+15497	139	1	8	1	8	["="]	[""]	+input
+15659	143	1	9	1	9	[" "]	[""]	+input
+16216	147	1	10	1	10	["i"]	[""]	+input
+16269	150	1	11	1	11	["n"]	[""]	+input
+16374	155	1	12	1	12	["t"]	[""]	+input
+16986	160	1	13	1	13	["()"]	[""]	+input
+17277	166	1	14	1	14	["i"]	[""]	+input
+17399	170	1	15	1	15	["n"]	[""]	+input
+17566	174	1	16	1	16	["p"]	[""]	+input
+17749	178	1	17	1	17	["u"]	[""]	+input
+17820	182	1	18	1	18	["t"]	[""]	+input
+18552	187	1	19	1	19	["()"]	[""]	+input
+20314	201	1	22	1	22	["",""]	[""]	+input
+25713	207	0	21	0	22	[""]	[")"]	+delete
+26484	217	1	21	1	22	[""]	[")"]	+delete
+28476	241	1	13	1	14	[""]	["("]	+delete
+28624	245	1	12	1	13	[""]	["t"]	+delete
+28793	249	1	11	1	12	[""]	["n"]	+delete
+29120	253	1	10	1	11	[""]	["i"]	+delete
+30425	272	0	13	0	14	[""]	["("]	+delete
+30559	276	0	12	0	13	[""]	["t"]	+delete
+30815	280	0	11	0	12	[""]	["n"]	+delete
+30926	284	0	10	0	11	[""]	["i"]	+delete
+33576	289	2	0	2	0	["",""]	[""]	+input
+42598	295	3	0	3	0	["i"]	[""]	+input
+42676	298	3	1	3	1	["f"]	[""]	+input
+43112	303	3	2	3	2	[" "]	[""]	+input
+43449	307	3	3	3	3	["j"]	[""]	+input
+43543	311	3	4	3	4	["o"]	[""]	+input
+43798	315	3	5	3	5	["g"]	[""]	+input
+43911	319	3	6	3	6	["a"]	[""]	+input
+44088	323	3	7	3	7	["d"]	[""]	+input
+44205	327	3	8	3	8	["o"]	[""]	+input
+44290	331	3	9	3	9	["r"]	[""]	+input
+44665	335	3	10	3	10	[" "]	[""]	+input
+44996	339	3	11	3	11	["="]	[""]	+input
+45102	343	3	12	3	12	["="]	[""]	+input
+45389	347	3	13	3	13	[" "]	[""]	+input
+45695	351	3	14	3	14	["l"]	[""]	+input
+45873	355	3	15	3	15	["o"]	[""]	+input
+46119	359	3	16	3	16	["t"]	[""]	+input
+46344	363	3	17	3	17	["e"]	[""]	+input
+46553	367	3	18	3	18	["i"]	[""]	+input
+47010	370	3	18	3	19	[""]	["i"]	+delete
+47213	375	3	18	3	18	["r"]	[""]	+input
+47436	379	3	19	3	19	["t"]	[""]	+input
+47760	383	3	20	3	20	["i"]	[""]	+input
+47896	387	3	21	3	21	["a"]	[""]	+input
+48362	390	3	21	3	22	[""]	["a"]	+delete
+48560	394	3	20	3	21	[""]	["i"]	+delete
+48885	398	3	19	3	20	[""]	["t"]	+delete
+49317	403	3	19	3	19	["i"]	[""]	+input
+49385	406	3	20	3	20	["a"]	[""]	+input
+55325	412	3	21	3	21	[":"]	[""]	+input
+55779	416	3	22	3	22	["",""]	[""]	+input
+55779	417	4	0	4	0	["\t"]	[""]	+input
+56773	423	4	1	4	1	["p"]	[""]	+input
+56953	427	4	2	4	2	["r"]	[""]	+input
+57048	430	4	3	4	3	["i"]	[""]	+input
+57134	434	4	4	4	4	["n"]	[""]	+input
+57210	438	4	5	4	5	["t"]	[""]	+input
+57914	444	4	6	4	6	["()"]	[""]	+input
+64947	454	4	7	4	7	["\"\""]	[""]	+input
+65438	460	4	8	4	8	["Ganhou R$ 100.000,00"]	[""]	paste
+70713	465	4	30	4	30	["",""]	[""]	+input
+70713	466	5	0	5	0	["\t"]	[""]	+input
+71622	471	5	0	5	1	[""]	["\t"]	+delete
+71847	476	5	0	5	0	["e"]	[""]	+input
+72137	480	5	1	5	1	["l"]	[""]	+input
+72395	484	5	2	5	2	["s"]	[""]	+input
+72798	488	5	3	5	3	["i"]	[""]	+input
+72878	491	5	4	5	4	["f"]	[""]	+input
+73919	495	5	4	5	5	[""]	["f"]	+delete
+74063	499	5	3	5	4	[""]	["i"]	+delete
+74348	503	5	2	5	3	[""]	["s"]	+delete
+75024	508	5	2	5	2	["i"]	[""]	+input
+75131	512	5	3	5	3	["f"]	[""]	+input
+76083	516	5	4	5	4	[" "]	[""]	+input
+76713	520	5	5	5	5	["j"]	[""]	+input
+76779	523	5	6	5	6	["p"]	[""]	+input
+77509	528	5	7	5	7	["g"]	[""]	+input
+77804	531	5	7	5	8	[""]	["g"]	+delete
+78000	535	5	6	5	7	[""]	["p"]	+delete
+78481	540	5	6	5	6	["o"]	[""]	+input
+79095	544	5	7	5	7	["g"]	[""]	+input
+79398	548	5	8	5	8	["a"]	[""]	+input
+79651	552	5	9	5	9	["d"]	[""]	+input
+79865	556	5	10	5	10	["o"]	[""]	+input
+112167	561	0	10	0	10	["i"]	[""]	+input
+112226	564	0	11	0	11	["n"]	[""]	+input
+112292	567	0	12	0	12	["t"]	[""]	+input
+112924	574	0	13	0	13	["("]	[""]	+input
+114375	580	1	10	1	10	["i"]	[""]	+input
+114450	583	1	11	1	11	["n"]	[""]	+input
+114559	588	1	12	1	12	["t"]	[""]	+input
+115110	593	1	13	1	13	["("]	[""]	+input
+116807	600	0	21	0	21	[")"]	[""]	+input
+117474	609	1	21	1	21	[")"]	[""]	+input
+124359	615	5	11	5	11	["r"]	[""]	+input
+127410	619	5	12	5	12	["[]"]	[""]	+input
+129214	624	5	13	5	13	["0"]	[""]	+input
+131180	630	5	14	5	15	[""]	["]"]	+delete
+132057	634	5	13	5	14	[""]	["0"]	+delete
+132239	638	5	12	5	13	[""]	["["]	+delete
+134291	644	5	12	5	12	["%"]	[""]	+input
+135331	649	5	13	5	13	["1"]	[""]	+input
+135432	652	5	14	5	14	["0"]	[""]	+input
+213439	658	0	21	0	22	[""]	[")"]	+delete
+214327	668	1	21	1	22	[""]	[")"]	+delete
+215891	693	1	13	1	14	[""]	["("]	+delete
+216043	697	1	12	1	13	[""]	["t"]	+delete
+216188	701	1	11	1	12	[""]	["n"]	+delete
+216739	705	1	10	1	11	[""]	["i"]	+delete
+217935	724	0	13	0	14	[""]	["("]	+delete
+218258	728	0	12	0	13	[""]	["t"]	+delete
+218426	732	0	11	0	12	[""]	["n"]	+delete
+218622	736	0	10	0	11	[""]	["i"]	+delete
+222822	744	5	14	5	15	[""]	["0"]	+delete
+222967	748	5	13	5	14	[""]	["1"]	+delete
+223391	752	5	12	5	13	[""]	["%"]	+delete
+224057	757	5	12	5	12	["[]"]	[""]	+input
+225505	762	5	13	5	13	["0"]	[""]	+input
+228346	769	5	15	5	15	[","]	[""]	+input
+228487	772	5	16	5	16	[" "]	[""]	+input
+228992	777	5	17	5	17	["j"]	[""]	+input
+229429	781	5	18	5	18	["g"]	[""]	+input
+229652	785	5	19	5	19	["a"]	[""]	+input
+229872	789	5	20	5	20	["d"]	[""]	+input
+229985	792	5	21	5	21	["o"]	[""]	+input
+230135	797	5	22	5	22	["t"]	[""]	+input
+230373	800	5	22	5	23	[""]	["t"]	+delete
+230570	804	5	21	5	22	[""]	["o"]	+delete
+230712	808	5	20	5	21	[""]	["d"]	+delete
+230859	812	5	19	5	20	[""]	["a"]	+delete
+230936	816	5	18	5	19	[""]	["g"]	+delete
+231654	821	5	18	5	18	["o"]	[""]	+input
+231930	825	5	19	5	19	["g"]	[""]	+input
+232225	829	5	20	5	20	["a"]	[""]	+input
+232463	833	5	21	5	21	["d"]	[""]	+input
+232596	837	5	22	5	22	["o"]	[""]	+input
+232675	840	5	23	5	23	["r"]	[""]	+input
+233820	845	5	24	5	24	["[]"]	[""]	+input
+281889	852	5	25	5	25	["1"]	[""]	+input
+377560	860	5	13	5	27	[":"]	["0], jogador[1]"]	+input
+377719	864	5	14	5	14	[":"]	[""]	+input
+379059	868	5	14	5	15	[""]	[":"]	+delete
+379212	872	5	13	5	14	[""]	[":"]	+delete
+383747	897	5	13	5	13	[":"]	[""]	+input
+384301	901	5	14	5	14	[":"]	[""]	+input
+387110	906	5	15	5	15	["-"]	[""]	+input
+387215	909	5	16	5	16	["1"]	[""]	+input
+390829	915	5	17	5	17	["{}"]	[""]	+input
+391565	920	5	17	5	19	[""]	["{}"]	+delete
+391902	926	5	17	5	17	["}"]	[""]	+input
+392316	930	5	17	5	18	[""]	["}"]	+delete
+392846	935	5	17	5	17	["]"]	[""]	+input
+393327	939	5	18	5	18	[" "]	[""]	+input
+394369	943	5	19	5	19	["="]	[""]	+input
+394492	947	5	20	5	20	["="]	[""]	+input
+394786	951	5	21	5	21	[" "]	[""]	+input
+395221	955	5	22	5	22	["l"]	[""]	+input
+395376	959	5	23	5	23	["o"]	[""]	+input
+396010	963	5	24	5	24	["t"]	[""]	+input
+397238	967	5	25	5	25	["e"]	[""]	+input
+397461	971	5	26	5	26	["r"]	[""]	+input
+397611	975	5	27	5	27	["i"]	[""]	+input
+398193	979	5	28	5	28	["a"]	[""]	+input
+399427	984	5	29	5	29	[":"]	[""]	+input
+400530	988	5	30	5	30	["",""]	[""]	+input
+400530	989	6	0	6	0	["\t"]	[""]	+input
+403896	1002	6	1	6	1	["print(\"Ganhou R$ 100.000,00\")"]	[""]	paste
+405912	1007	6	19	6	20	[""]	["0"]	+delete
+406054	1011	6	18	6	19	[""]	["1"]	+delete
+406165	1016	6	18	6	18	["5"]	[""]	+input
+440037	1023	6	29	6	29	["",""]	[""]	+input
+440037	1024	7	0	7	0	["\t"]	[""]	+input
+440413	1029	7	0	7	1	[""]	["\t"]	+delete
+440821	1034	7	0	7	0	["e"]	[""]	+input
+440946	1038	7	1	7	1	["l"]	[""]	+input
+441113	1042	7	2	7	2	["s"]	[""]	+input
+441415	1046	7	3	7	3	["e"]	[""]	+input
+441616	1049	7	3	7	4	[""]	["e"]	+delete
+441799	1053	7	2	7	3	[""]	["s"]	+delete
+441993	1057	7	1	7	2	[""]	["l"]	+delete
+442199	1061	7	0	7	1	[""]	["e"]	+delete
+443330	1066	7	0	7	0	["e"]	[""]	+input
+443578	1070	7	1	7	1	["l"]	[""]	+input
+444561	1074	7	2	7	2	["o"]	[""]	+input
+444706	1078	7	3	7	3	["f"]	[""]	+input
+445304	1081	7	3	7	4	[""]	["f"]	+delete
+445445	1085	7	2	7	3	[""]	["o"]	+delete
+446029	1090	7	2	7	2	["i"]	[""]	+input
+446181	1094	7	3	7	3	["f"]	[""]	+input
+447472	1098	7	4	7	4	[" "]	[""]	+input
+447945	1102	7	5	7	5	["j"]	[""]	+input
+448074	1106	7	6	7	6	["o"]	[""]	+input
+448445	1110	7	7	7	7	["g"]	[""]	+input
+448619	1114	7	8	7	8	["a"]	[""]	+input
+448856	1118	7	9	7	9	["d"]	[""]	+input
+449014	1122	7	10	7	10	["o"]	[""]	+input
+449146	1126	7	11	7	11	["r"]	[""]	+input
+455542	1130	7	12	7	12	[" "]	[""]	+input
+456363	1133	7	12	7	13	[""]	[" "]	+delete
+457082	1138	7	12	7	12	[" "]	[""]	+input
+457331	1142	7	13	7	13	["[]"]	[""]	+input
+458119	1146	7	13	7	15	[""]	["[]"]	+delete
+458370	1150	7	12	7	13	[""]	[" "]	+delete
+459480	1155	7	12	7	12	[" "]	[""]	+input
+459746	1159	7	13	7	13	["[]"]	[""]	+input
+461028	1163	7	13	7	15	[""]	["[]"]	+delete
+461235	1167	7	12	7	13	[""]	[" "]	+delete
+462019	1172	7	12	7	12	["[]"]	[""]	+input
+462331	1177	7	13	7	13	["0"]	[""]	+input
+463089	1184	7	15	7	15	[" "]	[""]	+input
+463398	1188	7	16	7	16	["i"]	[""]	+input
+463481	1191	7	17	7	17	["n"]	[""]	+input
+463970	1196	7	18	7	18	[" "]	[""]	+input
+465921	1200	7	19	7	19	["l"]	[""]	+input
+466097	1204	7	20	7	20	["o"]	[""]	+input
+466499	1208	7	21	7	21	["t"]	[""]	+input
+466717	1212	7	22	7	22	["e"]	[""]	+input
+466908	1216	7	23	7	23	["r"]	[""]	+input
+467071	1220	7	24	7	24	["i"]	[""]	+input
+467248	1224	7	25	7	25	["a"]	[""]	+input
+495641	1231	7	14	7	15	[""]	["]"]	+delete
+495783	1235	7	13	7	14	[""]	["0"]	+delete
+496429	1239	7	12	7	13	[""]	["["]	+delete
+498067	1246	7	23	7	23	[":"]	[""]	+input
+498298	1250	7	24	7	24	["",""]	[""]	+input
+498298	1251	8	0	8	0	["\t"]	[""]	+input
+502251	1256	8	1	8	1	["",""]	[""]	+input
+502252	1257	9	0	9	0	["\t"]	[""]	+input
+502541	1262	9	0	9	1	[""]	["\t"]	+delete
+503140	1267	9	0	9	0	["e"]	[""]	+input
+503252	1271	9	1	9	1	["l"]	[""]	+input
+503367	1275	9	2	9	2	["s"]	[""]	+input
+503581	1279	9	3	9	3	["e"]	[""]	+input
+503802	1284	9	4	9	4	[":"]	[""]	+input
+504018	1288	9	5	9	5	["",""]	[""]	+input
+504019	1289	10	0	10	0	["\t"]	[""]	+input
+505025	1295	10	1	10	1	["p"]	[""]	+input
+505192	1299	10	2	10	2	["r"]	[""]	+input
+505297	1303	10	3	10	3	["i"]	[""]	+input
+505437	1307	10	4	10	4	["t"]	[""]	+input
+505972	1310	10	4	10	5	[""]	["t"]	+delete
+506375	1315	10	4	10	4	["n"]	[""]	+input
+506491	1319	10	5	10	5	["t"]	[""]	+input
+507231	1324	10	6	10	6	["()"]	[""]	+input
+507770	1331	10	7	10	7	["\"\""]	[""]	+input
+508298	1337	10	8	10	8	["p"]	[""]	+input
+508439	1341	10	9	10	9	["e"]	[""]	+input
+508617	1345	10	10	10	10	["r"]	[""]	+input
+508820	1349	10	11	10	11	["d"]	[""]	+input
+508989	1353	10	12	10	12	["e"]	[""]	+input
+509141	1357	10	13	10	13	["u"]	[""]	+input
+520977	1371	8	1	8	1	["print(\"Ganhou R$ 50.000,00\")"]	[""]	paste
+522543	1376	8	19	8	20	[""]	["0"]	+delete
+522702	1380	8	18	8	19	[""]	["5"]	+delete
+523099	1385	8	18	8	18	["1"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 529474
+- raw_log_line: 1390
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+Run Output
+```text
+Ganhou R$ 50.000,00
+```
+
+Edit Segment 2
+- raw_change_event_count: 24
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+544750	1395	7	12	7	12	["[]"]	[""]	+input
+545556	1400	7	13	7	13	["0"]	[""]	+input
+551505	1406	7	26	7	26	[" "]	[""]	+input
+552508	1410	7	27	7	27	["o"]	[""]	+input
+552756	1414	7	28	7	28	["r"]	[""]	+input
+553102	1417	7	28	7	29	[""]	["r"]	+delete
+553300	1421	7	27	7	28	[""]	["o"]	+delete
+553517	1425	7	26	7	27	[""]	[" "]	+delete
+554891	1430	7	26	7	26	[" "]	[""]	+input
+555395	1434	7	27	7	27	["o"]	[""]	+input
+555601	1438	7	28	7	28	["r"]	[""]	+input
+555873	1442	7	29	7	29	[" "]	[""]	+input
+684192	1458	7	30	7	30	["jogador[0]"]	[""]	paste
+685296	1463	7	40	7	40	[" "]	[""]	+input
+685520	1467	7	41	7	41	["i"]	[""]	+input
+685646	1471	7	42	7	42	["n"]	[""]	+input
+685775	1475	7	43	7	43	[" "]	[""]	+input
+686037	1479	7	44	7	44	["l"]	[""]	+input
+686285	1483	7	45	7	45	["o"]	[""]	+input
+686744	1487	7	46	7	46	["t"]	[""]	+input
+686964	1491	7	47	7	47	["e"]	[""]	+input
+687129	1495	7	48	7	48	["r"]	[""]	+input
+687238	1499	7	49	7	49	["i"]	[""]	+input
+687377	1503	7	50	7	50	["a"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 691671
+- raw_log_line: 1508
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] in loteria or jogador[0] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+Run Output
+```text
+perdeu
+```
+
+Local Run 3
+- event_time_delta_ms: 699528
+- raw_log_line: 1510
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] in loteria or jogador[0] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+Run Output
+```text
+Ganhou R$ 100.000,00
+```
+
+Local Run 4
+- event_time_delta_ms: 709544
+- raw_log_line: 1512
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] in loteria or jogador[0] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+Run Output
+```text
+Ganhou R$ 50.000,00
+```
+
+Edit Segment 3
+- raw_change_event_count: 8
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+722329	1517	7	38	7	38	["0"]	[""]	+input
+722537	1520	7	38	7	39	[""]	["0"]	+delete
+722711	1525	7	38	7	38	["1"]	[""]	+input
+723392	1531	7	39	7	40	[""]	["0"]	+delete
+723508	1536	7	39	7	39	["1"]	[""]	+input
+723935	1539	7	39	7	40	[""]	["1"]	+delete
+724073	1543	7	38	7	39	[""]	["1"]	+delete
+724187	1548	7	38	7	38	["1"]	[""]	+input
+
+Local Run 5
+- event_time_delta_ms: 727414
+- raw_log_line: 1552
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] in loteria or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+Run Output
+```text
+perdeu
+```
+
+Edit Segment 4
+- raw_change_event_count: 6
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+745926	1564	7	16	7	16	["o"]	[""]	+input
+746082	1568	7	17	7	17	["r"]	[""]	+input
+746221	1572	7	18	7	18	[" "]	[""]	+input
+746720	1576	7	19	7	19	["jogador[1]"]	[""]	paste
+748510	1581	7	29	7	29	[" "]	[""]	+input
+751594	1585	7	40	7	65	[""]	[" or jogador[1] in loteria"]	+delete
+
+Local Run 6
+- event_time_delta_ms: 755227
+- raw_log_line: 1590
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+Run Output
+```text
+Ganhou R$ 1.000,00
+```
+
+Local Run 7
+- event_time_delta_ms: 769418
+- raw_log_line: 1592
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+Run Output
+```text
+Ganhou R$ 1.000,00
+```
+
+Local Run 8
+- event_time_delta_ms: 779354
+- raw_log_line: 1594
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+Run Output
+```text
+Ganhou R$ 1.000,00
+```
+
+Local Run 9
+- event_time_delta_ms: 789612
+- raw_log_line: 1596
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+Run Output
+```text
+Ganhou R$ 1.000,00
+```
+
+Edit Segment 5
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+810447	1607	7	15	7	29	[""]	[" or jogador[1]"]	+delete
+811413	1614	7	13	7	14	[""]	["0"]	+delete
+812119	1620	7	13	7	13	[":"]	[""]	+input
+
+Local Run 10
+- event_time_delta_ms: 817307
+- raw_log_line: 1625
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[:] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+Run Output
+```text
+Ganhou R$ 1.000,00
+```
+
+Edit Segment 6
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+825320	1631	7	14	7	14	[":"]	[""]	+input
+
+Local Run 11
+- event_time_delta_ms: 831340
+- raw_log_line: 1636
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[::] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+Run Output
+```text
+perdeu
+```
+
+Edit Segment 7
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+838489	1641	7	14	7	15	[""]	[":"]	undo
+838717	1645	7	13	7	14	[""]	[":"]	undo
+838966	1649	7	13	7	13	["0"]	[""]	undo
+839200	1653	7	15	7	15	[" or jogador[1]"]	[""]	undo
+
+Local Run 12
+- event_time_delta_ms: 843275
+- raw_log_line: 1660
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+Run Output
+```text
+perdeu
+```
+
+Local Run 13
+- event_time_delta_ms: 855373
+- raw_log_line: 1662
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+Run Output
+```text
+Ganhou R$ 1.000,00
+```
+
+Local Run 14
+- event_time_delta_ms: 863457
+- raw_log_line: 1664
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+Run Output
+```text
+Ganhou R$ 1.000,00
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 872659
+- raw_log_line: 1665
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-01-29T20:31:47.895000
+
+Execution Result
+
+- submitted_at: 2024-01-29 20:32:09
+- grade: 0.0
+- pass_count: 2
+- failed_test_indices_0idx: [2]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "55\n55"
+    expected: "Ganhou R$ 100.000,00"
+    actual: "Ganhou R$ 100.000,00"
+  - test_index_0idx: 1 [PASS]
+    input: "78\n89"
+    expected: "Ganhou R$ 1.000,00"
+    actual: "Ganhou R$ 1.000,00"
+  - test_index_0idx: 2 [FAIL]
+    input: "12\n56"
+    expected: "Perdeu"
+    actual: "Ganhou R$ 1.000,00"
+
+Attempt Start Code
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1667
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+Run Output
+```text
+Ganhou R$ 1.000,00
+```
+
+Local Run 2
+- event_time_delta_ms: 8287
+- raw_log_line: 1668
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("perdeu")
+```
+Run Output
+```text
+
+```
+
+Edit Segment 1
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+11793	1672	10	8	10	9	[""]	["p"]	+delete
+12545	1678	10	8	10	8	["P"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 16287
+- raw_log_line: 1682
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("Perdeu")
+```
+Run Output
+```text
+
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 21493
+- raw_log_line: 1683
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("Perdeu")
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-01-29T20:32:57.846000
+
+Execution Result
+
+- submitted_at: 2024-01-29 20:34:10
+- grade: 0.0
+- pass_count: 2
+- failed_test_indices_0idx: [1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "55\n55"
+    expected: "Ganhou R$ 100.000,00"
+    actual: "Ganhou R$ 100.000,00"
+  - test_index_0idx: 1 [FAIL]
+    input: "78\n89"
+    expected: "Ganhou R$ 1.000,00"
+    actual: "Perdeu"
+  - test_index_0idx: 2 [PASS]
+    input: "12\n56"
+    expected: "Perdeu"
+    actual: "Perdeu"
+
+Attempt Start Code
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("Perdeu")
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1687
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("Perdeu")
+```
+Run Output
+```text
+
+```
+
+Local Run 2
+- event_time_delta_ms: 10033
+- raw_log_line: 1689
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif jogador[0] or jogador[1] in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("Perdeu")
+```
+Run Output
+```text
+Ganhou R$ 100.000,00
+```
+
+Edit Segment 1
+- raw_change_event_count: 6
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+27971	1700	7	16	7	16	["in loteria"]	[""]	paste
+28371	1705	7	26	7	26	[" "]	[""]	+input
+44249	1710	7	16	7	26	[""]	["in loteria"]	+delete
+44807	1714	7	15	7	16	[""]	[" "]	+delete
+47299	1750	7	5	7	5	["("]	[""]	+input
+49190	1757	7	30	7	30	[")"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 53952
+- raw_log_line: 1762
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif (jogador[0] or jogador[1]) in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("Perdeu")
+```
+Run Output
+```text
+Ganhou R$ 1.000,00
+```
+
+Local Run 4
+- event_time_delta_ms: 64210
+- raw_log_line: 1769
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif (jogador[0] or jogador[1]) in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("Perdeu")
+```
+Run Output
+```text
+Perdeu
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 72943
+- raw_log_line: 1770
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+jogador = input()
+loteria = input()
+
+if jogador == loteria:
+	print("Ganhou R$ 100.000,00")
+elif jogador[::-1] == loteria:
+	print("Ganhou R$ 50.000,00")
+elif (jogador[0] or jogador[1]) in loteria:
+	print("Ganhou R$ 1.000,00")
+else:
+	print("Perdeu")
+```

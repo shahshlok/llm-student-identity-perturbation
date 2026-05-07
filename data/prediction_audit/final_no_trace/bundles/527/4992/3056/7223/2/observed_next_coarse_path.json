@@ -1,0 +1,52 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "527",
+    "assessment_id": "4992",
+    "exercise_id": "3056",
+    "student_id": "7223",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "Area = float(input(\"Area em ha:\"))\nif 0<Area<=10000:\n\tCusto = 6\n\tFertilizante = 100\nelif 10000<Area<=20000:\n\tCusto = 5.5\n\tFertilizante = 150\nelif 20000<Area<=30000:\n\tCusto = 5\n\tFertilizante = 200\nelif 30000<Area:\n\tCusto = 4.5\n\tFertilizante = 250\n\t\nValor = (round(float(Area*Custo+Fertilizante),2))\n\nprint(Valor)",
+    "coarse_path_steps": [
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 14,
+        "target_end_line_0idx": 15
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 14,
+        "target_end_line_0idx": 14
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 14,
+        "target_end_line_0idx": 14
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

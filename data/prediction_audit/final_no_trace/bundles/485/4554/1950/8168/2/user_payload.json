@@ -1,0 +1,138 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4554",
+    "assessment_title": "Extra 3 - Condicionais Encadeados (if/elif)",
+    "exercise_id": "1950",
+    "student_id": "8168",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2022-2/485/users/8168/executions/4554_1950.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2022-2/485/users/8168/codemirror/4554_1950.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-04-28 09:10:21",
+        "grade": 0.0,
+        "pass_count": 2,
+        "failed_test_indices_0idx": [
+          2
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": true,
+            "input": "20\n9",
+            "expected": "Temperatura invalida",
+            "actual": "Temperatura invalida"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": true,
+            "input": "-5\n4",
+            "expected": "Velocidade invalida",
+            "actual": "Velocidade invalida"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "-5\n50",
+            "expected": "-14.9563",
+            "actual": "-15"
+          }
+        ]
+      },
+      "submitted_code": "temp=float(input(\"\"))\nvv= float(input(\"\"))\n\n\nif(temp<-50 or temp>10):\n\tprint(\"Temperatura invalida\")\nelif(vv<4.8):\n\tprint(\"Velocidade invalida\")\nelse:\n\tprint(round(13.2+0.6215*temp-(11.37*vv**0.16)+(0.3965*temp*vv**0.16)))\n\t\t"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-04-28 09:10:29",
+        "grade": 0.0,
+        "pass_count": 2,
+        "failed_test_indices_0idx": [
+          2
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": true,
+            "input": "20\n9",
+            "expected": "Temperatura invalida",
+            "actual": "Temperatura invalida"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": true,
+            "input": "-5\n4",
+            "expected": "Velocidade invalida",
+            "actual": "Velocidade invalida"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "-5\n50",
+            "expected": "-14.9563",
+            "actual": ""
+          }
+        ]
+      },
+      "submitted_code": "temp=float(input(\"\"))\nvv= float(input(\"\"))\n\n\nif(temp<-50 or temp>10):\n\tprint(\"Temperatura invalida\")\nelif(vv<4.8):\n\tprint(\"Velocidade invalida\")\nelse:\n\tprint(round(13.2+0.6215*temp-(11.37*vv**0.16)+(0.3965*temp*vv**0.16 , 4)))\n\t\t"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-04-28 09:12:24",
+        "grade": 0.0,
+        "pass_count": 2,
+        "failed_test_indices_0idx": [
+          2
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": true,
+            "input": "20\n9",
+            "expected": "Temperatura invalida",
+            "actual": "Temperatura invalida"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": true,
+            "input": "-5\n4",
+            "expected": "Velocidade invalida",
+            "actual": "Velocidade invalida"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "-5\n50",
+            "expected": "-14.9563",
+            "actual": ""
+          }
+        ]
+      },
+      "submitted_code": "temp=float(input(\"\"))\nvv= float(input(\"\"))\n\n\nif(temp<-50 or temp>10):\n\tprint(\"Temperatura invalida\")\nelif(vv<4.8):\n\tprint(\"Velocidade invalida\")\nelse:\n\tprint(round(13.2+(0.6215*temp)-(11.37*(vv**0.16))+(0.3965*temp*(vv**0.16) , 4)))\n\t\t"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

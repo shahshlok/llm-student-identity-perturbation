@@ -1,0 +1,77 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "563",
+    "assessment_id": "5288",
+    "exercise_id": "6715",
+    "student_id": "9217",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "x = int(input(\"VALOR DE X: \"))\ny = int(input(\"VALOR DE Y: \"))\n\nif ( x / y ):\n\tprint(x % y, \"nao\")\nelse :\n\tprint(x // y, \"sim\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "x = int(input(\"VALOR DE X: \"))\ny = int(input(\"VALOR DE Y: \"))\n\nif ( x / y == 0):\n\tprint(x // y, \"sim\")\nelse :\n\tprint(x % y, \"nao\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "10\n5",
+        "expected": "2\nsim",
+        "actual": "0 nao"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "9\n2",
+        "expected": "1 \nnao",
+        "actual": "1 nao"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "0\n12",
+        "expected": "0\nsim",
+        "actual": "0 sim"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 5,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 6,
+        "end_line_0idx": 6,
+        "edit_kind": "delete"
+      }
+    ],
+    "changed_line_count_in_next_code": 4,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 6
+      }
+    ]
+  }
+}

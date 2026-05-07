@@ -1,0 +1,141 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "594",
+    "assessment_id": "5746",
+    "assessment_title": "Lista 3: Exercícios em Sala",
+    "exercise_id": "6104",
+    "student_id": "8647",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2024-1/594/users/8647/executions/5746_6104.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2024-1/594/users/8647/codemirror/5746_6104.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2024-05-30 19:42:02",
+        "grade": 33.0,
+        "pass_count": 1,
+        "failed_test_indices_0idx": [
+          1,
+          2
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": true,
+            "input": "0.57",
+            "expected": "1",
+            "actual": "1"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1.99",
+            "expected": "1.4107",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "2.01",
+            "expected": "1.262",
+            "actual": ""
+          }
+        ]
+      },
+      "submitted_code": "x = float(input(\"Digite x: \"))\n\nif x <= 0:\n\tconta = 0\n\nelif 0 < x <= 1:\n\tconta = 1\n\nelif 1 < x <= 2:\n\tconta = sqrt(x)\n\nelif x > 2:\n\tconta = sqrt**3(x)\n\t\nprint(conta)"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2024-05-30 19:42:18",
+        "grade": 33.0,
+        "pass_count": 1,
+        "failed_test_indices_0idx": [
+          1,
+          2
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": true,
+            "input": "0.57",
+            "expected": "1",
+            "actual": "1"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1.99",
+            "expected": "1.4107",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "2.01",
+            "expected": "1.262",
+            "actual": ""
+          }
+        ]
+      },
+      "submitted_code": "x = float(input(\"Digite x: \"))\n\nif x <= 0:\n\tconta = 0\n\nelif 0 < x <= 1:\n\tconta = 1\n\nelif 1 < x <= 2:\n\tconta = sqrt(x)\n\nelif x > 2:\n\tconta = sqrt**3(x)\n\t\nprint(round(conta, 2))"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2024-05-30 19:43:03",
+        "grade": 33.0,
+        "pass_count": 1,
+        "failed_test_indices_0idx": [
+          1,
+          2
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": true,
+            "input": "0.57",
+            "expected": "1",
+            "actual": "1"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1.99",
+            "expected": "1.4107",
+            "actual": "1.41"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "2.01",
+            "expected": "1.262",
+            "actual": ""
+          }
+        ]
+      },
+      "submitted_code": "from math import *\n\nx = float(input(\"Digite x: \"))\n\nif x <= 0:\n\tconta = 0\n\nelif 0 < x <= 1:\n\tconta = 1\n\nelif 1 < x <= 2:\n\tconta = sqrt(x)\n\nelif x > 2:\n\tconta = sqrt**3(x)\n\t\nprint(round(conta, 2))"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "530",
+    "assessment_id": "4900",
+    "exercise_id": "2895",
+    "student_id": "8737",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "var_um= float(input(\"quantas unidades de jogos serao compradas? \"))\nvar= float(input(\"qual o valor unitario de cada jogo?\"))\nfrete = 43.50\ntotal = (var_um * var) + frete\nprint(total)",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "var_um= float(input(\"quantas unidades de jogos serao compradas? \"))\nvar= float(input(\"qual o valor unitario de cada jogo?\"))\nfrete = 40.0\ntotal = (var_um * var) + frete\nprint(total)",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "12\n45.0\n78.0",
+        "expected": "618.0",
+        "actual": "580.0"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "10\n67.0\n95.0",
+        "expected": "765.0",
+        "actual": "710.0"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "246\n975.0\n321.0",
+        "expected": "240171.0",
+        "actual": "239890.0"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 2,
+        "end_line_0idx": 2,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 2,
+        "end_line_0idx": 2
+      }
+    ]
+  }
+}

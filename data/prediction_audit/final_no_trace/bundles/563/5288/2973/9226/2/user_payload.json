@@ -1,0 +1,144 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "563",
+    "assessment_id": "5288",
+    "assessment_title": "Lab 2: Estrutura Condicional Composta",
+    "exercise_id": "2973",
+    "student_id": "9226",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2023-2/563/users/9226/executions/5288_2973.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2023-2/563/users/9226/codemirror/5288_2973.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2024-01-17 13:15:40",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n60\n120",
+            "expected": "7202\nOK",
+            "actual": "7202.0\n ACIMA"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n41\n109",
+            "expected": "4470\nOK",
+            "actual": "4470.0\n ACIMA"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "3\n120\n60",
+            "expected": "7203\nACIMA",
+            "actual": "7203.0\n ACIMA"
+          }
+        ]
+      },
+      "submitted_code": "#o programa quer ler a posicao final do objeto:\n# informacoes:\nposicao_inicial_m = float(input(\" digite o posicao inicial de m: \"))\nvelocidade_ms = float(input(\" digite o velocidade em metros por segundo do objeto: \"))\ntempo_t = float(input(\" digite a velociade do objeto: \"))\nlim = 100\n\nif posicao_inicial_m == 100: \n\tposicao_final_m = posicao_inicial_m + (velociade_ms * tempo_t)\n\tmensagem = \" OK \"\n\nelse:\n\tposicao_final_m = posicao_inicial_m + (velocidade_ms * tempo_t)\n\tmensagem = \" ACIMA \"\n\t\nprint(round( posicao_final_m,2))\nprint(mensagem)"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2024-01-17 13:16:13",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n60\n120",
+            "expected": "7202\nOK",
+            "actual": "7202.0\nACIMA"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n41\n109",
+            "expected": "4470\nOK",
+            "actual": "4470.0\nACIMA"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "3\n120\n60",
+            "expected": "7203\nACIMA",
+            "actual": "7203.0\nACIMA"
+          }
+        ]
+      },
+      "submitted_code": "#o programa quer ler a posicao final do objeto:\n# informacoes:\nposicao_inicial_m = float(input(\" digite o posicao inicial de m: \"))\nvelocidade_ms = float(input(\" digite o velocidade em metros por segundo do objeto: \"))\ntempo_t = float(input(\" digite a velociade do objeto: \"))\nlim = 100\n\nif posicao_inicial_m == 100: \n\tposicao_final_m = posicao_inicial_m + (velociade_ms * tempo_t)\n\tmensagem = \"OK\"\n\nelse:\n\tposicao_final_m = posicao_inicial_m + (velocidade_ms * tempo_t)\n\tmensagem = \"ACIMA\"\n\t\nprint(round( posicao_final_m,2))\nprint(mensagem)"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2024-01-17 13:18:53",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n60\n120",
+            "expected": "7202\nOK",
+            "actual": "7202.0\nacima"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n41\n109",
+            "expected": "4470\nOK",
+            "actual": "4470.0\nacima"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "3\n120\n60",
+            "expected": "7203\nACIMA",
+            "actual": "7203.0\nacima"
+          }
+        ]
+      },
+      "submitted_code": "#o programa quer ler a posicao final do objeto:\n# informacoes:\nposicao_inicial_m = float(input(\" digite o posicao inicial de m: \"))\nvelocidade_ms = float(input(\" digite o velocidade em metros por segundo do objeto: \"))\ntempo_t = float(input(\" digite a velociade do objeto: \"))\nlim = 100\n\nif posicao_inicial_m == 100: \n\tposicao_final_m = posicao_inicial_m + (velociade_ms * tempo_t)\n\tmensagem = \"ok\"\n\nelse:\n\tposicao_final_m = posicao_inicial_m + (velocidade_ms * tempo_t)\n\tmensagem = \"acima\"\n\t\nprint(round( posicao_final_m,2))\nprint(mensagem)"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

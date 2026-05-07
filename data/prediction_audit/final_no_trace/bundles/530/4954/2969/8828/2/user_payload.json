@@ -1,0 +1,144 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "530",
+    "assessment_id": "4954",
+    "assessment_title": "Lab 2 - Estrutura Condicional Composta",
+    "exercise_id": "2969",
+    "student_id": "8828",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/530/users/8828/executions/4954_2969.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2023-1/530/users/8828/codemirror/4954_2969.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-08-22 15:38:56",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n55.50\n100.25",
+            "expected": "130.69",
+            "actual": "156"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n72.65",
+            "expected": "72.65",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "2\n99.99\n120.25",
+            "expected": "190.18",
+            "actual": "220"
+          }
+        ]
+      },
+      "submitted_code": "qtd = int(input(\"1 ou 2: \"))\np = float(input(\"jogo p: \"))\nq = float(input(\"jogo q: \"))\n\nif(qtd==\"1\"):\n\tprint(round(p))\nelse:\n\td = (q-25/100)+p\n\tprint(round(d))\n\t"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-08-22 15:43:49",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n55.50\n100.25",
+            "expected": "130.69",
+            "actual": "75.19"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n72.65",
+            "expected": "72.65",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "2\n99.99\n120.25",
+            "expected": "190.18",
+            "actual": "90.19"
+          }
+        ]
+      },
+      "submitted_code": "q = int(input(\"1 ou 2: \"))\nt = float(input(\"preco: \"))\n\nif(q == 2):\n\tc = float(input(\"preco 2: \"))\n\td = c+-(c*0.25)\n\tprint(round(d,2))\nelse:\n\tprint(round(d,2))"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-08-22 15:44:03",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n55.50\n100.25",
+            "expected": "130.69",
+            "actual": "125.31"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n72.65",
+            "expected": "72.65",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "2\n99.99\n120.25",
+            "expected": "190.18",
+            "actual": "150.31"
+          }
+        ]
+      },
+      "submitted_code": "q = int(input(\"1 ou 2: \"))\nt = float(input(\"preco: \"))\n\nif(q == 2):\n\tc = float(input(\"preco 2: \"))\n\td = c+(c*0.25)\n\tprint(round(d,2))\nelse:\n\tprint(round(d,2))"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

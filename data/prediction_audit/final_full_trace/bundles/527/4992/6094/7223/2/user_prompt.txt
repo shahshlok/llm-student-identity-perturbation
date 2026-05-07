@@ -1,0 +1,1086 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 527
+- assessment_id: 4992
+- assessment_title: Lab 3 - Estrutura Condicional Encadeada
+- exercise_id: 6094
+- student_id: 7223
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-09-14T15:17:11.798000
+
+Execution Result
+
+- submitted_at: 2023-09-14 15:22:37
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "200.0\n3"
+    expected: "R$ 450.0"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "400.0\n4"
+    expected: "R$ 1040.0"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "1200\n1"
+    expected: "R$ 1200.0"
+    actual: ""
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 220
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	9	0	0	0	0	["V"]	[""]	+input
+252	15	0	1	0	1	["a"]	[""]	+input
+310	18	0	2	0	2	["l"]	[""]	+input
+502	23	0	3	0	3	["o"]	[""]	+input
+628	27	0	4	0	4	["r"]	[""]	+input
+974	31	0	5	0	5	[" "]	[""]	+input
+1468	34	0	5	0	6	[""]	[" "]	+delete
+2250	41	0	5	0	5	["P"]	[""]	+input
+2473	47	0	6	0	6	["l"]	[""]	+input
+2568	51	0	7	0	7	["a"]	[""]	+input
+3586	54	0	7	0	8	[""]	["a"]	+delete
+3710	58	0	6	0	7	[""]	["l"]	+delete
+3893	62	0	5	0	6	[""]	["P"]	+delete
+4646	68	0	5	0	5	["_"]	[""]	+input
+5192	74	0	6	0	6	["P"]	[""]	+input
+5370	81	0	7	0	7	["l"]	[""]	+input
+5467	85	0	8	0	8	["a"]	[""]	+input
+6180	89	0	9	0	9	["n"]	[""]	+input
+6211	92	0	10	0	10	["o"]	[""]	+input
+8160	100	0	11	0	11	[" "]	[""]	+input
+8285	104	0	12	0	12	["="]	[""]	+input
+8393	108	0	13	0	13	[" "]	[""]	+input
+9596	112	0	14	0	14	["f"]	[""]	+input
+9675	115	0	15	0	15	["l"]	[""]	+input
+9857	120	0	16	0	16	["o"]	[""]	+input
+10029	124	0	17	0	17	["a"]	[""]	+input
+10178	128	0	18	0	18	["t"]	[""]	+input
+11055	133	0	19	0	19	["()"]	[""]	+input
+12240	139	0	20	0	20	["i"]	[""]	+input
+12434	143	0	21	0	21	["n"]	[""]	+input
+12671	147	0	22	0	22	["p"]	[""]	+input
+12929	151	0	23	0	23	["u"]	[""]	+input
+13327	155	0	24	0	24	["t"]	[""]	+input
+13688	160	0	25	0	25	["()"]	[""]	+input
+16391	168	0	26	0	26	["V"]	[""]	+input
+16701	174	0	27	0	27	["a"]	[""]	+input
+17110	178	0	28	0	28	["l"]	[""]	+input
+17290	182	0	29	0	29	["o"]	[""]	+input
+17368	185	0	30	0	30	["r"]	[""]	+input
+17636	189	0	30	0	31	[""]	["r"]	+delete
+17768	193	0	29	0	30	[""]	["o"]	+delete
+17939	197	0	28	0	29	[""]	["l"]	+delete
+18135	201	0	27	0	28	[""]	["a"]	+delete
+19131	207	0	26	0	27	[""]	["V"]	+delete
+19658	213	0	26	0	26	["\"\""]	[""]	+input
+20463	221	0	27	0	27	["V"]	[""]	+input
+20724	227	0	28	0	28	["a"]	[""]	+input
+20857	231	0	29	0	29	["l"]	[""]	+input
+21137	235	0	30	0	30	["o"]	[""]	+input
+21232	238	0	31	0	31	["r"]	[""]	+input
+21378	243	0	32	0	32	[" "]	[""]	+input
+21563	247	0	33	0	33	["d"]	[""]	+input
+21613	250	0	34	0	34	["o"]	[""]	+input
+21745	255	0	35	0	35	[" "]	[""]	+input
+22027	261	0	36	0	36	["P"]	[""]	+input
+22230	267	0	37	0	37	["l"]	[""]	+input
+22328	271	0	38	0	38	["a"]	[""]	+input
+22504	275	0	39	0	39	["n"]	[""]	+input
+22545	278	0	40	0	40	["o"]	[""]	+input
+23192	284	0	41	0	41	[":"]	[""]	+input
+24387	289	0	42	0	42	[" "]	[""]	+input
+37881	300	0	46	0	46	["",""]	[""]	+input
+38879	306	1	0	1	0	[" = float(input("]	[""]	paste
+40687	311	1	7	1	8	[""]	["t"]	+delete
+40892	315	1	6	1	7	[""]	["a"]	+delete
+41005	319	1	5	1	6	[""]	["o"]	+delete
+41186	323	1	4	1	5	[""]	["l"]	+delete
+41618	327	1	3	1	4	[""]	["f"]	+delete
+42029	332	1	3	1	3	["i"]	[""]	+input
+42219	336	1	4	1	4	["n"]	[""]	+input
+42366	339	1	5	1	5	["t"]	[""]	+input
+48873	381	1	0	1	0	["M"]	[""]	+input
+49147	387	1	1	1	1	["e"]	[""]	+input
+49694	391	1	2	1	2	["m"]	[""]	+input
+49903	395	1	3	1	3	["b"]	[""]	+input
+49939	398	1	4	1	4	["r"]	[""]	+input
+50017	402	1	5	1	5	["o"]	[""]	+input
+50402	407	1	6	1	6	["s"]	[""]	+input
+52713	413	1	20	1	20	["\"\""]	[""]	+input
+54018	421	1	21	1	21	["N"]	[""]	+input
+55828	427	1	22	1	22	["u"]	[""]	+input
+56116	431	1	23	1	23	["m"]	[""]	+input
+56166	435	1	24	1	24	["e"]	[""]	+input
+56397	438	1	25	1	25	["r"]	[""]	+input
+57033	443	1	26	1	26	["o"]	[""]	+input
+57261	447	1	27	1	27	[" "]	[""]	+input
+57332	450	1	28	1	28	["d"]	[""]	+input
+57441	454	1	29	1	29	["e"]	[""]	+input
+57584	458	1	30	1	30	[" "]	[""]	+input
+57792	465	1	31	1	31	["M"]	[""]	+input
+58081	471	1	32	1	32	["e"]	[""]	+input
+58205	475	1	33	1	33	["n"]	[""]	+input
+58557	478	1	33	1	34	[""]	["n"]	+delete
+58764	483	1	33	1	33	["m"]	[""]	+input
+59093	487	1	34	1	34	["b"]	[""]	+input
+59196	490	1	35	1	35	["r"]	[""]	+input
+59217	494	1	36	1	36	["o"]	[""]	+input
+59412	499	1	37	1	37	["s"]	[""]	+input
+60028	504	1	38	1	38	[":"]	[""]	+input
+60189	509	1	39	1	39	[" "]	[""]	+input
+62257	515	1	41	1	41	[")"]	[""]	+input
+62420	519	1	42	1	42	[")"]	[""]	+input
+62935	523	1	43	1	43	["",""]	[""]	+input
+75401	529	2	0	2	0	[" "]	[""]	+input
+76545	532	2	0	2	1	[""]	[" "]	+delete
+76687	536	2	0	2	0	["",""]	[""]	+input
+77673	542	3	0	3	0	["i"]	[""]	+input
+77746	546	3	1	3	1	["f"]	[""]	+input
+78402	550	3	2	3	2	[" "]	[""]	+input
+80570	555	3	3	3	3	["M"]	[""]	+input
+80795	562	3	4	3	4	["e"]	[""]	+input
+80945	566	3	5	3	5	["m"]	[""]	+input
+81581	570	3	6	3	6	["b"]	[""]	+input
+81633	573	3	7	3	7	["r"]	[""]	+input
+81699	577	3	8	3	8	["o"]	[""]	+input
+81917	582	3	9	3	9	["s"]	[""]	+input
+90835	586	3	10	3	10	["="]	[""]	+input
+90971	590	3	11	3	11	["="]	[""]	+input
+91032	593	3	12	3	12	["1"]	[""]	+input
+92507	597	3	13	3	13	["",""]	[""]	+input
+94061	603	4	0	4	0	[" "]	[""]	+input
+96347	609	4	1	4	1	["D"]	[""]	+input
+103054	615	4	2	4	2	["e"]	[""]	+input
+103754	619	4	3	4	3	["s"]	[""]	+input
+103927	623	4	4	4	4	["c"]	[""]	+input
+104103	627	4	5	4	5	["o"]	[""]	+input
+104366	631	4	6	4	6	["n"]	[""]	+input
+104511	635	4	7	4	7	["t"]	[""]	+input
+104626	638	4	8	4	8	["r"]	[""]	+input
+104678	642	4	9	4	9	["o"]	[""]	+input
+105280	646	4	9	4	10	[""]	["o"]	+delete
+105476	650	4	8	4	9	[""]	["r"]	+delete
+106309	655	4	8	4	8	["o"]	[""]	+input
+107730	659	4	9	4	9	[" "]	[""]	+input
+108106	663	4	10	4	10	["="]	[""]	+input
+108263	667	4	11	4	11	[" "]	[""]	+input
+110197	671	4	12	4	12	["0"]	[""]	+input
+128562	674	4	13	4	13	["",""]	[""]	+input
+128564	675	5	0	5	0	["\t"]	[""]	+input
+135536	689	5	0	5	0	["if Membros==1"," Desconto = 0","\t"]	[""]	paste
+138527	699	5	0	5	0	["e"]	[""]	+input
+138589	702	5	1	5	1	["l"]	[""]	+input
+144213	710	5	14	5	15	[""]	["1"]	+delete
+144367	715	5	14	5	14	["2"]	[""]	+input
+147979	723	6	13	6	13	["."]	[""]	+input
+148334	727	6	14	6	14	["1"]	[""]	+input
+148414	730	6	15	6	15	["5"]	[""]	+input
+153399	743	7	0	7	0	["elif Membros==2"," Desconto = 0.15"]	[""]	paste
+156113	751	7	14	7	15	[""]	["2"]	+delete
+156280	755	7	14	7	14	["3"]	[""]	+input
+158369	762	8	14	8	15	[""]	["1"]	+delete
+158504	766	8	14	8	14	["2"]	[""]	+input
+163977	778	8	18	8	18	["",""]	[""]	+input
+163978	779	9	0	9	0	["\t"]	[""]	+input
+164598	784	9	0	9	1	[""]	["\t"]	+delete
+165211	789	9	0	9	0	["elif Membros==2"," Desconto = 0.15"]	[""]	paste
+167003	798	10	15	10	15	["3"]	[""]	+input
+167547	801	10	15	10	16	[""]	["3"]	+delete
+167690	805	10	14	10	15	[""]	["1"]	+delete
+167792	809	10	14	10	14	["3"]	[""]	+input
+168768	816	9	14	9	15	[""]	["2"]	+delete
+169824	821	9	14	9	14	["4"]	[""]	+input
+174111	830	9	12	9	13	[""]	["="]	+delete
+175446	836	9	12	9	12	[">"]	[""]	+input
+184773	852	10	16	10	16	["",""]	[""]	+input
+184774	853	11	0	11	0	["\t"]	[""]	+input
+185694	858	11	1	11	1	["",""]	[""]	+input
+185695	859	12	0	12	0	["\t"]	[""]	+input
+185977	864	12	0	12	1	[""]	["\t"]	+delete
+186704	869	12	0	12	0	["p"]	[""]	+input
+186890	873	12	1	12	1	["r"]	[""]	+input
+187053	876	12	2	12	2	["i"]	[""]	+input
+187291	881	12	3	12	3	["n"]	[""]	+input
+187349	885	12	4	12	4	["t"]	[""]	+input
+187798	890	12	5	12	5	["()"]	[""]	+input
+188560	896	12	6	12	6	["m"]	[""]	+input
+188658	899	12	7	12	7	["e"]	[""]	+input
+189043	903	12	7	12	8	[""]	["e"]	+delete
+189216	907	12	6	12	7	[""]	["m"]	+delete
+189386	914	12	6	12	6	["M"]	[""]	+input
+189689	920	12	7	12	7	["e"]	[""]	+input
+190976	924	12	8	12	8	["n"]	[""]	+input
+191110	928	12	9	12	9	["b"]	[""]	+input
+191138	931	12	10	12	10	["r"]	[""]	+input
+191312	936	12	11	12	11	["o"]	[""]	+input
+192640	939	12	11	12	12	[""]	["o"]	+delete
+193245	943	12	10	12	11	[""]	["r"]	+delete
+193494	947	12	9	12	10	[""]	["b"]	+delete
+194087	951	12	8	12	9	[""]	["n"]	+delete
+194347	956	12	8	12	8	["m"]	[""]	+input
+194569	960	12	9	12	9	["b"]	[""]	+input
+194698	963	12	10	12	10	["r"]	[""]	+input
+194791	967	12	11	12	11	["o"]	[""]	+input
+194917	972	12	12	12	12	["s"]	[""]	+input
+207282	982	3	3	3	3	["i"]	[""]	+input
+207470	986	3	4	3	4	["n"]	[""]	+input
+207556	989	3	5	3	5	["t"]	[""]	+input
+208445	995	3	6	3	6	["("]	[""]	+input
+211340	1027	3	17	3	17	[")"]	[""]	+input
+211824	1033	3	18	3	18	[":"]	[""]	+input
+214156	1039	5	5	5	5	["i"]	[""]	+input
+214345	1043	5	6	5	6	["n"]	[""]	+input
+214450	1047	5	7	5	7	["t"]	[""]	+input
+215432	1052	5	8	5	8	["("]	[""]	+input
+218639	1092	5	19	5	19	[")"]	[""]	+input
+219028	1098	5	20	5	20	[":"]	[""]	+input
+220988	1104	7	5	7	5	["i"]	[""]	+input
+221249	1108	7	6	7	6	["n"]	[""]	+input
+221340	1111	7	7	7	7	["t"]	[""]	+input
+222283	1117	7	8	7	8	["*"]	[""]	+input
+222786	1121	7	8	7	9	[""]	["*"]	+delete
+223279	1127	7	8	7	8	["("]	[""]	+input
+226069	1157	7	19	7	19	[")"]	[""]	+input
+227156	1163	7	20	7	20	[":"]	[""]	+input
+229258	1169	9	5	9	5	["i"]	[""]	+input
+229511	1173	9	6	9	6	["n"]	[""]	+input
+229617	1177	9	7	9	7	["t"]	[""]	+input
+230615	1186	9	8	9	8	["("]	[""]	+input
+232530	1193	9	19	9	19	[")"]	[""]	+input
+233138	1199	9	20	9	20	[":"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 237023
+- raw_log_line: 1205
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Valor_Plano = float(input("Valor do Plano: "))
+Membros = int(input("Numero de Membros: "))
+
+if int(Membros==1):
+ Desconto = 0
+elif int(Membros==2):
+ Desconto = 0.15
+elif int(Membros==3):
+ Desconto = 0.25		
+elif int(Membros>=4):
+ Desconto = 0.35
+	
+print(Membros)
+```
+Run Output
+```text
+
+```
+
+Edit Segment 2
+- raw_change_event_count: 15
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+248255	1209	12	12	12	13	[""]	["s"]	+delete
+248406	1213	12	11	12	12	[""]	["o"]	+delete
+248573	1217	12	10	12	11	[""]	["r"]	+delete
+248756	1221	12	9	12	10	[""]	["b"]	+delete
+248980	1225	12	8	12	9	[""]	["m"]	+delete
+249188	1229	12	7	12	8	[""]	["e"]	+delete
+249983	1233	12	6	12	7	[""]	["M"]	+delete
+250375	1239	12	6	12	6	["D"]	[""]	+input
+250622	1246	12	7	12	7	["e"]	[""]	+input
+250888	1250	12	8	12	8	["s"]	[""]	+input
+251331	1254	12	9	12	9	["c"]	[""]	+input
+251340	1257	12	10	12	10	["o"]	[""]	+input
+251548	1262	12	11	12	11	["n"]	[""]	+input
+251683	1266	12	12	12	12	["t"]	[""]	+input
+252527	1270	12	13	12	13	["o"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 254946
+- raw_log_line: 1275
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Valor_Plano = float(input("Valor do Plano: "))
+Membros = int(input("Numero de Membros: "))
+
+if int(Membros==1):
+ Desconto = 0
+elif int(Membros==2):
+ Desconto = 0.15
+elif int(Membros==3):
+ Desconto = 0.25		
+elif int(Membros>=4):
+ Desconto = 0.35
+	
+print(Desconto)
+```
+Run Output
+```text
+Valor do Plano: 500
+```
+
+Edit Segment 3
+- raw_change_event_count: 59
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+268553	1281	12	1	12	15	[""]	["rint(Desconto)"]	+delete
+268770	1285	12	0	12	1	[""]	["p"]	+delete
+269769	1289	11	1	12	0	[""]	["",""]	+delete
+270439	1294	11	0	11	1	[""]	["\t"]	+delete
+275817	1301	11	0	11	0	["V"]	[""]	+input
+276929	1307	11	1	11	1	["a"]	[""]	+input
+277000	1311	11	2	11	2	["l"]	[""]	+input
+277195	1315	11	3	11	3	["o"]	[""]	+input
+278082	1319	11	4	11	4	["r"]	[""]	+input
+278516	1324	11	5	11	5	["_"]	[""]	+input
+279958	1329	11	6	11	6	["c"]	[""]	+input
+282081	1334	11	7	11	7	["_"]	[""]	+input
+282788	1341	11	8	11	8	["D"]	[""]	+input
+283341	1347	11	9	11	9	["e"]	[""]	+input
+283581	1351	11	10	11	10	["s"]	[""]	+input
+283766	1355	11	11	11	11	["c"]	[""]	+input
+283981	1359	11	12	11	12	["o"]	[""]	+input
+284355	1363	11	13	11	13	["n"]	[""]	+input
+284501	1367	11	14	11	14	["t"]	[""]	+input
+284622	1370	11	15	11	15	["o"]	[""]	+input
+287622	1402	11	7	11	7	["o"]	[""]	+input
+287798	1406	11	8	11	8	["m"]	[""]	+input
+290242	1411	11	18	11	18	[" "]	[""]	+input
+290330	1414	11	19	11	19	["="]	[""]	+input
+290456	1419	11	20	11	20	[" "]	[""]	+input
+294450	1423	10	16	10	16	["",""]	[""]	+input
+297469	1432	12	21	12	21	["V"]	[""]	+input
+297774	1438	12	22	12	22	["a"]	[""]	+input
+297880	1442	12	23	12	23	["l"]	[""]	+input
+298037	1446	12	24	12	24	["o"]	[""]	+input
+298166	1449	12	25	12	25	["r"]	[""]	+input
+299042	1455	12	26	12	26	["_"]	[""]	+input
+300216	1462	12	27	12	27	["P"]	[""]	+input
+300704	1468	12	28	12	28	["l"]	[""]	+input
+300833	1472	12	29	12	29	["a"]	[""]	+input
+300947	1476	12	30	12	30	["n"]	[""]	+input
+301098	1479	12	31	12	31	["o"]	[""]	+input
+304071	1485	12	32	12	32	["*"]	[""]	+input
+304943	1492	12	33	12	33	["M"]	[""]	+input
+305231	1498	12	34	12	34	["e"]	[""]	+input
+305313	1502	12	35	12	35	["m"]	[""]	+input
+305534	1506	12	36	12	36	["b"]	[""]	+input
+305576	1509	12	37	12	37	["r"]	[""]	+input
+305698	1513	12	38	12	38	["o"]	[""]	+input
+305918	1518	12	39	12	39	["s"]	[""]	+input
+309326	1524	12	21	12	21	["("]	[""]	+input
+311453	1531	12	41	12	41	[")"]	[""]	+input
+313695	1537	12	42	12	42	["*"]	[""]	+input
+314458	1541	12	43	12	43	["()"]	[""]	+input
+318704	1554	12	44	12	44	["1"]	[""]	+input
+318786	1557	12	45	12	45	["-"]	[""]	+input
+320669	1564	12	46	12	46	["D"]	[""]	+input
+320967	1570	12	47	12	47	["e"]	[""]	+input
+321108	1574	12	48	12	48	["s"]	[""]	+input
+321333	1578	12	49	12	49	["c"]	[""]	+input
+321483	1582	12	50	12	50	["o"]	[""]	+input
+321773	1586	12	51	12	51	["n"]	[""]	+input
+322315	1590	12	52	12	52	["t"]	[""]	+input
+322420	1593	12	53	12	53	["o"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 325887
+- raw_log_line: 1598
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+Valor_Plano = float(input("Valor do Plano: "))
+Membros = int(input("Numero de Membros: "))
+
+if int(Membros==1):
+ Desconto = 0
+elif int(Membros==2):
+ Desconto = 0.15
+elif int(Membros==3):
+ Desconto = 0.25		
+elif int(Membros>=4):
+ Desconto = 0.35
+
+Valor_com_Desconto = (Valor_Plano*Membros)*(1-Desconto)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-09-14T15:22:53.986000
+
+Execution Result
+
+- submitted_at: 2023-09-14 15:23:55
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "200.0\n3"
+    expected: "R$ 450.0"
+    actual: "450.0"
+  - test_index_0idx: 1 [FAIL]
+    input: "400.0\n4"
+    expected: "R$ 1040.0"
+    actual: "1040.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "1200\n1"
+    expected: "R$ 1200.0"
+    actual: "1200.0"
+
+Attempt Start Code
+```python
+Valor_Plano = float(input("Valor do Plano: "))
+Membros = int(input("Numero de Membros: "))
+
+if int(Membros==1):
+ Desconto = 0
+elif int(Membros==2):
+ Desconto = 0.15
+elif int(Membros==3):
+ Desconto = 0.25		
+elif int(Membros>=4):
+ Desconto = 0.35
+
+Valor_com_Desconto = (Valor_Plano*Membros)*(1-Desconto)
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 24
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1602	12	21	12	21	["r"]	[""]	+input
+65	1605	12	22	12	22	["o"]	[""]	+input
+468	1609	12	22	12	23	[""]	["o"]	+delete
+619	1613	12	21	12	22	[""]	["r"]	+delete
+9263	1622	12	21	12	21	["r"]	[""]	+input
+9384	1625	12	22	12	22	["p"]	[""]	+input
+10020	1629	12	22	12	23	[""]	["p"]	+delete
+10121	1634	12	22	12	22	["o"]	[""]	+input
+10445	1638	12	23	12	23	["u"]	[""]	+input
+10667	1642	12	24	12	24	["n"]	[""]	+input
+10780	1645	12	25	12	25	["d"]	[""]	+input
+11754	1651	12	26	12	26	["("]	[""]	+input
+12534	1656	12	27	12	27	["f"]	[""]	+input
+12679	1659	12	28	12	28	["l"]	[""]	+input
+12807	1664	12	29	12	29	["o"]	[""]	+input
+12950	1668	12	30	12	30	["a"]	[""]	+input
+13005	1672	12	31	12	31	["t"]	[""]	+input
+14283	1682	12	32	12	32	["("]	[""]	+input
+17381	1701	12	67	12	67	[")"]	[""]	+input
+17996	1705	12	68	12	68	[")"]	[""]	+input
+18322	1709	12	69	12	69	[")"]	[""]	+input
+18848	1713	12	69	12	70	[""]	[")"]	+delete
+23424	1721	12	68	12	68	[","]	[""]	+input
+23570	1725	12	69	12	69	["2"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 28678
+- raw_log_line: 1733
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Valor_Plano = float(input("Valor do Plano: "))
+Membros = int(input("Numero de Membros: "))
+
+if int(Membros==1):
+ Desconto = 0
+elif int(Membros==2):
+ Desconto = 0.15
+elif int(Membros==3):
+ Desconto = 0.25		
+elif int(Membros>=4):
+ Desconto = 0.35
+
+Valor_com_Desconto = round(float((Valor_Plano*Membros)*(1-Desconto)),2)
+```
+Run Output
+```text
+Valor do Plano: 500
+Numero de Membros: 5
+0.35
+```
+
+Edit Segment 2
+- raw_change_event_count: 27
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+41504	1738	12	71	12	71	["",""]	[""]	+input
+42518	1744	13	0	13	0	["p"]	[""]	+input
+42648	1747	13	1	13	1	["r"]	[""]	+input
+42785	1752	13	2	13	2	["i"]	[""]	+input
+42958	1756	13	3	13	3	["n"]	[""]	+input
+43044	1760	13	4	13	4	["t"]	[""]	+input
+44039	1765	13	5	13	5	["()"]	[""]	+input
+45321	1773	13	6	13	6	["C"]	[""]	+input
+46235	1778	13	6	13	7	[""]	["C"]	+delete
+46554	1785	13	6	13	6	["V"]	[""]	+input
+47059	1791	13	7	13	7	["a"]	[""]	+input
+47166	1794	13	8	13	8	["l"]	[""]	+input
+47318	1799	13	9	13	9	["o"]	[""]	+input
+47421	1802	13	10	13	10	["r"]	[""]	+input
+48342	1810	13	11	13	11	["_"]	[""]	+input
+49247	1815	13	12	13	12	["c"]	[""]	+input
+49307	1818	13	13	13	13	["o"]	[""]	+input
+49489	1823	13	14	13	14	["m"]	[""]	+input
+50127	1828	13	15	13	15	["_"]	[""]	+input
+50819	1834	13	16	13	16	["D"]	[""]	+input
+51090	1841	13	17	13	17	["e"]	[""]	+input
+51251	1845	13	18	13	18	["s"]	[""]	+input
+51390	1848	13	19	13	19	["c"]	[""]	+input
+51512	1852	13	20	13	20	["o"]	[""]	+input
+51657	1857	13	21	13	21	["n"]	[""]	+input
+51890	1861	13	22	13	22	["t"]	[""]	+input
+52016	1865	13	23	13	23	["o"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 58652
+- raw_log_line: 1873
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Valor_Plano = float(input("Valor do Plano: "))
+Membros = int(input("Numero de Membros: "))
+
+if int(Membros==1):
+ Desconto = 0
+elif int(Membros==2):
+ Desconto = 0.15
+elif int(Membros==3):
+ Desconto = 0.25		
+elif int(Membros>=4):
+ Desconto = 0.35
+
+Valor_com_Desconto = round(float((Valor_Plano*Membros)*(1-Desconto)),2)
+print(Valor_com_Desconto)
+```
+Run Output
+```text
+Valor do Plano: 120
+Numero de Membros: 3
+270.0
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 61553
+- raw_log_line: 1874
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+Valor_Plano = float(input("Valor do Plano: "))
+Membros = int(input("Numero de Membros: "))
+
+if int(Membros==1):
+ Desconto = 0
+elif int(Membros==2):
+ Desconto = 0.15
+elif int(Membros==3):
+ Desconto = 0.25		
+elif int(Membros>=4):
+ Desconto = 0.35
+
+Valor_com_Desconto = round(float((Valor_Plano*Membros)*(1-Desconto)),2)
+print(Valor_com_Desconto)
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-09-14T15:24:44.996000
+
+Execution Result
+
+- submitted_at: 2023-09-14 15:34:01
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "200.0\n3"
+    expected: "R$ 450.0"
+    actual: "450.0"
+  - test_index_0idx: 1 [FAIL]
+    input: "400.0\n4"
+    expected: "R$ 1040.0"
+    actual: "1040.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "1200\n1"
+    expected: "R$ 1200.0"
+    actual: "1200.0"
+
+Attempt Start Code
+```python
+Valor_Plano = float(input("Valor do Plano: "))
+Membros = int(input("Numero de Membros: "))
+
+if int(Membros==1):
+ Desconto = 0
+elif int(Membros==2):
+ Desconto = 0.15
+elif int(Membros==3):
+ Desconto = 0.25		
+elif int(Membros>=4):
+ Desconto = 0.35
+
+Valor_com_Desconto = round(float((Valor_Plano*Membros)*(1-Desconto)),2)
+print(Valor_com_Desconto)
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1887
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Valor_Plano = float(input("Valor do Plano: "))
+Membros = int(input("Numero de Membros: "))
+
+if int(Membros==1):
+ Desconto = 0
+elif int(Membros==2):
+ Desconto = 0.15
+elif int(Membros==3):
+ Desconto = 0.25		
+elif int(Membros>=4):
+ Desconto = 0.35
+
+Valor_com_Desconto = round(float((Valor_Plano*Membros)*(1-Desconto)),2)
+print(Valor_com_Desconto)
+```
+Run Output
+```text
+Valor do Plano: 123.45
+Numero de Membros: 4
+320.97
+```
+
+Local Run 2
+- event_time_delta_ms: 11666
+- raw_log_line: 1891
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Valor_Plano = float(input("Valor do Plano: "))
+Membros = int(input("Numero de Membros: "))
+
+if int(Membros==1):
+ Desconto = 0
+elif int(Membros==2):
+ Desconto = 0.15
+elif int(Membros==3):
+ Desconto = 0.25		
+elif int(Membros>=4):
+ Desconto = 0.35
+
+Valor_com_Desconto = round(float((Valor_Plano*Membros)*(1-Desconto)),2)
+print(Valor_com_Desconto)
+```
+Run Output
+```text
+Valor do Plano: 800
+Numero de Membros: 6
+3120.0
+```
+
+Edit Segment 1
+- raw_change_event_count: 82
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+47623	1912	12	0	12	0	["#"]	[""]	+input
+57232	1918	12	72	12	72	["",""]	[""]	+input
+58275	1926	13	0	13	0	["V"]	[""]	+input
+58851	1932	13	1	13	1	["a"]	[""]	+input
+58958	1936	13	2	13	2	["l"]	[""]	+input
+59181	1940	13	3	13	3	["o"]	[""]	+input
+59254	1943	13	4	13	4	["r"]	[""]	+input
+59423	1948	13	5	13	5	[" "]	[""]	+input
+59553	1952	13	6	13	6	["d"]	[""]	+input
+59634	1955	13	7	13	7	["o"]	[""]	+input
+59808	1960	13	8	13	8	[" "]	[""]	+input
+60284	1964	13	9	13	9	["d"]	[""]	+input
+60399	1967	13	10	13	10	["e"]	[""]	+input
+60566	1972	13	11	13	11	["s"]	[""]	+input
+60649	1976	13	12	13	12	["c"]	[""]	+input
+60734	1979	13	13	13	13	["o"]	[""]	+input
+60951	1984	13	14	13	14	["n"]	[""]	+input
+61326	1987	13	14	13	15	[""]	["n"]	+delete
+61879	1990	13	13	13	14	[""]	["o"]	+delete
+61886	1993	13	12	13	13	[""]	["c"]	+delete
+61919	1996	13	11	13	12	[""]	["s"]	+delete
+61942	1999	13	10	13	11	[""]	["e"]	+delete
+61974	2002	13	9	13	10	[""]	["d"]	+delete
+62045	2005	13	8	13	9	[""]	[" "]	+delete
+62055	2008	13	7	13	8	[""]	["o"]	+delete
+62208	2012	13	6	13	7	[""]	["d"]	+delete
+62401	2016	13	5	13	6	[""]	[" "]	+delete
+62618	2020	13	4	13	5	[""]	["r"]	+delete
+63949	2025	13	4	13	4	["r"]	[""]	+input
+64748	2029	13	5	13	5	["-"]	[""]	+input
+65208	2033	13	6	13	6	["d"]	[""]	+input
+65220	2036	13	7	13	7	["o"]	[""]	+input
+65609	2040	13	7	13	8	[""]	["o"]	+delete
+65827	2044	13	6	13	7	[""]	["d"]	+delete
+66040	2048	13	5	13	6	[""]	["-"]	+delete
+66692	2054	13	5	13	5	["_"]	[""]	+input
+67025	2059	13	6	13	6	["d"]	[""]	+input
+67080	2062	13	7	13	7	["o"]	[""]	+input
+67720	2068	13	8	13	8	["_"]	[""]	+input
+68346	2074	13	9	13	9	["D"]	[""]	+input
+68672	2081	13	10	13	10	["e"]	[""]	+input
+68814	2085	13	11	13	11	["s"]	[""]	+input
+68961	2089	13	12	13	12	["c"]	[""]	+input
+68971	2092	13	13	13	13	["o"]	[""]	+input
+69312	2097	13	14	13	14	["n"]	[""]	+input
+69410	2101	13	15	13	15	["t"]	[""]	+input
+69538	2105	13	16	13	16	["o"]	[""]	+input
+73247	2109	13	17	13	17	[" "]	[""]	+input
+73321	2112	13	18	13	18	["="]	[""]	+input
+73425	2117	13	19	13	19	[" "]	[""]	+input
+84035	2123	13	20	13	20	["V"]	[""]	+input
+84289	2129	13	21	13	21	["a"]	[""]	+input
+84448	2133	13	22	13	22	["l"]	[""]	+input
+85103	2137	13	23	13	23	["o"]	[""]	+input
+85165	2140	13	24	13	24	["r"]	[""]	+input
+86680	2146	13	25	13	25	["_"]	[""]	+input
+87174	2153	13	26	13	26	["P"]	[""]	+input
+87390	2159	13	27	13	27	["l"]	[""]	+input
+87452	2162	13	28	13	28	["a"]	[""]	+input
+87586	2167	13	29	13	29	["n"]	[""]	+input
+87730	2170	13	30	13	30	["o"]	[""]	+input
+347750	2179	13	31	13	31	["*"]	[""]	+input
+350656	2185	13	32	13	32	["D"]	[""]	+input
+350935	2192	13	33	13	33	["e"]	[""]	+input
+351105	2196	13	34	13	34	["s"]	[""]	+input
+351845	2200	13	35	13	35	["c"]	[""]	+input
+351988	2203	13	36	13	36	["o"]	[""]	+input
+352145	2208	13	37	13	37	["n"]	[""]	+input
+352241	2212	13	38	13	38	["t"]	[""]	+input
+352441	2216	13	39	13	39	["o"]	[""]	+input
+359463	2249	14	0	14	0	["#"]	[""]	+input
+365715	2264	14	26	14	26	["print(Valor_com_Desconto)"]	[""]	paste
+366712	2269	14	26	14	51	[""]	["print(Valor_com_Desconto)"]	undo
+367424	2274	14	26	14	26	["",""]	[""]	+input
+367829	2280	15	0	15	0	["print(Valor_com_Desconto)"]	[""]	paste
+369886	2286	15	15	15	15	["["]	[""]	+input
+370846	2289	15	15	15	16	[""]	["["]	+delete
+371020	2293	15	14	15	15	[""]	["m"]	+delete
+371184	2297	15	13	15	14	[""]	["o"]	+delete
+372305	2301	15	12	15	13	[""]	["c"]	+delete
+372446	2306	15	12	15	12	["d"]	[""]	+input
+372599	2310	15	13	15	13	["o"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 378188
+- raw_log_line: 2315
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Valor_Plano = float(input("Valor do Plano: "))
+Membros = int(input("Numero de Membros: "))
+
+if int(Membros==1):
+ Desconto = 0
+elif int(Membros==2):
+ Desconto = 0.15
+elif int(Membros==3):
+ Desconto = 0.25		
+elif int(Membros>=4):
+ Desconto = 0.35
+
+#Valor_com_Desconto = round(float((Valor_Plano*Membros)*(1-Desconto)),2)
+Valor_do_Desconto = Valor_Plano*Desconto
+#print(Valor_com_Desconto)
+print(Valor_do_Desconto)
+```
+Run Output
+```text
+
+```
+
+Edit Segment 2
+- raw_change_event_count: 54
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+399206	2321	13	20	13	20	["("]	[""]	+input
+401229	2328	13	41	13	41	[")"]	[""]	+input
+402338	2335	13	42	13	42	["M"]	[""]	+input
+402737	2340	13	42	13	43	[""]	["M"]	+delete
+404055	2346	13	42	13	42	["*"]	[""]	+input
+404637	2353	13	43	13	43	["M"]	[""]	+input
+405156	2359	13	44	13	44	["e"]	[""]	+input
+405652	2363	13	45	13	45	["m"]	[""]	+input
+406019	2367	13	46	13	46	["r"]	[""]	+input
+406030	2370	13	47	13	47	["b"]	[""]	+input
+406162	2375	13	48	13	48	["o"]	[""]	+input
+406289	2379	13	49	13	49	["s"]	[""]	+input
+407035	2382	13	49	13	50	[""]	["s"]	+delete
+407192	2386	13	48	13	49	[""]	["o"]	+delete
+407348	2390	13	47	13	48	[""]	["b"]	+delete
+407625	2394	13	46	13	47	[""]	["r"]	+delete
+408409	2399	13	46	13	46	["b"]	[""]	+input
+408576	2402	13	47	13	47	["r"]	[""]	+input
+408589	2406	13	48	13	48	["o"]	[""]	+input
+408731	2411	13	49	13	49	["s"]	[""]	+input
+412240	2417	15	12	15	13	[""]	["d"]	+delete
+412388	2423	15	12	15	12	["c"]	[""]	+input
+413355	2430	15	14	15	14	["m"]	[""]	+input
+422702	2446	14	26	14	26	["",""]	[""]	+input
+423067	2452	15	0	15	0	["#Valor_com_Desconto = round(float((Valor_Plano*Membros)*(1-Desconto)),2)"]	[""]	paste
+425379	2459	15	0	15	1	[""]	["#"]	+delete
+429341	2465	15	55	15	71	[""]	["(1-Desconto)),2)"]	+delete
+429509	2469	15	54	15	55	[""]	["*"]	+delete
+430237	2474	15	54	15	54	["-"]	[""]	+input
+430797	2480	15	55	15	55	["V"]	[""]	+input
+431061	2486	15	56	15	56	["a"]	[""]	+input
+431130	2489	15	57	15	57	["l"]	[""]	+input
+431356	2494	15	58	15	58	["o"]	[""]	+input
+431516	2497	15	59	15	59	["r"]	[""]	+input
+431636	2502	15	60	15	60	[" "]	[""]	+input
+431763	2506	15	61	15	61	["d"]	[""]	+input
+431844	2509	15	62	15	62	["o"]	[""]	+input
+432022	2514	15	63	15	63	[" "]	[""]	+input
+432473	2517	15	63	15	64	[""]	[" "]	+delete
+432605	2521	15	62	15	63	[""]	["o"]	+delete
+432772	2525	15	61	15	62	[""]	["d"]	+delete
+433008	2529	15	60	15	61	[""]	[" "]	+delete
+433875	2535	15	60	15	60	["_"]	[""]	+input
+434199	2540	15	61	15	61	["d"]	[""]	+input
+434270	2543	15	62	15	62	["o"]	[""]	+input
+434957	2549	15	63	15	63	["_"]	[""]	+input
+435283	2555	15	64	15	64	["D"]	[""]	+input
+435589	2562	15	65	15	65	["e"]	[""]	+input
+435746	2566	15	66	15	66	["s"]	[""]	+input
+436599	2570	15	67	15	67	["c"]	[""]	+input
+436654	2574	15	68	15	68	["o"]	[""]	+input
+436848	2578	15	69	15	69	["n"]	[""]	+input
+436932	2581	15	70	15	70	["t"]	[""]	+input
+437088	2586	15	71	15	71	["o"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 481822
+- raw_log_line: 2594
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Valor_Plano = float(input("Valor do Plano: "))
+Membros = int(input("Numero de Membros: "))
+
+if int(Membros==1):
+ Desconto = 0
+elif int(Membros==2):
+ Desconto = 0.15
+elif int(Membros==3):
+ Desconto = 0.25		
+elif int(Membros>=4):
+ Desconto = 0.35
+
+#Valor_com_Desconto = round(float((Valor_Plano*Membros)*(1-Desconto)),2)
+Valor_do_Desconto = (Valor_Plano*Desconto)*Membros
+#print(Valor_com_Desconto)
+Valor_com_Desconto = round(float((Valor_Plano*Membros)-Valor_do_Desconto
+print(Valor_com_Desconto)
+```
+Run Output
+```text
+Valor do Plano: 500
+Numero de Membros: 4
+175.0
+```
+
+Edit Segment 3
+- raw_change_event_count: 24
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+503314	2598	15	17	15	18	[""]	["o"]	+delete
+503367	2602	15	16	15	17	[""]	["t"]	+delete
+503550	2606	15	15	15	16	[""]	["n"]	+delete
+503680	2610	15	14	15	15	[""]	["o"]	+delete
+503868	2614	15	13	15	14	[""]	["c"]	+delete
+504015	2618	15	12	15	13	[""]	["s"]	+delete
+504205	2622	15	11	15	12	[""]	["e"]	+delete
+504376	2626	15	10	15	11	[""]	["D"]	+delete
+504546	2630	15	9	15	10	[""]	["_"]	+delete
+504715	2634	15	8	15	9	[""]	["m"]	+delete
+504924	2638	15	7	15	8	[""]	["o"]	+delete
+505461	2642	15	6	15	7	[""]	["c"]	+delete
+505872	2647	15	6	15	6	["f"]	[""]	+input
+505924	2650	15	7	15	7	["i"]	[""]	+input
+506084	2655	15	8	15	8	["n"]	[""]	+input
+506216	2659	15	9	15	9	["a"]	[""]	+input
+506314	2663	15	10	15	10	["l"]	[""]	+input
+510168	2667	16	13	16	24	[""]	["om_Desconto"]	+delete
+510304	2671	16	12	16	13	[""]	["c"]	+delete
+510908	2676	16	12	16	12	["f"]	[""]	+input
+510992	2680	16	13	16	13	["i"]	[""]	+input
+511184	2684	16	14	16	14	["n"]	[""]	+input
+511365	2688	16	15	16	15	["a"]	[""]	+input
+511543	2692	16	16	16	16	["l"]	[""]	+input
+
+Local Run 5
+- event_time_delta_ms: 516403
+- raw_log_line: 2700
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Valor_Plano = float(input("Valor do Plano: "))
+Membros = int(input("Numero de Membros: "))
+
+if int(Membros==1):
+ Desconto = 0
+elif int(Membros==2):
+ Desconto = 0.15
+elif int(Membros==3):
+ Desconto = 0.25		
+elif int(Membros>=4):
+ Desconto = 0.35
+
+#Valor_com_Desconto = round(float((Valor_Plano*Membros)*(1-Desconto)),2)
+Valor_do_Desconto = (Valor_Plano*Desconto)*Membros
+#print(Valor_com_Desconto)
+Valor_final = round(float((Valor_Plano*Membros)-Valor_do_Desconto
+print(Valor_final)
+```
+Run Output
+```text
+File "main.py", line 17
+print(Valor_com_Desconto)
+SyntaxError: invalid syntax
+```
+
+Edit Segment 4
+- raw_change_event_count: 6
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+536296	2706	15	65	15	65	[")"]	[""]	+input
+536723	2710	15	66	15	66	[")"]	[""]	+input
+537227	2714	15	67	15	67	[")"]	[""]	+input
+538119	2718	15	67	15	68	[""]	[")"]	+delete
+539479	2726	15	66	15	66	[","]	[""]	+input
+539603	2730	15	67	15	67	["2"]	[""]	+input
+
+Local Run 6
+- event_time_delta_ms: 543754
+- raw_log_line: 2737
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Valor_Plano = float(input("Valor do Plano: "))
+Membros = int(input("Numero de Membros: "))
+
+if int(Membros==1):
+ Desconto = 0
+elif int(Membros==2):
+ Desconto = 0.15
+elif int(Membros==3):
+ Desconto = 0.25		
+elif int(Membros>=4):
+ Desconto = 0.35
+
+#Valor_com_Desconto = round(float((Valor_Plano*Membros)*(1-Desconto)),2)
+Valor_do_Desconto = (Valor_Plano*Desconto)*Membros
+#print(Valor_com_Desconto)
+Valor_final = round(float((Valor_Plano*Membros)-Valor_do_Desconto),2)
+print(Valor_final)
+```
+Run Output
+```text
+File "main.py", line 17
+print(Valor_final)
+SyntaxError: invalid syntax
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 556873
+- raw_log_line: 2739
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+Valor_Plano = float(input("Valor do Plano: "))
+Membros = int(input("Numero de Membros: "))
+
+if int(Membros==1):
+ Desconto = 0
+elif int(Membros==2):
+ Desconto = 0.15
+elif int(Membros==3):
+ Desconto = 0.25		
+elif int(Membros>=4):
+ Desconto = 0.35
+
+#Valor_com_Desconto = round(float((Valor_Plano*Membros)*(1-Desconto)),2)
+Valor_do_Desconto = (Valor_Plano*Desconto)*Membros
+#print(Valor_com_Desconto)
+Valor_final = round(float((Valor_Plano*Membros)-Valor_do_Desconto),2)
+print(Valor_final)
+```

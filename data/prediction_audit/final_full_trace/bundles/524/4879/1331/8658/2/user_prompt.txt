@@ -1,0 +1,471 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 524
+- assessment_id: 4879
+- assessment_title: Lab 0 – Primeiros passos com o Python
+- exercise_id: 1331
+- student_id: 8658
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-07-26T19:20:27.439000
+
+Execution Result
+
+- submitted_at: 2023-07-26 19:23:13
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "50"
+    expected: "16\n2"
+    actual: "Moedas dos guerreiros:  16\nMoedas do informante:  2"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 140
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	9	0	0	0	0	["g"]	[""]	+input
+495	13	0	1	0	1	["t"]	[""]	+input
+1678	16	0	1	0	2	[""]	["t"]	+delete
+1861	20	0	0	0	1	[""]	["g"]	+delete
+2695	25	0	0	0	0	["g"]	[""]	+input
+4031	29	0	1	0	1	[" "]	[""]	+input
+4545	33	0	2	0	2	["="]	[""]	+input
+4783	37	0	3	0	3	[" "]	[""]	+input
+4911	41	0	4	0	4	["3"]	[""]	+input
+5662	44	0	5	0	5	["",""]	[""]	+input
+7929	50	1	0	1	0	["m"]	[""]	+input
+8095	54	1	1	1	1	[" "]	[""]	+input
+8361	58	1	2	1	2	["="]	[""]	+input
+8595	62	1	3	1	3	[" "]	[""]	+input
+9346	66	1	4	1	4	["5"]	[""]	+input
+9795	70	1	5	1	5	["0"]	[""]	+input
+14579	74	1	6	1	6	[" "]	[""]	+input
+15614	77	1	6	1	7	[""]	[" "]	+delete
+15830	81	1	6	1	6	["",""]	[""]	+input
+19879	87	2	0	2	0	["m"]	[""]	+input
+20030	91	2	1	2	1	["o"]	[""]	+input
+20195	95	2	2	2	2	["e"]	[""]	+input
+21168	98	2	2	2	3	[""]	["e"]	+delete
+21361	102	2	1	2	2	[""]	["o"]	+delete
+22014	107	2	1	2	1	["g"]	[""]	+input
+22414	111	2	2	2	2	[" "]	[""]	+input
+23311	115	2	3	2	3	["="]	[""]	+input
+23650	119	2	4	2	4	[" "]	[""]	+input
+25111	123	2	5	2	5	["m"]	[""]	+input
+25650	127	2	6	2	6	["/"]	[""]	+input
+26079	131	2	7	2	7	["g"]	[""]	+input
+27428	134	2	8	2	8	["",""]	[""]	+input
+38399	167	2	7	2	7	["/"]	[""]	+input
+47915	173	2	9	2	9	["",""]	[""]	+input
+55111	179	3	0	3	0	["i"]	[""]	+input
+55743	183	3	1	3	1	[" "]	[""]	+input
+56510	187	3	2	3	2	["="]	[""]	+input
+56867	191	3	3	3	3	[" "]	[""]	+input
+60815	195	3	4	3	4	["m"]	[""]	+input
+70863	200	3	5	3	5	["%"]	[""]	+input
+75494	205	3	6	3	6	["g"]	[""]	+input
+77226	208	3	7	3	7	["",""]	[""]	+input
+77794	214	4	0	4	0	["p"]	[""]	+input
+78026	218	4	1	4	1	["i"]	[""]	+input
+78367	221	4	1	4	2	[""]	["i"]	+delete
+78542	226	4	1	4	1	["r"]	[""]	+input
+78659	230	4	2	4	2	["i"]	[""]	+input
+78830	234	4	3	4	3	["n"]	[""]	+input
+78894	238	4	4	4	4	["t"]	[""]	+input
+79711	243	4	5	4	5	["()"]	[""]	+input
+80776	250	4	6	4	6	["\"\""]	[""]	+input
+89625	258	4	7	4	8	[""]	["\""]	+delete
+89825	262	4	6	4	7	[""]	["\""]	+delete
+115329	268	4	6	4	6	["\"\""]	[""]	+input
+116312	274	4	7	4	7	["v"]	[""]	+input
+116391	278	4	8	4	8	["a"]	[""]	+input
+116514	282	4	9	4	9	["l"]	[""]	+input
+116674	286	4	10	4	10	["o"]	[""]	+input
+116728	289	4	11	4	11	["r"]	[""]	+input
+120010	293	4	11	4	12	[""]	["r"]	+delete
+120145	297	4	10	4	11	[""]	["o"]	+delete
+120276	301	4	9	4	10	[""]	["l"]	+delete
+120423	305	4	8	4	9	[""]	["a"]	+delete
+120543	309	4	7	4	8	[""]	["v"]	+delete
+120942	315	4	7	4	7	["M"]	[""]	+input
+121108	320	4	8	4	8	["o"]	[""]	+input
+121607	324	4	9	4	9	["e"]	[""]	+input
+121790	328	4	10	4	10	["d"]	[""]	+input
+122007	332	4	11	4	11	["a"]	[""]	+input
+122160	336	4	12	4	12	["s"]	[""]	+input
+122627	340	4	13	4	13	[" "]	[""]	+input
+122757	344	4	14	4	14	["d"]	[""]	+input
+122958	348	4	15	4	15	["s"]	[""]	+input
+123294	351	4	15	4	16	[""]	["s"]	+delete
+123524	356	4	15	4	15	["p"]	[""]	+input
+123657	360	4	16	4	16	["s"]	[""]	+input
+123890	363	4	16	4	17	[""]	["s"]	+delete
+124014	367	4	15	4	16	[""]	["p"]	+delete
+124658	372	4	15	4	15	["o"]	[""]	+input
+124790	376	4	16	4	16	["s"]	[""]	+input
+124894	380	4	17	4	17	[" "]	[""]	+input
+125074	384	4	18	4	18	["g"]	[""]	+input
+125176	388	4	19	4	19	["e"]	[""]	+input
+125273	392	4	20	4	20	["u"]	[""]	+input
+126148	395	4	20	4	21	[""]	["u"]	+delete
+126289	399	4	19	4	20	[""]	["e"]	+delete
+126790	404	4	19	4	19	["u"]	[""]	+input
+126878	408	4	20	4	20	["e"]	[""]	+input
+127060	412	4	21	4	21	["r"]	[""]	+input
+127190	416	4	22	4	22	["r"]	[""]	+input
+127374	420	4	23	4	23	["e"]	[""]	+input
+127474	424	4	24	4	24	["i"]	[""]	+input
+127573	428	4	25	4	25	["r"]	[""]	+input
+127694	432	4	26	4	26	["o"]	[""]	+input
+127807	436	4	27	4	27	["s"]	[""]	+input
+128441	441	4	28	4	28	[":"]	[""]	+input
+130490	458	4	29	4	29	[" "]	[""]	+input
+131440	465	4	31	4	31	[","]	[""]	+input
+131694	469	4	32	4	32	[" "]	[""]	+input
+133090	473	4	33	4	33	["m"]	[""]	+input
+133217	477	4	34	4	34	["g"]	[""]	+input
+134790	483	4	36	4	36	["",""]	[""]	+input
+135077	489	5	0	5	0	["p"]	[""]	+input
+135294	493	5	1	5	1	["i"]	[""]	+input
+135843	496	5	1	5	2	[""]	["i"]	+delete
+135940	501	5	1	5	1	["r"]	[""]	+input
+136440	505	5	2	5	2	["i"]	[""]	+input
+136674	509	5	3	5	3	["n"]	[""]	+input
+136857	513	5	4	5	4	["y"]	[""]	+input
+137477	516	5	4	5	5	[""]	["y"]	+delete
+137697	521	5	4	5	4	["t"]	[""]	+input
+138307	526	5	5	5	5	["()"]	[""]	+input
+139908	533	5	6	5	6	["\"\""]	[""]	+input
+143359	540	5	7	5	7	["M"]	[""]	+input
+143506	545	5	8	5	8	["o"]	[""]	+input
+143663	549	5	9	5	9	["e"]	[""]	+input
+143839	553	5	10	5	10	["d"]	[""]	+input
+144089	557	5	11	5	11	["a"]	[""]	+input
+144257	561	5	12	5	12	["s"]	[""]	+input
+145239	565	5	13	5	13	[" "]	[""]	+input
+146473	569	5	14	5	14	["d"]	[""]	+input
+146593	573	5	15	5	15	["o"]	[""]	+input
+146789	577	5	16	5	16	[" "]	[""]	+input
+146974	581	5	17	5	17	["i"]	[""]	+input
+147145	585	5	18	5	18	["n"]	[""]	+input
+147390	589	5	19	5	19	["f"]	[""]	+input
+147589	593	5	20	5	20	["r"]	[""]	+input
+147993	596	5	20	5	21	[""]	["r"]	+delete
+148340	601	5	20	5	20	["o"]	[""]	+input
+148442	605	5	21	5	21	["r"]	[""]	+input
+148592	609	5	22	5	22	["m"]	[""]	+input
+148706	613	5	23	5	23	["a"]	[""]	+input
+148806	617	5	24	5	24	["n"]	[""]	+input
+149057	621	5	25	5	25	["t"]	[""]	+input
+149158	625	5	26	5	26	["e"]	[""]	+input
+149990	630	5	27	5	27	[":"]	[""]	+input
+151375	641	5	28	5	28	[" "]	[""]	+input
+152594	648	5	30	5	30	[","]	[""]	+input
+152890	652	5	31	5	31	[" "]	[""]	+input
+153573	656	5	32	5	32	["i"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 165958
+- raw_log_line: 661
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+g = 3
+m = 50
+mg = m//g
+i = m%g
+print("Moedas dos guerreiros: ", mg)
+print("Moedas do informante: ", i)
+
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-07-26T19:23:30.462000
+
+Execution Result
+
+- submitted_at: 2023-07-26 19:23:55
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "50"
+    expected: "16\n2"
+    actual: "Total de moedas:  50\nMoedas dos guerreiros:  16\nMoedas do informante:  2"
+
+Attempt Start Code
+```python
+g = 3
+m = 50
+mg = m//g
+i = m%g
+print("Moedas dos guerreiros: ", mg)
+print("Moedas do informante: ", i)
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 30
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	665	3	7	3	7	["",""]	[""]	+input
+1001	671	4	0	4	0	["p"]	[""]	+input
+1120	675	4	1	4	1	["r"]	[""]	+input
+1238	679	4	2	4	2	["i"]	[""]	+input
+1415	683	4	3	4	3	["n"]	[""]	+input
+1498	687	4	4	4	4	["t"]	[""]	+input
+2151	692	4	5	4	5	["()"]	[""]	+input
+9850	699	4	6	4	6	["\"\""]	[""]	+input
+11249	706	4	7	4	7	["T"]	[""]	+input
+12565	711	4	8	4	8	["o"]	[""]	+input
+12799	715	4	9	4	9	["t"]	[""]	+input
+12915	719	4	10	4	10	["a"]	[""]	+input
+13048	723	4	11	4	11	["l"]	[""]	+input
+13236	727	4	12	4	12	[" "]	[""]	+input
+13817	731	4	13	4	13	["d"]	[""]	+input
+13999	735	4	14	4	14	["e"]	[""]	+input
+14099	739	4	15	4	15	[" "]	[""]	+input
+14264	743	4	16	4	16	["m"]	[""]	+input
+14415	747	4	17	4	17	["o"]	[""]	+input
+14697	751	4	18	4	18	["d"]	[""]	+input
+15120	754	4	18	4	19	[""]	["d"]	+delete
+15215	759	4	18	4	18	["e"]	[""]	+input
+15415	763	4	19	4	19	["d"]	[""]	+input
+15599	767	4	20	4	20	["a"]	[""]	+input
+15764	771	4	21	4	21	["s"]	[""]	+input
+16351	776	4	22	4	22	[":"]	[""]	+input
+16549	781	4	23	4	23	[" "]	[""]	+input
+17680	788	4	25	4	25	[","]	[""]	+input
+17898	792	4	26	4	26	[" "]	[""]	+input
+18085	796	4	27	4	27	["m"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 21643
+- raw_log_line: 803
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+g = 3
+m = 50
+mg = m//g
+i = m%g
+print("Total de moedas: ", m)
+print("Moedas dos guerreiros: ", mg)
+print("Moedas do informante: ", i)
+
+```
+Run Output
+```text
+Moedas dos guerreiros:  16
+Moedas do informante:  2
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 24881
+- raw_log_line: 804
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+g = 3
+m = 50
+mg = m//g
+i = m%g
+print("Total de moedas: ", m)
+print("Moedas dos guerreiros: ", mg)
+print("Moedas do informante: ", i)
+
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-07-26T19:23:59.976000
+
+Execution Result
+
+- submitted_at: 2023-07-26 19:24:39
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "50"
+    expected: "16\n2"
+    actual: "Moedas dos guerreiros:  16\nMoedas do informante:  2"
+
+Attempt Start Code
+```python
+g = 3
+m = 50
+mg = m//g
+i = m%g
+print("Total de moedas: ", m)
+print("Moedas dos guerreiros: ", mg)
+print("Moedas do informante: ", i)
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 53
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	808	4	28	4	29	[""]	[")"]	+delete
+149	812	4	27	4	28	[""]	["m"]	+delete
+299	816	4	26	4	27	[""]	[" "]	+delete
+799	819	4	25	4	26	[""]	[","]	+delete
+837	822	4	24	4	25	[""]	["\""]	+delete
+857	825	4	23	4	24	[""]	[" "]	+delete
+890	828	4	22	4	23	[""]	[":"]	+delete
+920	831	4	21	4	22	[""]	["s"]	+delete
+961	834	4	20	4	21	[""]	["a"]	+delete
+992	837	4	19	4	20	[""]	["d"]	+delete
+1022	840	4	18	4	19	[""]	["e"]	+delete
+1060	843	4	17	4	18	[""]	["o"]	+delete
+1091	846	4	16	4	17	[""]	["m"]	+delete
+1133	849	4	15	4	16	[""]	[" "]	+delete
+1162	852	4	14	4	15	[""]	["e"]	+delete
+1190	855	4	13	4	14	[""]	["d"]	+delete
+1221	858	4	12	4	13	[""]	[" "]	+delete
+1253	861	4	11	4	12	[""]	["l"]	+delete
+1286	864	4	10	4	11	[""]	["a"]	+delete
+1319	867	4	9	4	10	[""]	["t"]	+delete
+1358	870	4	8	4	9	[""]	["o"]	+delete
+1389	873	4	7	4	8	[""]	["T"]	+delete
+1425	876	4	6	4	7	[""]	["\""]	+delete
+1455	879	4	5	4	6	[""]	["("]	+delete
+1486	882	4	4	4	5	[""]	["t"]	+delete
+1641	886	4	3	4	4	[""]	["n"]	+delete
+1800	890	4	2	4	3	[""]	["i"]	+delete
+1982	894	4	1	4	2	[""]	["r"]	+delete
+2136	898	4	0	4	1	[""]	["p"]	+delete
+25982	903	1	5	1	6	[""]	["0"]	+delete
+26132	907	1	4	1	5	[""]	["5"]	+delete
+26282	911	1	3	1	4	[""]	[" "]	+delete
+26452	915	1	2	1	3	[""]	["="]	+delete
+26604	919	1	1	1	2	[""]	[" "]	+delete
+26748	923	1	0	1	1	[""]	["m"]	+delete
+26885	927	0	5	1	0	[""]	["",""]	+delete
+27032	932	0	4	0	5	[""]	["3"]	+delete
+27184	936	0	3	0	4	[""]	[" "]	+delete
+27317	940	0	2	0	3	[""]	["="]	+delete
+27481	944	0	1	0	2	[""]	[" "]	+delete
+27615	948	0	0	0	1	[""]	["g"]	+delete
+28549	953	0	0	0	0	["m"]	[""]	+input
+28749	957	0	1	0	1	[" "]	[""]	+input
+29616	961	0	2	0	2	["="]	[""]	+input
+29833	965	0	3	0	3	[" "]	[""]	+input
+30015	969	0	4	0	4	["5"]	[""]	+input
+30123	973	0	5	0	5	["0"]	[""]	+input
+31082	976	0	6	0	6	["",""]	[""]	+input
+33285	982	1	0	1	0	["g"]	[""]	+input
+33669	986	1	1	1	1	[" "]	[""]	+input
+33899	990	1	2	1	2	["="]	[""]	+input
+34104	994	1	3	1	3	[" "]	[""]	+input
+34215	998	1	4	1	4	["3"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 37738
+- raw_log_line: 1005
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+m = 50
+g = 3
+mg = m//g
+i = m%g
+
+print("Moedas dos guerreiros: ", mg)
+print("Moedas do informante: ", i)
+
+```
+Run Output
+```text
+Moedas dos guerreiros:  16
+Moedas do informante:  2
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 39649
+- raw_log_line: 1006
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+m = 50
+g = 3
+mg = m//g
+i = m%g
+
+print("Moedas dos guerreiros: ", mg)
+print("Moedas do informante: ", i)
+
+```

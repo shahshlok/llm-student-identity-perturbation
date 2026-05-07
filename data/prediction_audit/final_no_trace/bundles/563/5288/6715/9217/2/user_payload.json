@@ -1,0 +1,144 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "563",
+    "assessment_id": "5288",
+    "assessment_title": "Lab 2: Estrutura Condicional Composta",
+    "exercise_id": "6715",
+    "student_id": "9217",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2023-2/563/users/9217/executions/5288_6715.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2023-2/563/users/9217/codemirror/5288_6715.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2024-01-09 15:27:42",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "10\n5",
+            "expected": "2\nsim",
+            "actual": "2 sim"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "9\n2",
+            "expected": "1 \nnao",
+            "actual": "4 sim"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "0\n12",
+            "expected": "0\nsim",
+            "actual": "0 nao"
+          }
+        ]
+      },
+      "submitted_code": "x = int(input(\"VALOR DE X: \"))\ny = int(input(\"VALOR DE Y: \"))\n\nif ( x / y ):\n\tprint(x // y, \"sim\")\n\nelse :\n\tprint(x % y, \"nao\")"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2024-01-09 15:30:11",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "10\n5",
+            "expected": "2\nsim",
+            "actual": "2 sim"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "9\n2",
+            "expected": "1 \nnao",
+            "actual": "4 sim"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "0\n12",
+            "expected": "0\nsim",
+            "actual": "0 nao"
+          }
+        ]
+      },
+      "submitted_code": "x = int(input(\"VALOR DE X: \"))\ny = int(input(\"VALOR DE Y: \"))\n\nif ( x / y ):\n\tprint(x // y, \"sim\")\nelse :\n\tprint(x % y, \"nao\")"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2024-01-09 15:32:00",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "10\n5",
+            "expected": "2\nsim",
+            "actual": "0 nao"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "9\n2",
+            "expected": "1 \nnao",
+            "actual": "1 nao"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "0\n12",
+            "expected": "0\nsim",
+            "actual": "0 sim"
+          }
+        ]
+      },
+      "submitted_code": "x = int(input(\"VALOR DE X: \"))\ny = int(input(\"VALOR DE Y: \"))\n\nif ( x / y ):\n\tprint(x % y, \"nao\")\nelse :\n\tprint(x // y, \"sim\")"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

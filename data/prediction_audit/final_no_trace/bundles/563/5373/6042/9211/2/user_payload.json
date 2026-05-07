@@ -1,0 +1,144 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "563",
+    "assessment_id": "5373",
+    "assessment_title": "Lab 4 – Repetição por Condição (while)",
+    "exercise_id": "6042",
+    "student_id": "9211",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2023-2/563/users/9211/executions/5373_6042.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2023-2/563/users/9211/codemirror/5373_6042.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2024-02-06 15:35:36",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "-525\n1075\n333\n-9\n-1",
+            "expected": "4\n874",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "0\n0\n0\n0\n0\n0\n0\n-1",
+            "expected": "7\n0",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "10953\n32653\n-10953\n-1",
+            "expected": "3\n32653",
+            "actual": "1 10953\n2 43606"
+          }
+        ]
+      },
+      "submitted_code": "n = int(input(\"informe os numeros\"))\nsoma = 0 \ncont = 0 \nwhile (n > 0):\n\tcont = cont + 1\n\tsoma = soma + n\n\tn = int(input(\"informe os numeros\"))\n\tprint(cont , soma )\n\t\n\t"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2024-02-06 15:36:21",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "-525\n1075\n333\n-9\n-1",
+            "expected": "4\n874",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "0\n0\n0\n0\n0\n0\n0\n-1",
+            "expected": "7\n0",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "10953\n32653\n-10953\n-1",
+            "expected": "3\n32653",
+            "actual": "1 10953\n2 43606"
+          }
+        ]
+      },
+      "submitted_code": "n = int(input(\"informe os numeros\"))\nsoma = 0 \ncont = 0 \nwhile (n > 0):\n\tsoma = soma + n\n\tcont = cont + 1\n\tn = int(input(\"informe os numeros\"))\n\tprint(cont , soma )\n\t\n\t"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2024-02-06 15:36:50",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "-525\n1075\n333\n-9\n-1",
+            "expected": "4\n874",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "0\n0\n0\n0\n0\n0\n0\n-1",
+            "expected": "7\n0",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "10953\n32653\n-10953\n-1",
+            "expected": "3\n32653",
+            "actual": "1 10953\n2 43606"
+          }
+        ]
+      },
+      "submitted_code": "n = int(input(\"informe os numeros:\"))\nsoma = 0 \ncont = 0 \nwhile (n > 0):\n\tsoma = soma + n\n\tcont = cont + 1\n\tn = int(input(\"informe os numeros\"))\n\tprint(cont , soma )\n\t\n\t"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

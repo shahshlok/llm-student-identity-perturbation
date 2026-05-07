@@ -1,0 +1,27 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "594",
+    "assessment_id": "5747",
+    "exercise_id": "6915",
+    "student_id": "6903",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "p = float(input(\"preco total da entrada: \"))\ndia = int(input(\"Dia da semana: \"))\nmv = input(\"E dia de musica ao vivo: \").upper()\n\nif p > 0:\n\tif mv == 'N':\n\t\tif (dia == 2) or (dia == 3) or (dia == 5):\n\t\t\tt = p - p*0.25\n\t\t\tprint(round(t,2))\n\t\telif (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):\n\t\t\tprint(round(p,2))\n\t\telse:\n\t\t\tprint(\"Dados invalidos\")\t\t\n\telse:\n\t\tif (dia == 2) or (dia == 3) or (dia == 5):\n\t\t\tt = (p - p*0.25)+20\n\t\t\tprint(round(t,2))\n\t\telif (dia == 1) or (dia == 4) or (dia == 6) or (dia == 7):\n\t\t\tprint(round(p,2))\n\t\telse:\n\t\t\tprint(\"Dados invalidos\")\nelse:\n\tprint(\"Dados invalidos\")",
+    "coarse_path_steps": [
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 9,
+        "target_end_line_0idx": 17
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

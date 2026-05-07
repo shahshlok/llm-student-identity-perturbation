@@ -1,0 +1,90 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "563",
+    "assessment_id": "5324",
+    "exercise_id": "1117",
+    "student_id": "9219",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "p = float(input(\"VALOR:  \"))\nds = input(\"( 1 / 2 / 3 / 4 / 5 / 6 / 7 )\")\nv = input (\"(S/N)\")\n \nprint(\"Entradas: \", p, \",\", ds, \",\", v)\n\t\nif ((ds == \"2\") or (ds == \"3\") or (ds == \"5\")) and (v == \"N\"):\n\tt = p - p*0.25\n\tprint(\"Total: \", round(t, 2))\n\t\nelif ((ds == \"2\") or (ds == \"3\") or (ds == \"5\")) and (v == \"S\"):\n\tt = p - p*0.25 + 20\n\tprint(\"Total: \", round(t, 2))\n\t\nelif ((ds == \"1\") or (ds == \"4\") or (ds == \"6\") or (ds == \"7\")) and (v == \"N\"):\n\tprint(\"Total: \", round(p, 2))\n\t\nelif ((ds == \"1\") or (ds == \"4\") or (ds == \"6\") or (ds == \"7\")) and (v == \"S\"):\n\tt = p + 20\n\tprint(\"Total: R$\", round(p, 2))\nelse:\n\tprint(\"Dados invalidos\")",
+    "grade": 33.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "p = float(input(\"VALOR:  \"))\nds = input(\"( 1 / 2 / 3 / 4 / 5 / 6 / 7 )\")\nv = input (\"(S/N)\")\n \nprint(\"Entradas: \", p, \",\", ds, \",\", v)\n\t\nif ((ds == \"2\") or (ds == \"3\") or (ds == \"5\")) and (v == \"N\"):\n\tt = p - p*0.25\n\tprint(\"Total: R$\", round(t, 2))\n\t\nelif ((ds == \"2\") or (ds == \"3\") or (ds == \"5\")) and (v == \"S\"):\n\tt = p - p*0.25 + 20\n\tprint(\"Total: R$\", round(t, 2))\n\t\nelif ((ds == \"1\") or (ds == \"4\") or (ds == \"6\") or (ds == \"7\")) and (v == \"N\"):\n\tprint(\"Total: R$\", round(p, 2))\n\t\nelif ((ds == \"1\") or (ds == \"4\") or (ds == \"6\") or (ds == \"7\")) and (v == \"S\"):\n\tt = p + 20\n\tprint(\"Total: R$\", round(p, 2))\nelse:\n\tprint(\"Dados invalidos\")",
+    "grade": 67.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "70.56\n2\nN",
+        "expected": "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92",
+        "actual": "Entradas:  70.56 , 2 , N\nTotal: R$ 52.92"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "100.75\n6\nS",
+        "expected": "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75",
+        "actual": "Entradas:  100.75 , 6 , S\nTotal: R$ 100.75"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "0.00\n9\nS",
+        "expected": "Entradas: 0.0 , 9 , S\nDados invalidos",
+        "actual": "Entradas:  0.0 , 9 , S\nDados invalidos"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 8,
+        "end_line_0idx": 8,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 12,
+        "end_line_0idx": 12,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 15,
+        "end_line_0idx": 15,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 3,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 8,
+        "end_line_0idx": 8
+      },
+      {
+        "start_line_0idx": 12,
+        "end_line_0idx": 12
+      },
+      {
+        "start_line_0idx": 15,
+        "end_line_0idx": 15
+      }
+    ]
+  }
+}

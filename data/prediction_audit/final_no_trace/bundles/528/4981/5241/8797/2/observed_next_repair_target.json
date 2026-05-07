@@ -1,0 +1,70 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "528",
+    "assessment_id": "4981",
+    "exercise_id": "5241",
+    "student_id": "8797",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "c = float(input(\"consumo de agua de uma casa: \"))\n\n\nif (c < 10):\n\tvalor = 20 + c*2\nelif (c >= 10 > 20):\n\tvalor = 20 + c*2.5\nelif (c >= 20 < 40):\n\tvalor = 20 + c*2.75\nelif (c >+ 40):\n\tvalor =  20 + c*3\nprint(round(valor ,2))",
+    "grade": 33.0,
+    "pass_count": 1,
+    "failed_test_indices_0idx": [
+      0,
+      1
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "c = float(input(\"consumo de agua de uma casa: \"))\n\n\nif (c < 10):\n\tvalor = 20 + c*2\nelif (c >= 10 > 20):\n\tvalor = 20 + c*2.5\nelif (c >= 20 < 40):\n\tvalor = 20 + c*2.75\nelif (c >+ 40):\n\tvalor =  20 + c*3\n\t\nprint(round(valor ,2))",
+    "grade": 33.0,
+    "pass_count": 1,
+    "failed_test_indices_0idx": [
+      0,
+      1
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "400",
+        "expected": "1220.0",
+        "actual": "1120.0"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "50",
+        "expected": "170.0",
+        "actual": "157.5"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "20",
+        "expected": "75.0",
+        "actual": "75.0"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 11,
+        "end_line_0idx": 11,
+        "edit_kind": "insert"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 11,
+        "end_line_0idx": 11
+      }
+    ]
+  }
+}

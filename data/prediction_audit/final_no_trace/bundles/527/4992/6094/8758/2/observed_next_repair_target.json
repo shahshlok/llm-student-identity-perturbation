@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "527",
+    "assessment_id": "4992",
+    "exercise_id": "6094",
+    "student_id": "8758",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "valor = float(input(\"plano de saude: \"))\nnum = int(input(\"membros da familia: \"))\n\na = valor*num\nif(num == 1):\n\ttotal = a - 0.0 * a\n\tprint(round(total,2))\nelif(num == 2):\n\ttotal = a - 0.15 * a\n\tprint(round(total,2))\nelif(num == 3):\n\ttotal = a - 0.25 * a\n\tprint(round(total,2))\nelse:\n\ttotal = a - 0.35 * a\n\tprint(round(total,2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "valor = float(input(\"plano de saude: \"))\nnum = int(input(\"membros da familia: \"))\na = valor*num\nif(num == 1):\n\ttotal = a - 0.0 * a\n\tprint(round(total,2))\nelif(num == 2):\n\ttotal = a - 0.15 * a\n\tprint(round(total,2))\nelif(num == 3):\n\ttotal = a - 0.25 * a\n\tprint(round(total,2))\nelse:\n\ttotal = a - 0.35 * a\n\tprint(round(total,2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "200.0\n3",
+        "expected": "R$ 450.0",
+        "actual": "450.0"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "400.0\n4",
+        "expected": "R$ 1040.0",
+        "actual": "1040.0"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "1200\n1",
+        "expected": "R$ 1200.0",
+        "actual": "1200.0"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 2,
+        "end_line_0idx": 2,
+        "edit_kind": "delete"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 2,
+        "end_line_0idx": 2
+      }
+    ]
+  }
+}

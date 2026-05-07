@@ -1,0 +1,144 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "589",
+    "assessment_id": "5899",
+    "assessment_title": "Lista 6 - Exercícios em Sala",
+    "exercise_id": "2563",
+    "student_id": "9840",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2024-1/589/users/9840/executions/5899_2563.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2024-1/589/users/9840/codemirror/5899_2563.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2024-07-16 15:27:16",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "[6.3,6.4,6.0,6.9,5.5,5.2]\n[4.5,3.8,7.8,4.8,9.6,9.2,8.7,2.3,2.9]\n[5.6,4.7,3.8,7.5,8.2,8.4,7.1,6.9,6.7]\n[1.1,3.1,2.7,7.8,6.7,4.6,4.9,7.0]\n[1]",
+            "expected": "6\n0\n3\n1",
+            "actual": "11"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "[5.1,5.2,5.4,5.3,5.7,5.8,6.1,5.6,5.5,5.9,6.2]\n[2.7,6.8,4.7,5.7,3.5,6.6,7.0,5.4]\n[8.7,8.6,8.9,8.6,7.5,7.2,6.9,7.4,7.2]\n[1]",
+            "expected": "11\n4\n1",
+            "actual": "17"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "[8.5,7.5,6.8,6.9,7.0,5.6,5.8,6.3]\n[7.3,7.1,7.0,6.8,6.0,5.0]\n[1]",
+            "expected": "5\n3",
+            "actual": "10"
+          }
+        ]
+      },
+      "submitted_code": "from numpy import*\nv=eval(input(\"manda ver:\"))\n\nc=0\nwhile size(v)>1:\n\tfor i in v:\n\t\tif i>=5.0 and i<=7.0:\n\t\t\tc=c+1\n\t\n\tv= eval(input(\"manda ver:\"))\nprint(c)"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2024-07-16 15:28:01",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "[6.3,6.4,6.0,6.9,5.5,5.2]\n[4.5,3.8,7.8,4.8,9.6,9.2,8.7,2.3,2.9]\n[5.6,4.7,3.8,7.5,8.2,8.4,7.1,6.9,6.7]\n[1.1,3.1,2.7,7.8,6.7,4.6,4.9,7.0]\n[1]",
+            "expected": "6\n0\n3\n1",
+            "actual": "6\n6\n9\n11"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "[5.1,5.2,5.4,5.3,5.7,5.8,6.1,5.6,5.5,5.9,6.2]\n[2.7,6.8,4.7,5.7,3.5,6.6,7.0,5.4]\n[8.7,8.6,8.9,8.6,7.5,7.2,6.9,7.4,7.2]\n[1]",
+            "expected": "11\n4\n1",
+            "actual": "11\n16\n17"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "[8.5,7.5,6.8,6.9,7.0,5.6,5.8,6.3]\n[7.3,7.1,7.0,6.8,6.0,5.0]\n[1]",
+            "expected": "5\n3",
+            "actual": "6\n10"
+          }
+        ]
+      },
+      "submitted_code": "from numpy import*\nv=eval(input(\"manda ver:\"))\n\nc=0\nwhile size(v)>1:\n\tfor i in v:\n\t\tif i>=5.0 and i<=7.0:\n\t\t\tc=c+1\n\tprint(c)\n\tv= eval(input(\"manda ver:\"))"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2024-07-16 15:29:19",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "[6.3,6.4,6.0,6.9,5.5,5.2]\n[4.5,3.8,7.8,4.8,9.6,9.2,8.7,2.3,2.9]\n[5.6,4.7,3.8,7.5,8.2,8.4,7.1,6.9,6.7]\n[1.1,3.1,2.7,7.8,6.7,4.6,4.9,7.0]\n[1]",
+            "expected": "6\n0\n3\n1",
+            "actual": "6\n0\n3\n2"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "[5.1,5.2,5.4,5.3,5.7,5.8,6.1,5.6,5.5,5.9,6.2]\n[2.7,6.8,4.7,5.7,3.5,6.6,7.0,5.4]\n[8.7,8.6,8.9,8.6,7.5,7.2,6.9,7.4,7.2]\n[1]",
+            "expected": "11\n4\n1",
+            "actual": "11\n5\n1"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "[8.5,7.5,6.8,6.9,7.0,5.6,5.8,6.3]\n[7.3,7.1,7.0,6.8,6.0,5.0]\n[1]",
+            "expected": "5\n3",
+            "actual": "6\n4"
+          }
+        ]
+      },
+      "submitted_code": "from numpy import*\nv=eval(input(\"manda ver:\"))\n\n\nwhile size(v)>1:\n\tc=0\n\tfor i in v:\n\t\tif i>=5.0 and i<=7.0:\n\t\t\tc=c+1\n\tprint(c)\n\n\tv= eval(input(\"manda ver:\"))"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

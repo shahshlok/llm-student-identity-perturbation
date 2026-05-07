@@ -1,0 +1,138 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "593",
+    "assessment_id": "5695",
+    "assessment_title": "Lab 2 - Estrutura Condicional Composta",
+    "exercise_id": "2969",
+    "student_id": "6376",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2024-1/593/users/6376/executions/5695_2969.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2024-1/593/users/6376/codemirror/5695_2969.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2024-05-20 19:06:25",
+        "grade": 67.0,
+        "pass_count": 2,
+        "failed_test_indices_0idx": [
+          1
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": true,
+            "input": "2\n55.50\n100.25",
+            "expected": "130.69",
+            "actual": "130.69"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n72.65",
+            "expected": "72.65",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": true,
+            "input": "2\n99.99\n120.25",
+            "expected": "190.18",
+            "actual": "190.18"
+          }
+        ]
+      },
+      "submitted_code": "quantidade = int(input(\"quantidade de jogos: \"))\npreco1 = float(input(\"valor do jogo1: \"))\npreco2 = float(input(\"valor do jogo2: \"))\n\nif quantidade == 2:\n\ttotal = preco1+(preco2 - preco2*(25/100))\n\tprint(round(total, 2))\nelse:\n\tprint(round(preco1,2))"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2024-05-20 19:07:21",
+        "grade": 67.0,
+        "pass_count": 2,
+        "failed_test_indices_0idx": [
+          1
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": true,
+            "input": "2\n55.50\n100.25",
+            "expected": "130.69",
+            "actual": "130.69"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n72.65",
+            "expected": "72.65",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": true,
+            "input": "2\n99.99\n120.25",
+            "expected": "190.18",
+            "actual": "190.18"
+          }
+        ]
+      },
+      "submitted_code": "quantidade = int(input(\"quantidade de jogos: \"))\npreco1 = float(input(\"valor do jogo1: \"))\npreco2 = float(input(\"valor do jogo2: \"))\n\nif quantidade == 2:\n\ttotal = preco1+(preco2 - preco2*(25/100))\n\tprint(round(total, 2))\nelse:\n\ttotal = preco1\n\tprint(round(total, 2))"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2024-05-20 19:08:24",
+        "grade": 67.0,
+        "pass_count": 2,
+        "failed_test_indices_0idx": [
+          1
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": true,
+            "input": "2\n55.50\n100.25",
+            "expected": "130.69",
+            "actual": "130.69"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n72.65",
+            "expected": "72.65",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": true,
+            "input": "2\n99.99\n120.25",
+            "expected": "190.18",
+            "actual": "190.18"
+          }
+        ]
+      },
+      "submitted_code": "quantidade = int(input(\"quantidade de jogos: \"))\npreco1 = float(input(\"valor do jogo1: \"))\npreco2 = float(input(\"valor do jogo2: \"))\n\nif quantidade == 2:\n\ttotal = preco1+(preco2 - preco2*(25/100))\n\tprint(round(total, 2))\nelif quantidade == 1:\n\ttotal = preco1\n\tprint(round(total, 2))"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

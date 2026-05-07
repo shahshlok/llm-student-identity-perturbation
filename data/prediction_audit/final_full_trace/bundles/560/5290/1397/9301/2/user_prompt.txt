@@ -1,0 +1,720 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 560
+- assessment_id: 5290
+- assessment_title: Lab 2: Estrutura Condicional Composta
+- exercise_id: 1397
+- student_id: 9301
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-01-17T15:02:56.487000
+
+Execution Result
+
+- submitted_at: 2024-01-17 15:13:49
+- grade: 0.0
+- pass_count: 2
+- failed_test_indices_0idx: [1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "4554.0"
+    expected: "22770.0"
+    actual: "22770.0"
+  - test_index_0idx: 1 [FAIL]
+    input: "18215.0"
+    expected: "82860.0"
+    actual: "81075.0"
+  - test_index_0idx: 2 [PASS]
+    input: "9000.0"
+    expected: "45000.0"
+    actual: "45000.0"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 143
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	8	0	0	0	0	["a"]	[""]	+input
+136	12	0	1	0	1	["r"]	[""]	+input
+312	16	0	2	0	2	["e"]	[""]	+input
+476	20	0	3	0	3	["a"]	[""]	+input
+1388	24	0	4	0	4	[" "]	[""]	+input
+1752	28	0	5	0	5	["="]	[""]	+input
+2088	32	0	6	0	6	[" "]	[""]	+input
+12221	36	0	7	0	7	["f"]	[""]	+input
+12456	40	0	8	0	8	["l"]	[""]	+input
+12619	44	0	9	0	9	["o"]	[""]	+input
+12921	48	0	10	0	10	["a"]	[""]	+input
+13112	52	0	11	0	11	["t"]	[""]	+input
+13978	57	0	12	0	12	["()"]	[""]	+input
+14747	63	0	13	0	13	["i"]	[""]	+input
+15017	67	0	14	0	14	["n"]	[""]	+input
+15437	71	0	15	0	15	["p"]	[""]	+input
+15721	75	0	16	0	16	["u"]	[""]	+input
+16027	79	0	17	0	17	["t"]	[""]	+input
+16597	84	0	18	0	18	["()"]	[""]	+input
+18090	91	0	19	0	19	["\"\""]	[""]	+input
+21179	97	0	20	0	20	["h"]	[""]	+input
+21320	101	0	21	0	21	["e"]	[""]	+input
+21470	105	0	22	0	22	["c"]	[""]	+input
+21769	109	0	23	0	23	["t"]	[""]	+input
+21951	113	0	24	0	24	["a"]	[""]	+input
+22088	117	0	25	0	25	["r"]	[""]	+input
+22281	121	0	26	0	26	["e"]	[""]	+input
+22495	125	0	27	0	27	["s"]	[""]	+input
+24170	130	0	28	0	28	[":"]	[""]	+input
+24414	135	0	29	0	29	[" "]	[""]	+input
+28491	140	0	33	0	33	["",""]	[""]	+input
+29337	145	1	0	1	0	["",""]	[""]	+input
+45741	151	2	0	2	0	["i"]	[""]	+input
+46008	155	2	1	2	1	["f"]	[""]	+input
+47376	159	2	2	2	2	[" "]	[""]	+input
+57418	163	2	3	2	3	["a"]	[""]	+input
+57560	167	2	4	2	4	["r"]	[""]	+input
+57704	171	2	5	2	5	["e"]	[""]	+input
+57827	175	2	6	2	6	["a"]	[""]	+input
+64254	179	2	7	2	7	[" "]	[""]	+input
+66025	183	2	8	2	8	[","]	[""]	+input
+66936	186	2	8	2	9	[""]	[","]	+delete
+67417	192	2	8	2	8	["<"]	[""]	+input
+69192	196	2	8	2	9	[""]	["<"]	+delete
+69996	202	2	8	2	8	[">"]	[""]	+input
+70952	208	2	9	2	9	["+"]	[""]	+input
+72152	212	2	9	2	10	[""]	["+"]	+delete
+72629	217	2	9	2	9	["="]	[""]	+input
+73258	221	2	10	2	10	[" "]	[""]	+input
+76009	225	2	11	2	11	["1"]	[""]	+input
+76183	229	2	12	2	12	["0"]	[""]	+input
+76445	233	2	13	2	13	["0"]	[""]	+input
+76649	237	2	14	2	14	["0"]	[""]	+input
+80700	241	2	15	2	15	["0"]	[""]	+input
+90779	248	2	16	2	16	[":"]	[""]	+input
+91837	252	2	17	2	17	["",""]	[""]	+input
+91837	253	3	0	3	0	["\t"]	[""]	+input
+98597	259	3	1	3	1	["t"]	[""]	+input
+98747	263	3	2	3	2	["a"]	[""]	+input
+98843	266	3	3	3	3	["r"]	[""]	+input
+99287	271	3	4	3	4	["i"]	[""]	+input
+99591	275	3	5	3	5	["f"]	[""]	+input
+99751	279	3	6	3	6	["a"]	[""]	+input
+100440	283	3	7	3	7	[" "]	[""]	+input
+101085	288	3	8	3	8	["+"]	[""]	+input
+102045	292	3	8	3	9	[""]	["+"]	+delete
+102360	297	3	8	3	8	["="]	[""]	+input
+102727	301	3	9	3	9	[" "]	[""]	+input
+104376	305	3	10	3	10	["a"]	[""]	+input
+104509	308	3	11	3	11	["r"]	[""]	+input
+104709	313	3	12	3	12	["e"]	[""]	+input
+104841	317	3	13	3	13	["a"]	[""]	+input
+105424	321	3	14	3	14	[" "]	[""]	+input
+108666	326	3	15	3	15	["*"]	[""]	+input
+110073	331	3	16	3	16	[" "]	[""]	+input
+114156	335	3	17	3	17	["5"]	[""]	+input
+115081	339	3	18	3	18	["."]	[""]	+input
+115544	343	3	19	3	19	["0"]	[""]	+input
+117632	346	3	20	3	20	["",""]	[""]	+input
+117632	347	4	0	4	0	["\t"]	[""]	+input
+119160	352	4	1	4	1	["",""]	[""]	+input
+119160	353	5	0	5	0	["\t"]	[""]	+input
+119944	358	5	0	5	1	[""]	["\t"]	+delete
+121626	363	5	0	5	0	["e"]	[""]	+input
+121836	367	5	1	5	1	["l"]	[""]	+input
+121995	371	5	2	5	2	["s"]	[""]	+input
+122249	375	5	3	5	3	["e"]	[""]	+input
+123829	380	5	4	5	4	[":"]	[""]	+input
+124936	384	5	5	5	5	["",""]	[""]	+input
+124936	385	6	0	6	0	["\t"]	[""]	+input
+168552	391	2	8	2	9	[""]	[">"]	+delete
+169368	397	2	8	2	8	["<"]	[""]	+input
+244104	403	6	1	6	1	["t"]	[""]	+input
+244281	407	6	2	6	2	["a"]	[""]	+input
+244327	410	6	3	6	3	["r"]	[""]	+input
+244759	415	6	4	6	4	["i"]	[""]	+input
+245049	419	6	5	6	5	["f"]	[""]	+input
+245159	423	6	6	6	6	["a"]	[""]	+input
+246058	427	6	7	6	7	[" "]	[""]	+input
+246439	431	6	8	6	8	["="]	[""]	+input
+246711	435	6	9	6	9	[" "]	[""]	+input
+346156	439	6	10	6	10	["a"]	[""]	+input
+346310	442	6	11	6	11	["r"]	[""]	+input
+346487	447	6	12	6	12	["e"]	[""]	+input
+346823	451	6	13	6	13	["a"]	[""]	+input
+347352	455	6	14	6	14	[" "]	[""]	+input
+348211	460	6	15	6	15	["*"]	[""]	+input
+348551	465	6	16	6	16	[" "]	[""]	+input
+367177	469	6	17	6	17	["5"]	[""]	+input
+367596	473	6	18	6	18	["."]	[""]	+input
+368073	477	6	19	6	19	["0"]	[""]	+input
+368712	481	6	20	6	20	[" "]	[""]	+input
+370063	486	6	21	6	21	["+"]	[""]	+input
+370504	491	6	22	6	22	[" "]	[""]	+input
+372270	495	6	23	6	23	["4"]	[""]	+input
+373449	499	6	24	6	24	["."]	[""]	+input
+373947	503	6	25	6	25	["0"]	[""]	+input
+375960	506	6	26	6	26	["",""]	[""]	+input
+375961	507	7	0	7	0	["\t"]	[""]	+input
+376393	512	7	1	7	1	["",""]	[""]	+input
+376393	513	8	0	8	0	["\t"]	[""]	+input
+377149	518	8	0	8	1	[""]	["\t"]	+delete
+383420	523	8	0	8	0	["p"]	[""]	+input
+383642	527	8	1	8	1	["r"]	[""]	+input
+383871	531	8	2	8	2	["i"]	[""]	+input
+384103	535	8	3	8	3	["n"]	[""]	+input
+384376	539	8	4	8	4	["t"]	[""]	+input
+385673	544	8	5	8	5	["()"]	[""]	+input
+387096	550	8	6	8	6	["r"]	[""]	+input
+387231	554	8	7	8	7	["o"]	[""]	+input
+387432	558	8	8	8	8	["u"]	[""]	+input
+387751	562	8	9	8	9	["n"]	[""]	+input
+387927	566	8	10	8	10	["d"]	[""]	+input
+389225	571	8	11	8	11	["()"]	[""]	+input
+390219	577	8	12	8	12	["t"]	[""]	+input
+390379	581	8	13	8	13	["a"]	[""]	+input
+390599	585	8	14	8	14	["r"]	[""]	+input
+391034	589	8	15	8	15	["i"]	[""]	+input
+391309	593	8	16	8	16	["f"]	[""]	+input
+391453	597	8	17	8	17	["a"]	[""]	+input
+393128	601	8	18	8	18	[","]	[""]	+input
+395536	605	8	19	8	19	[" "]	[""]	+input
+396429	609	8	20	8	20	["2"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 410417
+- raw_log_line: 614
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+area = float(input("hectares: "))
+
+if area <= 10000:
+	tarifa = area * 5.0
+	
+else:
+	tarifa = area * 5.0 + 4.0
+	
+print(round(tarifa, 2))
+```
+Run Output
+```text
+hectares: 11000.0
+55004.0
+```
+
+Edit Segment 2
+- raw_change_event_count: 16
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+442184	619	6	26	6	26	[" "]	[""]	+input
+456408	624	6	27	6	27	["*"]	[""]	+input
+456840	629	6	28	6	28	[" "]	[""]	+input
+458345	634	6	29	6	29	["()"]	[""]	+input
+461290	640	6	30	6	30	["a"]	[""]	+input
+461419	643	6	31	6	31	["r"]	[""]	+input
+461592	648	6	32	6	32	["e"]	[""]	+input
+461704	652	6	33	6	33	["a"]	[""]	+input
+462189	656	6	34	6	34	[" "]	[""]	+input
+463544	660	6	35	6	35	["-"]	[""]	+input
+464092	664	6	36	6	36	[" "]	[""]	+input
+465144	668	6	37	6	37	["1"]	[""]	+input
+466015	672	6	38	6	38	["0"]	[""]	+input
+466376	676	6	39	6	39	["0"]	[""]	+input
+467083	680	6	40	6	40	["0"]	[""]	+input
+467704	684	6	41	6	41	["0"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 478528
+- raw_log_line: 689
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+area = float(input("hectares: "))
+
+if area <= 10000:
+	tarifa = area * 5.0
+	
+else:
+	tarifa = area * 5.0 + 4.0 * (area - 10000)
+	
+print(round(tarifa, 2))
+```
+Run Output
+```text
+hectares: 11000.0
+59000.0
+```
+
+Edit Segment 3
+- raw_change_event_count: 36
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+491868	693	6	27	7	1	[""]	["* (area - 10000)","\t"]	+delete
+493736	698	6	27	6	27	["",""]	[""]	+input
+493736	699	7	0	7	0	["\t"]	[""]	+input
+494220	704	7	1	7	1	["",""]	[""]	+input
+494220	705	8	0	8	0	["\t"]	[""]	+input
+560615	712	6	10	6	27	[""]	["area * 5.0 + 4.0 "]	+delete
+603385	717	6	10	6	10	["a"]	[""]	+input
+603512	720	6	11	6	11	["r"]	[""]	+input
+603687	725	6	12	6	12	["e"]	[""]	+input
+603799	729	6	13	6	13	["a"]	[""]	+input
+606328	733	6	14	6	14	[" "]	[""]	+input
+608311	738	6	15	6	15	["*"]	[""]	+input
+608826	743	6	16	6	16	[" "]	[""]	+input
+610719	747	6	17	6	17	["4"]	[""]	+input
+611673	751	6	18	6	18	["."]	[""]	+input
+612103	755	6	19	6	19	["0"]	[""]	+input
+612599	759	6	20	6	20	[" "]	[""]	+input
+616278	763	6	21	6	21	["="]	[""]	+input
+616811	766	6	21	6	22	[""]	["="]	+delete
+617511	772	6	21	6	21	["+"]	[""]	+input
+617975	777	6	22	6	22	[" "]	[""]	+input
+618712	782	6	23	6	23	["()"]	[""]	+input
+619241	788	6	24	6	24	[" "]	[""]	+input
+620023	791	6	24	6	25	[""]	[" "]	+delete
+621898	796	6	24	6	24	["a"]	[""]	+input
+622055	800	6	25	6	25	["r"]	[""]	+input
+622183	804	6	26	6	26	["e"]	[""]	+input
+622379	808	6	27	6	27	["a"]	[""]	+input
+622810	812	6	28	6	28	[" "]	[""]	+input
+624200	816	6	29	6	29	["-"]	[""]	+input
+624519	820	6	30	6	30	[" "]	[""]	+input
+625528	824	6	31	6	31	["1"]	[""]	+input
+625859	828	6	32	6	32	["0"]	[""]	+input
+626118	832	6	33	6	33	["0"]	[""]	+input
+626521	836	6	34	6	34	["0"]	[""]	+input
+627105	840	6	35	6	35	["0"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 640766
+- raw_log_line: 845
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+area = float(input("hectares: "))
+
+if area <= 10000:
+	tarifa = area * 5.0
+	
+else:
+	tarifa = area * 4.0 + (area - 10000)
+	
+	
+print(round(tarifa, 2))
+```
+Run Output
+```text
+hectares: 11000.0
+45000.0
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 652985
+- raw_log_line: 846
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+area = float(input("hectares: "))
+
+if area <= 10000:
+	tarifa = area * 5.0
+	
+else:
+	tarifa = area * 4.0 + (area - 10000)
+	
+	
+print(round(tarifa, 2))
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-01-17T15:15:21.573000
+
+Execution Result
+
+- submitted_at: 2024-01-17 15:17:25
+- grade: 0.0
+- pass_count: 2
+- failed_test_indices_0idx: [1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "4554.0"
+    expected: "22770.0"
+    actual: "22770.0"
+  - test_index_0idx: 1 [FAIL]
+    input: "18215.0"
+    expected: "82860.0"
+    actual: "81075.0"
+  - test_index_0idx: 2 [PASS]
+    input: "9000.0"
+    expected: "45000.0"
+    actual: "45000.0"
+
+Attempt Start Code
+```python
+area = float(input("hectares: "))
+
+if area <= 10000:
+	tarifa = area * 5.0
+	
+else:
+	tarifa = area * 4.0 + (area - 10000)
+	
+	
+print(round(tarifa, 2))
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 28
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	850	6	10	6	37	[""]	["area * 4.0 + (area - 10000)"]	+delete
+1197	855	6	10	6	10	["a"]	[""]	+input
+1329	858	6	11	6	11	["r"]	[""]	+input
+1724	863	6	12	6	12	["e"]	[""]	+input
+1939	867	6	13	6	13	["a"]	[""]	+input
+2188	871	6	14	6	14	[" "]	[""]	+input
+16133	876	6	15	6	15	["*"]	[""]	+input
+17580	881	6	16	6	16	[" "]	[""]	+input
+19017	885	6	17	6	17	["5"]	[""]	+input
+21148	889	6	18	6	18	["."]	[""]	+input
+21508	893	6	19	6	19	["o"]	[""]	+input
+23196	896	6	19	6	20	[""]	["o"]	+delete
+24450	901	6	19	6	19	["0"]	[""]	+input
+33740	906	6	10	6	10	["a"]	[""]	+input
+33816	909	6	11	6	11	["r"]	[""]	+input
+34202	914	6	12	6	12	["e"]	[""]	+input
+34476	918	6	13	6	13	["a"]	[""]	+input
+34825	922	6	14	6	14	[" "]	[""]	+input
+36569	927	6	15	6	15	["*"]	[""]	+input
+36987	932	6	16	6	16	[" "]	[""]	+input
+38593	936	6	17	6	17	["4"]	[""]	+input
+39510	940	6	18	6	18	["."]	[""]	+input
+39800	944	6	19	6	19	["0"]	[""]	+input
+40812	948	6	20	6	20	[" "]	[""]	+input
+43475	952	6	21	6	21	["-"]	[""]	+input
+43915	956	6	22	6	22	[" "]	[""]	+input
+45003	961	6	23	6	23	["("]	[""]	+input
+48009	968	6	34	6	34	[")"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 65253
+- raw_log_line: 974
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+area = float(input("hectares: "))
+
+if area <= 10000:
+	tarifa = area * 5.0
+	
+else:
+	tarifa = area * 4.0 - (area * 5.0)
+	
+	
+print(round(tarifa, 2))
+```
+Run Output
+```text
+hectares: 11000.0
+-11000.0
+```
+
+Edit Segment 2
+- raw_change_event_count: 36
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+71643	978	6	21	6	35	[""]	["- (area * 5.0)"]	+delete
+81825	984	6	21	6	21	["+"]	[""]	+input
+82441	989	6	22	6	22	[" "]	[""]	+input
+83481	994	6	23	6	23	["()"]	[""]	+input
+84937	1000	6	24	6	24	["a"]	[""]	+input
+85038	1003	6	25	6	25	["r"]	[""]	+input
+85272	1008	6	26	6	26	["e"]	[""]	+input
+85463	1012	6	27	6	27	["a"]	[""]	+input
+87002	1016	6	28	6	28	[" "]	[""]	+input
+88813	1021	6	29	6	29	["*"]	[""]	+input
+89987	1026	6	30	6	30	[" "]	[""]	+input
+90457	1030	6	31	6	31	["5"]	[""]	+input
+91296	1034	6	32	6	32	["."]	[""]	+input
+91562	1038	6	33	6	33	["0"]	[""]	+input
+106552	1044	6	31	6	34	[""]	["5.0"]	+delete
+106760	1048	6	30	6	31	[""]	[" "]	+delete
+107036	1052	6	29	6	30	[""]	["*"]	+delete
+108250	1056	6	28	6	29	[""]	[" "]	+delete
+108749	1060	6	27	6	28	[""]	["a"]	+delete
+109309	1064	6	26	6	27	[""]	["e"]	+delete
+109966	1068	6	25	6	26	[""]	["r"]	+delete
+110970	1072	6	24	6	25	[""]	["a"]	+delete
+113401	1077	6	24	6	24	["a"]	[""]	+input
+113511	1080	6	25	6	25	["r"]	[""]	+input
+113868	1085	6	26	6	26	["a"]	[""]	+input
+114778	1088	6	26	6	27	[""]	["a"]	+delete
+115261	1093	6	26	6	26	["e"]	[""]	+input
+115504	1097	6	27	6	27	["a"]	[""]	+input
+115832	1101	6	28	6	28	[" "]	[""]	+input
+116745	1105	6	29	6	29	["-"]	[""]	+input
+117000	1109	6	30	6	30	[" "]	[""]	+input
+117832	1113	6	31	6	31	["1"]	[""]	+input
+118080	1117	6	32	6	32	["0"]	[""]	+input
+118272	1121	6	33	6	33	["0"]	[""]	+input
+118712	1125	6	34	6	34	["0"]	[""]	+input
+119080	1129	6	35	6	35	["0"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 124004
+- raw_log_line: 1132
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+area = float(input("hectares: "))
+
+if area <= 10000:
+	tarifa = area * 5.0
+	
+else:
+	tarifa = area * 4.0 + (area - 10000)
+	
+	
+print(round(tarifa, 2))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-01-17T15:17:33.018000
+
+Execution Result
+
+- submitted_at: 2024-01-17 15:21:18
+- grade: 0.0
+- pass_count: 2
+- failed_test_indices_0idx: [1]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "4554.0"
+    expected: "22770.0"
+    actual: "22770.0"
+  - test_index_0idx: 1 [FAIL]
+    input: "18215.0"
+    expected: "82860.0"
+    actual: "91079.0"
+  - test_index_0idx: 2 [PASS]
+    input: "9000.0"
+    expected: "45000.0"
+    actual: "45000.0"
+
+Attempt Start Code
+```python
+area = float(input("hectares: "))
+
+if area <= 10000:
+	tarifa = area * 5.0
+	
+else:
+	tarifa = area * 4.0 + (area - 10000)
+	
+	
+print(round(tarifa, 2))
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1135
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+area = float(input("hectares: "))
+
+if area <= 10000:
+	tarifa = area * 5.0
+	
+else:
+	tarifa = area * 4.0 + (area - 10000)
+	
+	
+print(round(tarifa, 2))
+```
+Run Output
+```text
+hectares: 11000.0
+45000.0
+```
+
+Local Run 2
+- event_time_delta_ms: 30179
+- raw_log_line: 1138
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+area = float(input("hectares: "))
+
+if area <= 10000:
+	tarifa = area * 5.0
+	
+else:
+	tarifa = area * 4.0 + (area - 10000)
+	
+	
+print(round(tarifa, 2))
+```
+Run Output
+```text
+hectares: 5555.55
+27777.75
+```
+
+Edit Segment 1
+- raw_change_event_count: 23
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+175032	1142	6	10	6	31	[""]	["area * 4.0 + (area - "]	drag
+175033	1143	6	16	6	16	["area * 4.0 + (area - "]	[""]	paste
+178421	1146	6	11	6	37	[""]	["0000)area * 4.0 + (area - "]	+delete
+178887	1150	6	10	6	11	[""]	["1"]	+delete
+180597	1156	6	10	6	10	["()"]	[""]	+input
+181655	1162	6	11	6	11	["a"]	[""]	+input
+181891	1166	6	12	6	12	["r"]	[""]	+input
+182085	1170	6	13	6	13	["e"]	[""]	+input
+182324	1174	6	14	6	14	["a"]	[""]	+input
+182843	1178	6	15	6	15	[" "]	[""]	+input
+184409	1183	6	16	6	16	["*"]	[""]	+input
+184770	1188	6	17	6	17	[" "]	[""]	+input
+186329	1192	6	18	6	18	["5"]	[""]	+input
+187316	1196	6	19	6	19	["."]	[""]	+input
+187751	1200	6	20	6	20	["0"]	[""]	+input
+196549	1205	6	22	6	22	[" "]	[""]	+input
+197475	1210	6	23	6	23	["+"]	[""]	+input
+197731	1215	6	24	6	24	[" "]	[""]	+input
+199255	1219	6	25	6	25	["4"]	[""]	+input
+200357	1223	6	26	6	26	["."]	[""]	+input
+200994	1227	6	27	6	27	["0"]	[""]	+input
+204169	1231	6	28	6	28	[" "]	[""]	+input
+205514	1234	6	28	6	29	[""]	[" "]	+delete
+
+Local Run 3
+- event_time_delta_ms: 209029
+- raw_log_line: 1239
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+area = float(input("hectares: "))
+
+if area <= 10000:
+	tarifa = area * 5.0
+	
+else:
+	tarifa = (area * 5.0) + 4.0
+	
+	
+print(round(tarifa, 2))
+```
+Run Output
+```text
+
+```
+
+Local Run 4
+- event_time_delta_ms: 215964
+- raw_log_line: 1242
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+area = float(input("hectares: "))
+
+if area <= 10000:
+	tarifa = area * 5.0
+	
+else:
+	tarifa = (area * 5.0) + 4.0
+	
+	
+print(round(tarifa, 2))
+```
+Run Output
+```text
+hectares: 11000.0
+55004.0
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 225572
+- raw_log_line: 1243
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+area = float(input("hectares: "))
+
+if area <= 10000:
+	tarifa = area * 5.0
+	
+else:
+	tarifa = (area * 5.0) + 4.0
+	
+	
+print(round(tarifa, 2))
+```

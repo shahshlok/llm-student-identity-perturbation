@@ -1,0 +1,68 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "491",
+    "assessment_id": "4656",
+    "exercise_id": "2527",
+    "student_id": "8323",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "num = int(input())\ndiv = 1\nsoma = 0\nwhile div < num:\n\tif num % div == 0:\n\t\tsoma = soma + div\n\tdiv = div + 1\nif soma == num:\n\tprint(\"PERFEITO\")\nelse:\n\tprint(\"NAO PERFEITO\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "num = int(input())\ndiv = 1\nsoma = 0\nwhile div < num:\n\tif num % div == 0:\n\t\tsoma = soma + div\n\t\tprint(div)\n\tdiv = div + 1\nif soma == num:\n\tprint(\"PERFEITO\")\nelse:\n\tprint(\"NAO PERFEITO\")",
+    "grade": 100.0,
+    "pass_count": 3,
+    "failed_test_indices_0idx": [],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": true,
+        "input": "496",
+        "expected": "1\n2\n4\n8\n16\n31\n62\n124\n248\nPERFEITO",
+        "actual": "1\n2\n4\n8\n16\n31\n62\n124\n248\nPERFEITO"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "8128",
+        "expected": "1\n2\n4\n8\n16\n32\n64\n127\n254\n508\n1016\n2032\n4064\nPERFEITO",
+        "actual": "1\n2\n4\n8\n16\n32\n64\n127\n254\n508\n1016\n2032\n4064\nPERFEITO"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "20",
+        "expected": "1\n2\n4\n5\n10\nNAO PERFEITO",
+        "actual": "1\n2\n4\n5\n10\nNAO PERFEITO"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "solved",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 6,
+        "end_line_0idx": 6,
+        "edit_kind": "insert"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 6,
+        "end_line_0idx": 6
+      }
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "589",
+    "assessment_id": "5730",
+    "exercise_id": "1949",
+    "student_id": "5703",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "num = int(input())\nsort = int(input())\n\nif(num==sort):\n\tprint(\"Ganhou R$ 100.000,00\")\nelif(num-9==sort or sort-9==num):\n\tprint(\"Ganhou R$ 50.000,00\")\nelif((num//10 == sort//10) or(num%10 == sort%10) or (num//10 == sort%10) or (sort/10 == num%10)):\n\tprint(\"Ganhou R$ 1.000,00\")\nelse:\n\tprint(\"Perdeu\")",
+    "grade": 0.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      1
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "# Função principal\ndef verificar_premio():\n    # Leitura dos números apostado e sorteado\n    numero_apostado = int(input(\"Digite o número apostado (com dois dígitos): \"))\n    numero_sorteado = int(input(\"Digite o número sorteado na loteria (com dois dígitos): \"))\n\n    # Extraindo dígitos dos números apostado e sorteado\n    digito_apostado_1 = numero_apostado // 10\n    digito_apostado_2 = numero_apostado % 10\n    digito_sorteado_1 = numero_sorteado // 10\n    digito_sorteado_2 = numero_sorteado % 10\n\n    # Verificação dos prêmios\n    if numero_apostado == numero_sorteado:\n        print(\"Ganhou R$ 100.000,00\")\n    elif (digito_apostado_1 == digito_sorteado_2 and digito_apostado_2 == digito_sorteado_1):\n        print(\"Ganhou R$ 50.000,00\")\n    elif (digito_apostado_1 == digito_sorteado_1 or digito_apostado_1 == digito_sorteado_2 or\n          digito_apostado_2 == digito_sorteado_1 or digito_apostado_2 == digito_sorteado_2):\n        print(\"Ganhou R$ 1.000,00\")\n    else:\n        print(\"Perdeu\")\n\n# Chama a função principal\nverificar_premio()",
+    "grade": 100.0,
+    "pass_count": 3,
+    "failed_test_indices_0idx": [],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": true,
+        "input": "55\n55",
+        "expected": "Ganhou R$ 100.000,00",
+        "actual": "Ganhou R$ 100.000,00"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "78\n89",
+        "expected": "Ganhou R$ 1.000,00",
+        "actual": "Ganhou R$ 1.000,00"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "12\n56",
+        "expected": "Perdeu",
+        "actual": "Perdeu"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "solved",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 0,
+        "end_line_0idx": 4,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 6,
+        "end_line_0idx": 24,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 24,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 0,
+        "end_line_0idx": 4
+      },
+      {
+        "start_line_0idx": 6,
+        "end_line_0idx": 24
+      }
+    ]
+  }
+}

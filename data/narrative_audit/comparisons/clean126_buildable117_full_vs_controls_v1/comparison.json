@@ -1,0 +1,582 @@
+{
+  "schema_version": "v6_1_condition_comparison_v1",
+  "created_at": "2026-04-13T07:11:02+00:00",
+  "conditions": [
+    {
+      "label": "full",
+      "path": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_v6/evaluation.json",
+      "run_name": "gpt54_medium_v61_clean126_buildable117_v6",
+      "model": "gpt-5.4",
+      "reasoning_effort": "medium",
+      "n_predictions": 117
+    },
+    {
+      "label": "no_trace",
+      "path": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_no_trace_v1/evaluation.json",
+      "run_name": "gpt54_medium_v61_clean126_buildable117_no_trace_v1",
+      "model": "gpt-5.4",
+      "reasoning_effort": "medium",
+      "n_predictions": 117
+    },
+    {
+      "label": "trace_shuffled",
+      "path": "<SOURCE_WORKTREE>/data/v61_batch_runs/gpt54_medium_v61_clean126_buildable117_trace_shuffled_v1/evaluation.json",
+      "run_name": "gpt54_medium_v61_clean126_buildable117_trace_shuffled_v1",
+      "model": "gpt-5.4",
+      "reasoning_effort": "medium",
+      "n_predictions": 116
+    }
+  ],
+  "metric_groups": {
+    "predictive": [
+      "first_event_type",
+      "first_event_family",
+      "first_active_event_type",
+      "change_presence",
+      "run_presence",
+      "idle_gap_presence",
+      "first_change_line",
+      "event_count_buckets"
+    ],
+    "trajectory": [
+      "event_type_prefix",
+      "event_type_overlap",
+      "event_type_edit_similarity",
+      "event_family_edit_similarity",
+      "event_type_lcss",
+      "event_family_lcss",
+      "event_family_dtw",
+      "episode_motif"
+    ]
+  },
+  "metrics": {
+    "first_event_type": {
+      "metric_kind": "predictive",
+      "summary_keys": [
+        "top1_accuracy",
+        "mean_truth_probability_mass",
+        "top2_hit_rate",
+        "top3_hit_rate",
+        "mean_mrr",
+        "mean_brier_score",
+        "mean_log_loss"
+      ],
+      "by_condition": {
+        "full": {
+          "top1_accuracy": 0.5042735042735043,
+          "mean_truth_probability_mass": 0.5000854700854701,
+          "top2_hit_rate": 0.6410256410256411,
+          "top3_hit_rate": 0.6581196581196581,
+          "mean_mrr": 0.5783475783475782,
+          "mean_brier_score": 0.8549042735042737,
+          "mean_log_loss": 9.742306225705883
+        },
+        "no_trace": {
+          "top1_accuracy": 0.6153846153846154,
+          "mean_truth_probability_mass": 0.5988034188034189,
+          "top2_hit_rate": 0.6324786324786325,
+          "top3_hit_rate": 0.6495726495726496,
+          "mean_mrr": 0.6296296296296297,
+          "mean_brier_score": 0.722748717948718,
+          "mean_log_loss": 9.76430928025182
+        },
+        "trace_shuffled": {
+          "top1_accuracy": 0.4051724137931034,
+          "mean_truth_probability_mass": 0.43137931034482774,
+          "top2_hit_rate": 0.603448275862069,
+          "top3_hit_rate": 0.6120689655172413,
+          "mean_mrr": 0.5114942528735632,
+          "mean_brier_score": 0.9235741379310345,
+          "mean_log_loss": 11.028609332928298
+        }
+      }
+    },
+    "first_event_family": {
+      "metric_kind": "predictive",
+      "summary_keys": [
+        "top1_accuracy",
+        "mean_truth_probability_mass",
+        "top2_hit_rate",
+        "top3_hit_rate",
+        "mean_mrr",
+        "mean_brier_score",
+        "mean_log_loss"
+      ],
+      "by_condition": {
+        "full": {
+          "top1_accuracy": 0.5042735042735043,
+          "mean_truth_probability_mass": 0.5000854700854701,
+          "top2_hit_rate": 0.6410256410256411,
+          "top3_hit_rate": 0.6581196581196581,
+          "mean_mrr": 0.5783475783475782,
+          "mean_brier_score": 0.8549042735042737,
+          "mean_log_loss": 9.742306225705883
+        },
+        "no_trace": {
+          "top1_accuracy": 0.6153846153846154,
+          "mean_truth_probability_mass": 0.5988034188034189,
+          "top2_hit_rate": 0.6324786324786325,
+          "top3_hit_rate": 0.6495726495726496,
+          "mean_mrr": 0.6296296296296297,
+          "mean_brier_score": 0.722748717948718,
+          "mean_log_loss": 9.76430928025182
+        },
+        "trace_shuffled": {
+          "top1_accuracy": 0.4051724137931034,
+          "mean_truth_probability_mass": 0.43137931034482774,
+          "top2_hit_rate": 0.603448275862069,
+          "top3_hit_rate": 0.6120689655172413,
+          "mean_mrr": 0.5114942528735632,
+          "mean_brier_score": 0.9235741379310345,
+          "mean_log_loss": 11.028609332928298
+        }
+      }
+    },
+    "first_active_event_type": {
+      "metric_kind": "predictive",
+      "summary_keys": [
+        "top1_accuracy",
+        "mean_truth_probability_mass",
+        "top2_hit_rate",
+        "top3_hit_rate",
+        "mean_mrr",
+        "mean_brier_score",
+        "mean_log_loss"
+      ],
+      "by_condition": {
+        "full": {
+          "top1_accuracy": 0.6324786324786325,
+          "mean_truth_probability_mass": 0.6244444444444442,
+          "top2_hit_rate": 0.7435897435897436,
+          "top3_hit_rate": 0.7606837606837606,
+          "mean_mrr": 0.6937321937321937,
+          "mean_brier_score": 0.6320512820512822,
+          "mean_log_loss": 6.870870294537691
+        },
+        "no_trace": {
+          "top1_accuracy": 0.6324786324786325,
+          "mean_truth_probability_mass": 0.6283760683760683,
+          "top2_hit_rate": 0.6495726495726496,
+          "top3_hit_rate": 0.6666666666666666,
+          "mean_mrr": 0.6467236467236468,
+          "mean_brier_score": 0.6983008547008547,
+          "mean_log_loss": 9.286399734474207
+        },
+        "trace_shuffled": {
+          "top1_accuracy": 0.6120689655172413,
+          "mean_truth_probability_mass": 0.599310344827586,
+          "top2_hit_rate": 0.6551724137931034,
+          "top3_hit_rate": 0.6724137931034483,
+          "mean_mrr": 0.639367816091954,
+          "mean_brier_score": 0.6988068965517242,
+          "mean_log_loss": 9.169430756760692
+        }
+      }
+    },
+    "change_presence": {
+      "metric_kind": "predictive",
+      "summary_keys": [
+        "top1_accuracy",
+        "mean_truth_probability_mass",
+        "mean_predicted_true_probability",
+        "mean_brier_score",
+        "mean_log_loss"
+      ],
+      "by_condition": {
+        "full": {
+          "top1_accuracy": 0.9572649572649573,
+          "mean_truth_probability_mass": 0.9534188034188036,
+          "mean_predicted_true_probability": 0.9534188034188036,
+          "mean_brier_score": 0.027643589743589745,
+          "mean_log_loss": 0.2993321195611581
+        },
+        "no_trace": {
+          "top1_accuracy": 0.9572649572649573,
+          "mean_truth_probability_mass": 0.9565811965811966,
+          "mean_predicted_true_probability": 0.9565811965811966,
+          "mean_brier_score": 0.030311111111111105,
+          "mean_log_loss": 0.08978913294622497
+        },
+        "trace_shuffled": {
+          "top1_accuracy": 0.9655172413793104,
+          "mean_truth_probability_mass": 0.9563793103448275,
+          "mean_predicted_true_probability": 0.9563793103448275,
+          "mean_brier_score": 0.028198275862068963,
+          "mean_log_loss": 0.29949590750604005
+        }
+      }
+    },
+    "run_presence": {
+      "metric_kind": "predictive",
+      "summary_keys": [
+        "top1_accuracy",
+        "mean_truth_probability_mass",
+        "mean_predicted_true_probability",
+        "mean_brier_score",
+        "mean_log_loss"
+      ],
+      "by_condition": {
+        "full": {
+          "top1_accuracy": 0.7350427350427351,
+          "mean_truth_probability_mass": 0.7057264957264957,
+          "mean_predicted_true_probability": 0.42709401709401723,
+          "mean_brier_score": 0.2541205128205128,
+          "mean_log_loss": 5.820046561472031
+        },
+        "no_trace": {
+          "top1_accuracy": 0.5213675213675214,
+          "mean_truth_probability_mass": 0.5065811965811967,
+          "mean_predicted_true_probability": 0.7699999999999997,
+          "mean_brier_score": 0.43829658119658105,
+          "mean_log_loss": 9.72613502503775
+        },
+        "trace_shuffled": {
+          "top1_accuracy": 0.5431034482758621,
+          "mean_truth_probability_mass": 0.5273275862068965,
+          "mean_predicted_true_probability": 0.3924999999999999,
+          "mean_brier_score": 0.40576810344827585,
+          "mean_log_loss": 8.200429252714605
+        }
+      }
+    },
+    "idle_gap_presence": {
+      "metric_kind": "predictive",
+      "summary_keys": [
+        "top1_accuracy",
+        "mean_truth_probability_mass",
+        "mean_predicted_true_probability",
+        "mean_brier_score",
+        "mean_log_loss"
+      ],
+      "by_condition": {
+        "full": {
+          "top1_accuracy": 0.6068376068376068,
+          "mean_truth_probability_mass": 0.6035042735042734,
+          "mean_predicted_true_probability": 0.19752136752136765,
+          "mean_brier_score": 0.35753076923076926,
+          "mean_log_loss": 7.583854921728802
+        },
+        "no_trace": {
+          "top1_accuracy": 0.6666666666666666,
+          "mean_truth_probability_mass": 0.6661538461538462,
+          "mean_predicted_true_probability": 0.05487179487179489,
+          "mean_brier_score": 0.30291452991452994,
+          "mean_log_loss": 6.7978080737464905
+        },
+        "trace_shuffled": {
+          "top1_accuracy": 0.5517241379310345,
+          "mean_truth_probability_mass": 0.5603448275862069,
+          "mean_predicted_true_probability": 0.3018965517241377,
+          "mean_brier_score": 0.3458775862068965,
+          "mean_log_loss": 5.666643756104835
+        }
+      }
+    },
+    "first_change_line": {
+      "metric_kind": "predictive",
+      "summary_keys": [
+        "top1_accuracy_exact",
+        "mean_truth_probability_mass_exact",
+        "top1_accuracy_within_1",
+        "mean_truth_probability_mass_within_1",
+        "top1_accuracy_within_2",
+        "mean_truth_probability_mass_within_2",
+        "top2_hit_rate_exact",
+        "top3_hit_rate_exact",
+        "mean_mrr_exact",
+        "top2_hit_rate_within_2",
+        "top3_hit_rate_within_2",
+        "mean_mrr_within_2"
+      ],
+      "by_condition": {
+        "full": {
+          "top1_accuracy_exact": 0.4444444444444444,
+          "mean_truth_probability_mass_exact": 0.3559829059829059,
+          "top1_accuracy_within_1": 0.5897435897435898,
+          "mean_truth_probability_mass_within_1": 0.5293162393162394,
+          "top1_accuracy_within_2": 0.7008547008547008,
+          "mean_truth_probability_mass_within_2": 0.6354700854700855,
+          "top2_hit_rate_exact": 0.46153846153846156,
+          "top3_hit_rate_exact": 0.5470085470085471,
+          "mean_mrr_exact": 0.4878917378917379,
+          "top2_hit_rate_within_2": 0.7264957264957265,
+          "top3_hit_rate_within_2": 0.8290598290598291,
+          "mean_mrr_within_2": 0.7521367521367521
+        },
+        "no_trace": {
+          "top1_accuracy_exact": 0.4188034188034188,
+          "mean_truth_probability_mass_exact": 0.38401709401709405,
+          "top1_accuracy_within_1": 0.5897435897435898,
+          "mean_truth_probability_mass_within_1": 0.5685470085470085,
+          "top1_accuracy_within_2": 0.6752136752136753,
+          "mean_truth_probability_mass_within_2": 0.6496581196581195,
+          "top2_hit_rate_exact": 0.5042735042735043,
+          "top3_hit_rate_exact": 0.6068376068376068,
+          "mean_mrr_exact": 0.49786324786324787,
+          "top2_hit_rate_within_2": 0.7521367521367521,
+          "top3_hit_rate_within_2": 0.8290598290598291,
+          "mean_mrr_within_2": 0.7393162393162395
+        },
+        "trace_shuffled": {
+          "top1_accuracy_exact": 0.4224137931034483,
+          "mean_truth_probability_mass_exact": 0.3749137931034482,
+          "top1_accuracy_within_1": 0.5689655172413793,
+          "mean_truth_probability_mass_within_1": 0.5351724137931033,
+          "top1_accuracy_within_2": 0.6551724137931034,
+          "mean_truth_probability_mass_within_2": 0.6318103448275861,
+          "top2_hit_rate_exact": 0.4827586206896552,
+          "top3_hit_rate_exact": 0.5775862068965517,
+          "mean_mrr_exact": 0.4863505747126437,
+          "top2_hit_rate_within_2": 0.7241379310344828,
+          "top3_hit_rate_within_2": 0.7844827586206896,
+          "mean_mrr_within_2": 0.7119252873563219
+        }
+      }
+    },
+    "event_count_buckets": {
+      "metric_kind": "predictive",
+      "summary_keys": [
+        "top1_accuracy",
+        "edit_bucket_top1_accuracy",
+        "run_bucket_top1_accuracy",
+        "pause_bucket_top1_accuracy",
+        "mean_truth_probability_mass",
+        "top2_hit_rate",
+        "top3_hit_rate",
+        "mean_mrr",
+        "mean_brier_score",
+        "mean_log_loss"
+      ],
+      "by_condition": {
+        "full": {
+          "top1_accuracy": 0.08547008547008547,
+          "edit_bucket_top1_accuracy": 0.2222222222222222,
+          "run_bucket_top1_accuracy": 0.5726495726495726,
+          "pause_bucket_top1_accuracy": 0.5641025641025641,
+          "mean_truth_probability_mass": 0.08299145299145298,
+          "top2_hit_rate": 0.17094017094017094,
+          "top3_hit_rate": 0.18803418803418803,
+          "mean_mrr": 0.13176638176638175,
+          "mean_brier_score": 1.4448410256410253,
+          "mean_log_loss": 22.417518875107085
+        },
+        "no_trace": {
+          "top1_accuracy": 0.03418803418803419,
+          "edit_bucket_top1_accuracy": 0.13675213675213677,
+          "run_bucket_top1_accuracy": 0.3333333333333333,
+          "pause_bucket_top1_accuracy": 0.6666666666666666,
+          "mean_truth_probability_mass": 0.03794871794871795,
+          "top2_hit_rate": 0.06837606837606838,
+          "top3_hit_rate": 0.06837606837606838,
+          "mean_mrr": 0.05128205128205128,
+          "mean_brier_score": 1.6163247863247865,
+          "mean_log_loss": 25.79283516868493
+        },
+        "trace_shuffled": {
+          "top1_accuracy": 0.0603448275862069,
+          "edit_bucket_top1_accuracy": 0.2413793103448276,
+          "run_bucket_top1_accuracy": 0.4482758620689655,
+          "pause_bucket_top1_accuracy": 0.4827586206896552,
+          "mean_truth_probability_mass": 0.05060344827586208,
+          "top2_hit_rate": 0.09482758620689655,
+          "top3_hit_rate": 0.10344827586206896,
+          "mean_mrr": 0.08045977011494253,
+          "mean_brier_score": 1.4661982758620697,
+          "mean_log_loss": 24.864434862193328
+        }
+      }
+    },
+    "event_type_prefix": {
+      "metric_kind": "trajectory",
+      "summary_keys": [
+        "top1_exact_match_rate",
+        "mean_top1_shared_prefix_norm",
+        "mean_expected_shared_prefix_norm"
+      ],
+      "by_condition": {
+        "full": {
+          "top1_exact_match_rate": 0.05128205128205128,
+          "mean_top1_shared_prefix_norm": 0.13763353541932616,
+          "mean_expected_shared_prefix_norm": 0.1311823460822666
+        },
+        "no_trace": {
+          "top1_exact_match_rate": 0.042735042735042736,
+          "mean_top1_shared_prefix_norm": 0.13633725054637028,
+          "mean_expected_shared_prefix_norm": 0.1315608623942469
+        },
+        "trace_shuffled": {
+          "top1_exact_match_rate": 0.04310344827586207,
+          "mean_top1_shared_prefix_norm": 0.0924682502066304,
+          "mean_expected_shared_prefix_norm": 0.0977789828603963
+        }
+      }
+    },
+    "event_type_overlap": {
+      "metric_kind": "trajectory",
+      "summary_keys": [
+        "mean_top1_jaccard",
+        "mean_expected_jaccard"
+      ],
+      "by_condition": {
+        "full": {
+          "mean_top1_jaccard": 0.3219590514808104,
+          "mean_expected_jaccard": 0.31293986599219753
+        },
+        "no_trace": {
+          "mean_top1_jaccard": 0.27606203029405735,
+          "mean_expected_jaccard": 0.2618357609314643
+        },
+        "trace_shuffled": {
+          "mean_top1_jaccard": 0.30466328947854393,
+          "mean_expected_jaccard": 0.2935032331933498
+        }
+      }
+    },
+    "event_type_edit_similarity": {
+      "metric_kind": "trajectory",
+      "summary_keys": [
+        "mean_top1_similarity",
+        "mean_expected_similarity"
+      ],
+      "by_condition": {
+        "full": {
+          "mean_top1_similarity": 0.30669125992105006,
+          "mean_expected_similarity": 0.3017770729159945
+        },
+        "no_trace": {
+          "mean_top1_similarity": 0.26809404748095045,
+          "mean_expected_similarity": 0.2544544712395629
+        },
+        "trace_shuffled": {
+          "mean_top1_similarity": 0.3025118808282598,
+          "mean_expected_similarity": 0.2940024126031303
+        }
+      }
+    },
+    "event_family_edit_similarity": {
+      "metric_kind": "trajectory",
+      "summary_keys": [
+        "mean_top1_similarity",
+        "mean_expected_similarity"
+      ],
+      "by_condition": {
+        "full": {
+          "mean_top1_similarity": 0.30669125992105006,
+          "mean_expected_similarity": 0.3017770729159945
+        },
+        "no_trace": {
+          "mean_top1_similarity": 0.26809404748095045,
+          "mean_expected_similarity": 0.2544544712395629
+        },
+        "trace_shuffled": {
+          "mean_top1_similarity": 0.3025118808282598,
+          "mean_expected_similarity": 0.2940024126031303
+        }
+      }
+    },
+    "event_type_lcss": {
+      "metric_kind": "trajectory",
+      "summary_keys": [
+        "mean_top1_lcss_ratio",
+        "mean_expected_lcss_ratio"
+      ],
+      "by_condition": {
+        "full": {
+          "mean_top1_lcss_ratio": 0.3131662663960565,
+          "mean_expected_lcss_ratio": 0.30868664482556646
+        },
+        "no_trace": {
+          "mean_top1_lcss_ratio": 0.2709430503299533,
+          "mean_expected_lcss_ratio": 0.25811479239988405
+        },
+        "trace_shuffled": {
+          "mean_top1_lcss_ratio": 0.30754061646044367,
+          "mean_expected_lcss_ratio": 0.2990370259782609
+        }
+      }
+    },
+    "event_family_lcss": {
+      "metric_kind": "trajectory",
+      "summary_keys": [
+        "mean_top1_lcss_ratio",
+        "mean_expected_lcss_ratio"
+      ],
+      "by_condition": {
+        "full": {
+          "mean_top1_lcss_ratio": 0.3131662663960565,
+          "mean_expected_lcss_ratio": 0.30868664482556646
+        },
+        "no_trace": {
+          "mean_top1_lcss_ratio": 0.2709430503299533,
+          "mean_expected_lcss_ratio": 0.25811479239988405
+        },
+        "trace_shuffled": {
+          "mean_top1_lcss_ratio": 0.30754061646044367,
+          "mean_expected_lcss_ratio": 0.2990370259782609
+        }
+      }
+    },
+    "event_family_dtw": {
+      "metric_kind": "trajectory",
+      "summary_keys": [
+        "mean_top1_similarity",
+        "mean_expected_similarity"
+      ],
+      "by_condition": {
+        "full": {
+          "mean_top1_similarity": 0.8407789061180629,
+          "mean_expected_similarity": 0.8342264110598228
+        },
+        "no_trace": {
+          "mean_top1_similarity": 0.8112723577995005,
+          "mean_expected_similarity": 0.8017585921490947
+        },
+        "trace_shuffled": {
+          "mean_top1_similarity": 0.8284193272782733,
+          "mean_expected_similarity": 0.8140177899717043
+        }
+      }
+    },
+    "episode_motif": {
+      "metric_kind": "trajectory",
+      "summary_keys": [
+        "top1_accuracy",
+        "mean_truth_probability_mass",
+        "top2_hit_rate",
+        "top3_hit_rate",
+        "mean_mrr",
+        "mean_brier_score",
+        "mean_log_loss"
+      ],
+      "by_condition": {
+        "full": {
+          "top1_accuracy": 0.3247863247863248,
+          "mean_truth_probability_mass": 0.30205128205128207,
+          "top2_hit_rate": 0.4017094017094017,
+          "top3_hit_rate": 0.4017094017094017,
+          "mean_mrr": 0.36538461538461536,
+          "mean_brier_score": 1.1246393162393165,
+          "mean_log_loss": 16.48469071413151
+        },
+        "no_trace": {
+          "top1_accuracy": 0.1452991452991453,
+          "mean_truth_probability_mass": 0.1364102564102564,
+          "top2_hit_rate": 0.19658119658119658,
+          "top3_hit_rate": 0.20512820512820512,
+          "mean_mrr": 0.1737891737891738,
+          "mean_brier_score": 1.3964769230769236,
+          "mean_log_loss": 22.085047529390952
+        },
+        "trace_shuffled": {
+          "top1_accuracy": 0.19827586206896552,
+          "mean_truth_probability_mass": 0.17801724137931035,
+          "top2_hit_rate": 0.25862068965517243,
+          "top3_hit_rate": 0.28448275862068967,
+          "mean_mrr": 0.23706896551724138,
+          "mean_brier_score": 1.2899327586206895,
+          "mean_log_loss": 19.946221897283227
+        }
+      }
+    }
+  }
+}

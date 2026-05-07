@@ -1,0 +1,143 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "563",
+    "assessment_id": "5288",
+    "assessment_title": "Lab 2: Estrutura Condicional Composta",
+    "exercise_id": "2969",
+    "student_id": "9217",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2023-2/563/users/9217/executions/5288_2969.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2023-2/563/users/9217/codemirror/5288_2969.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2024-01-11 14:20:59",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n55.50\n100.25",
+            "expected": "130.69",
+            "actual": "131"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n72.65",
+            "expected": "72.65",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "2\n99.99\n120.25",
+            "expected": "190.18",
+            "actual": "195"
+          }
+        ]
+      },
+      "submitted_code": "qtd_jogos = int(input(\"Quantidade de Jogos: \"))\nprice_1 = float(input(\"Preco do jogo 1: \"))\nprice_2 = float(input(\"Preco do jogo 2: \"))\n\nif qtd_jogos == 2:\n    print(round((price_1 + price_2) - (25/100 * 100)))\n\t\t\nelse:\n    print(price_1)"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2024-01-11 14:31:52",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n55.50\n100.25",
+            "expected": "130.69",
+            "actual": "117 2"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "1\n72.65",
+            "expected": "72.65",
+            "actual": ""
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "2\n99.99\n120.25",
+            "expected": "190.18",
+            "actual": "165 2"
+          }
+        ]
+      },
+      "submitted_code": "qtd_jogos = int(input(\"Quantidade de Jogos: \"))\nprice_1 = float(input(\"Preco do jogo 1: \"))\nprice_2 = float(input(\"Preco do jogo 2: \"))\nsoma = price_1 + price_2\n\nif qtd_jogos == 2:\n    print(round(soma - soma * (25/100)), 2)\nelse:\n    print(price_1)"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2024-01-11 14:48:45",
+        "grade": 33.0,
+        "pass_count": 1,
+        "failed_test_indices_0idx": [
+          0,
+          2
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "2\n55.50\n100.25",
+            "expected": "130.69",
+            "actual": "30.44"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": true,
+            "input": "1\n72.65",
+            "expected": "72.65",
+            "actual": "72.65"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "2\n99.99\n120.25",
+            "expected": "190.18",
+            "actual": "69.93"
+          }
+        ]
+      },
+      "submitted_code": "qtd_jogos = int(input(\"Quantidade de Jogos: \"))\nprice_1 = float(input(\"Preco do jogo 1: \"))\n\nif qtd_jogos == 2:\n\tprice_2 = float(input(\"Preco do jogo 2: \"))\n\tprint(round(price_1 + price_2 * -(25/100), 2 ))\n\nelse:\n\tprint(price_1)"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

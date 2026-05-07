@@ -1,0 +1,36 @@
+{
+  "schema_version": "v6_2_full_trace_prototype_bundle_v6",
+  "custom_id": "485:8159:4553:1117:2",
+  "condition": "full",
+  "exercise_scope": "485:4553:1117",
+  "tertile": "T1",
+  "diversity_score": 0.0,
+  "model": "gpt-5.4",
+  "reasoning_effort": "xhigh",
+  "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+  "system_prompt_path": "system_prompt.txt",
+  "user_payload_path": "user_payload.json",
+  "user_prompt_path": "user_prompt.txt",
+  "response_schema_path": "response_schema.json",
+  "request_body_path": "request_body.json",
+  "batch_request_path": "batch_request.json",
+  "batch_request_jsonl_path": "requests.jsonl",
+  "observed_next_repair_target_path": "observed_next_repair_target.json",
+  "observed_next_coarse_path_path": "observed_next_coarse_path.json",
+  "transition_index_0idx": 2,
+  "prompt_char_count": 47457,
+  "visible_attempt_count": 3,
+  "attempt_n_pass_fail_vector": [
+    false,
+    false,
+    false
+  ],
+  "attempt_n_failed_test_indices_0idx": [
+    0,
+    1,
+    2
+  ],
+  "attempt_n_test_count": 3,
+  "attempt_n_pass_vector_signature": "FFF",
+  "attempt_n_normalized_code": "pn=float(input(\"preco normal: \"))\nds=int(input(\"dia da semana: \"))\nd=input(\"e dia de musica ao vivo: \").upper()\nif(pn>=0 and 1<=ds<=7):\n\tif(2<=ds<=3 or ds==5):\n\t\tif(d==\"S\"):\n\t\t\tcont=(pn+20)-(0.25*pn)\n\t\t\tprint(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)\n\t\t\tprint(\"Total:\",\"R$\",round(cont,2))\n\t\telse:\n\t\t\tcont=pn-(0.25*pn)\n\t\t\tprint(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)\n\t\t\tprint(\"Total:\",\"R$\",round(cont,2))\n\telse:\n\t\tif(d==\"S\"):\n\t\t\tcont=pn+20\n\t\t\tprint(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)\n\t\t\tprint(\"Total:\",\"R$\",round(cont,2))\n\t\telse:\n\t\t\tcont=pn\n\t\t\tprint(\"Entradas\",\",\",round(pn,2),\",\",ds,\",\",d)\n\t\t\tprint(\"Total:\",\"R$\",round(cont,2))\nelse:\n\tprint(\"Entradas:\",round(pn,2),ds,d)\n\tprint(\"Dados invalidos\")"
+}

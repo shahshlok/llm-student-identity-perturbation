@@ -1,0 +1,71 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "528",
+    "assessment_id": "4981",
+    "exercise_id": "5241",
+    "student_id": "8785",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "consumo= int(input())\n\nif consumo <= 10:\n\ttotal = consumo * 2. + 20. \nelif consumo >= 10 and consumo < 20:\n\ttotal = consumo * 2.5 + 20.\nelif consumo >= 20 and consumo < 40:\n\ttotal = consumo * 2.75 + 20\nelif 40 >= consumo:\n\ttotal = consumo * 3. + 20.\nelse:\n\ttotal= 0.\nprint(round(total,2))",
+    "grade": 33.0,
+    "pass_count": 1,
+    "failed_test_indices_0idx": [
+      0,
+      1
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "consumo= int(input())\n\nif consumo <= 10:\n\ttotal = consumo * 2. + 20. \nelif consumo >= 10 and consumo < 20:\n\ttotal = consumo * 2.5 + 20.\nelif consumo >= 20 and consumo < 40:\n\ttotal = consumo * 2.75 + 20\nelif 40 >= consumo:\n\ttotal = consumo * 3. + 20.\nelse:\n\ttotal= 0.\n\tprint(round(total,2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "400",
+        "expected": "1220.0",
+        "actual": "0.0"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "50",
+        "expected": "170.0",
+        "actual": "0.0"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "20",
+        "expected": "75.0",
+        "actual": ""
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "regressed",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 12,
+        "end_line_0idx": 12,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 12,
+        "end_line_0idx": 12
+      }
+    ]
+  }
+}

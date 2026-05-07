@@ -1,0 +1,37 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "527",
+    "assessment_id": "4992",
+    "exercise_id": "6094",
+    "student_id": "7223",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "Valor_Plano = float(input(\"Valor do Plano: \"))\nMembros = int(input(\"Numero de Membros: \"))\n\nif float(Membros==1):\n Desconto = 0\nelif float(Membros==2):\n Desconto = 0.15\nelif float(Membros==3):\n Desconto = 0.25\t\t\nelif float(Membros>=4):\n Desconto = 0.35\n\n#Valor_com_Desconto = round(float((Valor_Plano*Membros)*(1-Desconto)),2)\nValor_do_Desconto = (Valor_Plano*Desconto)*Membros\n#print(Valor_com_Desconto)\nValor_final = round(float((Valor_Plano*Membros)-Valor_do_Desconto),2)\nprint(Valor_final)",
+    "coarse_path_steps": [
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 3,
+        "target_end_line_0idx": 3
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 5,
+        "target_end_line_0idx": 9
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

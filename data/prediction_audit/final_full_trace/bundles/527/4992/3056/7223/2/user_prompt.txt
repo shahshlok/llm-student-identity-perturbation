@@ -1,0 +1,1150 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 527
+- assessment_id: 4992
+- assessment_title: Lab 3 - Estrutura Condicional Encadeada
+- exercise_id: 3056
+- student_id: 7223
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-09-14T14:45:15.882000
+
+Execution Result
+
+- submitted_at: 2023-09-14 14:54:06
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [0]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "256.8"
+    expected: "1640.8"
+    actual: "1640.8000000000002"
+  - test_index_0idx: 1 [PASS]
+    input: "11"
+    expected: "166.0"
+    actual: "166.0"
+  - test_index_0idx: 2 [PASS]
+    input: "9638.75"
+    expected: "57932.5"
+    actual: "57932.5"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 170
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	10	0	0	0	0	["V"]	[""]	+input
+313	16	0	1	0	1	["a"]	[""]	+input
+494	20	0	2	0	2	["l"]	[""]	+input
+754	24	0	3	0	3	["o"]	[""]	+input
+887	27	0	4	0	4	["r"]	[""]	+input
+1485	32	0	5	0	5	[" "]	[""]	+input
+1554	35	0	6	0	6	["="]	[""]	+input
+1690	40	0	7	0	7	[" "]	[""]	+input
+3312	44	0	8	0	8	["i"]	[""]	+input
+3577	48	0	9	0	9	["n"]	[""]	+input
+3955	51	0	9	0	10	[""]	["n"]	+delete
+4055	55	0	8	0	9	[""]	["i"]	+delete
+4571	60	0	8	0	8	["f"]	[""]	+input
+4645	64	0	9	0	9	["l"]	[""]	+input
+4879	68	0	10	0	10	["o"]	[""]	+input
+4897	71	0	11	0	11	["a"]	[""]	+input
+5020	75	0	12	0	12	["t"]	[""]	+input
+5884	81	0	13	0	13	["()"]	[""]	+input
+6856	87	0	14	0	14	["i"]	[""]	+input
+7029	91	0	15	0	15	["n"]	[""]	+input
+8434	94	0	15	0	16	[""]	["n"]	+delete
+9263	99	0	15	0	15	["n"]	[""]	+input
+9508	103	0	16	0	16	["p"]	[""]	+input
+9709	107	0	17	0	17	["u"]	[""]	+input
+9811	111	0	18	0	18	["t"]	[""]	+input
+10577	116	0	19	0	19	["()"]	[""]	+input
+12298	123	0	20	0	20	["A"]	[""]	+input
+12940	129	0	20	0	21	[""]	["A"]	+delete
+13831	135	0	20	0	20	["A"]	[""]	+input
+14403	141	0	20	0	21	[""]	["A"]	+delete
+15042	147	0	20	0	20	["\"\""]	[""]	+input
+15655	154	0	21	0	21	["A"]	[""]	+input
+16158	161	0	22	0	22	["r"]	[""]	+input
+16256	164	0	23	0	23	["e"]	[""]	+input
+16321	168	0	24	0	24	["a"]	[""]	+input
+17172	174	0	25	0	25	[":"]	[""]	+input
+20619	189	0	29	0	29	["",""]	[""]	+input
+20962	195	1	0	1	0	["Valor = float(input(\"Area:\"))"]	[""]	paste
+28323	201	1	4	1	5	[""]	["r"]	+delete
+28430	205	1	3	1	4	[""]	["o"]	+delete
+28581	209	1	2	1	3	[""]	["l"]	+delete
+28757	213	1	1	1	2	[""]	["a"]	+delete
+28931	217	1	0	1	1	[""]	["V"]	+delete
+29169	223	1	0	1	0	["A"]	[""]	+input
+29750	230	1	1	1	1	["r"]	[""]	+input
+29811	233	1	2	1	2	["e"]	[""]	+input
+29898	237	1	3	1	3	["a"]	[""]	+input
+33498	253	0	5	0	5	["Area"]	[""]	paste
+36151	264	0	0	0	5	[""]	["Valor"]	cut
+39484	278	1	0	1	4	[""]	["Area"]	cut
+40307	281	1	0	1	0	["Area"]	[""]	undo
+40927	285	1	0	1	4	["Area"]	["Area"]	paste
+43287	299	1	0	1	4	["V"]	["Area"]	+input
+43626	305	1	1	1	1	["a"]	[""]	+input
+43870	309	1	2	1	2	["l"]	[""]	+input
+44590	313	1	3	1	3	["o"]	[""]	+input
+44661	316	1	4	1	4	["r"]	[""]	+input
+71739	321	1	29	1	29	["",""]	[""]	+input
+77810	328	0	24	0	24	[" "]	[""]	+input
+77989	332	0	25	0	25	["e"]	[""]	+input
+78093	336	0	26	0	26	["m"]	[""]	+input
+78258	340	0	27	0	27	[" "]	[""]	+input
+78576	344	0	28	0	28	["h"]	[""]	+input
+78618	347	0	29	0	29	["a"]	[""]	+input
+80476	352	1	29	1	29	["",""]	[""]	+input
+96836	358	2	0	2	0	["i"]	[""]	+input
+96923	362	2	1	2	1	["f"]	[""]	+input
+98568	365	2	2	2	2	["",""]	[""]	+input
+102678	373	2	2	2	2	[" "]	[""]	+input
+106572	379	2	3	2	3	["A"]	[""]	+input
+106987	385	2	4	2	4	["r"]	[""]	+input
+107009	388	2	5	2	5	["e"]	[""]	+input
+107139	392	2	6	2	6	["a"]	[""]	+input
+116457	398	2	3	2	3	["0"]	[""]	+input
+117018	403	2	4	2	4	["<"]	[""]	+input
+119488	421	2	9	2	9	["<"]	[""]	+input
+120724	425	2	9	2	10	[""]	["<"]	+delete
+122083	431	2	9	2	9	["<"]	[""]	+input
+122661	436	2	10	2	10	["="]	[""]	+input
+123791	440	2	11	2	11	["1"]	[""]	+input
+123879	443	2	12	2	12	["0"]	[""]	+input
+124014	448	2	13	2	13	["0"]	[""]	+input
+124167	452	2	14	2	14	["0"]	[""]	+input
+124697	456	2	15	2	15	["0"]	[""]	+input
+130951	462	2	16	2	16	["",""]	[""]	+input
+132789	467	3	0	3	0	["\t"]	[""]	+input
+134540	472	3	1	3	1	["c"]	[""]	+input
+135043	475	3	1	3	2	[""]	["c"]	+delete
+135610	482	3	1	3	1	["C"]	[""]	+input
+135906	488	3	2	3	2	["u"]	[""]	+input
+136043	491	3	3	3	3	["s"]	[""]	+input
+136237	496	3	4	3	4	["t"]	[""]	+input
+136350	499	3	5	3	5	["o"]	[""]	+input
+136642	503	3	6	3	6	["",""]	[""]	+input
+136642	504	4	0	4	0	["\t"]	[""]	+input
+137311	512	4	1	4	1	["F"]	[""]	+input
+137848	518	4	2	4	2	["e"]	[""]	+input
+138031	522	4	3	4	3	["r"]	[""]	+input
+138218	526	4	4	4	4	["t"]	[""]	+input
+138335	530	4	5	4	5	["i"]	[""]	+input
+138564	534	4	6	4	6	["z"]	[""]	+input
+138698	538	4	7	4	7	["i"]	[""]	+input
+138864	542	4	8	4	8	["l"]	[""]	+input
+139822	546	4	9	4	9	["i"]	[""]	+input
+139999	550	4	10	4	10	["z"]	[""]	+input
+140161	554	4	11	4	11	["a"]	[""]	+input
+140356	558	4	12	4	12	["n"]	[""]	+input
+140478	562	4	13	4	13	["t"]	[""]	+input
+140514	565	4	14	4	14	["e"]	[""]	+input
+141696	570	4	15	4	15	[" "]	[""]	+input
+141773	574	4	16	4	16	["="]	[""]	+input
+141869	578	4	17	4	17	[" "]	[""]	+input
+143464	583	3	6	3	6	[" "]	[""]	+input
+143674	587	3	7	3	7	["="]	[""]	+input
+148418	591	3	8	3	8	[" "]	[""]	+input
+148618	595	3	9	3	9	["6"]	[""]	+input
+150413	599	3	10	3	10	[" "]	[""]	+input
+151915	602	3	10	3	11	[""]	[" "]	+delete
+152980	608	4	18	4	18	["1"]	[""]	+input
+153065	612	4	19	4	19	["0"]	[""]	+input
+153716	616	4	20	4	20	["0"]	[""]	+input
+157921	626	4	21	4	21	["",""]	[""]	+input
+157921	627	5	0	5	0	["\t"]	[""]	+input
+158285	633	5	1	5	1	["if 0<Area<=10000","\tCusto = 6","\tFertizilizante = 100"]	[""]	paste
+160694	639	5	0	5	1	[""]	["\t"]	+delete
+161153	644	5	0	5	0	["e"]	[""]	+input
+161186	647	5	1	5	1	["l"]	[""]	+input
+175558	663	5	5	5	6	[""]	["0"]	+delete
+175651	667	5	5	5	5	["1"]	[""]	+input
+175796	672	5	6	5	6	["0"]	[""]	+input
+175967	676	5	7	5	7	["0"]	[""]	+input
+176296	680	5	8	5	8	["0"]	[""]	+input
+176697	684	5	9	5	9	["0"]	[""]	+input
+180166	691	5	17	5	18	[""]	["1"]	+delete
+180335	696	5	17	5	17	["2"]	[""]	+input
+183238	700	6	9	6	10	[""]	["6"]	+delete
+184690	705	6	9	6	9	["5"]	[""]	+input
+184753	708	6	10	6	10	["."]	[""]	+input
+184883	713	6	11	6	11	["5"]	[""]	+input
+187793	719	7	19	7	20	[""]	["0"]	+delete
+188080	725	7	19	7	19	["5"]	[""]	+input
+194150	736	8	0	8	0	["elif 10000<Area<=20000","\tCusto = 5.5","\tFertizilizante = 150"]	[""]	paste
+195521	743	11	0	11	0	["elif 10000<Area<=20000","\tCusto = 5.5","\tFertizilizante = 150"]	[""]	paste
+198413	750	8	5	8	6	[""]	["1"]	+delete
+198546	755	8	5	8	5	["2"]	[""]	+input
+201565	808	8	17	8	18	[""]	["2"]	+delete
+201758	812	8	17	8	17	["3"]	[""]	+input
+215913	850	11	21	11	22	[""]	["0"]	+delete
+216104	854	11	20	11	21	[""]	["0"]	+delete
+216264	858	11	19	11	20	[""]	["0"]	+delete
+216481	862	11	18	11	19	[""]	["0"]	+delete
+216663	866	11	17	11	18	[""]	["2"]	+delete
+217260	870	11	16	11	17	[""]	["="]	+delete
+217679	874	11	15	11	16	[""]	["<"]	+delete
+220181	882	11	5	11	6	[""]	["1"]	+delete
+220336	887	11	5	11	5	["3"]	[""]	+input
+228895	891	12	9	12	10	[""]	["5"]	+delete
+229069	896	12	9	12	9	["4"]	[""]	+input
+231106	900	9	11	9	12	[""]	["5"]	+delete
+231275	904	9	10	9	11	[""]	["."]	+delete
+234481	909	10	19	10	20	[""]	["5"]	+delete
+234685	913	10	18	10	19	[""]	["1"]	+delete
+234792	918	10	18	10	18	["2"]	[""]	+input
+235854	922	10	19	10	19	["0"]	[""]	+input
+238295	926	13	18	13	19	[""]	["1"]	+delete
+238405	931	13	18	13	18	["2"]	[""]	+input
+260403	942	2	16	2	16	[":"]	[""]	+input
+262261	949	5	22	5	22	[":"]	[""]	+input
+268225	965	8	22	8	22	[":"]	[""]	+input
+271015	972	11	15	11	15	[":"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 274500
+- raw_log_line: 981
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Area = float(input("Area em ha:"))
+Valor = float(input("Area:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertizilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertizilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertizilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertizilizante = 250
+```
+Run Output
+```text
+File "main.py", line 3
+if 0<Area<=10000
+SyntaxError: invalid syntax
+```
+
+Edit Segment 2
+- raw_change_event_count: 66
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+294379	986	1	0	1	29	[""]	["Valor = float(input(\"Area:\"))"]	cut
+295803	990	0	34	1	0	[""]	["",""]	+delete
+298201	996	12	21	12	21	["",""]	[""]	+input
+298202	997	13	0	13	0	["\t"]	[""]	+input
+299223	1002	13	1	13	1	["",""]	[""]	+input
+299225	1003	14	0	14	0	["\t"]	[""]	+input
+299556	1008	14	0	14	1	[""]	["\t"]	+delete
+300227	1013	14	0	14	0	["Valor = float(input(\"Area:\"))"]	[""]	paste
+301411	1017	14	28	14	29	[""]	[")"]	+delete
+301908	1020	14	27	14	28	[""]	[")"]	+delete
+301942	1023	14	26	14	27	[""]	["\""]	+delete
+302027	1026	14	25	14	26	[""]	[":"]	+delete
+302057	1029	14	24	14	25	[""]	["a"]	+delete
+302090	1032	14	23	14	24	[""]	["e"]	+delete
+302120	1035	14	22	14	23	[""]	["r"]	+delete
+302135	1038	14	21	14	22	[""]	["A"]	+delete
+302145	1041	14	20	14	21	[""]	["\""]	+delete
+302212	1044	14	19	14	20	[""]	["("]	+delete
+302225	1047	14	18	14	19	[""]	["t"]	+delete
+302235	1050	14	17	14	18	[""]	["u"]	+delete
+302241	1053	14	16	14	17	[""]	["p"]	+delete
+302277	1056	14	15	14	16	[""]	["n"]	+delete
+302317	1059	14	14	14	15	[""]	["i"]	+delete
+302328	1062	14	13	14	14	[""]	["("]	+delete
+302354	1065	14	12	14	13	[""]	["t"]	+delete
+302387	1068	14	11	14	12	[""]	["a"]	+delete
+302420	1071	14	10	14	11	[""]	["o"]	+delete
+302480	1074	14	9	14	10	[""]	["l"]	+delete
+302496	1077	14	8	14	9	[""]	["f"]	+delete
+302628	1080	14	7	14	8	[""]	[" "]	+delete
+302644	1083	14	6	14	7	[""]	["="]	+delete
+303859	1088	14	6	14	6	["="]	[""]	+input
+303920	1092	14	7	14	7	[" "]	[""]	+input
+305249	1100	14	8	14	8	["f"]	[""]	+input
+305350	1104	14	9	14	9	["l"]	[""]	+input
+305573	1108	14	10	14	10	["o"]	[""]	+input
+305661	1111	14	11	14	11	["a"]	[""]	+input
+305894	1116	14	12	14	12	["t"]	[""]	+input
+307057	1121	14	13	14	13	["()"]	[""]	+input
+323129	1128	14	14	14	14	["A"]	[""]	+input
+323563	1135	14	15	14	15	["r"]	[""]	+input
+323684	1138	14	16	14	16	["e"]	[""]	+input
+323755	1141	14	17	14	17	["a"]	[""]	+input
+326629	1148	14	18	14	18	["*"]	[""]	+input
+327870	1155	14	19	14	19	["C"]	[""]	+input
+328521	1161	14	20	14	20	["u"]	[""]	+input
+328555	1164	14	21	14	21	["s"]	[""]	+input
+328822	1169	14	22	14	22	["t"]	[""]	+input
+328908	1173	14	23	14	23	["o"]	[""]	+input
+332112	1178	14	24	14	24	["+"]	[""]	+input
+333131	1184	14	25	14	25	["F"]	[""]	+input
+333451	1191	14	26	14	26	["e"]	[""]	+input
+333582	1194	14	27	14	27	["r"]	[""]	+input
+333774	1199	14	28	14	28	["t"]	[""]	+input
+333999	1203	14	29	14	29	["i"]	[""]	+input
+334790	1207	14	30	14	30	["z"]	[""]	+input
+335136	1210	14	30	14	31	[""]	["z"]	+delete
+335301	1215	14	30	14	30	["l"]	[""]	+input
+335462	1219	14	31	14	31	["i"]	[""]	+input
+335563	1222	14	32	14	32	["z"]	[""]	+input
+335756	1227	14	33	14	33	["a"]	[""]	+input
+335853	1230	14	34	14	34	["n"]	[""]	+input
+336011	1235	14	35	14	35	["t"]	[""]	+input
+336174	1238	14	36	14	36	["e"]	[""]	+input
+338793	1245	14	19	14	19	["("]	[""]	+input
+340790	1252	14	39	14	39	[")"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 342922
+- raw_log_line: 1258
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertizilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertizilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertizilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertizilizante = 250
+	
+Valor = float(Area*(Custo+Fertilizante))
+```
+Run Output
+```text
+Area em ha:9000
+```
+
+Edit Segment 3
+- raw_change_event_count: 23
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+389981	1268	14	40	14	40	["p"]	[""]	+input
+390296	1272	14	41	14	41	["r"]	[""]	+input
+390416	1276	14	42	14	42	["i"]	[""]	+input
+390615	1280	14	43	14	43	["n"]	[""]	+input
+392023	1283	14	43	14	44	[""]	["n"]	+delete
+392163	1287	14	42	14	43	[""]	["i"]	+delete
+392267	1291	14	41	14	42	[""]	["r"]	+delete
+392541	1295	14	40	14	41	[""]	["p"]	+delete
+395504	1322	14	0	14	0	["#"]	[""]	+input
+398601	1327	14	41	14	41	["",""]	[""]	+input
+399213	1333	15	0	15	0	["p"]	[""]	+input
+399390	1337	15	1	15	1	["r"]	[""]	+input
+399540	1341	15	2	15	2	["i"]	[""]	+input
+399700	1345	15	3	15	3	["n"]	[""]	+input
+399829	1349	15	4	15	4	["t"]	[""]	+input
+400605	1354	15	5	15	5	["()"]	[""]	+input
+402884	1361	15	6	15	6	["A"]	[""]	+input
+404052	1367	15	6	15	7	[""]	["A"]	+delete
+404548	1374	15	6	15	6	["C"]	[""]	+input
+405045	1380	15	7	15	7	["u"]	[""]	+input
+405114	1384	15	8	15	8	["s"]	[""]	+input
+405298	1388	15	9	15	9	["t"]	[""]	+input
+405377	1391	15	10	15	10	["o"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 408639
+- raw_log_line: 1401
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertizilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertizilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertizilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertizilizante = 250
+	
+#Valor = float(Area*(Custo+Fertilizante))
+print(Custo)
+```
+Run Output
+```text
+Area em ha:12000
+Traceback (most recent call last):
+File "main.py", line 15, in <module>
+Valor = float(Area*(Custo+Fertilizante))
+NameError: name 'Fertilizante' is not defined
+```
+
+Local Run 4
+- event_time_delta_ms: 424812
+- raw_log_line: 1405
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertizilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertizilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertizilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertizilizante = 250
+	
+#Valor = float(Area*(Custo+Fertilizante))
+print(Custo)
+```
+Run Output
+```text
+Area em ha:11000
+5.5
+```
+
+Edit Segment 4
+- raw_change_event_count: 20
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+432382	1409	15	10	15	11	[""]	["o"]	+delete
+432529	1413	15	9	15	10	[""]	["t"]	+delete
+432710	1417	15	8	15	9	[""]	["s"]	+delete
+432906	1421	15	7	15	8	[""]	["u"]	+delete
+433434	1425	15	6	15	7	[""]	["C"]	+delete
+433777	1432	15	6	15	6	["F"]	[""]	+input
+434075	1438	15	7	15	7	["e"]	[""]	+input
+434281	1442	15	8	15	8	["r"]	[""]	+input
+434482	1446	15	9	15	9	["t"]	[""]	+input
+434646	1450	15	10	15	10	["i"]	[""]	+input
+434794	1454	15	11	15	11	["l"]	[""]	+input
+435020	1458	15	12	15	12	["i"]	[""]	+input
+435116	1462	15	13	15	13	["z"]	[""]	+input
+435307	1466	15	14	15	14	["a"]	[""]	+input
+435438	1470	15	15	15	15	["n"]	[""]	+input
+435584	1474	15	16	15	16	["t"]	[""]	+input
+435626	1477	15	17	15	17	["e"]	[""]	+input
+436518	1481	15	18	15	18	["",""]	[""]	+input
+436519	1482	16	0	16	0	["\t  "]	[""]	+input
+437472	1487	16	2	16	3	[""]	[" "]	+delete
+
+Local Run 5
+- event_time_delta_ms: 440573
+- raw_log_line: 1492
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertizilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertizilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertizilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertizilizante = 250
+	
+#Valor = float(Area*(Custo+Fertilizante))
+print(Fertilizante
+	 )
+```
+Run Output
+```text
+
+```
+
+Edit Segment 5
+- raw_change_event_count: 13
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+455205	1497	12	10	12	11	[""]	["z"]	+delete
+459247	1502	12	10	12	10	["z"]	[""]	+input
+464085	1506	12	7	12	8	[""]	["i"]	+delete
+464488	1510	12	6	12	7	[""]	["z"]	+delete
+466141	1515	9	7	9	8	[""]	["i"]	+delete
+466304	1519	9	6	9	7	[""]	["z"]	+delete
+467788	1524	6	7	6	8	[""]	["i"]	+delete
+467898	1528	6	6	6	7	[""]	["z"]	+delete
+469704	1533	3	7	3	8	[""]	["i"]	+delete
+469953	1537	3	6	3	7	[""]	["z"]	+delete
+473339	1545	16	1	16	2	[""]	[" "]	+delete
+473537	1549	16	0	16	1	[""]	["\t"]	+delete
+473720	1553	15	18	16	0	[""]	["",""]	+delete
+
+Local Run 6
+- event_time_delta_ms: 478575
+- raw_log_line: 1564
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertilizante = 250
+	
+#Valor = float(Area*(Custo+Fertilizante))
+print(Fertilizante)
+```
+Run Output
+```text
+Area em ha:11000
+Traceback (most recent call last):
+File "main.py", line 16, in <module>
+print(Fertilizante
+NameError: name 'Fertilizante' is not defined
+```
+
+Edit Segment 6
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+485658	1569	15	0	15	19	[""]	["print(Fertilizante)"]	+delete
+487745	1579	14	0	14	1	[""]	["#"]	+delete
+
+Local Run 7
+- event_time_delta_ms: 490927
+- raw_log_line: 1586
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertilizante = 250
+	
+Valor = float(Area*(Custo+Fertilizante))
+
+```
+Run Output
+```text
+Area em ha:11000
+150
+```
+
+Edit Segment 7
+- raw_change_event_count: 17
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+494970	1592	15	0	15	0	["p"]	[""]	+input
+495098	1596	15	1	15	1	["r"]	[""]	+input
+495220	1600	15	2	15	2	["i"]	[""]	+input
+495426	1604	15	3	15	3	["n"]	[""]	+input
+495558	1608	15	4	15	4	["t"]	[""]	+input
+496898	1613	15	5	15	5	["()"]	[""]	+input
+497666	1619	15	6	15	6	["v"]	[""]	+input
+497760	1622	15	7	15	7	["a"]	[""]	+input
+497871	1626	15	8	15	8	["l"]	[""]	+input
+498181	1630	15	8	15	9	[""]	["l"]	+delete
+498370	1634	15	7	15	8	[""]	["a"]	+delete
+498537	1638	15	6	15	7	[""]	["v"]	+delete
+498863	1644	15	6	15	6	["V"]	[""]	+input
+499173	1651	15	7	15	7	["a"]	[""]	+input
+499285	1654	15	8	15	8	["l"]	[""]	+input
+499506	1659	15	9	15	9	["o"]	[""]	+input
+499563	1662	15	10	15	10	["r"]	[""]	+input
+
+Local Run 8
+- event_time_delta_ms: 502963
+- raw_log_line: 1668
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertilizante = 250
+	
+Valor = float(Area*(Custo+Fertilizante))
+print(Valor)
+```
+Run Output
+```text
+
+```
+
+Local Run 9
+- event_time_delta_ms: 512690
+- raw_log_line: 1671
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertilizante = 250
+	
+Valor = float(Area*(Custo+Fertilizante))
+print(Valor)
+```
+Run Output
+```text
+Area em ha:11000
+1710500.0
+```
+
+Edit Segment 8
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+517840	1675	14	19	14	20	[""]	["("]	+delete
+519263	1680	14	38	14	39	[""]	[")"]	+delete
+
+Local Run 10
+- event_time_delta_ms: 524719
+- raw_log_line: 1685
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertilizante = 250
+	
+Valor = float(Area*Custo+Fertilizante)
+print(Valor)
+```
+Run Output
+```text
+
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 531142
+- raw_log_line: 1687
+- feedback: "You're almost there! Your code is 67% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertilizante = 250
+	
+Valor = float(Area*Custo+Fertilizante)
+print(Valor)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-09-14T14:54:20.505000
+
+Execution Result
+
+- submitted_at: 2023-09-14 14:56:55
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "256.8"
+    expected: "1640.8"
+    actual: "(1641, 2)"
+  - test_index_0idx: 1 [FAIL]
+    input: "11"
+    expected: "166.0"
+    actual: "(166, 2)"
+  - test_index_0idx: 2 [FAIL]
+    input: "9638.75"
+    expected: "57932.5"
+    actual: "(57932, 2)"
+
+Attempt Start Code
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertilizante = 250
+	
+Valor = float(Area*Custo+Fertilizante)
+print(Valor)
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1694
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertilizante = 250
+	
+Valor = float(Area*Custo+Fertilizante)
+print(Valor)
+```
+Run Output
+```text
+Area em ha:12000
+66150.0
+```
+
+Local Run 2
+- event_time_delta_ms: 15899
+- raw_log_line: 1698
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertilizante = 250
+	
+Valor = float(Area*Custo+Fertilizante)
+print(Valor)
+```
+Run Output
+```text
+Area em ha:45000
+202750.0
+```
+
+Edit Segment 1
+- raw_change_event_count: 10
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+36017	1703	15	6	15	6	["r"]	[""]	+input
+36112	1706	15	7	15	7	["p"]	[""]	+input
+36377	1710	15	7	15	8	[""]	["p"]	+delete
+36563	1715	15	7	15	7	["o"]	[""]	+input
+36831	1719	15	8	15	8	["u"]	[""]	+input
+37039	1723	15	9	15	9	["n"]	[""]	+input
+37112	1726	15	10	15	10	["d"]	[""]	+input
+38496	1732	15	11	15	11	["("]	[""]	+input
+41535	1741	15	17	15	17	[","]	[""]	+input
+41763	1745	15	18	15	18	["2"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 46082
+- raw_log_line: 1752
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertilizante = 250
+	
+Valor = float(Area*Custo+Fertilizante)
+print(round(Valor,2)
+```
+Run Output
+```text
+Area em ha:5500.75
+33104.5
+```
+
+Edit Segment 2
+- raw_change_event_count: 20
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+84581	1756	15	11	15	11	["",""]	[""]	+input
+84582	1757	16	0	16	0	["\t\t"]	[""]	+input
+85195	1762	16	1	16	2	[""]	["\t"]	+delete
+85379	1766	16	0	16	1	[""]	["\t"]	+delete
+85534	1770	15	11	16	0	[""]	["",""]	+delete
+85691	1775	15	10	15	11	[""]	["d"]	+delete
+85862	1779	15	9	15	10	[""]	["n"]	+delete
+86061	1783	15	8	15	9	[""]	["u"]	+delete
+86236	1787	15	7	15	8	[""]	["o"]	+delete
+86454	1791	15	6	15	7	[""]	["r"]	+delete
+86787	1795	15	5	15	6	[""]	["("]	+delete
+90050	1800	15	12	15	13	[""]	["2"]	+delete
+90174	1804	15	11	15	12	[""]	[","]	+delete
+93418	1810	14	8	14	8	["r"]	[""]	+input
+93444	1813	14	9	14	9	["o"]	[""]	+input
+94641	1818	14	10	14	10	["u"]	[""]	+input
+94897	1822	14	11	14	11	["n"]	[""]	+input
+95050	1826	14	12	14	12	["d"]	[""]	+input
+96396	1848	14	13	14	13	["("]	[""]	+input
+98371	1855	14	44	14	44	[")"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 102052
+- raw_log_line: 1862
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertilizante = 250
+	
+Valor = round(float(Area*Custo+Fertilizante))
+print(Valor)
+```
+Run Output
+```text
+File "main.py", line 17
+SyntaxError: unexpected EOF while parsing
+```
+
+Edit Segment 3
+- raw_change_event_count: 11
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+114100	1869	14	8	14	8	["("]	[""]	+input
+116178	1876	14	46	14	46	[")"]	[""]	+input
+117375	1884	14	46	14	46	[","]	[""]	+input
+117608	1888	14	47	14	47	["2"]	[""]	+input
+117981	1891	14	48	14	48	["",""]	[""]	+input
+117982	1892	15	0	15	0	["\t\t  "]	[""]	+input
+144589	1897	15	3	15	4	[""]	[" "]	+delete
+144748	1901	15	2	15	3	[""]	[" "]	+delete
+145283	1905	15	1	15	2	[""]	["\t"]	+delete
+145749	1909	15	0	15	1	[""]	["\t"]	+delete
+146129	1913	14	48	15	0	[""]	["",""]	+delete
+
+Submit Anchor 1
+- event_time_delta_ms: 155482
+- raw_log_line: 1919
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertilizante = 250
+	
+Valor = (round(float(Area*Custo+Fertilizante)),2)
+print(Valor)
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-09-14T14:57:05.252000
+
+Execution Result
+
+- submitted_at: 2023-09-14 14:57:43
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "256.8"
+    expected: "1640.8"
+    actual: "(1641, 2)"
+  - test_index_0idx: 1 [FAIL]
+    input: "11"
+    expected: "166.0"
+    actual: "(166, 2)"
+  - test_index_0idx: 2 [FAIL]
+    input: "9638.75"
+    expected: "57932.5"
+    actual: "(57932, 2)"
+
+Attempt Start Code
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertilizante = 250
+	
+Valor = (round(float(Area*Custo+Fertilizante)),2)
+print(Valor)
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 7
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1946	14	19	14	20	[""]	["t"]	+delete
+151	1950	14	18	14	19	[""]	["a"]	+delete
+307	1954	14	17	14	18	[""]	["o"]	+delete
+464	1958	14	16	14	17	[""]	["l"]	+delete
+858	1962	14	15	14	16	[""]	["f"]	+delete
+1485	1966	14	14	14	15	[""]	["("]	+delete
+5566	2028	14	38	14	39	[""]	[")"]	+delete
+
+Local Run 1
+- event_time_delta_ms: 9486
+- raw_log_line: 2036
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertilizante = 250
+	
+Valor = (round(Area*Custo+Fertilizante),2)
+print(Valor)
+```
+Run Output
+```text
+Area em ha:12000
+66150
+```
+
+Edit Segment 2
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+27055	2041	14	8	14	9	[""]	["("]	+delete
+29087	2046	14	40	14	41	[""]	[")"]	+delete
+
+Local Run 2
+- event_time_delta_ms: 33499
+- raw_log_line: 2053
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertilizante = 250
+	
+Valor = round(Area*Custo+Fertilizante),2
+print(Valor)
+```
+Run Output
+```text
+Area em ha:12000
+(66150, 2)
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 38195
+- raw_log_line: 2055
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+Area = float(input("Area em ha:"))
+if 0<Area<=10000:
+	Custo = 6
+	Fertilizante = 100
+elif 10000<Area<=20000:
+	Custo = 5.5
+	Fertilizante = 150
+elif 20000<Area<=30000:
+	Custo = 5
+	Fertilizante = 200
+elif 30000<Area:
+	Custo = 4.5
+	Fertilizante = 250
+	
+Valor = round(Area*Custo+Fertilizante),2
+print(Valor)
+```

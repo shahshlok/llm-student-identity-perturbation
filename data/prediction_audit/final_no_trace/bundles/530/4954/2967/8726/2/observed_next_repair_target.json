@@ -1,0 +1,81 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "530",
+    "assessment_id": "4954",
+    "exercise_id": "2967",
+    "student_id": "8726",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "vc = float(input(\"qual a sua altura?: \"))\ndooutro = float(input(\"quala altura do outro\"))\n\nif vc or dooutro >= 1.37:\n\tprint(\"Sim\")\n\t\nelse: \n\tprint(\"Nao\")\n\tprint(max(vc, dooutro))\n\t\n\t\t\t\t\t",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "vc = float(input(\"qual a sua altura?: \"))\ndooutro = float(input(\"quala altura do outro\"))\n\n\nprint(max(vc, dooutro))\nif vc or dooutro <= 1.37:\n\tprint(\"Sim\")\n\t\nelse: \n\tprint(\"Nao\")\n\n\t\n\t\t\t\t\t",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "1.25\n1.26",
+        "expected": "Nao\n1.26",
+        "actual": "1.26\nSim"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "1.20\n1.53",
+        "expected": "Sim\n1.53",
+        "actual": "1.53\nSim"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "1.85\n1.9",
+        "expected": "Sim\n1.9",
+        "actual": "1.9\nSim"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 5,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 10,
+        "end_line_0idx": 10,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 4,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 5
+      },
+      {
+        "start_line_0idx": 10,
+        "end_line_0idx": 10
+      }
+    ]
+  }
+}

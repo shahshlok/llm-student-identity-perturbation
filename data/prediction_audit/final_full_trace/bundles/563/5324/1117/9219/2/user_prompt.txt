@@ -1,0 +1,1088 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 563
+- assessment_id: 5324
+- assessment_title: Lab 3: Estrutura Condicional Encadeada
+- exercise_id: 1117
+- student_id: 9219
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-02-01T12:59:19.716000
+
+Execution Result
+
+- submitted_at: 2024-02-01 13:21:47
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "70.56\n2\nN"
+    expected: "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92"
+    actual: "Entradas:  70.56 , 2 , N\nTotal:  52.92"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75"
+    actual: "Entradas:  100.75 , 6 , S\nTotal:  100.75"
+  - test_index_0idx: 2 [FAIL]
+    input: "0.00\n9\nS"
+    expected: "Entradas: 0.0 , 9 , S\nDados invalidos"
+    actual: "Entradas:  0.0 , 9 , S"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 366
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["p"]	[""]	+input
+142	11	0	1	0	1	[" "]	[""]	+input
+271	15	0	2	0	2	["="]	[""]	+input
+399	19	0	3	0	3	[" "]	[""]	+input
+2451	23	0	4	0	4	["f"]	[""]	+input
+2770	27	0	5	0	5	["l"]	[""]	+input
+2879	30	0	6	0	6	["o"]	[""]	+input
+2961	33	0	7	0	7	["a"]	[""]	+input
+3295	39	0	8	0	8	["t"]	[""]	+input
+4128	44	0	9	0	9	["()"]	[""]	+input
+4691	50	0	10	0	10	["n"]	[""]	+input
+5280	53	0	10	0	11	[""]	["n"]	+delete
+7696	58	0	10	0	10	["i"]	[""]	+input
+7886	62	0	11	0	11	["n"]	[""]	+input
+8063	65	0	12	0	12	["p"]	[""]	+input
+8464	70	0	13	0	13	["u"]	[""]	+input
+8688	74	0	14	0	14	["t"]	[""]	+input
+9795	79	0	15	0	15	["()"]	[""]	+input
+10531	86	0	16	0	16	["\"\""]	[""]	+input
+11826	93	0	17	0	17	["V"]	[""]	+input
+13670	100	0	18	0	18	["A"]	[""]	+input
+13840	104	0	19	0	19	["L"]	[""]	+input
+13920	107	0	20	0	20	["O"]	[""]	+input
+14195	112	0	21	0	21	["E"]	[""]	+input
+14664	115	0	21	0	22	[""]	["E"]	+delete
+14768	119	0	21	0	21	["R"]	[""]	+input
+15663	125	0	22	0	22	[":"]	[""]	+input
+16751	132	0	23	0	23	[" "]	[""]	+input
+17070	136	0	24	0	24	[" "]	[""]	+input
+17825	142	0	28	0	28	["",""]	[""]	+input
+19425	148	1	0	1	0	["d"]	[""]	+input
+21280	152	1	1	1	1	["s"]	[""]	+input
+21663	156	1	2	1	2	[" "]	[""]	+input
+21748	159	1	3	1	3	["="]	[""]	+input
+21887	164	1	4	1	4	[" "]	[""]	+input
+24738	168	1	5	1	5	["i"]	[""]	+input
+26193	172	1	6	1	6	["n"]	[""]	+input
+26688	176	1	7	1	7	["p"]	[""]	+input
+26885	179	1	8	1	8	["u"]	[""]	+input
+27055	183	1	9	1	9	["t"]	[""]	+input
+28336	189	1	10	1	10	["()"]	[""]	+input
+29904	194	1	11	1	11	["\"\""]	[""]	+input
+31346	199	1	12	1	12	["()"]	[""]	+input
+32592	205	1	13	1	13	["1"]	[""]	+input
+34256	209	1	14	1	14	["/"]	[""]	+input
+35223	213	1	15	1	15	["2"]	[""]	+input
+35439	217	1	16	1	16	["/"]	[""]	+input
+35825	221	1	17	1	17	["3"]	[""]	+input
+36015	225	1	18	1	18	["/"]	[""]	+input
+36511	229	1	19	1	19	["4"]	[""]	+input
+36719	233	1	20	1	20	["/"]	[""]	+input
+37304	237	1	21	1	21	["5"]	[""]	+input
+37487	241	1	22	1	22	["/"]	[""]	+input
+37887	245	1	23	1	23	["6"]	[""]	+input
+38177	249	1	24	1	24	["/"]	[""]	+input
+38648	253	1	25	1	25	["7"]	[""]	+input
+39123	257	1	26	1	26	["/"]	[""]	+input
+41576	260	1	26	1	27	[""]	["/"]	+delete
+44032	268	1	25	1	25	[" "]	[""]	+input
+44851	278	1	24	1	24	[" "]	[""]	+input
+45796	288	1	23	1	23	[" "]	[""]	+input
+46560	298	1	22	1	22	[" "]	[""]	+input
+47235	308	1	21	1	21	[" "]	[""]	+input
+47935	318	1	20	1	20	[" "]	[""]	+input
+48626	328	1	19	1	19	[" "]	[""]	+input
+49367	338	1	18	1	18	[" "]	[""]	+input
+49952	348	1	17	1	17	[" "]	[""]	+input
+50628	358	1	16	1	16	[" "]	[""]	+input
+51167	365	1	16	1	16	[" "]	[""]	+input
+52202	368	1	16	1	17	[""]	[" "]	+delete
+53039	376	1	15	1	15	[" "]	[""]	+input
+54156	386	1	14	1	14	[" "]	[""]	+input
+55110	396	1	13	1	13	[" "]	[""]	+input
+57839	452	1	39	1	39	[" "]	[""]	+input
+63991	456	1	43	1	43	["",""]	[""]	+input
+70070	462	2	0	2	0	["a"]	[""]	+input
+70879	465	2	0	2	1	[""]	["a"]	+delete
+71872	470	2	0	2	0	["v"]	[""]	+input
+73024	474	2	1	2	1	[" "]	[""]	+input
+73200	478	2	2	2	2	["="]	[""]	+input
+73353	482	2	3	2	3	[" "]	[""]	+input
+74289	486	2	4	2	4	["i"]	[""]	+input
+74547	490	2	5	2	5	["n"]	[""]	+input
+74656	493	2	6	2	6	["p"]	[""]	+input
+74887	497	2	7	2	7	["u"]	[""]	+input
+75030	501	2	8	2	8	["t"]	[""]	+input
+75781	506	2	9	2	9	[" "]	[""]	+input
+77345	511	2	10	2	10	["()"]	[""]	+input
+78628	518	2	11	2	11	["\"\""]	[""]	+input
+81328	526	2	12	2	12	["/"]	[""]	+input
+83557	529	2	12	2	13	[""]	["/"]	+delete
+84481	535	2	12	2	12	["()"]	[""]	+input
+86959	542	2	13	2	13	["S"]	[""]	+input
+88320	548	2	14	2	14	["?"]	[""]	+input
+89264	552	2	14	2	15	[""]	["?"]	+delete
+89792	557	2	14	2	14	["/"]	[""]	+input
+89954	561	2	15	2	15	["s"]	[""]	+input
+90849	564	2	15	2	16	[""]	["s"]	+delete
+91355	570	2	15	2	15	["N"]	[""]	+input
+112338	575	2	19	2	19	["",""]	[""]	+input
+113120	580	3	0	3	0	["",""]	[""]	+input
+114003	586	4	0	4	0	["i"]	[""]	+input
+114130	590	4	1	4	1	["f"]	[""]	+input
+114481	594	4	2	4	2	[" "]	[""]	+input
+125169	599	3	0	3	0	[" "]	[""]	+input
+125810	604	3	1	3	1	["D"]	[""]	+input
+126064	609	3	2	3	2	["i"]	[""]	+input
+126352	613	3	3	3	3	["a"]	[""]	+input
+126787	617	3	4	3	4	[" "]	[""]	+input
+126945	621	3	5	3	5	["d"]	[""]	+input
+127185	625	3	6	3	6	["e"]	[""]	+input
+127430	629	3	7	3	7	[" "]	[""]	+input
+128049	633	3	8	3	8	["q"]	[""]	+input
+128160	636	3	9	3	9	["u"]	[""]	+input
+128256	640	3	10	3	10	["i"]	[""]	+input
+128481	645	3	11	3	11	["n"]	[""]	+input
+128836	649	3	12	3	12	["t"]	[""]	+input
+128928	652	3	13	3	13	["a"]	[""]	+input
+129184	657	3	14	3	14	[" "]	[""]	+input
+130096	660	3	14	3	15	[""]	[" "]	+delete
+131056	665	3	14	3	14	[" "]	[""]	+input
+131704	668	3	14	3	15	[""]	[" "]	+delete
+132949	673	3	14	3	14	[","]	[""]	+input
+133104	677	3	15	3	15	[" "]	[""]	+input
+136869	680	3	15	3	16	[""]	[" "]	+delete
+137073	684	3	14	3	15	[""]	[","]	+delete
+137279	688	3	13	3	14	[""]	["a"]	+delete
+137459	692	3	12	3	13	[""]	["t"]	+delete
+137663	696	3	11	3	12	[""]	["n"]	+delete
+137850	700	3	10	3	11	[""]	["i"]	+delete
+138033	704	3	9	3	10	[""]	["u"]	+delete
+138209	708	3	8	3	9	[""]	["q"]	+delete
+139191	713	3	8	3	8	["s"]	[""]	+input
+139604	717	3	9	3	9	["e"]	[""]	+input
+139650	720	3	10	3	10	["g"]	[""]	+input
+139712	724	3	11	3	11	["u"]	[""]	+input
+140000	729	3	12	3	12	["n"]	[""]	+input
+140176	733	3	13	3	13	["d"]	[""]	+input
+140275	736	3	14	3	14	["a"]	[""]	+input
+140647	741	3	15	3	15	[" "]	[""]	+input
+141184	745	3	16	3	16	["t"]	[""]	+input
+141264	748	3	17	3	17	["e"]	[""]	+input
+141426	753	3	18	3	18	["r"]	[""]	+input
+142153	756	3	18	3	19	[""]	["r"]	+delete
+142242	760	3	17	3	18	[""]	["e"]	+delete
+142415	764	3	16	3	17	[""]	["t"]	+delete
+142576	768	3	15	3	16	[""]	[" "]	+delete
+143795	773	3	15	3	15	["."]	[""]	+input
+143952	777	3	16	3	16	[" "]	[""]	+input
+144691	780	3	16	3	17	[""]	[" "]	+delete
+144966	784	3	15	3	16	[""]	["."]	+delete
+145729	789	3	15	3	15	[","]	[""]	+input
+145856	793	3	16	3	16	[" "]	[""]	+input
+146497	796	3	16	3	17	[""]	[" "]	+delete
+147448	801	3	16	3	16	[" "]	[""]	+input
+148290	805	3	17	3	17	["t"]	[""]	+input
+148337	808	3	18	3	18	["e"]	[""]	+input
+148498	812	3	19	3	19	["r"]	[""]	+input
+148800	817	3	20	3	20	["c"]	[""]	+input
+148978	821	3	21	3	21	["a"]	[""]	+input
+150096	824	3	21	3	22	[""]	["a"]	+delete
+150485	828	3	20	3	21	[""]	["c"]	+delete
+152424	833	3	20	3	20	["ç"]	[""]	+input
+152499	837	3	21	3	21	["a"]	[""]	+input
+152916	841	3	22	3	22	[" "]	[""]	+input
+153317	845	3	23	3	23	["e"]	[""]	+input
+153414	848	3	24	3	24	[" "]	[""]	+input
+153728	853	3	25	3	25	["w"]	[""]	+input
+153936	857	3	26	3	26	["u"]	[""]	+input
+154017	860	3	27	3	27	["i"]	[""]	+input
+154265	865	3	28	3	28	["n"]	[""]	+input
+154448	869	3	29	3	29	["t"]	[""]	+input
+154560	872	3	30	3	30	["a"]	[""]	+input
+155088	876	3	30	3	31	[""]	["a"]	+delete
+155587	879	3	29	3	30	[""]	["t"]	+delete
+155704	883	3	28	3	29	[""]	["n"]	+delete
+155875	887	3	27	3	28	[""]	["i"]	+delete
+156095	891	3	26	3	27	[""]	["u"]	+delete
+156288	895	3	25	3	26	[""]	["w"]	+delete
+156489	900	3	25	3	25	["q"]	[""]	+input
+156818	904	3	26	3	26	["u"]	[""]	+input
+156916	907	3	27	3	27	["i"]	[""]	+input
+157187	912	3	28	3	28	["n"]	[""]	+input
+157378	915	3	29	3	29	["t"]	[""]	+input
+157477	919	3	30	3	30	["a"]	[""]	+input
+157712	924	3	31	3	31	[" "]	[""]	+input
+157904	928	3	32	3	32	["d"]	[""]	+input
+158421	931	3	32	3	33	[""]	["d"]	+delete
+158837	936	3	32	3	32	["t"]	[""]	+input
+158983	939	3	33	3	33	["e"]	[""]	+input
+159202	944	3	34	3	34	["m"]	[""]	+input
+159395	948	3	35	3	35	[" "]	[""]	+input
+159704	952	3	36	3	36	["d"]	[""]	+input
+159841	955	3	37	3	37	["e"]	[""]	+input
+160272	960	3	38	3	38	["s"]	[""]	+input
+160471	963	3	39	3	39	["c"]	[""]	+input
+160626	968	3	40	3	40	["o"]	[""]	+input
+160865	972	3	41	3	41	["n"]	[""]	+input
+161091	976	3	42	3	42	["t"]	[""]	+input
+161587	980	3	43	3	43	["o"]	[""]	+input
+161837	984	3	44	3	44	[" "]	[""]	+input
+162144	988	3	45	3	45	["d"]	[""]	+input
+162323	991	3	46	3	46	["e"]	[""]	+input
+162514	996	3	47	3	47	[" "]	[""]	+input
+162677	1000	3	48	3	48	["2"]	[""]	+input
+162822	1004	3	49	3	49	["5"]	[""]	+input
+163652	1009	3	50	3	50	["%"]	[""]	+input
+175329	1016	3	51	3	51	["",""]	[""]	+input
+175329	1017	4	0	4	0	["\t"]	[""]	+input
+179560	1025	5	3	5	3	["()"]	[""]	+input
+181059	1030	5	3	5	5	[""]	["()"]	+delete
+182440	1035	5	3	5	3	["d"]	[""]	+input
+182547	1038	5	4	5	4	["s"]	[""]	+input
+188146	1043	5	5	5	5	[" "]	[""]	+input
+188418	1047	5	6	5	6	["="]	[""]	+input
+188544	1051	5	7	5	7	["="]	[""]	+input
+189090	1055	5	8	5	8	[" "]	[""]	+input
+190258	1060	5	9	5	9	["\"\""]	[""]	+input
+190636	1065	5	10	5	10	["!"]	[""]	+input
+191410	1069	5	10	5	11	[""]	["!"]	+delete
+191569	1073	5	10	5	10	["2"]	[""]	+input
+192193	1077	5	10	5	11	[""]	["2"]	+delete
+192336	1082	5	10	5	10	["2"]	[""]	+input
+192869	1085	5	10	5	11	[""]	["2"]	+delete
+193057	1090	5	10	5	10	["1"]	[""]	+input
+195241	1097	5	12	5	12	[" "]	[""]	+input
+195411	1101	5	13	5	13	["a"]	[""]	+input
+195554	1105	5	14	5	14	["n"]	[""]	+input
+195712	1109	5	15	5	15	["d"]	[""]	+input
+200850	1116	5	3	5	3	["("]	[""]	+input
+204801	1125	5	13	5	13	[")"]	[""]	+input
+207011	1131	5	18	5	18	[" "]	[""]	+input
+207878	1136	5	19	5	19	["()"]	[""]	+input
+259202	1142	5	20	5	20	[" "]	[""]	+input
+259875	1146	5	21	5	21	["v"]	[""]	+input
+262425	1151	5	21	5	22	[""]	["v"]	+delete
+262593	1155	5	20	5	21	[""]	[" "]	+delete
+263365	1160	5	20	5	20	["v"]	[""]	+input
+278239	1164	5	21	5	21	[" "]	[""]	+input
+279042	1168	5	22	5	22	["="]	[""]	+input
+279268	1172	5	23	5	23	[" "]	[""]	+input
+280198	1175	5	23	5	24	[""]	[" "]	+delete
+280756	1180	5	23	5	23	["="]	[""]	+input
+281010	1184	5	24	5	24	[" "]	[""]	+input
+282162	1189	5	25	5	25	["\"\""]	[""]	+input
+284541	1194	5	26	5	26	["N"]	[""]	+input
+289762	1206	5	29	5	29	[":"]	[""]	+input
+298238	1219	5	30	5	30	["",""]	[""]	+input
+298239	1220	6	0	6	0	["\t"]	[""]	+input
+299282	1226	6	1	6	1	["p"]	[""]	+input
+299569	1230	6	2	6	2	["r"]	[""]	+input
+299652	1233	6	3	6	3	["i"]	[""]	+input
+299875	1237	6	4	6	4	["n"]	[""]	+input
+300946	1242	6	5	6	5	["t"]	[""]	+input
+301586	1247	6	6	6	6	["()"]	[""]	+input
+355818	1253	6	7	6	7	["p"]	[""]	+input
+360694	1257	6	8	6	8	[" "]	[""]	+input
+360850	1260	6	9	6	9	["-"]	[""]	+input
+361012	1265	6	10	6	10	[" "]	[""]	+input
+362002	1269	6	11	6	11	["p"]	[""]	+input
+363922	1274	6	12	6	12	["*"]	[""]	+input
+365317	1279	6	13	6	13	["0"]	[""]	+input
+365650	1283	6	14	6	14	["."]	[""]	+input
+365906	1287	6	15	6	15	["2"]	[""]	+input
+366242	1291	6	16	6	16	["5"]	[""]	+input
+386308	1327	6	7	6	17	["E"]	["p - p*0.25"]	+input
+386662	1332	6	8	6	8	["n"]	[""]	+input
+387090	1336	6	9	6	9	["t"]	[""]	+input
+387186	1339	6	10	6	10	["r"]	[""]	+input
+387314	1343	6	11	6	11	["a"]	[""]	+input
+387602	1348	6	12	6	12	["d"]	[""]	+input
+387730	1351	6	13	6	13	["a"]	[""]	+input
+387922	1355	6	14	6	14	["s"]	[""]	+input
+389090	1361	6	14	6	15	[""]	["s"]	+delete
+389589	1364	6	13	6	14	[""]	["a"]	+delete
+389626	1367	6	12	6	13	[""]	["d"]	+delete
+389654	1370	6	11	6	12	[""]	["a"]	+delete
+389680	1373	6	10	6	11	[""]	["r"]	+delete
+389721	1376	6	9	6	10	[""]	["t"]	+delete
+389741	1379	6	8	6	9	[""]	["n"]	+delete
+389770	1382	6	7	6	8	[""]	["E"]	+delete
+389803	1385	6	6	6	8	[""]	["()"]	+delete
+391453	1391	6	6	6	6	["()"]	[""]	+input
+391842	1396	6	7	6	7	["\"\""]	[""]	+input
+393002	1403	6	8	6	8	["E"]	[""]	+input
+393186	1408	6	9	6	9	["n"]	[""]	+input
+393666	1412	6	10	6	10	["t"]	[""]	+input
+393812	1415	6	11	6	11	["r"]	[""]	+input
+393906	1419	6	12	6	12	["a"]	[""]	+input
+394145	1424	6	13	6	13	["d"]	[""]	+input
+394294	1427	6	14	6	14	["a"]	[""]	+input
+400295	1434	6	15	6	15	["s"]	[""]	+input
+401874	1439	6	16	6	16	[":"]	[""]	+input
+403042	1444	6	17	6	17	[" "]	[""]	+input
+404693	1448	6	18	6	18	["p"]	[""]	+input
+406002	1451	6	18	6	19	[""]	["p"]	+delete
+406771	1455	6	17	6	18	[""]	[" "]	+delete
+407428	1460	6	17	6	17	[" "]	[""]	+input
+409858	1467	6	19	6	19	[","]	[""]	+input
+410130	1471	6	20	6	20	[" "]	[""]	+input
+411560	1477	6	21	6	21	["p"]	[""]	+input
+412541	1481	6	22	6	22	[" "]	[""]	+input
+413923	1485	6	23	6	23	["."]	[""]	+input
+414256	1489	6	24	6	24	[" "]	[""]	+input
+414693	1492	6	24	6	25	[""]	[" "]	+delete
+415201	1496	6	23	6	24	[""]	["."]	+delete
+415846	1501	6	23	6	23	[","]	[""]	+input
+416140	1505	6	24	6	24	[" "]	[""]	+input
+418002	1509	6	25	6	25	["d"]	[""]	+input
+418082	1512	6	26	6	26	["s"]	[""]	+input
+418834	1517	6	27	6	27	[" "]	[""]	+input
+419074	1521	6	28	6	28	[","]	[""]	+input
+419290	1525	6	29	6	29	[" "]	[""]	+input
+420515	1529	6	30	6	30	["v"]	[""]	+input
+428946	1540	6	32	6	32	["",""]	[""]	+input
+428946	1541	7	0	7	0	["\t"]	[""]	+input
+429458	1547	7	1	7	1	["p"]	[""]	+input
+429636	1551	7	2	7	2	["r"]	[""]	+input
+430186	1555	7	3	7	3	["i"]	[""]	+input
+430386	1559	7	4	7	4	["n"]	[""]	+input
+430611	1563	7	5	7	5	["t"]	[""]	+input
+431672	1568	7	6	7	6	["()"]	[""]	+input
+434358	1575	7	7	7	7	["\"\""]	[""]	+input
+435412	1582	7	8	7	8	["T"]	[""]	+input
+436674	1587	7	9	7	9	["o"]	[""]	+input
+437109	1591	7	10	7	10	["t"]	[""]	+input
+437191	1594	7	11	7	11	["a"]	[""]	+input
+437347	1598	7	12	7	12	["l"]	[""]	+input
+438755	1604	7	13	7	13	[":"]	[""]	+input
+439126	1609	7	14	7	14	[" "]	[""]	+input
+442584	1616	7	16	7	16	[","]	[""]	+input
+443242	1620	7	17	7	17	[" "]	[""]	+input
+449686	1624	7	18	7	18	["p"]	[""]	+input
+450678	1628	7	19	7	19	["-"]	[""]	+input
+452436	1632	7	20	7	20	["p"]	[""]	+input
+453235	1637	7	21	7	21	["*"]	[""]	+input
+453912	1642	7	22	7	22	["-"]	[""]	+input
+454421	1646	7	23	7	23	["2"]	[""]	+input
+456228	1649	7	23	7	24	[""]	["2"]	+delete
+456887	1654	7	23	7	23	["0"]	[""]	+input
+457266	1658	7	24	7	24	["."]	[""]	+input
+457429	1662	7	25	7	25	["2"]	[""]	+input
+457911	1666	7	26	7	26	["5"]	[""]	+input
+465545	1671	7	18	7	18	["r"]	[""]	+input
+465971	1675	7	19	7	19	["o"]	[""]	+input
+466233	1679	7	20	7	20	["u"]	[""]	+input
+466612	1683	7	21	7	21	["n"]	[""]	+input
+466875	1687	7	22	7	22	["f"]	[""]	+input
+467525	1690	7	22	7	23	[""]	["f"]	+delete
+468323	1695	7	22	7	22	["d"]	[""]	+input
+468739	1698	7	22	7	23	[""]	["d"]	+delete
+469396	1703	7	22	7	22	["d"]	[""]	+input
+472139	1706	7	23	7	24	[""]	["p"]	+delete
+473781	1712	7	23	7	23	["("]	[""]	+input
+476311	1719	7	24	7	25	[""]	["-"]	+delete
+477813	1724	7	24	7	24	["p"]	[""]	+input
+478899	1728	7	25	7	25	["-"]	[""]	+input
+483267	1754	7	33	7	33	["<"]	[""]	+input
+483555	1759	7	34	7	34	[" "]	[""]	+input
+483940	1763	7	35	7	35	["2"]	[""]	+input
+485571	1774	7	37	7	37	[")"]	[""]	+input
+488999	1790	7	33	7	34	[""]	["<"]	+delete
+489379	1795	7	33	7	33	[","]	[""]	+input
+497923	1807	7	38	7	38	["",""]	[""]	+input
+497923	1808	8	0	8	0	["\t"]	[""]	+input
+498503	1813	8	0	8	1	[""]	["\t"]	+delete
+
+Local Run 1
+- event_time_delta_ms: 515848
+- raw_log_line: 1825
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("VALOR:  "))
+ds = input("( 1 / 2 / 3 / 4 / 5 / 6 / 7 )")
+v = input ("(S/N)")
+ Dia de segunda, terça e quinta tem desconto de 25%
+	
+if (ds == "1") and (v == "N"):
+	print("Entradas: ", p , ds , v)
+	print("Total: ", round(p-p*-0.25, 2))
+
+```
+Run Output
+```text
+File "main.py", line 4
+Dia de segunda, ter\xe7a e quinta tem desconto de 25%
+IndentationError: unexpected indent
+```
+
+Edit Segment 2
+- raw_change_event_count: 52
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+521527	1829	3	1	4	1	[""]	["Dia de segunda, terça e quinta tem desconto de 25%","\t"]	+delete
+552330	1841	5	23	5	23	["\"\""]	[""]	+input
+554436	1847	5	25	5	26	[""]	[","]	+delete
+554652	1851	5	24	5	25	[""]	["\""]	+delete
+556477	1858	5	24	5	24	[","]	[""]	+input
+556661	1862	5	25	5	25	["'"]	[""]	+input
+558884	1867	5	25	5	26	[""]	["'"]	+delete
+559256	1873	5	25	5	25	["\""]	[""]	+input
+561301	1880	5	30	5	30	["\"\""]	[""]	+input
+562692	1886	5	31	5	32	[""]	["\""]	+delete
+564310	1893	5	32	5	32	["\""]	[""]	+input
+601515	1899	5	1	5	36	["(ds == \"1\") and (v == \"N\"):","\tprint(\"Entradas: \", p , ds , v)","\tprint(\"Total: \", round(p-p*-0.25, 2))"]	["print(\"Entradas: \", p \",\" ds \",\" v)"]	paste
+603177	1905	5	1	7	38	["print(\"Entradas: \", p \",\" ds \",\" v)"]	["(ds == \"1\") and (v == \"N\"):","\tprint(\"Entradas: \", p , ds , v)","\tprint(\"Total: \", round(p-p*-0.25, 2))"]	undo
+605596	1915	5	1	5	36	[""]	["print(\"Entradas: \", p \",\" ds \",\" v)"]	cut
+607128	1920	3	1	3	1	["",""]	[""]	+input
+607129	1921	4	0	4	0	["\t"]	[""]	+input
+607845	1927	4	1	4	1	["print(\"Entradas: \", p \",\" ds \",\" v)"]	[""]	paste
+608858	1931	4	36	4	36	["",""]	[""]	+input
+608859	1932	5	0	5	0	["\t"]	[""]	+input
+611350	1938	4	0	4	1	[""]	["\t"]	+delete
+613253	1943	7	0	7	1	[""]	["\t"]	+delete
+613589	1947	6	30	7	0	[""]	["",""]	+delete
+646000	1962	6	3	6	3	["("]	[""]	+input
+706963	1968	6	15	6	15	[" "]	[""]	+input
+707178	1972	6	16	6	16	["o"]	[""]	+input
+707292	1976	6	17	6	17	["r"]	[""]	+input
+708266	1980	6	18	6	18	[" "]	[""]	+input
+709175	1985	6	19	6	19	["()"]	[""]	+input
+709662	1991	6	20	6	20	["d"]	[""]	+input
+710199	1995	6	21	6	21	["s"]	[""]	+input
+710987	1999	6	22	6	22	[" "]	[""]	+input
+711083	2002	6	23	6	23	["="]	[""]	+input
+711222	2007	6	24	6	24	["="]	[""]	+input
+711858	2011	6	25	6	25	[" "]	[""]	+input
+715466	2015	6	26	6	26	["2"]	[""]	+input
+736431	2022	6	12	6	13	["2"]	["1"]	+input
+762440	2028	6	26	6	26	["\""]	[""]	+input
+764300	2035	6	28	6	28	["\""]	[""]	+input
+796114	2042	6	30	6	30	[" "]	[""]	+input
+796522	2046	6	31	6	31	["o"]	[""]	+input
+796617	2049	6	32	6	32	["r"]	[""]	+input
+798267	2054	6	33	6	33	[" "]	[""]	+input
+798687	2059	6	34	6	34	["()"]	[""]	+input
+799567	2065	6	35	6	35	["d"]	[""]	+input
+799696	2068	6	36	6	36	["s"]	[""]	+input
+800678	2075	6	37	6	37	[" "]	[""]	+input
+801025	2079	6	38	6	38	["="]	[""]	+input
+801230	2083	6	39	6	39	["="]	[""]	+input
+805611	2088	6	27	6	28	["3"]	["2"]	+input
+808497	2093	6	40	6	40	[" "]	[""]	+input
+809224	2098	6	41	6	41	["\"\""]	[""]	+input
+810012	2106	6	42	6	42	["5"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 829877
+- raw_log_line: 2118
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("VALOR:  "))
+ds = input("( 1 / 2 / 3 / 4 / 5 / 6 / 7 )")
+v = input ("(S/N)")
+ 
+print("Entradas: ", p "," ds "," v)
+	
+if ((ds == "2") or (ds == "3") or (ds == "5") and (v == "N"):
+	print("Total: ", round(p-p*-0.25, 2))
+
+```
+Run Output
+```text
+File "main.py", line 5
+print("Entradas: ", p "," ds "," v)
+SyntaxError: invalid syntax
+```
+
+Edit Segment 3
+- raw_change_event_count: 7
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+837308	2123	4	22	4	22	[","]	[""]	+input
+840650	2128	4	21	4	22	[""]	[" "]	+delete
+842532	2134	4	22	4	22	[" "]	[""]	+input
+844215	2140	4	26	4	26	[","]	[""]	+input
+845640	2145	4	30	4	30	[","]	[""]	+input
+846653	2150	4	35	4	35	[","]	[""]	+input
+861641	2160	6	45	6	45	[")"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 863783
+- raw_log_line: 2168
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("VALOR:  "))
+ds = input("( 1 / 2 / 3 / 4 / 5 / 6 / 7 )")
+v = input ("(S/N)")
+ 
+print("Entradas: ", p, ",", ds, ",", v)
+	
+if ((ds == "2") or (ds == "3") or (ds == "5")) and (v == "N"):
+	print("Total: ", round(p-p*-0.25, 2))
+
+```
+Run Output
+```text
+File "main.py", line 7
+if ((ds == "2") or (ds == "3") or (ds == "5") and (v == "N"):
+SyntaxError: invalid syntax
+```
+
+Local Run 4
+- event_time_delta_ms: 875545
+- raw_log_line: 2174
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("VALOR:  "))
+ds = input("( 1 / 2 / 3 / 4 / 5 / 6 / 7 )")
+v = input ("(S/N)")
+ 
+print("Entradas: ", p, ",", ds, ",", v)
+	
+if ((ds == "2") or (ds == "3") or (ds == "5")) and (v == "N"):
+	print("Total: ", round(p-p*-0.25, 2))
+
+```
+Run Output
+```text
+VALOR:  10
+( 1 / 2 / 3 / 4 / 5 / 6 / 7 )2
+(S/N)S
+Entradas:  10.0 , 2 , S
+```
+
+Edit Segment 4
+- raw_change_event_count: 39
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+885577	2179	7	25	7	25	[" "]	[""]	+input
+886500	2184	7	27	7	27	[" "]	[""]	+input
+889406	2188	7	28	7	28	[" "]	[""]	+input
+891370	2191	7	28	7	29	[""]	[" "]	+delete
+908666	2199	7	1	7	24	[""]	["print(\"Total: \", round("]	cut
+911069	2205	8	0	8	0	[" "]	[""]	+input
+911449	2209	8	1	8	1	[" "]	[""]	+input
+912201	2212	8	1	8	2	[""]	[" "]	+delete
+912424	2216	8	0	8	1	[""]	[" "]	+delete
+912744	2220	7	17	8	0	[""]	["",""]	+delete
+913115	2225	7	17	7	17	["",""]	[""]	+input
+913115	2226	8	0	8	0	["\t"]	[""]	+input
+915214	2232	8	1	8	1	["print(\"Total: \", round("]	[""]	paste
+918856	2236	8	23	8	24	[""]	["("]	+delete
+919357	2239	8	22	8	23	[""]	["d"]	+delete
+919582	2243	8	21	8	22	[""]	["n"]	+delete
+919915	2247	8	20	8	21	[""]	["u"]	+delete
+920126	2251	8	19	8	20	[""]	["o"]	+delete
+920313	2255	8	18	8	19	[""]	["r"]	+delete
+920490	2259	8	17	8	18	[""]	[" "]	+delete
+920683	2263	8	16	8	17	[""]	[","]	+delete
+926674	2270	7	1	7	1	["t"]	[""]	+input
+926841	2274	7	2	7	2	[" "]	[""]	+input
+927673	2278	7	3	7	3	["="]	[""]	+input
+927786	2282	7	4	7	4	[" "]	[""]	+input
+934123	2290	7	16	7	21	[""]	[", 2))"]	+delete
+936065	2296	8	16	8	16	[","]	[""]	+input
+936137	2299	8	17	8	17	[" "]	[""]	+input
+936556	2304	8	18	8	18	["r"]	[""]	+input
+936715	2308	8	19	8	19	["o"]	[""]	+input
+936937	2312	8	20	8	20	["u"]	[""]	+input
+937289	2316	8	21	8	21	["n"]	[""]	+input
+937515	2320	8	22	8	22	["d"]	[""]	+input
+938762	2325	8	23	8	23	["()"]	[""]	+input
+940850	2331	8	24	8	24	["t"]	[""]	+input
+941599	2335	8	25	8	25	[","]	[""]	+input
+941852	2339	8	26	8	26	[" "]	[""]	+input
+942489	2343	8	27	8	27	["2"]	[""]	+input
+944953	2352	8	29	8	29	[")"]	[""]	+input
+
+Local Run 5
+- event_time_delta_ms: 955635
+- raw_log_line: 2359
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("VALOR:  "))
+ds = input("( 1 / 2 / 3 / 4 / 5 / 6 / 7 )")
+v = input ("(S/N)")
+ 
+print("Entradas: ", p, ",", ds, ",", v)
+	
+if ((ds == "2") or (ds == "3") or (ds == "5")) and (v == "N"):
+	t = p - p*-0.25
+	print("Total: ", round(t, 2))
+```
+Run Output
+```text
+VALOR:  2
+```
+
+Edit Segment 5
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+968717	2363	7	11	7	12	[""]	["-"]	+delete
+
+Local Run 6
+- event_time_delta_ms: 981558
+- raw_log_line: 2374
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("VALOR:  "))
+ds = input("( 1 / 2 / 3 / 4 / 5 / 6 / 7 )")
+v = input ("(S/N)")
+ 
+print("Entradas: ", p, ",", ds, ",", v)
+	
+if ((ds == "2") or (ds == "3") or (ds == "5")) and (v == "N"):
+	t = p - p*0.25
+	print("Total: ", round(t, 2))
+```
+Run Output
+```text
+VALOR:  30
+( 1 / 2 / 3 / 4 / 5 / 6 / 7 )2
+(S/N)N
+Entradas:  30.0 , 2 , N
+Total:  22.5
+```
+
+Edit Segment 6
+- raw_change_event_count: 91
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+990266	2385	8	30	8	30	["",""]	[""]	+input
+990266	2386	9	0	9	0	["\t"]	[""]	+input
+990859	2391	9	0	9	1	[""]	["\t"]	+delete
+991746	2396	9	0	9	0	["E"]	[""]	+input
+991883	2400	9	1	9	1	["L"]	[""]	+input
+992158	2404	9	2	9	2	["I"]	[""]	+input
+992314	2408	9	3	9	3	["F"]	[""]	+input
+993167	2411	9	3	9	4	[""]	["F"]	+delete
+993373	2415	9	2	9	3	[""]	["I"]	+delete
+993532	2419	9	1	9	2	[""]	["L"]	+delete
+993897	2425	9	0	9	1	[""]	["E"]	+delete
+994569	2430	9	0	9	0	["e"]	[""]	+input
+994667	2433	9	1	9	1	["l"]	[""]	+input
+994858	2438	9	2	9	2	["i"]	[""]	+input
+995065	2442	9	3	9	3	["f"]	[""]	+input
+995865	2446	9	4	9	4	[" "]	[""]	+input
+996737	2451	9	5	9	5	["V"]	[""]	+input
+997402	2455	9	5	9	6	[""]	["V"]	+delete
+997962	2460	9	5	9	5	["((ds == \"2\") or (ds == \"3\") or (ds == \"5\")) and (v == \"N\"):","\tt = p - p*0.25","\tprint(\"Total: \", round(t, 2))"]	[""]	paste
+1001178	2466	8	30	8	30	["",""]	[""]	+input
+1001178	2467	9	0	9	0	["\t"]	[""]	+input
+1008444	2477	10	60	10	61	["S"]	["N"]	+input
+1132370	2484	11	15	11	15	[" "]	[""]	+input
+1134570	2489	11	16	11	16	["+"]	[""]	+input
+1135420	2494	11	17	11	17	[" "]	[""]	+input
+1135867	2498	11	18	11	18	["2"]	[""]	+input
+1135995	2501	11	19	11	19	["0"]	[""]	+input
+1203021	2510	12	30	12	30	["",""]	[""]	+input
+1203021	2511	13	0	13	0	["\t"]	[""]	+input
+1203868	2516	13	0	13	1	[""]	["\t"]	+delete
+1204167	2521	13	0	13	0	["e"]	[""]	+input
+1204369	2525	13	1	13	1	["l"]	[""]	+input
+1204571	2529	13	2	13	2	["i"]	[""]	+input
+1204731	2533	13	3	13	3	["f"]	[""]	+input
+1206608	2538	13	4	13	4	["()"]	[""]	+input
+1207407	2542	13	4	13	5	[""]	["("]	+delete
+1208622	2548	13	4	13	4	["((ds == \"2\") or (ds == \"3\") or (ds == \"5\")) and (v == \"N\"):","\tt = p - p*0.25","\tprint(\"Total: \", round(t, 2))"]	[""]	paste
+1211806	2555	13	4	13	4	[" "]	[""]	+input
+1213807	2560	13	14	13	15	["1"]	["2"]	+input
+1217376	2565	13	29	13	30	["4"]	["3"]	+input
+1220492	2570	13	44	13	45	["6"]	["5"]	+input
+1224383	2578	13	47	13	47	[" "]	[""]	+input
+1225502	2583	13	48	13	48	["()"]	[""]	+input
+1226034	2589	13	49	13	49	["o"]	[""]	+input
+1226171	2593	13	50	13	50	["r"]	[""]	+input
+1227515	2596	13	50	13	51	[""]	["r"]	+delete
+1227725	2600	13	49	13	50	[""]	["o"]	+delete
+1228363	2604	13	48	13	50	[""]	["()"]	+delete
+1229468	2609	13	48	13	48	["o"]	[""]	+input
+1229547	2613	13	49	13	49	["r"]	[""]	+input
+1229833	2617	13	50	13	50	[" "]	[""]	+input
+1231045	2622	13	51	13	51	["()"]	[""]	+input
+1232248	2628	13	52	13	52	["d"]	[""]	+input
+1232507	2632	13	53	13	53	["s"]	[""]	+input
+1232934	2636	13	54	13	54	[" "]	[""]	+input
+1233068	2639	13	55	13	55	["="]	[""]	+input
+1233218	2644	13	56	13	56	["="]	[""]	+input
+1233260	2648	13	57	13	57	[" "]	[""]	+input
+1234326	2653	13	58	13	58	["\"\""]	[""]	+input
+1236655	2665	13	59	13	59	["7"]	[""]	+input
+1251102	2669	14	1	14	15	[""]	["t = p - p*0.25"]	+delete
+1251675	2673	14	0	14	1	[""]	["\t"]	+delete
+1252098	2677	13	79	14	0	[""]	["",""]	+delete
+1254876	2684	14	24	14	25	["p"]	["t"]	+input
+1257180	2688	14	30	14	31	[""]	[")"]	+delete
+1258971	2692	14	30	14	30	["",""]	[""]	+input
+1258972	2693	15	0	15	0	["\t"]	[""]	+input
+1259413	2698	15	0	15	1	[""]	["\t"]	+delete
+1260147	2703	15	0	15	0	["e"]	[""]	+input
+1260322	2707	15	1	15	1	["l"]	[""]	+input
+1260541	2711	15	2	15	2	["i"]	[""]	+input
+1260647	2715	15	3	15	3	["f"]	[""]	+input
+1267440	2727	15	4	15	4	[" "]	[""]	+input
+1268255	2731	15	5	15	5	["((ds == \"1\") or (ds == \"4\") or (ds == \"6\") or (ds == \"7\")) and (v == \"N\"):","\tprint(\"Total: \", round(p, 2))"]	[""]	paste
+1270801	2737	14	30	14	30	["",""]	[""]	+input
+1270802	2738	15	0	15	0	["\t"]	[""]	+input
+1271712	2744	12	30	12	30	["",""]	[""]	+input
+1271714	2745	13	0	13	0	["\t"]	[""]	+input
+1276716	2753	17	75	17	76	["S"]	["N"]	+input
+1279932	2759	17	79	17	79	["",""]	[""]	+input
+1279932	2760	18	0	18	0	["\t"]	[""]	+input
+1321474	2766	18	1	18	1	["t"]	[""]	+input
+1321744	2770	18	2	18	2	[" "]	[""]	+input
+1321996	2774	18	3	18	3	["="]	[""]	+input
+1322148	2778	18	4	18	4	[" "]	[""]	+input
+1323340	2782	18	5	18	5	["p"]	[""]	+input
+1323520	2786	18	6	18	6	[" "]	[""]	+input
+1324988	2791	18	7	18	7	["+"]	[""]	+input
+1325921	2796	18	8	18	8	[" "]	[""]	+input
+1326130	2800	18	9	18	9	["2"]	[""]	+input
+1326622	2804	18	10	18	10	["0"]	[""]	+input
+
+Local Run 7
+- event_time_delta_ms: 1331888
+- raw_log_line: 2814
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+p = float(input("VALOR:  "))
+ds = input("( 1 / 2 / 3 / 4 / 5 / 6 / 7 )")
+v = input ("(S/N)")
+ 
+print("Entradas: ", p, ",", ds, ",", v)
+	
+if ((ds == "2") or (ds == "3") or (ds == "5")) and (v == "N"):
+	t = p - p*0.25
+	print("Total: ", round(t, 2))
+	
+elif ((ds == "2") or (ds == "3") or (ds == "5")) and (v == "S"):
+	t = p - p*0.25 + 20
+	print("Total: ", round(t, 2))
+	
+elif ((ds == "1") or (ds == "4") or (ds == "6") or (ds == "7")) and (v == "N"):
+	print("Total: ", round(p, 2))
+	
+elif ((ds == "1") or (ds == "4") or (ds == "6") or (ds == "7")) and (v == "S"):
+	t = p + 20
+	print("Total: ", round(p, 2))
+```
+Run Output
+```text
+VALOR:  75.25
+( 1 / 2 / 3 / 4 / 5 / 6 / 7 )3
+(S/N)S
+Entradas:  75.25 , 3 , S
+Total:  76.44
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 1347505
+- raw_log_line: 2816
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+p = float(input("VALOR:  "))
+ds = input("( 1 / 2 / 3 / 4 / 5 / 6 / 7 )")
+v = input ("(S/N)")
+ 
+print("Entradas: ", p, ",", ds, ",", v)
+	
+if ((ds == "2") or (ds == "3") or (ds == "5")) and (v == "N"):
+	t = p - p*0.25
+	print("Total: ", round(t, 2))
+	
+elif ((ds == "2") or (ds == "3") or (ds == "5")) and (v == "S"):
+	t = p - p*0.25 + 20
+	print("Total: ", round(t, 2))
+	
+elif ((ds == "1") or (ds == "4") or (ds == "6") or (ds == "7")) and (v == "N"):
+	print("Total: ", round(p, 2))
+	
+elif ((ds == "1") or (ds == "4") or (ds == "6") or (ds == "7")) and (v == "S"):
+	t = p + 20
+	print("Total: ", round(p, 2))
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-02-01T13:21:57.183000
+
+Execution Result
+
+- submitted_at: 2024-02-01 13:22:03
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "70.56\n2\nN"
+    expected: "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92"
+    actual: "Entradas:  70.56 , 2 , N\nTotal:  52.92"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75"
+    actual: "Entradas:  100.75 , 6 , S\nTotal: R$ 100.75"
+  - test_index_0idx: 2 [FAIL]
+    input: "0.00\n9\nS"
+    expected: "Entradas: 0.0 , 9 , S\nDados invalidos"
+    actual: "Entradas:  0.0 , 9 , S"
+
+Attempt Start Code
+```python
+p = float(input("VALOR:  "))
+ds = input("( 1 / 2 / 3 / 4 / 5 / 6 / 7 )")
+v = input ("(S/N)")
+ 
+print("Entradas: ", p, ",", ds, ",", v)
+	
+if ((ds == "2") or (ds == "3") or (ds == "5")) and (v == "N"):
+	t = p - p*0.25
+	print("Total: ", round(t, 2))
+	
+elif ((ds == "2") or (ds == "3") or (ds == "5")) and (v == "S"):
+	t = p - p*0.25 + 20
+	print("Total: ", round(t, 2))
+	
+elif ((ds == "1") or (ds == "4") or (ds == "6") or (ds == "7")) and (v == "N"):
+	print("Total: ", round(p, 2))
+	
+elif ((ds == "1") or (ds == "4") or (ds == "6") or (ds == "7")) and (v == "S"):
+	t = p + 20
+	print("Total: ", round(p, 2))
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	2820	19	14	19	15	[""]	[" "]	+delete
+802	2825	19	14	19	14	[" "]	[""]	+input
+2243	2830	19	15	19	15	["R"]	[""]	+input
+4193	2834	19	16	19	16	["$"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 6133
+- raw_log_line: 2839
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+p = float(input("VALOR:  "))
+ds = input("( 1 / 2 / 3 / 4 / 5 / 6 / 7 )")
+v = input ("(S/N)")
+ 
+print("Entradas: ", p, ",", ds, ",", v)
+	
+if ((ds == "2") or (ds == "3") or (ds == "5")) and (v == "N"):
+	t = p - p*0.25
+	print("Total: ", round(t, 2))
+	
+elif ((ds == "2") or (ds == "3") or (ds == "5")) and (v == "S"):
+	t = p - p*0.25 + 20
+	print("Total: ", round(t, 2))
+	
+elif ((ds == "1") or (ds == "4") or (ds == "6") or (ds == "7")) and (v == "N"):
+	print("Total: ", round(p, 2))
+	
+elif ((ds == "1") or (ds == "4") or (ds == "6") or (ds == "7")) and (v == "S"):
+	t = p + 20
+	print("Total: R$", round(p, 2))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-02-01T13:22:10.693000
+
+Execution Result
+
+- submitted_at: 2024-02-01 13:22:28
+- grade: 33.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "70.56\n2\nN"
+    expected: "Entradas: 70.56 , 2 , N\nTotal: R$ 52.92"
+    actual: "Entradas:  70.56 , 2 , N\nTotal:  52.92"
+  - test_index_0idx: 1 [FAIL]
+    input: "100.75\n6\nS"
+    expected: "Entradas: 100.75 , 6 , S\nTotal: R$ 120.75"
+    actual: "Entradas:  100.75 , 6 , S\nTotal: R$ 100.75"
+  - test_index_0idx: 2 [FAIL]
+    input: "0.00\n9\nS"
+    expected: "Entradas: 0.0 , 9 , S\nDados invalidos"
+    actual: "Entradas:  0.0 , 9 , S\nDados invalidos"
+
+Attempt Start Code
+```python
+p = float(input("VALOR:  "))
+ds = input("( 1 / 2 / 3 / 4 / 5 / 6 / 7 )")
+v = input ("(S/N)")
+ 
+print("Entradas: ", p, ",", ds, ",", v)
+	
+if ((ds == "2") or (ds == "3") or (ds == "5")) and (v == "N"):
+	t = p - p*0.25
+	print("Total: ", round(t, 2))
+	
+elif ((ds == "2") or (ds == "3") or (ds == "5")) and (v == "S"):
+	t = p - p*0.25 + 20
+	print("Total: ", round(t, 2))
+	
+elif ((ds == "1") or (ds == "4") or (ds == "6") or (ds == "7")) and (v == "N"):
+	print("Total: ", round(p, 2))
+	
+elif ((ds == "1") or (ds == "4") or (ds == "6") or (ds == "7")) and (v == "S"):
+	t = p + 20
+	print("Total: R$", round(p, 2))
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 34
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	2842	19	32	19	32	["",""]	[""]	+input
+0	2843	20	0	20	0	["\t"]	[""]	+input
+572	2848	20	0	20	1	[""]	["\t"]	+delete
+1262	2853	20	0	20	0	["e"]	[""]	+input
+1426	2857	20	1	20	1	["l"]	[""]	+input
+1606	2861	20	2	20	2	["s"]	[""]	+input
+2658	2865	20	3	20	3	["e"]	[""]	+input
+4107	2870	20	4	20	4	[":"]	[""]	+input
+4892	2874	20	5	20	5	["",""]	[""]	+input
+4893	2875	21	0	21	0	["\t"]	[""]	+input
+5852	2882	21	1	21	1	["P"]	[""]	+input
+7005	2886	21	1	21	2	[""]	["P"]	+delete
+7409	2891	21	1	21	1	["p"]	[""]	+input
+7567	2895	21	2	21	2	["r"]	[""]	+input
+7708	2899	21	3	21	3	["i"]	[""]	+input
+7963	2903	21	4	21	4	["n"]	[""]	+input
+7985	2906	21	5	21	5	["t"]	[""]	+input
+8841	2912	21	6	21	6	["()"]	[""]	+input
+10624	2919	21	7	21	7	["\"\""]	[""]	+input
+11507	2926	21	8	21	8	["D"]	[""]	+input
+12081	2931	21	9	21	9	["a"]	[""]	+input
+12236	2935	21	10	21	10	["d"]	[""]	+input
+12496	2939	21	11	21	11	["o"]	[""]	+input
+12642	2943	21	12	21	12	["s"]	[""]	+input
+12978	2947	21	13	21	13	[" "]	[""]	+input
+13548	2951	21	14	21	14	["i"]	[""]	+input
+13691	2954	21	15	21	15	["n"]	[""]	+input
+14162	2959	21	16	21	16	["v"]	[""]	+input
+14236	2962	21	17	21	17	["a"]	[""]	+input
+14380	2966	21	18	21	18	["l"]	[""]	+input
+15692	2971	21	19	21	19	["i"]	[""]	+input
+15787	2974	21	20	21	20	["d"]	[""]	+input
+16028	2979	21	21	21	21	["o"]	[""]	+input
+16236	2983	21	22	21	22	["s"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 18199
+- raw_log_line: 2987
+- feedback: "You're almost there! Your code is 33% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+p = float(input("VALOR:  "))
+ds = input("( 1 / 2 / 3 / 4 / 5 / 6 / 7 )")
+v = input ("(S/N)")
+ 
+print("Entradas: ", p, ",", ds, ",", v)
+	
+if ((ds == "2") or (ds == "3") or (ds == "5")) and (v == "N"):
+	t = p - p*0.25
+	print("Total: ", round(t, 2))
+	
+elif ((ds == "2") or (ds == "3") or (ds == "5")) and (v == "S"):
+	t = p - p*0.25 + 20
+	print("Total: ", round(t, 2))
+	
+elif ((ds == "1") or (ds == "4") or (ds == "6") or (ds == "7")) and (v == "N"):
+	print("Total: ", round(p, 2))
+	
+elif ((ds == "1") or (ds == "4") or (ds == "6") or (ds == "7")) and (v == "S"):
+	t = p + 20
+	print("Total: R$", round(p, 2))
+else:
+	print("Dados invalidos")
+```

@@ -1,0 +1,1150 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 487
+- assessment_id: 4578
+- assessment_title: Extra 3 - Condicionais Encadeados (if/elif)
+- exercise_id: 6102
+- student_id: 8195
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2023-04-27T16:53:34.164000
+
+Execution Result
+
+- submitted_at: 2023-04-27 16:09:56
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "0\n0"
+    expected: "Dados invalidos"
+    actual: "Risco: Baixo"
+  - test_index_0idx: 1 [FAIL]
+    input: "25\n25"
+    expected: "Risco: Medio"
+    actual: "Risco: Alto"
+  - test_index_0idx: 2 [FAIL]
+    input: "50\n25"
+    expected: "Risco: Alto"
+    actual: "Risco: Medio"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 343
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["v"]	[""]	+input
+233	11	0	1	0	1	["a"]	[""]	+input
+523	15	0	2	0	2	["r"]	[""]	+input
+1065	19	0	3	0	3	["1"]	[""]	+input
+2705	23	0	4	0	4	[" "]	[""]	+input
+2891	26	0	5	0	5	["="]	[""]	+input
+3045	31	0	6	0	6	[" "]	[""]	+input
+3780	35	0	7	0	7	["i"]	[""]	+input
+4038	39	0	8	0	8	["n"]	[""]	+input
+4305	43	0	9	0	9	["t"]	[""]	+input
+5476	48	0	10	0	10	["()"]	[""]	+input
+6861	54	0	11	0	11	["i"]	[""]	+input
+7188	58	0	12	0	12	["n"]	[""]	+input
+7745	62	0	13	0	13	["p"]	[""]	+input
+8122	66	0	14	0	14	["u"]	[""]	+input
+8440	70	0	15	0	15	["t"]	[""]	+input
+9133	75	0	16	0	16	["()"]	[""]	+input
+12067	81	0	17	0	17	["''"]	[""]	+input
+12480	86	0	18	0	18	["n"]	[""]	+input
+13350	90	0	19	0	19	["u"]	[""]	+input
+13673	94	0	20	0	20	["m"]	[""]	+input
+13929	98	0	21	0	21	["e"]	[""]	+input
+14221	102	0	22	0	22	["r"]	[""]	+input
+14438	106	0	23	0	23	["o"]	[""]	+input
+15305	111	0	24	0	24	[":"]	[""]	+input
+16079	116	0	25	0	25	[" "]	[""]	+input
+21672	126	0	29	0	29	["",""]	[""]	+input
+22131	132	1	0	1	0	["var1 = int(input('numero: '))"]	[""]	paste
+25256	137	1	3	1	4	[""]	["1"]	+delete
+25772	142	1	3	1	3	["2"]	[""]	+input
+43308	149	1	18	1	24	["i"]	["numero"]	+input
+43624	153	1	19	1	19	["n"]	[""]	+input
+43871	157	1	20	1	20	["d"]	[""]	+input
+44090	161	1	21	1	21	["i"]	[""]	+input
+44465	165	1	22	1	22	["c"]	[""]	+input
+44586	169	1	23	1	23	["e"]	[""]	+input
+89686	175	1	29	1	29	["",""]	[""]	+input
+90370	181	2	0	2	0	["i"]	[""]	+input
+90687	185	2	1	2	1	["f"]	[""]	+input
+91420	190	2	2	2	2	["*"]	[""]	+input
+92484	194	2	2	2	3	[""]	["*"]	+delete
+93101	200	2	2	2	2	["()"]	[""]	+input
+102738	210	1	29	1	29	["",""]	[""]	+input
+202973	231	3	3	3	3	["v"]	[""]	+input
+203168	235	3	4	3	4	["a"]	[""]	+input
+203419	239	3	5	3	5	["r"]	[""]	+input
+203641	243	3	6	3	6	["1"]	[""]	+input
+208069	248	3	7	3	7	["<"]	[""]	+input
+209141	253	3	8	3	8	["4"]	[""]	+input
+209408	257	3	9	3	9	["5"]	[""]	+input
+212615	261	3	10	3	10	[" "]	[""]	+input
+215481	265	3	11	3	11	["a"]	[""]	+input
+215632	268	3	12	3	12	["n"]	[""]	+input
+215964	273	3	13	3	13	["d"]	[""]	+input
+216405	277	3	14	3	14	[" "]	[""]	+input
+218852	281	3	15	3	15	["v"]	[""]	+input
+218993	285	3	16	3	16	["a"]	[""]	+input
+219218	289	3	17	3	17	["r"]	[""]	+input
+219758	293	3	18	3	18	["2"]	[""]	+input
+220890	297	3	19	3	19	[" "]	[""]	+input
+222248	302	3	20	3	20	["<"]	[""]	+input
+223880	307	3	21	3	21	["2"]	[""]	+input
+224466	311	3	22	3	22	["2"]	[""]	+input
+229799	318	3	24	3	24	[":"]	[""]	+input
+266472	326	3	23	3	23	[" "]	[""]	+input
+267664	330	3	24	3	24	["a"]	[""]	+input
+267862	334	3	25	3	25	["n"]	[""]	+input
+268230	338	3	26	3	26	["d"]	[""]	+input
+268479	342	3	27	3	27	[" "]	[""]	+input
+272915	346	3	28	3	28	["v"]	[""]	+input
+273161	350	3	29	3	29	["a"]	[""]	+input
+273361	354	3	30	3	30	["r"]	[""]	+input
+273606	358	3	31	3	31	["1"]	[""]	+input
+277620	362	3	32	3	32	[" "]	[""]	+input
+281452	365	3	32	3	33	[""]	[" "]	+delete
+281953	368	3	31	3	32	[""]	["1"]	+delete
+281983	371	3	30	3	31	[""]	["r"]	+delete
+282017	374	3	29	3	30	[""]	["a"]	+delete
+282043	377	3	28	3	29	[""]	["v"]	+delete
+282076	380	3	27	3	28	[""]	[" "]	+delete
+282103	383	3	26	3	27	[""]	["d"]	+delete
+282135	386	3	25	3	26	[""]	["n"]	+delete
+282164	389	3	24	3	25	[""]	["a"]	+delete
+282194	392	3	23	3	24	[""]	[" "]	+delete
+282227	395	3	22	3	23	[""]	["2"]	+delete
+282255	398	3	21	3	22	[""]	["2"]	+delete
+282286	401	3	20	3	21	[""]	["<"]	+delete
+282317	404	3	19	3	20	[""]	[" "]	+delete
+282345	407	3	18	3	19	[""]	["2"]	+delete
+282375	410	3	17	3	18	[""]	["r"]	+delete
+282411	413	3	16	3	17	[""]	["a"]	+delete
+282435	416	3	15	3	16	[""]	["v"]	+delete
+282470	419	3	14	3	15	[""]	[" "]	+delete
+282781	423	3	13	3	14	[""]	["d"]	+delete
+283287	426	3	12	3	13	[""]	["n"]	+delete
+283476	430	3	11	3	12	[""]	["a"]	+delete
+283662	434	3	10	3	11	[""]	[" "]	+delete
+284093	438	3	9	3	10	[""]	["5"]	+delete
+284261	442	3	8	3	9	[""]	["4"]	+delete
+284422	446	3	7	3	8	[""]	["<"]	+delete
+284578	450	3	6	3	7	[""]	["1"]	+delete
+284730	454	3	5	3	6	[""]	["r"]	+delete
+284931	458	3	4	3	5	[""]	["a"]	+delete
+285817	463	3	4	3	4	["v"]	[""]	+input
+286035	467	3	5	3	5	["a"]	[""]	+input
+286228	471	3	6	3	6	["r"]	[""]	+input
+286396	475	3	7	3	7	["1"]	[""]	+input
+287391	478	3	7	3	8	[""]	["1"]	+delete
+287576	482	3	6	3	7	[""]	["r"]	+delete
+287748	486	3	5	3	6	[""]	["a"]	+delete
+287925	490	3	4	3	5	[""]	["v"]	+delete
+288566	495	3	4	3	4	["a"]	[""]	+input
+288735	499	3	5	3	5	["r"]	[""]	+input
+288992	503	3	6	3	6	["1"]	[""]	+input
+296305	508	3	7	3	7	[">"]	[""]	+input
+296978	513	3	8	3	8	["1"]	[""]	+input
+297385	517	3	9	3	9	["3"]	[""]	+input
+297707	521	3	10	3	10	["0"]	[""]	+input
+301983	525	3	13	3	13	["",""]	[""]	+input
+301983	526	4	0	4	0	["\t"]	[""]	+input
+303323	532	4	1	4	1	["p"]	[""]	+input
+303483	535	4	2	4	2	["r"]	[""]	+input
+303713	540	4	3	4	3	["i"]	[""]	+input
+304065	544	4	4	4	4	["n"]	[""]	+input
+304102	547	4	5	4	5	["t"]	[""]	+input
+305234	553	4	6	4	6	["9"]	[""]	+input
+306312	557	4	6	4	7	[""]	["9"]	+delete
+306878	563	4	6	4	6	["()"]	[""]	+input
+308312	569	4	7	4	7	["''"]	[""]	+input
+309412	574	4	8	4	8	["D"]	[""]	+input
+309952	580	4	9	4	9	["s"]	[""]	+input
+310776	583	4	9	4	10	[""]	["s"]	+delete
+310912	587	4	9	4	9	["a"]	[""]	+input
+311366	592	4	10	4	10	["d"]	[""]	+input
+311698	596	4	11	4	11	["o"]	[""]	+input
+311883	600	4	12	4	12	["s"]	[""]	+input
+312186	604	4	13	4	13	[" "]	[""]	+input
+314301	608	4	14	4	14	["i"]	[""]	+input
+314562	612	4	15	4	15	["n"]	[""]	+input
+314910	616	4	16	4	16	["v"]	[""]	+input
+315085	620	4	17	4	17	["a"]	[""]	+input
+315483	624	4	18	4	18	["l"]	[""]	+input
+315777	628	4	19	4	19	["i"]	[""]	+input
+316064	632	4	20	4	20	["d"]	[""]	+input
+316197	636	4	21	4	21	["o"]	[""]	+input
+316382	640	4	22	4	22	["s"]	[""]	+input
+318745	644	4	25	4	25	["",""]	[""]	+input
+318745	645	5	0	5	0	["\t"]	[""]	+input
+319633	650	5	0	5	1	[""]	["\t"]	+delete
+320143	655	5	0	5	0	["e"]	[""]	+input
+320630	659	5	1	5	1	["l"]	[""]	+input
+320800	663	5	2	5	2	["s"]	[""]	+input
+321030	667	5	3	5	3	["e"]	[""]	+input
+321865	672	5	4	5	4	[":"]	[""]	+input
+322826	676	5	4	5	5	[""]	[":"]	+delete
+323914	682	5	4	5	4	["()"]	[""]	+input
+328965	691	5	5	5	5	["v"]	[""]	+input
+329277	695	5	6	5	6	["a"]	[""]	+input
+329464	699	5	7	5	7	["r"]	[""]	+input
+329655	703	5	8	5	8	["1"]	[""]	+input
+331053	707	5	9	5	9	[" "]	[""]	+input
+331927	712	5	10	5	10	["<"]	[""]	+input
+333260	716	5	10	5	11	[""]	["<"]	+delete
+333970	721	5	10	5	10	["5"]	[""]	+input
+334232	725	5	11	5	11	[" "]	[""]	+input
+334926	728	5	11	5	12	[""]	[" "]	+delete
+335146	732	5	10	5	11	[""]	["5"]	+delete
+336230	738	5	10	5	10	["<"]	[""]	+input
+336734	743	5	11	5	11	[" "]	[""]	+input
+337048	747	5	12	5	12	["4"]	[""]	+input
+337250	751	5	13	5	13	["5"]	[""]	+input
+337744	755	5	14	5	14	[" "]	[""]	+input
+338788	759	5	15	5	15	["a"]	[""]	+input
+339086	763	5	16	5	16	["n"]	[""]	+input
+339384	767	5	17	5	17	["d"]	[""]	+input
+339636	771	5	18	5	18	[" "]	[""]	+input
+345295	775	5	19	5	19	["v"]	[""]	+input
+345492	779	5	20	5	20	["a"]	[""]	+input
+347565	783	5	21	5	21	["r"]	[""]	+input
+348642	787	5	22	5	22	["2"]	[""]	+input
+349430	791	5	23	5	23	[" "]	[""]	+input
+351126	796	5	24	5	24	["<"]	[""]	+input
+353175	801	5	25	5	25	[" "]	[""]	+input
+353382	805	5	26	5	26	["2"]	[""]	+input
+353566	809	5	27	5	27	["2"]	[""]	+input
+356102	815	5	29	5	29	[":"]	[""]	+input
+362436	822	5	30	5	30	["",""]	[""]	+input
+362436	823	6	0	6	0	["\t"]	[""]	+input
+363568	829	6	1	6	1	["p"]	[""]	+input
+363739	832	6	2	6	2	["r"]	[""]	+input
+364012	837	6	3	6	3	["i"]	[""]	+input
+364226	841	6	4	6	4	["n"]	[""]	+input
+364375	845	6	5	6	5	["t"]	[""]	+input
+365415	850	6	6	6	6	["()"]	[""]	+input
+368036	856	6	7	6	7	["''"]	[""]	+input
+369997	863	6	8	6	8	["R"]	[""]	+input
+371118	869	6	9	6	9	["i"]	[""]	+input
+371407	873	6	10	6	10	["s"]	[""]	+input
+371975	877	6	11	6	11	["c"]	[""]	+input
+372201	881	6	12	6	12	["o"]	[""]	+input
+374334	885	6	13	6	13	[";"]	[""]	+input
+375457	888	6	13	6	14	[""]	[";"]	+delete
+376124	894	6	13	6	13	[":"]	[""]	+input
+385997	902	6	14	6	14	["v"]	[""]	+input
+386758	906	6	15	6	15	["a"]	[""]	+input
+387258	910	6	16	6	16	["i"]	[""]	+input
+387767	914	6	17	6	17	["c"]	[""]	+input
+390511	917	6	17	6	18	[""]	["c"]	+delete
+390662	921	6	16	6	17	[""]	["i"]	+delete
+390849	925	6	15	6	16	[""]	["a"]	+delete
+391391	929	6	14	6	15	[""]	["v"]	+delete
+392502	934	6	14	6	14	["b"]	[""]	+input
+392678	938	6	15	6	15	["a"]	[""]	+input
+393234	942	6	16	6	16	["i"]	[""]	+input
+393990	946	6	17	6	17	["x"]	[""]	+input
+394241	950	6	18	6	18	["o"]	[""]	+input
+396524	953	6	18	6	19	[""]	["o"]	+delete
+396761	957	6	17	6	18	[""]	["x"]	+delete
+396976	961	6	16	6	17	[""]	["i"]	+delete
+397157	965	6	15	6	16	[""]	["a"]	+delete
+397524	969	6	14	6	15	[""]	["b"]	+delete
+397769	974	6	14	6	14	[" "]	[""]	+input
+399081	980	6	15	6	15	["B"]	[""]	+input
+399533	986	6	16	6	16	["a"]	[""]	+input
+399972	990	6	17	6	17	["i"]	[""]	+input
+400277	994	6	18	6	18	["x"]	[""]	+input
+400542	998	6	19	6	19	["o"]	[""]	+input
+408393	1008	6	22	6	22	["",""]	[""]	+input
+408393	1009	7	0	7	0	["\t"]	[""]	+input
+409271	1014	7	0	7	1	[""]	["\t"]	+delete
+409844	1019	7	0	7	0	["else(var1 < 45 and var2 < 22):","\tprint('Risco: Baixo')"]	[""]	paste
+416840	1026	7	11	7	11	["="]	[""]	+input
+421979	1029	7	11	7	12	[""]	["="]	+delete
+422405	1033	7	10	7	11	[""]	["<"]	+delete
+423874	1039	7	10	7	10	[">"]	[""]	+input
+425177	1044	7	11	7	11	["="]	[""]	+input
+429072	1048	7	25	7	26	[""]	["<"]	+delete
+429801	1054	7	25	7	25	[">"]	[""]	+input
+430359	1059	7	26	7	26	["="]	[""]	+input
+434590	1063	8	19	8	20	[""]	["o"]	+delete
+434782	1067	8	18	8	19	[""]	["x"]	+delete
+434959	1071	8	17	8	18	[""]	["i"]	+delete
+435138	1075	8	16	8	17	[""]	["a"]	+delete
+435449	1079	8	15	8	16	[""]	["B"]	+delete
+436539	1086	8	15	8	15	["m"]	[""]	+input
+437812	1089	8	15	8	16	[""]	["m"]	+delete
+438548	1096	8	15	8	15	["M"]	[""]	+input
+440409	1102	8	16	8	16	["e"]	[""]	+input
+440680	1106	8	17	8	17	["d"]	[""]	+input
+440927	1110	8	18	8	18	["i"]	[""]	+input
+441175	1114	8	19	8	19	["o"]	[""]	+input
+443840	1118	8	22	8	22	["",""]	[""]	+input
+443840	1119	9	0	9	0	["\t"]	[""]	+input
+444718	1124	9	0	9	1	[""]	["\t"]	+delete
+447770	1129	5	3	5	4	[""]	["e"]	+delete
+448443	1133	5	2	5	3	[""]	["s"]	+delete
+449379	1138	5	2	5	2	["i"]	[""]	+input
+449724	1142	5	3	5	3	["f"]	[""]	+input
+452280	1146	7	3	7	4	[""]	["e"]	+delete
+452454	1150	7	2	7	3	[""]	["s"]	+delete
+453363	1155	7	2	7	2	["i"]	[""]	+input
+453514	1159	7	3	7	3	["f"]	[""]	+input
+461958	1171	9	0	9	0	["elif(var1 < 45 and var2 < 22):","\tprint('Risco: Baixo')"]	[""]	paste
+499054	1177	7	26	7	27	[""]	["="]	+delete
+508364	1184	9	24	9	24	["="]	[""]	+input
+522572	1188	10	19	10	20	[""]	["o"]	+delete
+522800	1192	10	18	10	19	[""]	["x"]	+delete
+522969	1196	10	17	10	18	[""]	["i"]	+delete
+523158	1200	10	16	10	17	[""]	["a"]	+delete
+523934	1204	10	15	10	16	[""]	["B"]	+delete
+525486	1209	10	15	10	15	["m"]	[""]	+input
+527657	1214	10	15	10	16	[""]	["m"]	+delete
+528152	1219	10	15	10	15	["M"]	[""]	+input
+528787	1225	10	16	10	16	["e"]	[""]	+input
+529402	1229	10	17	10	17	["d"]	[""]	+input
+529640	1233	10	18	10	18	["i"]	[""]	+input
+530057	1237	10	19	10	19	["o"]	[""]	+input
+535715	1246	9	0	10	22	["C"]	["elif(var1 < 45 and var2 =< 22):","\tprint('Risco: Medio')"]	+input
+537086	1253	9	1	9	1	["Z"]	[""]	+input
+537856	1259	9	2	9	2	["Z"]	[""]	+input
+538636	1263	9	2	9	3	[""]	["Z"]	+delete
+538836	1267	9	1	9	2	[""]	["Z"]	+delete
+539009	1271	9	0	9	1	[""]	["C"]	+delete
+541828	1276	9	0	9	0	["e"]	[""]	+input
+541997	1280	9	1	9	1	["l"]	[""]	+input
+542185	1284	9	2	9	2	["s"]	[""]	+input
+542435	1288	9	3	9	3	["e"]	[""]	+input
+543945	1293	9	4	9	4	[":"]	[""]	+input
+545906	1297	9	5	9	5	["",""]	[""]	+input
+545907	1298	10	0	10	0	["\t"]	[""]	+input
+549087	1304	10	1	10	1	["p"]	[""]	+input
+549629	1308	10	2	10	2	["r"]	[""]	+input
+549869	1312	10	3	10	3	["i"]	[""]	+input
+550183	1316	10	4	10	4	["n"]	[""]	+input
+550352	1320	10	5	10	5	["t"]	[""]	+input
+553099	1325	10	6	10	6	["()"]	[""]	+input
+554222	1331	10	7	10	7	["''"]	[""]	+input
+556679	1338	10	8	10	8	["R"]	[""]	+input
+557435	1344	10	9	10	9	["i"]	[""]	+input
+557619	1347	10	10	10	10	["s"]	[""]	+input
+558026	1352	10	11	10	11	["c"]	[""]	+input
+558341	1356	10	12	10	12	["o"]	[""]	+input
+559271	1361	10	13	10	13	[":"]	[""]	+input
+560018	1366	10	14	10	14	[" "]	[""]	+input
+561456	1372	10	15	10	15	["A"]	[""]	+input
+562236	1378	10	16	10	16	["l"]	[""]	+input
+562478	1382	10	17	10	17	["t"]	[""]	+input
+562715	1386	10	18	10	18	["o"]	[""]	+input
+610234	1399	3	11	3	11	[" "]	[""]	+input
+611326	1403	3	12	3	12	["a"]	[""]	+input
+611693	1407	3	13	3	13	["n"]	[""]	+input
+612037	1411	3	14	3	14	["d"]	[""]	+input
+612379	1415	3	15	3	15	[" "]	[""]	+input
+612709	1419	3	16	3	16	["b"]	[""]	+input
+612845	1423	3	17	3	17	["a"]	[""]	+input
+613972	1426	3	17	3	18	[""]	["a"]	+delete
+614243	1430	3	16	3	17	[""]	["b"]	+delete
+614895	1435	3	16	3	16	["v"]	[""]	+input
+614995	1438	3	17	3	17	["a"]	[""]	+input
+615336	1443	3	18	3	18	["r"]	[""]	+input
+615617	1447	3	19	3	19	["1"]	[""]	+input
+616100	1451	3	20	3	20	[" "]	[""]	+input
+616321	1455	3	21	3	21	["-"]	[""]	+input
+616519	1459	3	22	3	22	["-"]	[""]	+input
+616700	1463	3	23	3	23	[" "]	[""]	+input
+617083	1467	3	24	3	24	["0"]	[""]	+input
+618469	1470	3	24	3	25	[""]	["0"]	+delete
+618653	1474	3	23	3	24	[""]	[" "]	+delete
+618815	1478	3	22	3	23	[""]	["-"]	+delete
+619181	1482	3	21	3	22	[""]	["-"]	+delete
+620155	1487	3	21	3	21	["="]	[""]	+input
+620349	1491	3	22	3	22	["="]	[""]	+input
+621035	1495	3	23	3	23	[" "]	[""]	+input
+621257	1499	3	24	3	24	["0"]	[""]	+input
+628282	1504	7	26	7	26	["="]	[""]	+input
+652755	1507	7	26	7	27	[""]	["="]	+delete
+663266	1520	8	22	8	22	["",""]	[""]	+input
+663266	1521	9	0	9	0	["\t"]	[""]	+input
+664011	1527	9	1	9	1	["elif(var1 >= 45 and var2 > 22):","\tprint('Risco: Medio')"]	[""]	paste
+667540	1533	9	0	9	1	[""]	["\t"]	+delete
+680250	1538	7	25	7	26	[""]	[">"]	+delete
+681858	1544	7	25	7	25	["<"]	[""]	+input
+716665	1550	9	26	9	26	["="]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 727573
+- raw_log_line: 1556
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = int(input('indice: '))
+
+if(var1>130 and var1 == 0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+Run Output
+```text
+
+```
+
+Local Run 2
+- event_time_delta_ms: 743838
+- raw_log_line: 1560
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = int(input('indice: '))
+
+if(var1>130 and var1 == 0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+Run Output
+```text
+numero: 25
+indice: 21
+Risco: Baixo
+```
+
+Local Run 3
+- event_time_delta_ms: 751726
+- raw_log_line: 1564
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = int(input('indice: '))
+
+if(var1>130 and var1 == 0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+Run Output
+```text
+
+```
+
+Edit Segment 2
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+757905	1571	3	22	3	23	[""]	["="]	+delete
+758547	1577	3	22	3	22	["<"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 763792
+- raw_log_line: 1581
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = int(input('indice: '))
+
+if(var1>130 and var1 =< 0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+Run Output
+```text
+
+```
+
+Local Run 5
+- event_time_delta_ms: 773788
+- raw_log_line: 1585
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = int(input('indice: '))
+
+if(var1>130 and var1 =< 0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+Run Output
+```text
+File "main.py", line 4
+if(var1>130 and var1 =< 0):
+SyntaxError: invalid syntax
+```
+
+Edit Segment 3
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+778426	1589	3	22	3	23	[""]	["<"]	+delete
+779197	1593	3	21	3	22	[""]	["="]	+delete
+780694	1599	3	21	3	21	["<"]	[""]	+input
+781482	1604	3	22	3	22	["="]	[""]	+input
+
+Local Run 6
+- event_time_delta_ms: 785761
+- raw_log_line: 1610
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = int(input('indice: '))
+
+if(var1>130 and var1 <= 0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+Run Output
+```text
+File "main.py", line 4
+if(var1>130 and var1 =< 0):
+SyntaxError: invalid syntax
+```
+
+Edit Segment 4
+- raw_change_event_count: 10
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+806915	1614	1	9	1	10	[""]	["t"]	+delete
+807126	1618	1	8	1	9	[""]	["n"]	+delete
+807290	1622	1	7	1	8	[""]	["i"]	+delete
+808230	1627	1	7	1	7	["f"]	[""]	+input
+808509	1631	1	8	1	8	["l"]	[""]	+input
+808736	1635	1	9	1	9	["o"]	[""]	+input
+808996	1639	1	10	1	10	["a"]	[""]	+input
+809208	1643	1	11	1	11	["t"]	[""]	+input
+809229	1646	1	12	1	12	["5"]	[""]	+input
+810296	1650	1	12	1	13	[""]	["5"]	+delete
+
+Local Run 7
+- event_time_delta_ms: 817672
+- raw_log_line: 1660
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = float(input('indice: '))
+
+if(var1>130 and var1 <= 0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+Run Output
+```text
+numero: 25
+indice: -10.5
+Traceback (most recent call last):
+File "main.py", line 2, in <module>
+var2 = int(input('indice: '))
+ValueError: invalid literal for int() with base 10: '-10.5'
+```
+
+Edit Segment 5
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+834639	1664	3	21	3	22	[""]	["<"]	+delete
+835633	1670	3	21	3	21	[">"]	[""]	+input
+
+Local Run 8
+- event_time_delta_ms: 845747
+- raw_log_line: 1677
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = float(input('indice: '))
+
+if(var1>130 and var1 >= 0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+Run Output
+```text
+numero: 28
+indice: -10.5
+Risco: Baixo
+```
+
+Edit Segment 6
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+855335	1681	3	19	3	20	[""]	["1"]	+delete
+855761	1686	3	19	3	19	["2"]	[""]	+input
+
+Local Run 9
+- event_time_delta_ms: 859894
+- raw_log_line: 1690
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = float(input('indice: '))
+
+if(var1>130 and var2 >= 0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+Run Output
+```text
+numero: 28
+```
+
+Edit Segment 7
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+871972	1694	3	21	3	22	[""]	[">"]	+delete
+872793	1700	3	21	3	21	["<"]	[""]	+input
+
+Local Run 10
+- event_time_delta_ms: 877565
+- raw_log_line: 1707
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = float(input('indice: '))
+
+if(var1>130 and var2 <= 0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+Run Output
+```text
+numero: 28
+indice: -10.5
+Risco: Baixo
+```
+
+Edit Segment 8
+- raw_change_event_count: 20
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+900873	1712	3	19	3	20	[""]	["2"]	+delete
+901306	1717	3	19	3	19	["1"]	[""]	+input
+907536	1721	3	21	3	22	[""]	["<"]	+delete
+908396	1727	3	21	3	21	[">"]	[""]	+input
+920646	1732	3	7	3	8	[""]	[">"]	+delete
+921910	1739	3	7	3	7	[","]	[""]	+input
+922930	1742	3	7	3	8	[""]	[","]	+delete
+923628	1748	3	7	3	7	["<"]	[""]	+input
+945281	1756	3	25	3	25	[" "]	[""]	+input
+947248	1760	3	26	3	26	["a"]	[""]	+input
+947371	1763	3	27	3	27	["n"]	[""]	+input
+947674	1768	3	28	3	28	["d"]	[""]	+input
+947921	1772	3	29	3	29	[" "]	[""]	+input
+948474	1776	3	30	3	30	["v"]	[""]	+input
+948611	1779	3	31	3	31	["a"]	[""]	+input
+948959	1784	3	32	3	32	["r"]	[""]	+input
+949212	1788	3	33	3	33	["2"]	[""]	+input
+949903	1792	3	34	3	34	[" "]	[""]	+input
+954666	1797	3	35	3	35	["<"]	[""]	+input
+956411	1802	3	36	3	36	["0"]	[""]	+input
+
+Local Run 11
+- event_time_delta_ms: 963830
+- raw_log_line: 1808
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = float(input('indice: '))
+
+if(var1<130 and var1 >= 0 and var2 <0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+Run Output
+```text
+numero: 28
+indice: -10.5
+Risco: Baixo
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 979544
+- raw_log_line: 1809
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+var1 = int(input('numero: '))
+var2 = float(input('indice: '))
+
+if(var1<130 and var1 >= 0 and var2 <0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2023-04-27T17:10:03.686000
+
+Execution Result
+
+- submitted_at: 2023-05-08 13:44:16
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [0]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "0\n0"
+    expected: "Dados invalidos"
+    actual: "Risco: Baixo"
+  - test_index_0idx: 1 [PASS]
+    input: "25\n25"
+    expected: "Risco: Medio"
+    actual: "Risco: Medio"
+  - test_index_0idx: 2 [PASS]
+    input: "50\n25"
+    expected: "Risco: Alto"
+    actual: "Risco: Alto"
+
+Attempt Start Code
+```python
+var1 = int(input('numero: '))
+var2 = float(input('indice: '))
+
+if(var1<130 and var1 >= 0 and var2 <0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1813
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = float(input('indice: '))
+
+if(var1<130 and var1 >= 0 and var2 <0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+Run Output
+```text
+numero: 28
+indice: -10.5
+Dados invalidos
+```
+
+Local Run 2
+- event_time_delta_ms: 18006
+- raw_log_line: 1817
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = float(input('indice: '))
+
+if(var1<130 and var1 >= 0 and var2 <0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+Run Output
+```text
+numero: 25
+indice: 21
+Risco: Baixo
+```
+
+Local Run 3
+- event_time_delta_ms: 937848458
+- raw_log_line: 1834
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = float(input('indice: '))
+
+if(var1<130 and var1 >= 0 and var2 <0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+Run Output
+```text
+numero: 25
+indice: 21
+Risco: Baixo
+```
+
+Local Run 4
+- event_time_delta_ms: 937888058
+- raw_log_line: 1838
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = float(input('indice: '))
+
+if(var1<130 and var1 >= 0 and var2 <0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Medio')
+else:
+	print('Risco: Alto')
+```
+Run Output
+```text
+numero: 52
+indice: 28
+Risco: Medio
+```
+
+Edit Segment 1
+- raw_change_event_count: 18
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+938005834	1842	10	19	10	20	[""]	["o"]	+delete
+938006045	1846	10	18	10	19	[""]	["i"]	+delete
+938006201	1850	10	17	10	18	[""]	["d"]	+delete
+938006378	1854	10	16	10	17	[""]	["e"]	+delete
+938006895	1858	10	15	10	16	[""]	["M"]	+delete
+938007713	1865	10	15	10	15	["A"]	[""]	+input
+938008151	1871	10	16	10	16	["l"]	[""]	+input
+938008546	1875	10	17	10	17	["t"]	[""]	+input
+938009469	1879	10	18	10	18	["o"]	[""]	+input
+938032795	1883	12	18	12	19	[""]	["o"]	+delete
+938033000	1887	12	17	12	18	[""]	["t"]	+delete
+938033194	1891	12	16	12	17	[""]	["l"]	+delete
+938033416	1895	12	15	12	16	[""]	["A"]	+delete
+938034147	1902	12	15	12	15	["M"]	[""]	+input
+938034681	1908	12	16	12	16	["e"]	[""]	+input
+938034969	1912	12	17	12	17	["d"]	[""]	+input
+938035177	1916	12	18	12	18	["i"]	[""]	+input
+938035561	1920	12	19	12	19	["o"]	[""]	+input
+
+Local Run 5
+- event_time_delta_ms: 938050311
+- raw_log_line: 1926
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = float(input('indice: '))
+
+if(var1<130 and var1 >= 0 and var2 <0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Alto')
+else:
+	print('Risco: Medio')
+```
+Run Output
+```text
+numero: 52
+indice: 28
+Risco: Alto
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 938052644
+- raw_log_line: 1927
+- feedback: "You're almost there! Your code is 67% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+var1 = int(input('numero: '))
+var2 = float(input('indice: '))
+
+if(var1<130 and var1 >= 0 and var2 <0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Alto')
+else:
+	print('Risco: Medio')
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2023-05-08T13:44:53.984000
+
+Execution Result
+
+- submitted_at: 2023-05-08 13:45:09
+- grade: 67.0
+- pass_count: 2
+- failed_test_indices_0idx: [0]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "0\n0"
+    expected: "Dados invalidos"
+    actual: "Risco: Baixo"
+  - test_index_0idx: 1 [PASS]
+    input: "25\n25"
+    expected: "Risco: Medio"
+    actual: "Risco: Medio"
+  - test_index_0idx: 2 [PASS]
+    input: "50\n25"
+    expected: "Risco: Alto"
+    actual: "Risco: Alto"
+
+Attempt Start Code
+```python
+var1 = int(input('numero: '))
+var2 = float(input('indice: '))
+
+if(var1<130 and var1 >= 0 and var2 <0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Alto')
+else:
+	print('Risco: Medio')
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 1931
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+var1 = int(input('numero: '))
+var2 = float(input('indice: '))
+
+if(var1<130 and var1 >= 0 and var2 <0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 >= 22):
+	print('Risco: Alto')
+else:
+	print('Risco: Medio')
+```
+Run Output
+```text
+numero: 28
+indice: -10.5
+Dados invalidos
+```
+
+Edit Segment 1
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+7983	1935	9	26	9	27	[""]	["="]	+delete
+
+Submit Anchor 1
+- event_time_delta_ms: 15425
+- raw_log_line: 1939
+- feedback: "You're almost there! Your code is 67% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+var1 = int(input('numero: '))
+var2 = float(input('indice: '))
+
+if(var1<130 and var1 >= 0 and var2 <0):
+	print('Dados invalidos')
+elif(var1 < 45 and var2 < 22):
+	print('Risco: Baixo')
+elif(var1 >= 45 and var2 < 22):
+	print('Risco: Medio')
+elif(var1 >= 45 and var2 > 22):
+	print('Risco: Alto')
+else:
+	print('Risco: Medio')
+```

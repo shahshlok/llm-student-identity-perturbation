@@ -1,0 +1,138 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "589",
+    "assessment_id": "5730",
+    "assessment_title": "Extra 3: Condicionais Encadeados (if/elif)",
+    "exercise_id": "1949",
+    "student_id": "9895",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2024-1/589/users/9895/executions/5730_1949.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2024-1/589/users/9895/codemirror/5730_1949.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2024-05-31 13:46:28",
+        "grade": 0.0,
+        "pass_count": 2,
+        "failed_test_indices_0idx": [
+          1
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": true,
+            "input": "55\n55",
+            "expected": "Ganhou R$ 100.000,00",
+            "actual": "Ganhou R$ 100.000,00"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "78\n89",
+            "expected": "Ganhou R$ 1.000,00",
+            "actual": "Ganhou R$ 100.000,00"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": true,
+            "input": "12\n56",
+            "expected": "Perdeu",
+            "actual": "Perdeu"
+          }
+        ]
+      },
+      "submitted_code": "n = int(input(\"n1: \"))\nl = int(input(\"l1: \"))\nif n == l:\n\tprint(\"Ganhou R$ 100.000,00\")\nelif sorted(str(n)) == sorted(str(l)):\n\tprint(\"Ganhou R$ 50.000,00\")\nelif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:\n\tprint(\"Ganhou R$ 100.000,00\")\nelse:\n\tprint(\"Perdeu\")"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2024-05-31 13:55:43",
+        "grade": 0.0,
+        "pass_count": 2,
+        "failed_test_indices_0idx": [
+          1
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": true,
+            "input": "55\n55",
+            "expected": "Ganhou R$ 100.000,00",
+            "actual": "Ganhou R$ 100.000,00"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "78\n89",
+            "expected": "Ganhou R$ 1.000,00",
+            "actual": "Ganhou R$ 100.000,00"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": true,
+            "input": "12\n56",
+            "expected": "Perdeu",
+            "actual": "Perdeu"
+          }
+        ]
+      },
+      "submitted_code": "n = int(input(\"n1: \"))\nl = int(input(\"l1: \"))\nif 10 <= n <= 99:\n\tif n == l:\n\t\tprint(\"Ganhou R$ 100.000,00\")\n\telif sorted(str(n)) == sorted(str(l)):\n\t\tprint(\"Ganhou R$ 50.000,00\")\n\telif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:\n\t\tprint(\"Ganhou R$ 100.000,00\")\n\telse:\n\t\tprint(\"Perdeu\")"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2024-05-31 13:56:26",
+        "grade": 0.0,
+        "pass_count": 2,
+        "failed_test_indices_0idx": [
+          1
+        ],
+        "test_outcome": "mixed",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": true,
+            "input": "55\n55",
+            "expected": "Ganhou R$ 100.000,00",
+            "actual": "Ganhou R$ 100.000,00"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "78\n89",
+            "expected": "Ganhou R$ 1.000,00",
+            "actual": "Ganhou R$ 100.000,00"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": true,
+            "input": "12\n56",
+            "expected": "Perdeu",
+            "actual": "Perdeu"
+          }
+        ]
+      },
+      "submitted_code": "n = int(input(\"n1: \"))\nl = int(input(\"l1: \"))\nif 10 <= n <= 99 and 10 <= l <= 99:\n\tif n == l:\n\t\tprint(\"Ganhou R$ 100.000,00\")\n\telif sorted(str(n)) == sorted(str(l)):\n\t\tprint(\"Ganhou R$ 50.000,00\")\n\telif str(n)[0] == str(l)[0] or str(n)[0] == str(l)[1] or str(n)[1] == str(l)[0] or str(n)[1] == str(l)[1]:\n\t\tprint(\"Ganhou R$ 100.000,00\")\n\telse:\n\t\tprint(\"Perdeu\")"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

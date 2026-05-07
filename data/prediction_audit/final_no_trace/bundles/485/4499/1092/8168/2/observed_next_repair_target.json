@@ -1,0 +1,71 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4499",
+    "exercise_id": "1092",
+    "student_id": "8168",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "a=int(input(\"\"))\nvar1=(a//100)**3\nvar2=((a%100)//10)**3\nvar3=(a%10)**3\ncal=var1+var2+var3\nif(cal==a):\n\tprint(\"atende\")\nelse:\n\tprint(\"nao atende\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "a=int(input(\"\"))\nvar1=(a//100)**3\nvar2=((a%100)//10)**3\nvar3=(a%10)**3\ncal=var1+var2+var3\nprint(cal)\nif(cal==a):\n\tprint(\"atende\")\nelse:\n\tprint(\"nao atende\")",
+    "grade": 0.0,
+    "pass_count": 1,
+    "failed_test_indices_0idx": [
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": true,
+        "input": "371",
+        "expected": "371\natende",
+        "actual": "371\natende"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "246",
+        "expected": "246\nnao atende",
+        "actual": "288\nnao atende"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "579",
+        "expected": "579\nnao atende",
+        "actual": "1197\nnao atende"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "partial_fix",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5,
+        "edit_kind": "insert"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 5,
+        "end_line_0idx": 5
+      }
+    ]
+  }
+}

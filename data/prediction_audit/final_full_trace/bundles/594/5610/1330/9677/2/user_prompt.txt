@@ -1,0 +1,364 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 594
+- assessment_id: 5610
+- assessment_title: Lab 0 – Primeiros passos com o Python - 2020
+- exercise_id: 1330
+- student_id: 9677
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-04-23T13:20:24.750000
+
+Execution Result
+
+- submitted_at: 2024-04-23 13:21:18
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "xxx"
+    expected: "41.67"
+    actual: "41.666666666666664"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 11
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	9	0	0	0	0	["p"]	[""]	+input
+250	13	0	1	0	1	["r"]	[""]	+input
+937	17	0	2	0	2	["i"]	[""]	+input
+1199	21	0	3	0	3	["n"]	[""]	+input
+1401	25	0	4	0	4	["t"]	[""]	+input
+2863	30	0	5	0	5	["()"]	[""]	+input
+39635	36	0	6	0	6	["2"]	[""]	+input
+39951	40	0	7	0	7	["5"]	[""]	+input
+40339	44	0	8	0	8	["0"]	[""]	+input
+41719	48	0	9	0	9	["/"]	[""]	+input
+42825	52	0	10	0	10	["6"]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 52881
+- raw_log_line: 55
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print(250/6)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-04-23T13:21:24.670000
+
+Execution Result
+
+- submitted_at: 2024-04-23 13:24:28
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "xxx"
+    expected: "41.67"
+    actual: "41.666666666666664\n41.666666666666664"
+
+Attempt Start Code
+```python
+print(250/6)
+```
+
+Trace Timeline
+
+Local Run 1
+- event_time_delta_ms: 0
+- raw_log_line: 57
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print(250/6)
+```
+Run Output
+```text
+41.666666666666664
+```
+
+Edit Segment 1
+- raw_change_event_count: 58
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+16319	61	0	12	0	12	["",""]	[""]	+input
+17201	67	1	0	1	0	["p"]	[""]	+input
+17524	71	1	1	1	1	["r"]	[""]	+input
+17725	75	1	2	1	2	["i"]	[""]	+input
+17982	79	1	3	1	3	["n"]	[""]	+input
+18213	83	1	4	1	4	["t"]	[""]	+input
+20098	86	1	4	1	5	[""]	["t"]	+delete
+20320	90	1	3	1	4	[""]	["n"]	+delete
+20521	94	1	2	1	3	[""]	["i"]	+delete
+20726	98	1	1	1	2	[""]	["r"]	+delete
+21052	102	1	0	1	1	[""]	["p"]	+delete
+21840	107	1	0	1	0	["r"]	[""]	+input
+22188	111	1	1	1	1	["o"]	[""]	+input
+22457	115	1	2	1	2	["u"]	[""]	+input
+22711	119	1	3	1	3	["n"]	[""]	+input
+22905	123	1	4	1	4	["d"]	[""]	+input
+23728	127	1	5	1	5	[" "]	[""]	+input
+25598	132	1	6	1	6	["()"]	[""]	+input
+27560	138	1	7	1	7	["x"]	[""]	+input
+29064	141	1	7	1	8	[""]	["x"]	+delete
+30362	145	1	6	1	8	[""]	["()"]	+delete
+30595	149	1	5	1	6	[""]	[" "]	+delete
+30957	153	1	4	1	5	[""]	["d"]	+delete
+31151	157	1	3	1	4	[""]	["n"]	+delete
+31327	161	1	2	1	3	[""]	["u"]	+delete
+31508	165	1	1	1	2	[""]	["o"]	+delete
+31676	169	1	0	1	1	[""]	["r"]	+delete
+31873	173	0	12	1	0	[""]	["",""]	+delete
+32054	178	0	11	0	12	[""]	[")"]	+delete
+32233	182	0	10	0	11	[""]	["6"]	+delete
+32396	186	0	9	0	10	[""]	["/"]	+delete
+32558	190	0	8	0	9	[""]	["0"]	+delete
+32720	194	0	7	0	8	[""]	["5"]	+delete
+32895	198	0	6	0	7	[""]	["2"]	+delete
+33057	202	0	5	0	6	[""]	["("]	+delete
+33194	206	0	4	0	5	[""]	["t"]	+delete
+33303	210	0	3	0	4	[""]	["n"]	+delete
+33431	214	0	2	0	3	[""]	["i"]	+delete
+33598	218	0	1	0	2	[""]	["r"]	+delete
+33749	222	0	0	0	1	[""]	["p"]	+delete
+127484	227	0	0	0	0	["p"]	[""]	+input
+127694	231	0	1	0	1	["r"]	[""]	+input
+127839	235	0	2	0	2	["i"]	[""]	+input
+128115	239	0	3	0	3	["n"]	[""]	+input
+128328	243	0	4	0	4	["t"]	[""]	+input
+128625	247	0	5	0	5	[" "]	[""]	+input
+130139	252	0	6	0	6	["()"]	[""]	+input
+132530	258	0	7	0	7	["2"]	[""]	+input
+132857	262	0	8	0	8	["5"]	[""]	+input
+133311	266	0	9	0	9	["0"]	[""]	+input
+134509	270	0	10	0	10	["/"]	[""]	+input
+135191	274	0	11	0	11	["6"]	[""]	+input
+139550	279	0	12	0	12	["="]	[""]	+input
+140472	283	0	13	0	13	["1"]	[""]	+input
+141032	287	0	14	0	14	["2"]	[""]	+input
+141441	291	0	15	0	15	["5"]	[""]	+input
+145717	295	0	16	0	16	["/"]	[""]	+input
+146778	299	0	17	0	17	["3"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 151670
+- raw_log_line: 305
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print (250/6=125/3)
+```
+Run Output
+```text
+File "main.py", line 1
+print (250/6=125/3)
+SyntaxError: keyword can't be an expression
+```
+
+Edit Segment 2
+- raw_change_event_count: 19
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+154761	309	0	17	0	18	[""]	["3"]	+delete
+154999	313	0	16	0	17	[""]	["/"]	+delete
+155230	317	0	15	0	16	[""]	["5"]	+delete
+155457	321	0	14	0	15	[""]	["2"]	+delete
+155707	325	0	13	0	14	[""]	["1"]	+delete
+156074	329	0	12	0	13	[""]	["="]	+delete
+157169	334	0	13	0	13	["",""]	[""]	+input
+158595	340	1	0	1	0	["p"]	[""]	+input
+158837	344	1	1	1	1	["r"]	[""]	+input
+159014	348	1	2	1	2	["i"]	[""]	+input
+159239	352	1	3	1	3	["n"]	[""]	+input
+159474	356	1	4	1	4	["t"]	[""]	+input
+159902	360	1	5	1	5	[" "]	[""]	+input
+161062	365	1	6	1	6	["()"]	[""]	+input
+169044	371	1	7	1	7	["1"]	[""]	+input
+169767	375	1	8	1	8	["2"]	[""]	+input
+170360	379	1	9	1	9	["5"]	[""]	+input
+170855	383	1	10	1	10	["/"]	[""]	+input
+171752	387	1	11	1	11	["3"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 178037
+- raw_log_line: 392
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print (250/6)
+print (125/3)
+```
+Run Output
+```text
+41.666666666666664
+41.666666666666664
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 182483
+- raw_log_line: 393
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print (250/6)
+print (125/3)
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-04-23T13:24:32.165000
+
+Execution Result
+
+- submitted_at: 2024-04-23 13:25:48
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "xxx"
+    expected: "41.67"
+    actual: "41.666666666666664\n41.666666666666664\n41.666666666666664\n41.666666666666664"
+
+Attempt Start Code
+```python
+print (250/6)
+print (125/3)
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 32
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	397	1	13	1	13	["",""]	[""]	+input
+730	403	2	0	2	0	["p"]	[""]	+input
+961	407	2	1	2	1	["r"]	[""]	+input
+1145	411	2	2	2	2	["i"]	[""]	+input
+1371	415	2	3	2	3	["n"]	[""]	+input
+1578	419	2	4	2	4	["t"]	[""]	+input
+1850	423	2	5	2	5	[" "]	[""]	+input
+3237	428	2	6	2	6	["()"]	[""]	+input
+6474	434	2	7	2	7	["4"]	[""]	+input
+6858	438	2	8	2	8	["1"]	[""]	+input
+8668	442	2	9	2	9	["="]	[""]	+input
+9569	445	2	9	2	10	[""]	["="]	+delete
+10437	451	2	9	2	9	["+"]	[""]	+input
+14852	456	2	10	2	10	["2"]	[""]	+input
+16774	460	2	11	2	11	["/"]	[""]	+input
+17331	464	2	12	2	12	["3"]	[""]	+input
+48981	470	2	14	2	14	["",""]	[""]	+input
+49738	476	3	0	3	0	["p"]	[""]	+input
+50044	480	3	1	3	1	["r"]	[""]	+input
+50250	484	3	2	3	2	["i"]	[""]	+input
+50528	488	3	3	3	3	["n"]	[""]	+input
+50813	492	3	4	3	4	["t"]	[""]	+input
+51307	496	3	5	3	5	[" "]	[""]	+input
+56717	500	3	6	3	6	["4"]	[""]	+input
+57699	503	3	6	3	7	[""]	["4"]	+delete
+58488	509	3	6	3	6	["()"]	[""]	+input
+59416	515	3	7	3	7	["4"]	[""]	+input
+59764	519	3	8	3	8	["1"]	[""]	+input
+61361	524	3	9	3	9	["+"]	[""]	+input
+64319	529	3	10	3	10	["6"]	[""]	+input
+65212	533	3	11	3	11	["/"]	[""]	+input
+65773	537	3	12	3	12	["9"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 70528
+- raw_log_line: 543
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print (250/6)
+print (125/3)
+print (41+2/3)
+print (41+6/9)
+```
+Run Output
+```text
+41.666666666666664
+41.666666666666664
+41.666666666666664
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 75293
+- raw_log_line: 544
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print (250/6)
+print (125/3)
+print (41+2/3)
+print (41+6/9)
+```

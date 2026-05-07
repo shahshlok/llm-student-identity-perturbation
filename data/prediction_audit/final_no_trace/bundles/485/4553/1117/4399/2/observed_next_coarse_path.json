@@ -1,0 +1,27 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4553",
+    "exercise_id": "1117",
+    "student_id": "4399",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "preco_normal = float(input())\ndia_semana = int(input())\nmusica_ao_vivo = str(input())\n\nif dia_semana == 2 or dia_semana == 3 or dia_semana == 5:\n\ttotal = preco_normal - (25/100) * preco_normal\n\tif musica_ao_vivo == 'S':\n\t\ttotal = total + 20\n\t\tprint(\"Entradas: {} , {} , {}\".format(round(preco_normal, 2), dia_semana, musica_ao_vivo))\n\t\tprint(\"Total\", round(total, 2))\nelif dia_semana > 7 or dia_semana < 1:\n\tprint(\"Entradas: {} , {} , {}\".format(round(preco_normal, 2), dia_semana, musica_ao_vivo))\n\tprint(\"Dados invalidos\")\nelse:\n\tprint(\"Entradas: {} , {} , {}\".format(round(preco_normal, 2), dia_semana, musica_ao_vivo))\n\tprint(\"Total: \", round(preco_normal, 2))",
+    "coarse_path_steps": [
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 8,
+        "target_end_line_0idx": 14
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

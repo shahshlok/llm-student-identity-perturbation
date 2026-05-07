@@ -1,0 +1,27 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "589",
+    "assessment_id": "5730",
+    "exercise_id": "1949",
+    "student_id": "5703",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "# Função principal\ndef verificar_premio():\n    # Leitura dos números apostado e sorteado\n    numero_apostado = int(input(\"Digite o número apostado (com dois dígitos): \"))\n    numero_sorteado = int(input(\"Digite o número sorteado na loteria (com dois dígitos): \"))\n\n    # Extraindo dígitos dos números apostado e sorteado\n    digito_apostado_1 = numero_apostado // 10\n    digito_apostado_2 = numero_apostado % 10\n    digito_sorteado_1 = numero_sorteado // 10\n    digito_sorteado_2 = numero_sorteado % 10\n\n    # Verificação dos prêmios\n    if numero_apostado == numero_sorteado:\n        print(\"Ganhou R$ 100.000,00\")\n    elif (digito_apostado_1 == digito_sorteado_2 and digito_apostado_2 == digito_sorteado_1):\n        print(\"Ganhou R$ 50.000,00\")\n    elif (digito_apostado_1 == digito_sorteado_1 or digito_apostado_1 == digito_sorteado_2 or\n          digito_apostado_2 == digito_sorteado_1 or digito_apostado_2 == digito_sorteado_2):\n        print(\"Ganhou R$ 1.000,00\")\n    else:\n        print(\"Perdeu\")\n\n# Chama a função principal\nverificar_premio()\n",
+    "coarse_path_steps": [
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 0,
+        "target_end_line_0idx": 25
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

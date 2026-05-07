@@ -1,0 +1,27 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "487",
+    "assessment_id": "4503",
+    "exercise_id": "1418",
+    "student_id": "3964",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "# Ler o número de votos de cada candidato\nvotos1 = int(input(\"Digite o número de votos do candidato mais votado: \"))\nvotos2 = int(input(\"Digite o número de votos do segundo candidato mais votado: \"))\nvotos3 = int(input(\"Digite o número de votos do candidato menos votado: \"))\n\n# Calcular o total de votos válidos\ntotal_votos = votos1 + votos2 + votos3\nvotos_validos = total_votos - votos3\n\n# Verificar se há mais de 200 mil habitantes e se a eleição precisa de segundo turno\nif votos1 > total_votos / 2 and total_votos > 200000:\n    print(\"SIM\")\nelse:\n    print(\"NAO\")",
+    "coarse_path_steps": [
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 10,
+        "target_end_line_0idx": 10
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

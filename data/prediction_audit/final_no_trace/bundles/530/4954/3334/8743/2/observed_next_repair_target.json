@@ -1,0 +1,68 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "530",
+    "assessment_id": "4954",
+    "exercise_id": "3334",
+    "student_id": "8743",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "a = float(input(\"digite a variavel x2: \"))\nb = float(input(\"digite a variavel x: \"))\nc = float(input(\"digite a variavel c: \"))\n\ndelta = (b**2) - (4*a*c)\n\nif(delta>=0):\n\tx1 = (-b+(delta**0.5))/(2*a)\n\tx2 = (-b-(delta**0.5))/(2*a)\n\tprint(x1)\n\tprint(x2)\nelse:\n\t(\"a equacao nao possui raizes reais\")",
+    "grade": 67.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "a = float(input(\"digite a variavel x2: \"))\nb = float(input(\"digite a variavel x: \"))\nc = float(input(\"digite a variavel c: \"))\n\ndelta = (b**2) - (4*a*c)\n\nif(delta>=0):\n\tx1 = (-b+(delta**0.5))/(2*a)\n\tx2 = (-b-(delta**0.5))/(2*a)\n\tprint(x1)\n\tprint(x2)\nelse:\n\t(\"a equacao nao possui raizes reais \")",
+    "grade": 67.0,
+    "pass_count": 2,
+    "failed_test_indices_0idx": [
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": true,
+        "input": "1.0\n5.0\n6.0",
+        "expected": "-2.0\n-3.0",
+        "actual": "-2.0\n-3.0"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "1.0\n4.0\n-5.0",
+        "expected": "1.0\n-5.0",
+        "actual": "1.0\n-5.0"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "10.0\n6.0\n10.0",
+        "expected": "a equacao nao possui raizes reais",
+        "actual": ""
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 12,
+        "end_line_0idx": 12,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 12,
+        "end_line_0idx": 12
+      }
+    ]
+  }
+}

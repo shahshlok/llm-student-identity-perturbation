@@ -1,0 +1,32 @@
+{
+  "schema_version": "v6_2_observed_coarse_path_v1",
+  "source": {
+    "class_id": "563",
+    "assessment_id": "5324",
+    "exercise_id": "1117",
+    "student_id": "9207",
+    "transition_index_0idx": 2
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "aligned_submit_index_0idx": 3,
+    "submitted_code": "#Dias da semana com desconto\n\t# segundas, terças e quintas (desconto de 25%)\n\t\npreco_normal = float(input(\"Informe o preco normal de entrada: \"))\ndia_semana = int(input(\"Informe o dia da semana: \"))\nmusica_aovivo = str(input(\"Dia de musica ao vivo? \")).upper()\n\ndomingo = 1\nsegunda = 2\nterca = 3\nquarta = 4\nquinta = 5\nsexta = 6\nsabado = 7\n\nif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == \"s\"):\n\tprint(\"Total: R$\", (round(preco_normal * 0.75 + 20, 2)))\nelif (dia_semana == 2) or (dia_semana == 3) or (dia_semana == 5) and (musica_aovivo == \"n\"):\n\tprint(\"Total: R$\", (round(preco_normal * 0.75, 2)))\nelif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == \"s\"):\n\tprint(\"Total: R$\", (round(preco_normal + 20, 2)))\nelif (dia_semana == 1) or (dia_semana == 4) or (dia_semana == 6) or (dia_semana == 7) and (musica_aovivo == \"n\"):\n\tprint(\"Total: R$\", (round(preco_normal, 2))) \nelse:\n\tprint(\"Dados invalidos\")",
+    "coarse_path_steps": [
+      {
+        "action_type": "edit",
+        "target_start_line_0idx": 5,
+        "target_end_line_0idx": 5
+      },
+      {
+        "action_type": "local_run",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      },
+      {
+        "action_type": "submit",
+        "target_start_line_0idx": null,
+        "target_end_line_0idx": null
+      }
+    ]
+  }
+}

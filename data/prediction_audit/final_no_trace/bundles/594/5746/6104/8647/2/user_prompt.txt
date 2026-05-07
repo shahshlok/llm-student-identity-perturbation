@@ -1,0 +1,179 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the authoritative execution result for that submitted attempt.
+- Each attempt includes the submitted code for that attempt.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 594
+- assessment_id: 5746
+- assessment_title: Lista 3: Exercícios em Sala
+- exercise_id: 6104
+- student_id: 8647
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+Execution Result
+
+- submitted_at: 2024-05-30 19:42:02
+- grade: 33.0
+- pass_count: 1
+- failed_test_indices_0idx: [1,2]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "0.57"
+    expected: "1"
+    actual: "1"
+  - test_index_0idx: 1 [FAIL]
+    input: "1.99"
+    expected: "1.4107"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "2.01"
+    expected: "1.262"
+    actual: ""
+
+Submitted Code
+```python
+x = float(input("Digite x: "))
+
+if x <= 0:
+	conta = 0
+
+elif 0 < x <= 1:
+	conta = 1
+
+elif 1 < x <= 2:
+	conta = sqrt(x)
+
+elif x > 2:
+	conta = sqrt**3(x)
+	
+print(conta)
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+Execution Result
+
+- submitted_at: 2024-05-30 19:42:18
+- grade: 33.0
+- pass_count: 1
+- failed_test_indices_0idx: [1,2]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "0.57"
+    expected: "1"
+    actual: "1"
+  - test_index_0idx: 1 [FAIL]
+    input: "1.99"
+    expected: "1.4107"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "2.01"
+    expected: "1.262"
+    actual: ""
+
+Submitted Code
+```python
+x = float(input("Digite x: "))
+
+if x <= 0:
+	conta = 0
+
+elif 0 < x <= 1:
+	conta = 1
+
+elif 1 < x <= 2:
+	conta = sqrt(x)
+
+elif x > 2:
+	conta = sqrt**3(x)
+	
+print(round(conta, 2))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+Execution Result
+
+- submitted_at: 2024-05-30 19:43:03
+- grade: 33.0
+- pass_count: 1
+- failed_test_indices_0idx: [1,2]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [PASS]
+    input: "0.57"
+    expected: "1"
+    actual: "1"
+  - test_index_0idx: 1 [FAIL]
+    input: "1.99"
+    expected: "1.4107"
+    actual: "1.41"
+  - test_index_0idx: 2 [FAIL]
+    input: "2.01"
+    expected: "1.262"
+    actual: ""
+
+Submitted Code
+```python
+from math import *
+
+x = float(input("Digite x: "))
+
+if x <= 0:
+	conta = 0
+
+elif 0 < x <= 1:
+	conta = 1
+
+elif 1 < x <= 2:
+	conta = sqrt(x)
+
+elif x > 2:
+	conta = sqrt**3(x)
+	
+print(round(conta, 2))
+```

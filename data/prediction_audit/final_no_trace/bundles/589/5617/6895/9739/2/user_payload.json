@@ -1,0 +1,120 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "589",
+    "assessment_id": "5617",
+    "assessment_title": "Lista 1 -  Exercícios em Sala",
+    "exercise_id": "6895",
+    "student_id": "9739",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2024-1/589/users/9739/executions/5617_6895.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2024-1/589/users/9739/codemirror/5617_6895.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2024-04-25 14:52:31",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "Teresa\n13\n1.45",
+            "expected": "Nome: Teresa\nIdade: 13\nAltura: 1.45",
+            "actual": "Moises /n Palheta /n 170cm"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "Jose\n45\n1.89",
+            "expected": "Nome: Jose\nIdade: 45\nAltura: 1.89",
+            "actual": "Moises /n Palheta /n 170cm"
+          }
+        ]
+      },
+      "submitted_code": "nome = \"Moises\"\nquebra_l = \"/n\"\nsobrenome = \"Palheta\"\nquebra_l = \"/n\"\naltura = \"170cm\"\n\nprint(nome, quebra_l, sobrenome, quebra_l, altura)"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2024-04-25 14:53:41",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "Teresa\n13\n1.45",
+            "expected": "Nome: Teresa\nIdade: 13\nAltura: 1.45",
+            "actual": "Moises\nPalheta\n170cm"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "Jose\n45\n1.89",
+            "expected": "Nome: Jose\nIdade: 45\nAltura: 1.89",
+            "actual": "Moises\nPalheta\n170cm"
+          }
+        ]
+      },
+      "submitted_code": "nome = \"Moises\"\nsobrenome = \"Palheta\"\naltura = \"170cm\"\nprint(nome)\nprint(sobrenome)\nprint(altura)"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2024-04-25 14:54:02",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "Teresa\n13\n1.45",
+            "expected": "Nome: Teresa\nIdade: 13\nAltura: 1.45",
+            "actual": "Moises\nPalheta\n1.70"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "Jose\n45\n1.89",
+            "expected": "Nome: Jose\nIdade: 45\nAltura: 1.89",
+            "actual": "Moises\nPalheta\n1.70"
+          }
+        ]
+      },
+      "submitted_code": "nome = \"Moises\"\nsobrenome = \"Palheta\"\naltura = \"1.70\"\nprint(nome)\nprint(sobrenome)\nprint(altura)"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

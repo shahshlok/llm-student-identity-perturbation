@@ -1,0 +1,70 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "523",
+    "assessment_id": "4895",
+    "exercise_id": "1802",
+    "student_id": "2068",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "import math\n\npontosVidas = int(input(\"Pontos de vidas iniciais: \"))\nd1 = int(input(\"Valor sorteado 1: \"))\nd2 = int(input(\"Valor sorteado 2: \"))\n\ndano = math.floor(math.sqrt(5 * d1) + (math.pi * d2) / 3)\n\npontosRestantes = pontosVidas - dano\n\nprint(pontosRestantes)",
+    "grade": 0.0,
+    "pass_count": 1,
+    "failed_test_indices_0idx": [
+      0,
+      1
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "import math\n\npontosVidas = int(input(\"Pontos de vidas iniciais: \"))\nd1 = int(input(\"Valor sorteado 1: \"))\nd2 = int(input(\"Valor sorteado 2: \"))\n\ndano = int(math.sqrt(5 * d1) + ((math.pi * d2) / 3))\n\npontosRestantes = pontosVidas - dano\n\nprint(pontosRestantes)",
+    "grade": 0.0,
+    "pass_count": 1,
+    "failed_test_indices_0idx": [
+      0,
+      1
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "200\n1\n6",
+        "expected": "188",
+        "actual": "192"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "300\n6\n6",
+        "expected": "285",
+        "actual": "289"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "500\n1\n1",
+        "expected": "497",
+        "actual": "497"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 6,
+        "end_line_0idx": 6,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 6,
+        "end_line_0idx": 6
+      }
+    ]
+  }
+}

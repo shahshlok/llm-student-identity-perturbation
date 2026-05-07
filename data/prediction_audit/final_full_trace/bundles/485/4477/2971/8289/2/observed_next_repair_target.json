@@ -1,0 +1,68 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4477",
+    "exercise_id": "2971",
+    "student_id": "8289",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "# leitura dos dados de entrada\njuros = float(input(\"Digite a taxa de juros aplicada no valor inicialmente investido: \"))\nvalor_apartamento = float(input(\"Digite o valor do apartamento: \"))\n\n# cálculo do valor final\nq0 = 1500  # capital inicial investido por Robertina\nt = 36  # prazo em meses\nqf = q0 * ((1 + juros)**t)\n\n# verificação se Robertina tem dinheiro suficiente para comprar o apartamento\nif qf>= valor_apartamento:\n    print(\"Sim\")\nelse:\n    print(\"Nao\")\n\n# impressão do valor final do investimento\nprint(round(qf,2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "taxa = float(input(\"Digite a taxa: \"))\nvalor = float(input(\"Digite o valor: \"))\ntotal = 1500*(1+taxa)**36\nprint(round(total,2))\nif valor > total:\n\tprint(\"Nao\")\nelse: \n\tprint(\"Sim\")\n\t",
+    "grade": 100.0,
+    "pass_count": 3,
+    "failed_test_indices_0idx": [],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": true,
+        "input": "0.29\n125250",
+        "expected": "14365502.76\nSim",
+        "actual": "14365502.76\nSim"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": true,
+        "input": "0.15\n300000",
+        "expected": "229727.78\nNao",
+        "actual": "229727.78\nNao"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": true,
+        "input": "0.2\n150000",
+        "expected": "1063202.81\nSim",
+        "actual": "1063202.81\nSim"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "solved",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 0,
+        "end_line_0idx": 8,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 9,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 0,
+        "end_line_0idx": 8
+      }
+    ]
+  }
+}

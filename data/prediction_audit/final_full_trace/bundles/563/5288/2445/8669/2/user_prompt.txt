@@ -1,0 +1,728 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 563
+- assessment_id: 5288
+- assessment_title: Lab 2: Estrutura Condicional Composta
+- exercise_id: 2445
+- student_id: 8669
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-01-09T15:22:31.274000
+
+Execution Result
+
+- submitted_at: 2024-01-11 14:03:50
+- grade: 33.0
+- pass_count: 1
+- failed_test_indices_0idx: [0,2]
+- test_outcome: mixed
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "C\n320"
+    expected: "608.0"
+    actual: "160.0"
+  - test_index_0idx: 1 [PASS]
+    input: "F\n320"
+    expected: "160.0"
+    actual: "160.0"
+  - test_index_0idx: 2 [FAIL]
+    input: "C\n0"
+    expected: "32.0"
+    actual: "-17.78"
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 231
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	8	0	0	0	0	["e"]	[""]	+input
+144	12	0	1	0	1	["s"]	[""]	+input
+420	16	0	2	0	2	["c"]	[""]	+input
+641	20	0	3	0	3	["a"]	[""]	+input
+1071	24	0	4	0	4	["l"]	[""]	+input
+1192	28	0	5	0	5	["a"]	[""]	+input
+1872	32	0	6	0	6	["="]	[""]	+input
+2017	35	0	7	0	7	[" "]	[""]	+input
+3061	41	0	8	0	8	["\"\""]	[""]	+input
+3888	47	0	9	0	9	["i"]	[""]	+input
+4098	51	0	10	0	10	["n"]	[""]	+input
+4223	55	0	11	0	11	["s"]	[""]	+input
+5234	59	0	12	0	12	["i"]	[""]	+input
+6047	63	0	13	0	13	["r"]	[""]	+input
+6176	67	0	14	0	14	["a"]	[""]	+input
+6272	71	0	15	0	15	[" "]	[""]	+input
+7197	75	0	16	0	16	["c"]	[""]	+input
+7727	79	0	17	0	17	[" "]	[""]	+input
+7828	83	0	18	0	18	["p"]	[""]	+input
+7934	86	0	19	0	19	["a"]	[""]	+input
+8658	91	0	20	0	20	["r"]	[""]	+input
+8761	95	0	21	0	21	["a"]	[""]	+input
+8882	99	0	22	0	22	[" "]	[""]	+input
+10213	104	0	23	0	23	["C"]	[""]	+input
+10431	109	0	24	0	24	["e"]	[""]	+input
+10756	113	0	25	0	25	["l"]	[""]	+input
+10879	117	0	26	0	26	["s"]	[""]	+input
+11118	121	0	27	0	27	["i"]	[""]	+input
+11217	124	0	28	0	28	["u"]	[""]	+input
+11406	129	0	29	0	29	["s"]	[""]	+input
+11574	133	0	30	0	30	[" "]	[""]	+input
+11742	137	0	31	0	31	["r"]	[""]	+input
+11870	141	0	32	0	32	[" "]	[""]	+input
+12481	144	0	32	0	33	[""]	[" "]	+delete
+12609	148	0	31	0	32	[""]	["r"]	+delete
+12694	153	0	31	0	31	["e"]	[""]	+input
+16703	157	0	32	0	32	[" "]	[""]	+input
+17039	162	0	33	0	33	["F"]	[""]	+input
+18000	167	0	34	0	34	[" "]	[""]	+input
+18110	171	0	35	0	35	["p"]	[""]	+input
+18256	175	0	36	0	36	["a"]	[""]	+input
+18414	179	0	37	0	37	["r"]	[""]	+input
+18546	183	0	38	0	38	["a"]	[""]	+input
+18622	186	0	39	0	39	[" "]	[""]	+input
+20018	192	0	40	0	40	["F"]	[""]	+input
+20223	197	0	41	0	41	["a"]	[""]	+input
+21237	201	0	42	0	42	["r"]	[""]	+input
+21470	205	0	43	0	43	["e"]	[""]	+input
+21694	209	0	44	0	44	["n"]	[""]	+input
+21915	213	0	45	0	45	["h"]	[""]	+input
+22046	217	0	46	0	46	["e"]	[""]	+input
+22366	221	0	47	0	47	["i"]	[""]	+input
+22608	225	0	48	0	48	["t"]	[""]	+input
+23936	230	0	49	0	49	[":"]	[""]	+input
+24677	235	0	50	0	50	[" "]	[""]	+input
+26222	241	0	52	0	52	["",""]	[""]	+input
+95157	259	0	42	0	42	["h"]	[""]	+input
+112898	265	0	53	0	53	["",""]	[""]	+input
+114058	272	1	0	1	0	["C"]	[""]	+input
+115048	276	1	0	1	1	[""]	["C"]	+delete
+115354	281	1	0	1	0	["c"]	[""]	+input
+115688	285	1	1	1	1	["="]	[""]	+input
+115855	289	1	2	1	2	[" "]	[""]	+input
+425042	309	0	8	0	8	["i"]	[""]	+input
+425183	313	0	9	0	9	["n"]	[""]	+input
+425391	317	0	10	0	10	["p"]	[""]	+input
+425616	321	0	11	0	11	["u"]	[""]	+input
+425983	325	0	12	0	12	["t"]	[""]	+input
+427041	330	0	13	0	13	["()"]	[""]	+input
+428269	335	0	14	0	15	[""]	[")"]	+delete
+433951	352	0	59	0	59	[")"]	[""]	+input
+434816	357	0	60	0	60	["."]	[""]	+input
+435311	361	0	61	0	61	["l"]	[""]	+input
+435471	365	0	62	0	62	["o"]	[""]	+input
+436415	369	0	63	0	63	["w"]	[""]	+input
+436575	373	0	64	0	64	["r"]	[""]	+input
+436584	376	0	65	0	65	["e"]	[""]	+input
+437341	380	0	65	0	66	[""]	["e"]	+delete
+437517	384	0	64	0	65	[""]	["r"]	+delete
+437660	388	0	63	0	64	[""]	["w"]	+delete
+438863	393	0	63	0	63	["w"]	[""]	+input
+439039	397	0	64	0	64	["e"]	[""]	+input
+439231	401	0	65	0	65	["r"]	[""]	+input
+439663	405	0	66	0	66	[" "]	[""]	+input
+440636	408	0	66	0	67	[""]	[" "]	+delete
+440971	414	0	66	0	66	["()"]	[""]	+input
+444716	424	1	0	1	1	[""]	["c"]	+delete
+445435	429	1	0	1	0	["t"]	[""]	+input
+445583	433	1	1	1	1	["e"]	[""]	+input
+445807	437	1	2	1	2	[","]	[""]	+input
+446236	440	1	2	1	3	[""]	[","]	+delete
+446991	445	1	2	1	2	["m"]	[""]	+input
+447166	449	1	3	1	3	["p"]	[""]	+input
+454415	456	1	5	1	5	[" "]	[""]	+input
+455139	461	1	6	1	6	["\"\""]	[""]	+input
+455852	466	1	6	1	8	[""]	["\"\""]	+delete
+456382	471	1	6	1	6	["i"]	[""]	+input
+456558	475	1	7	1	7	["n"]	[""]	+input
+456830	479	1	8	1	8	["t"]	[""]	+input
+457998	484	1	9	1	9	["()"]	[""]	+input
+459247	490	1	10	1	10	["i"]	[""]	+input
+459423	494	1	11	1	11	["n"]	[""]	+input
+459615	498	1	12	1	12	["p"]	[""]	+input
+459839	502	1	13	1	13	["u"]	[""]	+input
+460110	506	1	14	1	14	["t"]	[""]	+input
+464877	511	1	15	1	15	["()"]	[""]	+input
+465038	516	1	16	1	16	["\"\""]	[""]	+input
+466126	522	1	17	1	17	["i"]	[""]	+input
+466334	526	1	18	1	18	["n"]	[""]	+input
+466510	530	1	19	1	19	["s"]	[""]	+input
+466670	534	1	20	1	20	["i"]	[""]	+input
+467422	538	1	21	1	21	["r"]	[""]	+input
+467550	542	1	22	1	22	["a"]	[""]	+input
+467663	546	1	23	1	23	[" "]	[""]	+input
+467886	550	1	24	1	24	["o"]	[""]	+input
+467982	554	1	25	1	25	[" "]	[""]	+input
+468350	558	1	26	1	26	["v"]	[""]	+input
+468542	562	1	27	1	27	["a"]	[""]	+input
+468702	566	1	28	1	28	["l"]	[""]	+input
+468894	570	1	29	1	29	["o"]	[""]	+input
+469358	574	1	30	1	30	["r"]	[""]	+input
+469550	578	1	31	1	31	[" "]	[""]	+input
+469726	582	1	32	1	32	["d"]	[""]	+input
+469934	586	1	33	1	33	["a"]	[""]	+input
+470060	590	1	34	1	34	[" "]	[""]	+input
+471278	594	1	35	1	35	["t"]	[""]	+input
+471422	598	1	36	1	36	["e"]	[""]	+input
+471884	602	1	37	1	37	["m"]	[""]	+input
+472350	606	1	38	1	38	["p"]	[""]	+input
+472766	610	1	39	1	39	["e"]	[""]	+input
+473037	614	1	40	1	40	["r"]	[""]	+input
+473374	618	1	41	1	41	["a"]	[""]	+input
+474206	622	1	42	1	42	["t"]	[""]	+input
+474318	626	1	43	1	43	["u"]	[""]	+input
+474574	630	1	44	1	44	["r"]	[""]	+input
+474686	634	1	45	1	45	["a"]	[""]	+input
+476030	639	1	46	1	46	[":"]	[""]	+input
+476718	644	1	47	1	47	[" "]	[""]	+input
+477999	650	1	52	1	52	["",""]	[""]	+input
+479966	656	2	0	2	0	["c"]	[""]	+input
+480394	660	2	1	2	1	["="]	[""]	+input
+480558	664	2	2	2	2	[" "]	[""]	+input
+482607	668	2	3	2	3	["5"]	[""]	+input
+482894	672	2	4	2	4	["/"]	[""]	+input
+483710	676	2	5	2	5	["9"]	[""]	+input
+487678	680	2	6	2	6	["*"]	[""]	+input
+489789	685	2	7	2	7	["()"]	[""]	+input
+493758	691	2	8	2	8	["t"]	[""]	+input
+493902	695	2	9	2	9	["e"]	[""]	+input
+494542	699	2	10	2	10	["m"]	[""]	+input
+494702	703	2	11	2	11	["p"]	[""]	+input
+496174	707	2	12	2	12	["-"]	[""]	+input
+496622	711	2	13	2	13	["3"]	[""]	+input
+496797	715	2	14	2	14	["2"]	[""]	+input
+499436	721	2	16	2	16	["",""]	[""]	+input
+512094	727	3	0	3	0	["f"]	[""]	+input
+513037	731	3	1	3	1	["="]	[""]	+input
+513197	735	3	2	3	2	[" "]	[""]	+input
+514557	739	3	3	3	3	["t"]	[""]	+input
+514669	743	3	4	3	4	["e"]	[""]	+input
+514925	747	3	5	3	5	["m"]	[""]	+input
+515101	751	3	6	3	6	["p"]	[""]	+input
+515885	755	3	7	3	7	["-"]	[""]	+input
+516285	759	3	8	3	8	["3"]	[""]	+input
+516461	763	3	9	3	9	["2"]	[""]	+input
+517693	768	3	10	3	10	[")"]	[""]	+input
+519918	788	3	3	3	3	["("]	[""]	+input
+522222	796	3	12	3	12	["*"]	[""]	+input
+523869	800	3	13	3	13	["1"]	[""]	+input
+524733	804	3	14	3	14	["."]	[""]	+input
+524969	808	3	15	3	15	["8"]	[""]	+input
+548602	822	3	12	3	13	[""]	["*"]	+delete
+549405	827	3	12	3	12	["/"]	[""]	+input
+551710	831	3	16	4	0	[""]	["",""]	+delete
+553355	836	3	16	3	16	["",""]	[""]	+input
+553945	841	4	0	4	0	["",""]	[""]	+input
+554366	847	5	0	5	0	["i"]	[""]	+input
+554764	851	5	1	5	1	["f"]	[""]	+input
+554908	855	5	2	5	2	[" "]	[""]	+input
+556621	859	5	3	5	3	["e"]	[""]	+input
+556873	863	5	4	5	4	["s"]	[""]	+input
+557004	867	5	5	5	5	["c"]	[""]	+input
+557164	871	5	6	5	6	["a"]	[""]	+input
+558012	875	5	7	5	7	["l"]	[""]	+input
+558125	879	5	8	5	8	["a"]	[""]	+input
+558284	883	5	9	5	9	[" "]	[""]	+input
+558572	887	5	10	5	10	["="]	[""]	+input
+558716	891	5	11	5	11	["="]	[""]	+input
+558840	895	5	12	5	12	[" "]	[""]	+input
+559532	900	5	13	5	13	["\"\""]	[""]	+input
+559868	906	5	14	5	14	["c"]	[""]	+input
+561821	914	5	16	5	16	["?"]	[""]	+input
+562330	918	5	16	5	17	[""]	["?"]	+delete
+562841	924	5	16	5	16	[":"]	[""]	+input
+563067	928	5	17	5	17	["",""]	[""]	+input
+563067	929	6	0	6	0	["\t"]	[""]	+input
+564492	935	6	1	6	1	["p"]	[""]	+input
+564588	939	6	2	6	2	["r"]	[""]	+input
+564728	943	6	3	6	3	["i"]	[""]	+input
+564924	947	6	4	6	4	["n"]	[""]	+input
+565020	951	6	5	6	5	["t"]	[""]	+input
+569991	956	6	6	6	6	["()"]	[""]	+input
+570988	962	6	7	6	7	["f"]	[""]	+input
+572618	968	6	9	6	9	["",""]	[""]	+input
+572619	969	7	0	7	0	["\t"]	[""]	+input
+573369	974	7	0	7	1	[""]	["\t"]	+delete
+575580	979	7	0	7	0	["i"]	[""]	+input
+575724	983	7	1	7	1	["f"]	[""]	+input
+575881	987	7	2	7	2	[" "]	[""]	+input
+576108	991	7	3	7	3	["e"]	[""]	+input
+576348	995	7	4	7	4	["s"]	[""]	+input
+576492	999	7	5	7	5	["c"]	[""]	+input
+576636	1003	7	6	7	6	["a"]	[""]	+input
+577199	1007	7	7	7	7	["l"]	[""]	+input
+577372	1010	7	8	7	8	["a"]	[""]	+input
+577501	1015	7	9	7	9	[" "]	[""]	+input
+578972	1019	7	10	7	10	["="]	[""]	+input
+579116	1023	7	11	7	11	["="]	[""]	+input
+579244	1027	7	12	7	12	[" "]	[""]	+input
+580013	1032	7	13	7	13	["\"\""]	[""]	+input
+581052	1038	7	14	7	14	["f"]	[""]	+input
+583084	1046	7	16	7	16	[":"]	[""]	+input
+583338	1050	7	17	7	17	["",""]	[""]	+input
+583339	1051	8	0	8	0	["\t"]	[""]	+input
+584839	1057	8	1	8	1	["p"]	[""]	+input
+584967	1061	8	2	8	2	["r"]	[""]	+input
+585084	1065	8	3	8	3	["i"]	[""]	+input
+585276	1069	8	4	8	4	["n"]	[""]	+input
+585404	1073	8	5	8	5	["t"]	[""]	+input
+586491	1078	8	6	8	6	["()"]	[""]	+input
+586972	1084	8	7	8	7	["c"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 596447
+- raw_log_line: 1091
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+escala= input("insira c para Celsius e F para Fahrenheit: ").lower()
+temp= int(input("insira o valor da temperatura: ")) 
+c= 5/9*(temp-32)
+f= (temp-32)/1.8
+
+if escala == "c":
+	print(f)
+if escala == "f":
+	print(c)
+```
+Run Output
+```text
+
+```
+
+Edit Segment 2
+- raw_change_event_count: 26
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+606775	1095	0	39	0	40	[""]	["F"]	+delete
+607212	1100	0	39	0	39	["f"]	[""]	+input
+632909	1111	1	6	1	9	["f"]	["int"]	+input
+633005	1115	1	7	1	7	["l"]	[""]	+input
+633163	1119	1	8	1	8	["o"]	[""]	+input
+633324	1123	1	9	1	9	["a"]	[""]	+input
+633500	1127	1	10	1	10	["t"]	[""]	+input
+645996	1133	6	7	6	7	["("]	[""]	+input
+653368	1137	6	7	6	8	[""]	["("]	+delete
+654363	1142	6	7	6	7	["r"]	[""]	+input
+654474	1146	6	8	6	8	["o"]	[""]	+input
+654683	1150	6	9	6	9	["u"]	[""]	+input
+654923	1154	6	10	6	10	["n"]	[""]	+input
+655099	1158	6	11	6	11	["d"]	[""]	+input
+655787	1163	6	12	6	12	["("]	[""]	+input
+657627	1171	6	14	6	14	[","]	[""]	+input
+658923	1175	6	15	6	15	["2"]	[""]	+input
+663899	1186	8	7	8	7	["r"]	[""]	+input
+664475	1190	8	8	8	8	["o"]	[""]	+input
+664667	1194	8	9	8	9	["u"]	[""]	+input
+664891	1198	8	10	8	10	["n"]	[""]	+input
+665051	1202	8	11	8	11	["d"]	[""]	+input
+665755	1207	8	12	8	12	["("]	[""]	+input
+667657	1215	8	14	8	14	[","]	[""]	+input
+668282	1219	8	15	8	15	["2"]	[""]	+input
+669946	1230	8	17	8	17	[")"]	[""]	+input
+
+Local Run 2
+- event_time_delta_ms: 686460
+- raw_log_line: 1239
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+escala= input("insira c para Celsius e f para Fahrenheit: ").lower()
+temp= float(input("insira o valor da temperatura: ")) 
+c= 5/9*(temp-32)
+f= (temp-32)/1.8
+
+if escala == "c":
+	print(round(f,2)
+if escala == "f":
+	print(round(c,2))
+```
+Run Output
+```text
+insira c para Celsius e f para Fahrenheit: f
+insira o valor da temperatura: 100
+37.77777777777778
+```
+
+Edit Segment 3
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+698490	1245	6	17	6	17	["0"]	[""]	+input
+699207	1249	6	17	6	18	[""]	["0"]	+delete
+700602	1257	6	17	6	17	[")"]	[""]	+input
+
+Local Run 3
+- event_time_delta_ms: 740204
+- raw_log_line: 1268
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+escala= input("insira c para Celsius e f para Fahrenheit: ").lower()
+temp= float(input("insira o valor da temperatura: ")) 
+c= 5/9*(temp-32)
+f= (temp-32)/1.8
+
+if escala == "c":
+	print(round(f,2))
+if escala == "f":
+	print(round(c,2))
+```
+Run Output
+```text
+File "main.py", line 8
+if escala == "f":
+SyntaxError: invalid syntax
+```
+
+Edit Segment 4
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+168061918	1289	0	0	8	18	[""]	["escala= input(\"insira c para Celsius e f para Fahrenheit: \").lower()","temp= float(input(\"insira o valor da temperatura: \")) ","c= 5/9*(temp-32)","f= (temp-32)/1.8","","if escala == \"c\":","\tprint(round(f,2))","if escala == \"f\":","\tprint(round(c,2))"]	cut
+168063721	1295	0	0	0	0	["escala= input(\"insira c para Celsius e f para Fahrenheit: \").lower()","temp= float(input(\"insira o valor da temperatura: \")) ","c= 5/9*(temp-32)","f= (temp-32)/1.8","","if escala == \"c\":","\tprint(round(f,2))","if escala == \"f\":","\tprint(round(c,2))"]	[""]	paste
+
+Local Run 4
+- event_time_delta_ms: 168078911
+- raw_log_line: 1305
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+escala= input("insira c para Celsius e f para Fahrenheit: ").lower()
+temp= float(input("insira o valor da temperatura: ")) 
+c= 5/9*(temp-32)
+f= (temp-32)/1.8
+
+if escala == "c":
+	print(round(f,2))
+if escala == "f":
+	print(round(c,2))
+```
+Run Output
+```text
+insira c para Celsius e f para Fahrenheit: f
+insira o valor da temperatura: 100
+37.78
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 168079003
+- raw_log_line: 1306
+- feedback: "You're almost there! Your code is 33% correct, but if you try harder you'll be able to hit 100% of the question."
+Code At This Submit
+```python
+escala= input("insira c para Celsius e f para Fahrenheit: ").lower()
+temp= float(input("insira o valor da temperatura: ")) 
+c= 5/9*(temp-32)
+f= (temp-32)/1.8
+
+if escala == "c":
+	print(round(f,2))
+if escala == "f":
+	print(round(c,2))
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-01-11T14:04:07.086000
+
+Execution Result
+
+- submitted_at: 2024-01-11 14:05:06
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "C\n320"
+    expected: "608.0"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "F\n320"
+    expected: "160.0"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "C\n0"
+    expected: "32.0"
+    actual: ""
+
+Attempt Start Code
+```python
+escala= input("insira c para Celsius e f para Fahrenheit: ").lower()
+temp= float(input("insira o valor da temperatura: ")) 
+c= 5/9*(temp-32)
+f= (temp-32)/1.8
+
+if escala == "c":
+	print(round(f,2))
+if escala == "f":
+	print(round(c,2))
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 5
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1318	0	61	0	66	["u"]	["lower"]	+input
+268	1322	0	62	0	62	["p"]	[""]	+input
+400	1326	0	63	0	63	["p"]	[""]	+input
+575	1330	0	64	0	64	["e"]	[""]	+input
+787	1334	0	65	0	65	["r"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 17354
+- raw_log_line: 1341
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+escala= input("insira c para Celsius e f para Fahrenheit: ").upper()
+temp= float(input("insira o valor da temperatura: ")) 
+c= 5/9*(temp-32)
+f= (temp-32)/1.8
+
+if escala == "c":
+	print(round(f,2))
+if escala == "f":
+	print(round(c,2))
+```
+Run Output
+```text
+insira c para Celsius e f para Fahrenheit: c
+insira o valor da temperatura: 320
+```
+
+Local Run 2
+- event_time_delta_ms: 47017
+- raw_log_line: 1346
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+escala= input("insira c para Celsius e f para Fahrenheit: ").upper()
+temp= float(input("insira o valor da temperatura: ")) 
+c= 5/9*(temp-32)
+f= (temp-32)/1.8
+
+if escala == "c":
+	print(round(f,2))
+if escala == "f":
+	print(round(c,2))
+```
+Run Output
+```text
+insira c para Celsius e f para Fahrenheit: f
+insira o valor da temperatura: 320
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 59707
+- raw_log_line: 1350
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+escala= input("insira c para Celsius e f para Fahrenheit: ").upper()
+temp= float(input("insira o valor da temperatura: ")) 
+c= 5/9*(temp-32)
+f= (temp-32)/1.8
+
+if escala == "c":
+	print(round(f,2))
+if escala == "f":
+	print(round(c,2))
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-01-11T14:05:18.320000
+
+Execution Result
+
+- submitted_at: 2024-01-11 14:06:46
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1,2]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "C\n320"
+    expected: "608.0"
+    actual: ""
+  - test_index_0idx: 1 [FAIL]
+    input: "F\n320"
+    expected: "160.0"
+    actual: ""
+  - test_index_0idx: 2 [FAIL]
+    input: "C\n0"
+    expected: "32.0"
+    actual: ""
+
+Attempt Start Code
+```python
+escala= input("insira c para Celsius e f para Fahrenheit: ").upper()
+temp= float(input("insira o valor da temperatura: ")) 
+c= 5/9*(temp-32)
+f= (temp-32)/1.8
+
+if escala == "c":
+	print(round(f,2))
+if escala == "f":
+	print(round(c,2))
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 4
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	1359	7	0	7	2	["e"]	["if"]	+input
+95	1363	7	1	7	1	["l"]	[""]	+input
+251	1367	7	2	7	2	["s"]	[""]	+input
+470	1371	7	3	7	3	["e"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 15910
+- raw_log_line: 1383
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+escala= input("insira c para Celsius e f para Fahrenheit: ").upper()
+temp= float(input("insira o valor da temperatura: ")) 
+c= 5/9*(temp-32)
+f= (temp-32)/1.8
+
+if escala == "c":
+	print(round(f,2))
+else escala == "f":
+	print(round(c,2))
+```
+Run Output
+```text
+File "main.py", line 8
+else escala == "f":
+SyntaxError: invalid syntax
+```
+
+Edit Segment 2
+- raw_change_event_count: 12
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+18415	1389	8	18	8	18	["z"]	[""]	+input
+18415	1390	7	4	7	4	["z"]	[""]	+input
+19802	1396	7	4	7	5	[""]	["z"]	undo
+19802	1397	8	18	8	19	[""]	["z"]	undo
+20097	1401	7	0	7	4	["if"]	["else"]	undo
+26080	1409	7	0	7	0	["e"]	[""]	+input
+26207	1413	7	1	7	1	["l"]	[""]	+input
+39169	1422	7	1	7	2	[""]	["l"]	+delete
+39376	1426	7	0	7	1	[""]	["e"]	+delete
+39726	1430	7	0	7	0	["",""]	[""]	+input
+39727	1431	8	0	8	0	["\t"]	[""]	+input
+40368	1436	8	0	8	1	[""]	["\t"]	+delete
+
+Local Run 2
+- event_time_delta_ms: 67861
+- raw_log_line: 1443
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+escala= input("insira c para Celsius e f para Fahrenheit: ").upper()
+temp= float(input("insira o valor da temperatura: ")) 
+c= 5/9*(temp-32)
+f= (temp-32)/1.8
+
+if escala == "c":
+	print(round(f,2))
+
+if escala == "f":
+	print(round(c,2))
+```
+Run Output
+```text
+insira c para Celsius e f para Fahrenheit: c
+insira o valor da temperatura: 320
+```
+
+Edit Segment 3
+- raw_change_event_count: 2
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+86053	1447	0	61	0	68	[""]	["upper()"]	+delete
+86246	1451	0	60	0	61	[""]	["."]	+delete
+
+Submit Anchor 1
+- event_time_delta_ms: 87983
+- raw_log_line: 1456
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+escala= input("insira c para Celsius e f para Fahrenheit: ")
+temp= float(input("insira o valor da temperatura: ")) 
+c= 5/9*(temp-32)
+f= (temp-32)/1.8
+
+if escala == "c":
+	print(round(f,2))
+
+if escala == "f":
+	print(round(c,2))
+```

@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "587",
+    "assessment_id": "5671",
+    "exercise_id": "6911",
+    "student_id": "9869",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "idade=int(input(\"informe a idade da pessoa: 18\"))\nprint(\"Idade:\", idade)\nif idade>=18:\n\tprint(\"maior de idade\")\nelse:\n\tprint(\"menor de idade\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "idade=int(input(\"informe a idade da pessoa: 12\"))\nprint(\"Idade:\", idade)\nif idade>=18:\n\tprint(\"maior de idade\")\nelse:\n\tprint(\"menor de idade\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "10",
+        "expected": "10\nMenor_de_idade",
+        "actual": "Idade: 10\nmenor de idade"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "18",
+        "expected": "18\nMaior_de_idade",
+        "actual": "Idade: 18\nmaior de idade"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "22",
+        "expected": "22\nMaior_de_idade",
+        "actual": "Idade: 22\nmaior de idade"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 0,
+        "end_line_0idx": 0,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 0,
+        "end_line_0idx": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4499",
+    "exercise_id": "1418",
+    "student_id": "8170",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "p = int(input(\"Candidato mais votado:\"))\ns = int(input(\"Segundo mais votado: \"))\nt = int(input(\"Candidato menos votado: \"))\n\nvv = (p + s + t) / 2\n\nif (p>vv):\n\tprint(\"SIM\")\nelse:\n\tprint(\"NAO\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "p = int(input(\"Candidato mais votado:\"))\ns = int(input(\"Segundo mais votado: \"))\nt = int(input(\"Candidato menos votado: \"))\n\nmaximo = max(p,s,t)\nvv = (p + s + t)/2\n\nif (maximo>vv):\n\tprint(\"SIM\")\nelse:\n\tprint(\"NAO\")",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "900000\n300000\n150000",
+        "expected": "NAO",
+        "actual": "SIM"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "400000\n300000\n100000",
+        "expected": "SIM",
+        "actual": "NAO"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "1180100\n1000000\n700000",
+        "expected": "SIM",
+        "actual": "NAO"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 4,
+        "end_line_0idx": 5,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 7,
+        "end_line_0idx": 7,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 3,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 4,
+        "end_line_0idx": 5
+      },
+      {
+        "start_line_0idx": 7,
+        "end_line_0idx": 7
+      }
+    ]
+  }
+}

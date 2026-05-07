@@ -1,0 +1,99 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "597",
+    "assessment_id": "5731",
+    "exercise_id": "6094",
+    "student_id": "9850",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "valor = float(input(\"Valor do plano mensal individual: \"))\nmembros = int(input(\"Quantidade de membros da familia: \"))\n\nif membros == 1:\n\tprint(valor)\nelif membros == 2:\n\tdesconto = ((valor * (15/100)) * membros)\nelif membros == 3:\n\tdesconto = ((valor * (25/100)) * membros)\nelse: \n\tdesconto = ((valor * (35/100)) * membros)\n\t\ntotal = (valor * membros) - desconto\n\nprint(round(total,2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "valor_Mensal_individual = float(input(\"Valor do plano mensal individual: \"))\nqtd_Membros = int(input(\"Quantidade de membros da familia: \"))\n\nif qtd_Membros == 1:\n\tprint(valor_Mensal_individual)\nelif qtd_Membros == 2:\n\tDesconto = ((valor_Mensal_individual * (15/100)) * qtd_Membros)\nelif qtd_Membros == 3:\n\tDesconto = ((valor_Mensal_individual * (25/100)) * qtd_Membros)\nelse: \n\tDesconto = ((valor_Mensal_individual * (35/100)) * qtd_Membros)\n\t\ntotal = (valor_Mensal_individual * qtd_Membros) - Desconto\n\nprint(round(total,2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "200.0\n3",
+        "expected": "R$ 450.0",
+        "actual": "450.0"
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "400.0\n4",
+        "expected": "R$ 1040.0",
+        "actual": "1040.0"
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "1200\n1",
+        "expected": "R$ 1200.0",
+        "actual": "1200.0"
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 0,
+        "end_line_0idx": 1,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 8,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 10,
+        "end_line_0idx": 10,
+        "edit_kind": "replace"
+      },
+      {
+        "start_line_0idx": 12,
+        "end_line_0idx": 12,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 10,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 0,
+        "end_line_0idx": 1
+      },
+      {
+        "start_line_0idx": 3,
+        "end_line_0idx": 8
+      },
+      {
+        "start_line_0idx": 10,
+        "end_line_0idx": 10
+      },
+      {
+        "start_line_0idx": 12,
+        "end_line_0idx": 12
+      }
+    ]
+  }
+}

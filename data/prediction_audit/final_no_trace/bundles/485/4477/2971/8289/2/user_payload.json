@@ -1,0 +1,144 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "485",
+    "assessment_id": "4477",
+    "assessment_title": "Lab 2 - Estrutura Condicional Composta",
+    "exercise_id": "2971",
+    "student_id": "8289",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2022-2/485/users/8289/executions/4477_2971.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2022-2/485/users/8289/codemirror/4477_2971.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2023-04-16 23:44:03",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "0.29\n125250",
+            "expected": "14365502.76\nSim",
+            "actual": "Sim\n14365502.75713173"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "0.15\n300000",
+            "expected": "229727.78\nNao",
+            "actual": "Nao\n229727.7779036261"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "0.2\n150000",
+            "expected": "1063202.81\nSim",
+            "actual": "Sim\n1063202.8124776364"
+          }
+        ]
+      },
+      "submitted_code": "# leitura dos dados de entrada\njuros = float(input(\"Digite a taxa de juros aplicada no valor inicialmente investido: \"))\nvalor_apartamento = float(input(\"Digite o valor do apartamento: \"))\n\n# cálculo do valor final\nq0 = 1500  # capital inicial investido por Robertina\nt = 36  # prazo em meses\nqf = q0 * ((1 + juros)**t)\n\n# verificação se Robertina tem dinheiro suficiente para comprar o apartamento\nif qf >= valor_apartamento:\n    print(\"Sim\")\nelse:\n    print(\"Nao\")\n\n# impressão do valor final do investimento\nprint((qf))"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2023-04-16 23:47:10",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "0.29\n125250",
+            "expected": "14365502.76\nSim",
+            "actual": "Sim\n14365502.75713173"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "0.15\n300000",
+            "expected": "229727.78\nNao",
+            "actual": "Nao\n229727.7779036261"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "0.2\n150000",
+            "expected": "1063202.81\nSim",
+            "actual": "Sim\n1063202.8124776364"
+          }
+        ]
+      },
+      "submitted_code": "# leitura dos dados de entrada\njuros = float(input(\"Digite a taxa de juros aplicada no valor inicialmente investido: \"))\nvalor_apartamento = float(input(\"Digite o valor do apartamento: \"))\n\n# cálculo do valor final\nq0 = 1500  # capital inicial investido por Robertina\nt = 36  # prazo em meses\nqf = q0 * ((1 + juros)**t)\n\n# verificação se Robertina tem dinheiro suficiente para comprar o apartamento\nif qf >= valor_apartamento:\n    print(\"Sim\")\nelse:\n    print(\"Nao\")\n\n# impressão do valor final do investimento\nprint((qf))"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2023-04-16 23:49:17",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "0.29\n125250",
+            "expected": "14365502.76\nSim",
+            "actual": "Sim\n14365502.76"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "0.15\n300000",
+            "expected": "229727.78\nNao",
+            "actual": "Nao\n229727.78"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "0.2\n150000",
+            "expected": "1063202.81\nSim",
+            "actual": "Sim\n1063202.81"
+          }
+        ]
+      },
+      "submitted_code": "# leitura dos dados de entrada\njuros = float(input(\"Digite a taxa de juros aplicada no valor inicialmente investido: \"))\nvalor_apartamento = float(input(\"Digite o valor do apartamento: \"))\n\n# cálculo do valor final\nq0 = 1500  # capital inicial investido por Robertina\nt = 36  # prazo em meses\nqf = q0 * ((1 + juros)**t)\n\n# verificação se Robertina tem dinheiro suficiente para comprar o apartamento\nif qf>= valor_apartamento:\n    print(\"Sim\")\nelse:\n    print(\"Nao\")\n\n# impressão do valor final do investimento\nprint(round(qf,2))"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

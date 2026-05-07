@@ -1,0 +1,144 @@
+{
+  "schema_version": "v6_2_full_trace_prompt_payload_v2",
+  "source": {
+    "class_id": "594",
+    "assessment_id": "5687",
+    "assessment_title": "Lab 2: Estrutura Condicional Composta",
+    "exercise_id": "6714",
+    "student_id": "9685",
+    "condition": "no_trace",
+    "visible_transition_index_0idx": 2,
+    "visible_attempt_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "prediction_target_attempt_index_0idx": 3,
+    "alignment_policy": "visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit",
+    "execution_log_path": "<CODEBENCH_DATA_ROOT>/2024-1/594/users/9685/executions/5687_6714.log",
+    "codemirror_log_path": "<CODEBENCH_DATA_ROOT>/2024-1/594/users/9685/codemirror/5687_6714.log"
+  },
+  "visible_attempts": [
+    {
+      "attempt_index_0idx": 0,
+      "aligned_submit_index_0idx": 0,
+      "execution_result": {
+        "timestamp": "2024-05-20 15:51:58",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "C\n11245",
+            "expected": "529.34",
+            "actual": "C\n529.34"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "V\n54000",
+            "expected": "2442.27",
+            "actual": "V\n4571.29"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "C\n32450",
+            "expected": "1527.53",
+            "actual": "C\n1527.53"
+          }
+        ]
+      },
+      "submitted_code": "status = input(\"V ou C:\")\nv = int(input(\"Valor do emprestimo:\"))\nrv = 0.8/12\nrc = 0.12/12\nnt = 24\npv = (rv*v)/(1-(1+rv)**-nt)\npc = (rc*v)/(1-(1+rc)**-nt)\nprint(status)\nif status == \"V\":\n\tprint(round(pv,2))\nelse:\n\tprint(round(pc,2))"
+    },
+    {
+      "attempt_index_0idx": 1,
+      "aligned_submit_index_0idx": 1,
+      "execution_result": {
+        "timestamp": "2024-05-20 15:52:00",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "C\n11245",
+            "expected": "529.34",
+            "actual": "C\n529.34"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "V\n54000",
+            "expected": "2442.27",
+            "actual": "V\n4571.29"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "C\n32450",
+            "expected": "1527.53",
+            "actual": "C\n1527.53"
+          }
+        ]
+      },
+      "submitted_code": "status = input(\"V ou C:\")\nv = int(input(\"Valor do emprestimo:\"))\nrv = 0.8/12\nrc = 0.12/12\nnt = 24\npv = (rv*v)/(1-(1+rv)**-nt)\npc = (rc*v)/(1-(1+rc)**-nt)\nprint(status)\nif status == \"V\":\n\tprint(round(pv,2))\nelse:\n\tprint(round(pc,2))"
+    },
+    {
+      "attempt_index_0idx": 2,
+      "aligned_submit_index_0idx": 2,
+      "execution_result": {
+        "timestamp": "2024-05-20 15:52:11",
+        "grade": 0.0,
+        "pass_count": 0,
+        "failed_test_indices_0idx": [
+          0,
+          1,
+          2
+        ],
+        "test_outcome": "all_fail",
+        "test_results": [
+          {
+            "test_index_0idx": 0,
+            "passed": false,
+            "input": "C\n11245",
+            "expected": "529.34",
+            "actual": "C\n529.34"
+          },
+          {
+            "test_index_0idx": 1,
+            "passed": false,
+            "input": "V\n54000",
+            "expected": "2442.27",
+            "actual": "V\n4571.29"
+          },
+          {
+            "test_index_0idx": 2,
+            "passed": false,
+            "input": "C\n32450",
+            "expected": "1527.53",
+            "actual": "C\n1527.53"
+          }
+        ]
+      },
+      "submitted_code": "status = input(\"V ou C:\")\nv = int(input(\"Valor do emprestimo:\"))\nrv = 0.8/12\nrc = 0.12/12\nnt = 24\npv = (rv*v)/(1-(1+rv)**-nt)\npc = (rc*v)/(1-(1+rc)**-nt)\nprint(status)\nif status == \"V\":\n\tprint(round(pv,2))\nelse:\n\tprint(round(pc,2))"
+    }
+  ],
+  "prediction_target": {
+    "attempt_index_0idx": 3,
+    "task": "Predict the next submitted attempt after the visible history."
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "schema_version": "v6_2_observed_next_repair_target_v1",
+  "source": {
+    "class_id": "527",
+    "assessment_id": "4992",
+    "exercise_id": "3056",
+    "student_id": "8766",
+    "transition_index_0idx": 2
+  },
+  "attempt_n": {
+    "attempt_index_0idx": 2,
+    "code": "area  = float(input(\"Digite o valor da area:\"))\n\nif (area >= 0) and (area <= 10000):\n\tValor = area * 6 + 100\n\t\nelif (area >= 10000) and (area <= 20000):\n\tValor = area * 5.50 + 150\n\nelif (area >= 20000) and (area <= 30000):\n\tValor = area * 5 + 200\n\t\nelse:\n\tValor = area * 4.50 + 250\n\tprint(round(valor,2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ]
+  },
+  "attempt_n1": {
+    "attempt_index_0idx": 3,
+    "code": "area  = float(input(\"Digite o valor da area:\"))\n\nif (area >= 0) and (area <= 10000):\n\tValor = area * 6 + 100\n\t\nelif (area >= 10000) and (area <= 20000):\n\tValor = area * 5.50 + 150\n\nelif (area >= 20000) and (area <= 30000):\n\tValor = area * 5 + 200\n\t\nelse:\n\tValor = area * 4.50 + 250\n\tprint(round(Valor,2))",
+    "grade": 0.0,
+    "pass_count": 0,
+    "failed_test_indices_0idx": [
+      0,
+      1,
+      2
+    ],
+    "test_results": [
+      {
+        "test_index_0idx": 0,
+        "passed": false,
+        "input": "256.8",
+        "expected": "1640.8",
+        "actual": ""
+      },
+      {
+        "test_index_0idx": 1,
+        "passed": false,
+        "input": "11",
+        "expected": "166.0",
+        "actual": ""
+      },
+      {
+        "test_index_0idx": 2,
+        "passed": false,
+        "input": "9638.75",
+        "expected": "57932.5",
+        "actual": ""
+      }
+    ]
+  },
+  "repair_target": {
+    "outcome_bucket": "no_improvement",
+    "repair_spans_in_next_code": [
+      {
+        "start_line_0idx": 13,
+        "end_line_0idx": 13,
+        "edit_kind": "replace"
+      }
+    ],
+    "changed_line_count_in_next_code": 1,
+    "changed_line_spans_in_next_code": [
+      {
+        "start_line_0idx": 13,
+        "end_line_0idx": 13
+      }
+    ]
+  }
+}

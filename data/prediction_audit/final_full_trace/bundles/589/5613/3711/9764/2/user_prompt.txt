@@ -1,0 +1,725 @@
+Task: predict this student's next submitted attempt n+1.
+
+How to read the payload:
+- Attempts are ordered from oldest to newest.
+- The execution result is the authoritative grading result for each submitted attempt.
+- Each attempt includes the exact code buffer at the start of that attempt block.
+- Each edit segment is lossless raw CodeMirror change data rendered as TSV with a legend.
+- `event_time_delta_ms` means milliseconds since the first trace event in that attempt.
+- `from_line/from_ch/to_line/to_ch` are the raw CodeMirror coordinates.
+- `inserted_text_json` and `removed_text_json` keep the exact inserted and removed text as JSON arrays.
+- `edit_origin` is the raw CodeMirror origin string.
+- Local runs include raw output and the exact code snapshot after the run.
+- Submit anchors include raw feedback and the exact code snapshot at submit.
+- Some attempts may contain repeated submits with no edits between them. Treat that as real behavior, not as noise.
+
+Return exactly 3 hypotheses.
+
+Each hypothesis must include:
+- a short label
+- a probability
+- the full predicted code for the next submitted attempt
+- a predicted next trajectory with 1 to 8 coarse steps
+
+The priority order is:
+1. get the next submitted code right
+2. get the rough next trajectory right
+
+For each predicted trajectory step:
+- use `action_type` from this set only: `edit`, `local_run`, `submit`
+- for `edit`, set `target_start_line_0idx` and `target_end_line_0idx` to one coarse line span in the predicted next code
+- for `local_run` and `submit`, set both target line fields to `-1`
+- repeated `edit` and repeated `local_run` steps are allowed
+- every trajectory must end with `submit`
+- do not try to predict every raw event; this path should stay coarse
+
+Do not invent exercise requirements that are not supported by the visible evidence.
+
+SOURCE
+- class_id: 589
+- assessment_id: 5613
+- assessment_title: Lab 0 – Primeiros passos com o Python - 2020
+- exercise_id: 3711
+- student_id: 9764
+- condition: full
+- visible_transition_index_0idx: 2
+- visible_attempt_indices_0idx: [0,1,2]
+- prediction_target_attempt_index_0idx: 3
+- alignment_policy: visible_narrow_normalized_unique_monotonic__target_immediate_next_submit_block_narrow_normalized_unique__coarse_path_requires_real_edit_and_final_submit
+
+PREDICTION TARGET
+- attempt_index_0idx: 3
+- task: Predict the next submitted attempt after the visible history.
+
+VISIBLE ATTEMPTS
+## Attempt 0
+
+- aligned_submit_index_0idx: 0
+
+- trace_base_timestamp: 2024-04-25T13:18:08.462000
+
+Execution Result
+
+- submitted_at: 2024-04-25 13:20:30
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em 2009 a Ufam completo 100 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em 2009 a Ufam completo 100 anos de fundacao."
+
+Attempt Start Code
+```python
+
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 62
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	7	0	0	0	0	["p"]	[""]	+input
+702	11	0	1	0	1	["r"]	[""]	+input
+885	15	0	2	0	2	["i"]	[""]	+input
+1152	19	0	3	0	3	["n"]	[""]	+input
+7369	25	0	4	0	4	["t"]	[""]	+input
+24786	30	0	5	0	5	["()"]	[""]	+input
+26725	39	0	6	0	6	["\"\""]	[""]	+input
+29000	45	0	7	0	7	["e"]	[""]	+input
+29217	49	0	8	0	8	["m"]	[""]	+input
+30835	52	0	8	0	9	[""]	["m"]	+delete
+31021	56	0	7	0	8	[""]	["e"]	+delete
+32272	62	0	7	0	7	["E"]	[""]	+input
+32835	67	0	8	0	8	["m"]	[""]	+input
+33902	71	0	9	0	9	[" "]	[""]	+input
+36324	74	0	9	0	10	[""]	[" "]	+delete
+39772	79	0	9	0	9	[","]	[""]	+input
+40000	83	0	10	0	10	[" "]	[""]	+input
+41870	86	0	10	0	11	[""]	[" "]	+delete
+43600	90	0	9	0	10	[""]	[","]	+delete
+55772	95	0	9	0	9	[" "]	[""]	+input
+56383	99	0	10	0	10	["2"]	[""]	+input
+56735	103	0	11	0	11	["0"]	[""]	+input
+56916	107	0	12	0	12	["0"]	[""]	+input
+64901	111	0	13	0	13	["9"]	[""]	+input
+67950	115	0	14	0	14	[" "]	[""]	+input
+70418	119	0	15	0	15	["a"]	[""]	+input
+71070	123	0	16	0	16	[" "]	[""]	+input
+73199	128	0	17	0	17	["U"]	[""]	+input
+73870	133	0	18	0	18	["f"]	[""]	+input
+74082	137	0	19	0	19	["a"]	[""]	+input
+74349	141	0	20	0	20	["m"]	[""]	+input
+74566	145	0	21	0	21	[" "]	[""]	+input
+75399	149	0	22	0	22	["c"]	[""]	+input
+75615	153	0	23	0	23	["o"]	[""]	+input
+75870	157	0	24	0	24	["m"]	[""]	+input
+76149	161	0	25	0	25	["p"]	[""]	+input
+76399	165	0	26	0	26	["l"]	[""]	+input
+76727	169	0	27	0	27	["e"]	[""]	+input
+76965	173	0	28	0	28	["t"]	[""]	+input
+77149	177	0	29	0	29	["o"]	[""]	+input
+79470	181	0	30	0	30	[" "]	[""]	+input
+79949	185	0	31	0	31	["1"]	[""]	+input
+80271	189	0	32	0	32	["0"]	[""]	+input
+80399	193	0	33	0	33	["0"]	[""]	+input
+80871	197	0	34	0	34	[" "]	[""]	+input
+82115	201	0	35	0	35	["a"]	[""]	+input
+82637	205	0	36	0	36	["n"]	[""]	+input
+82832	209	0	37	0	37	["o"]	[""]	+input
+82932	213	0	38	0	38	["s"]	[""]	+input
+83165	217	0	39	0	39	[" "]	[""]	+input
+84648	221	0	40	0	40	["d"]	[""]	+input
+84798	225	0	41	0	41	["e"]	[""]	+input
+84882	229	0	42	0	42	[" "]	[""]	+input
+85144	233	0	43	0	43	["f"]	[""]	+input
+85438	237	0	44	0	44	["u"]	[""]	+input
+85700	241	0	45	0	45	["n"]	[""]	+input
+87666	245	0	46	0	46	["d"]	[""]	+input
+88081	249	0	47	0	47	["a"]	[""]	+input
+90482	253	0	48	0	48	["c"]	[""]	+input
+91248	257	0	49	0	49	["a"]	[""]	+input
+91565	261	0	50	0	50	["o"]	[""]	+input
+95714	265	0	51	0	51	["."]	[""]	+input
+
+Submit Anchor 1
+- event_time_delta_ms: 142078
+- raw_log_line: 270
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+print("Em 2009 a Ufam completo 100 anos de fundacao.")
+```
+
+## Attempt 1
+
+- aligned_submit_index_0idx: 1
+
+- trace_base_timestamp: 2024-04-25T13:21:27.057000
+
+Execution Result
+
+- submitted_at: 2024-04-25 13:38:09
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em 1959 a Ufam completo 50 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em 2020 a Ufam completo 111 anos de fundacao."
+
+Attempt Start Code
+```python
+print("Em 2009 a Ufam completo 100 anos de fundacao.")
+```
+
+Trace Timeline
+
+Edit Segment 1
+- raw_change_event_count: 12
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+0	276	0	33	0	34	[""]	["0"]	+delete
+532	280	0	32	0	33	[""]	["0"]	+delete
+1083	284	0	31	0	32	[""]	["1"]	+delete
+2433	290	0	31	0	31	["()"]	[""]	+input
+6172	296	0	32	0	32	["2"]	[""]	+input
+6618	300	0	33	0	33	["0"]	[""]	+input
+6765	304	0	34	0	34	["0"]	[""]	+input
+9151	308	0	35	0	35	["9"]	[""]	+input
+11004	312	0	36	0	36	["-"]	[""]	+input
+11715	316	0	37	0	37	["1"]	[""]	+input
+12039	320	0	38	0	38	["0"]	[""]	+input
+12205	324	0	39	0	39	["0"]	[""]	+input
+
+Local Run 1
+- event_time_delta_ms: 18217
+- raw_log_line: 330
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em 2009 a Ufam completo (2009-100) anos de fundacao.")
+```
+Run Output
+```text
+Em 2009 a Ufam completo (2009-100) anos de fundacao.
+```
+
+Edit Segment 2
+- raw_change_event_count: 1
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+64462	335	0	60	0	61	[""]	[")"]	+delete
+
+Local Run 2
+- event_time_delta_ms: 72400
+- raw_log_line: 344
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em 2009 a Ufam completo (2009-100) anos de fundacao."
+```
+Run Output
+```text
+File "main.py", line 2
+SyntaxError: unexpected EOF while parsing
+```
+
+Edit Segment 3
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+78813	350	0	60	0	60	[")"]	[""]	+input
+81833	357	0	40	0	41	[""]	[")"]	+delete
+85226	362	0	31	0	32	[""]	["("]	+delete
+
+Local Run 3
+- event_time_delta_ms: 88105
+- raw_log_line: 369
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em 2009 a Ufam completo 2009-100 anos de fundacao.")
+```
+Run Output
+```text
+Em 2009 a Ufam completo 2009-100 anos de fundacao.
+```
+
+Edit Segment 4
+- raw_change_event_count: 104
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+269538	373	0	59	0	59	["",""]	[""]	+input
+274690	379	0	38	0	39	[""]	["0"]	+delete
+274840	383	0	37	0	38	[""]	["0"]	+delete
+274955	387	0	36	0	37	[""]	["1"]	+delete
+275176	391	0	35	0	36	[""]	["-"]	+delete
+275321	395	0	34	0	35	[""]	["9"]	+delete
+275479	399	0	33	0	34	[""]	["0"]	+delete
+275771	403	0	32	0	33	[""]	["0"]	+delete
+276472	407	0	31	0	32	[""]	["2"]	+delete
+277657	412	0	31	0	31	["1"]	[""]	+input
+277771	416	0	32	0	32	["0"]	[""]	+input
+277939	420	0	33	0	33	["0"]	[""]	+input
+324703	429	0	30	0	30	[" "]	[""]	+input
+325225	433	0	31	0	31	["p"]	[""]	+input
+325986	437	0	32	0	32	["t"]	[""]	+input
+326285	441	0	33	0	33	["i"]	[""]	+input
+326536	445	0	34	0	34	["n"]	[""]	+input
+326905	449	0	35	0	35	["t"]	[""]	+input
+330143	452	0	35	0	36	[""]	["t"]	+delete
+330318	456	0	34	0	35	[""]	["n"]	+delete
+330636	460	0	33	0	34	[""]	["i"]	+delete
+330888	464	0	32	0	33	[""]	["t"]	+delete
+331819	469	0	32	0	32	["r"]	[""]	+input
+332120	473	0	33	0	33	["i"]	[""]	+input
+333519	477	0	34	0	34	["n"]	[""]	+input
+333785	481	0	35	0	35	["t"]	[""]	+input
+345471	486	0	36	0	36	["()"]	[""]	+input
+349657	493	0	31	0	31	[","]	[""]	+input
+350963	496	0	31	0	32	[""]	[","]	+delete
+351752	502	0	31	0	31	["("]	[""]	+input
+356002	510	0	39	0	39	[")"]	[""]	+input
+357401	514	0	39	0	40	[""]	[")"]	+delete
+358162	518	0	38	0	39	[""]	[")"]	+delete
+374235	522	0	37	0	38	[""]	["("]	+delete
+374451	526	0	36	0	37	[""]	["t"]	+delete
+374600	530	0	35	0	36	[""]	["n"]	+delete
+374767	534	0	34	0	35	[""]	["i"]	+delete
+374952	538	0	33	0	34	[""]	["r"]	+delete
+375150	542	0	32	0	33	[""]	["p"]	+delete
+375388	546	0	31	0	32	[""]	["("]	+delete
+375650	550	0	30	0	31	[""]	[" "]	+delete
+381017	556	1	0	1	0	["p"]	[""]	+input
+381517	559	1	1	1	1	["p"]	[""]	+input
+381552	562	1	2	1	2	["p"]	[""]	+input
+381593	565	1	3	1	3	["p"]	[""]	+input
+381621	568	1	4	1	4	["p"]	[""]	+input
+381653	571	1	5	1	5	["p"]	[""]	+input
+381691	574	1	6	1	6	["p"]	[""]	+input
+381706	577	1	7	1	7	["r"]	[""]	+input
+382000	580	1	8	1	8	["i"]	[""]	+input
+382383	585	1	9	1	9	["n"]	[""]	+input
+382734	590	1	10	1	10	["t"]	[""]	+input
+383817	593	1	10	1	11	[""]	["t"]	+delete
+384316	596	1	9	1	10	[""]	["n"]	+delete
+384354	599	1	8	1	9	[""]	["i"]	+delete
+384394	602	1	7	1	8	[""]	["r"]	+delete
+384422	605	1	6	1	7	[""]	["p"]	+delete
+384451	608	1	5	1	6	[""]	["p"]	+delete
+384485	611	1	4	1	5	[""]	["p"]	+delete
+384519	614	1	3	1	4	[""]	["p"]	+delete
+384553	617	1	2	1	3	[""]	["p"]	+delete
+384585	620	1	1	1	2	[""]	["p"]	+delete
+384619	623	1	0	1	1	[""]	["p"]	+delete
+384652	626	0	54	1	0	[""]	["",""]	+delete
+384687	630	0	53	0	54	[""]	[")"]	+delete
+384718	633	0	52	0	53	[""]	["\""]	+delete
+384760	636	0	51	0	52	[""]	["."]	+delete
+384794	639	0	50	0	51	[""]	["o"]	+delete
+384826	642	0	49	0	50	[""]	["a"]	+delete
+384856	645	0	48	0	49	[""]	["c"]	+delete
+384885	648	0	47	0	48	[""]	["a"]	+delete
+385617	653	0	47	0	47	["p"]	[""]	+input
+386136	657	0	48	0	48	["r"]	[""]	+input
+386334	661	0	49	0	49	["i"]	[""]	+input
+386584	665	0	50	0	50	["n"]	[""]	+input
+387067	669	0	51	0	51	["t"]	[""]	+input
+389933	672	0	51	0	52	[""]	["t"]	+delete
+390172	676	0	50	0	51	[""]	["n"]	+delete
+390366	680	0	49	0	50	[""]	["i"]	+delete
+390519	684	0	48	0	49	[""]	["r"]	+delete
+390699	688	0	47	0	48	[""]	["p"]	+delete
+396403	693	0	47	0	47	["a"]	[""]	+input
+396700	697	0	48	0	48	["c"]	[""]	+input
+397129	701	0	49	0	49	["a"]	[""]	+input
+397260	705	0	50	0	50	["o"]	[""]	+input
+397784	708	0	51	0	51	["",""]	[""]	+input
+397784	709	1	0	1	0	["\t\t"]	[""]	+input
+398584	715	1	2	1	2	["p"]	[""]	+input
+399134	719	1	3	1	3	["r"]	[""]	+input
+399352	723	1	4	1	4	["i"]	[""]	+input
+399672	727	1	5	1	5	["n"]	[""]	+input
+399833	731	1	6	1	6	["t"]	[""]	+input
+400017	735	1	7	1	7	[" "]	[""]	+input
+401483	738	1	7	1	8	[""]	[" "]	+delete
+402384	743	1	7	1	7	[" "]	[""]	+input
+404450	748	1	8	1	8	["()"]	[""]	+input
+407216	754	1	9	1	9	["2"]	[""]	+input
+407517	758	1	10	1	10	["0"]	[""]	+input
+407688	762	1	11	1	11	["0"]	[""]	+input
+408520	766	1	12	1	12	["9"]	[""]	+input
+409549	770	1	13	1	13	["-"]	[""]	+input
+411583	774	1	14	1	14	["1"]	[""]	+input
+411752	778	1	15	1	15	["0"]	[""]	+input
+411916	782	1	16	1	16	["0"]	[""]	+input
+
+Local Run 4
+- event_time_delta_ms: 420219
+- raw_log_line: 790
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+print("Em 2009 a Ufam completo 100 anos de fundacao
+		print (2009-100)
+```
+Run Output
+```text
+File "main.py", line 1
+print("Em 2009 a Ufam completo 100 anos de fundacao
+SyntaxError: EOL while scanning string literal
+```
+
+Edit Segment 5
+- raw_change_event_count: 202
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+694903	795	1	17	1	18	[""]	[")"]	+delete
+695071	799	1	16	1	17	[""]	["0"]	+delete
+695238	803	1	15	1	16	[""]	["0"]	+delete
+695389	807	1	14	1	15	[""]	["1"]	+delete
+695554	811	1	13	1	14	[""]	["-"]	+delete
+695675	815	1	12	1	13	[""]	["9"]	+delete
+695838	819	1	11	1	12	[""]	["0"]	+delete
+696004	823	1	10	1	11	[""]	["0"]	+delete
+696157	827	1	9	1	10	[""]	["2"]	+delete
+696503	831	1	8	1	9	[""]	["("]	+delete
+696654	835	1	7	1	8	[""]	[" "]	+delete
+696821	839	1	6	1	7	[""]	["t"]	+delete
+696941	843	1	5	1	6	[""]	["n"]	+delete
+697121	847	1	4	1	5	[""]	["i"]	+delete
+697271	851	1	3	1	4	[""]	["r"]	+delete
+697421	855	1	2	1	3	[""]	["p"]	+delete
+697587	859	1	1	1	2	[""]	["\t"]	+delete
+703521	866	0	9	0	9	["\""]	[""]	+input
+704721	871	0	10	0	10	[" "]	[""]	+input
+705407	875	0	11	0	11	["n"]	[""]	+input
+705554	878	0	12	0	12	["u"]	[""]	+input
+705871	883	0	13	0	13	["m"]	[""]	+input
+713824	887	0	14	0	14	[","]	[""]	+input
+715887	892	0	11	0	11	[","]	[""]	+input
+721406	896	0	20	0	21	[""]	["9"]	+delete
+721581	900	0	19	0	20	[""]	["0"]	+delete
+721719	904	0	18	0	19	[""]	["0"]	+delete
+721855	908	0	17	0	18	[""]	["2"]	+delete
+722270	912	0	16	0	17	[""]	[" "]	+delete
+726503	917	0	16	0	17	[""]	[" "]	+delete
+727504	922	0	16	0	16	[" "]	[""]	+input
+739287	931	0	32	0	32	["\"\""]	[""]	+input
+744209	939	0	17	0	17	["\""]	[""]	+input
+747236	944	0	35	0	36	[""]	[" "]	+delete
+747806	948	0	34	0	35	[""]	["\""]	+delete
+752755	953	0	34	0	34	[","]	[""]	+input
+753236	957	0	35	0	35	[" "]	[""]	+input
+754135	960	0	35	0	36	[""]	[" "]	+delete
+755619	965	0	35	0	35	["u"]	[""]	+input
+756287	969	0	36	0	36	["m"]	[""]	+input
+756802	973	0	37	0	37	[" "]	[""]	+input
+762469	976	0	37	0	38	[""]	[" "]	+delete
+762673	980	0	36	0	37	[""]	["m"]	+delete
+762835	984	0	35	0	36	[""]	["u"]	+delete
+764152	989	0	35	0	35	["n"]	[""]	+input
+764674	993	0	36	0	36	["u"]	[""]	+input
+765236	997	0	37	0	37	["m"]	[""]	+input
+773768	1001	0	38	0	38	["-"]	[""]	+input
+779852	1007	0	42	0	42	[","]	[""]	+input
+784241	1013	0	44	0	44	["\""]	[""]	+input
+789301	1021	0	61	0	61	["."]	[""]	+input
+790640	1026	0	62	0	62	["\""]	[""]	+input
+791904	1032	0	63	0	63	[")"]	[""]	+input
+796703	1037	0	0	0	0	["",""]	[""]	+input
+807215	1045	0	0	0	0	["https://codebench.icomp.ufam.edu.br/index.php?r=trabalho%2Fview&id=5613&turma=589#codigo-fonte-1-3711"]	[""]	paste
+810867	1049	0	100	0	101	[""]	["1"]	+delete
+811366	1052	0	99	0	100	[""]	["1"]	+delete
+811404	1055	0	98	0	99	[""]	["7"]	+delete
+811433	1058	0	97	0	98	[""]	["3"]	+delete
+811466	1061	0	96	0	97	[""]	["-"]	+delete
+811494	1064	0	95	0	96	[""]	["1"]	+delete
+811537	1067	0	94	0	95	[""]	["-"]	+delete
+811567	1070	0	93	0	94	[""]	["e"]	+delete
+811605	1073	0	92	0	93	[""]	["t"]	+delete
+811634	1076	0	91	0	92	[""]	["n"]	+delete
+811672	1079	0	90	0	91	[""]	["o"]	+delete
+811701	1082	0	89	0	90	[""]	["f"]	+delete
+811734	1085	0	88	0	89	[""]	["-"]	+delete
+811767	1088	0	87	0	88	[""]	["o"]	+delete
+811804	1091	0	86	0	87	[""]	["g"]	+delete
+811843	1094	0	85	0	86	[""]	["i"]	+delete
+811860	1097	0	84	0	85	[""]	["d"]	+delete
+811905	1100	0	83	0	84	[""]	["o"]	+delete
+811934	1103	0	82	0	83	[""]	["c"]	+delete
+811967	1106	0	81	0	82	[""]	["#"]	+delete
+812003	1109	0	80	0	81	[""]	["9"]	+delete
+812036	1112	0	79	0	80	[""]	["8"]	+delete
+812067	1115	0	78	0	79	[""]	["5"]	+delete
+812094	1118	0	77	0	78	[""]	["="]	+delete
+812136	1121	0	76	0	77	[""]	["a"]	+delete
+812172	1124	0	75	0	76	[""]	["m"]	+delete
+812200	1127	0	74	0	75	[""]	["r"]	+delete
+812238	1130	0	73	0	74	[""]	["u"]	+delete
+812267	1133	0	72	0	73	[""]	["t"]	+delete
+812310	1136	0	71	0	72	[""]	["&"]	+delete
+812326	1139	0	70	0	71	[""]	["3"]	+delete
+812367	1142	0	69	0	70	[""]	["1"]	+delete
+812400	1145	0	68	0	69	[""]	["6"]	+delete
+812436	1148	0	67	0	68	[""]	["5"]	+delete
+812469	1151	0	66	0	67	[""]	["="]	+delete
+812501	1154	0	65	0	66	[""]	["d"]	+delete
+812543	1157	0	64	0	65	[""]	["i"]	+delete
+812560	1160	0	63	0	64	[""]	["&"]	+delete
+812600	1163	0	62	0	63	[""]	["w"]	+delete
+812634	1166	0	61	0	62	[""]	["e"]	+delete
+812677	1169	0	60	0	61	[""]	["i"]	+delete
+812692	1172	0	59	0	60	[""]	["v"]	+delete
+812733	1175	0	58	0	59	[""]	["F"]	+delete
+812775	1178	0	57	0	58	[""]	["2"]	+delete
+812791	1181	0	56	0	57	[""]	["%"]	+delete
+812834	1184	0	55	0	56	[""]	["o"]	+delete
+812872	1187	0	54	0	55	[""]	["h"]	+delete
+812900	1190	0	53	0	54	[""]	["l"]	+delete
+812934	1193	0	52	0	53	[""]	["a"]	+delete
+812967	1196	0	51	0	52	[""]	["b"]	+delete
+813010	1199	0	50	0	51	[""]	["a"]	+delete
+813026	1202	0	49	0	50	[""]	["r"]	+delete
+813061	1205	0	48	0	49	[""]	["t"]	+delete
+813104	1208	0	47	0	48	[""]	["="]	+delete
+813143	1211	0	46	0	47	[""]	["r"]	+delete
+813159	1214	0	45	0	46	[""]	["?"]	+delete
+813194	1217	0	44	0	45	[""]	["p"]	+delete
+813233	1220	0	43	0	44	[""]	["h"]	+delete
+813275	1223	0	42	0	43	[""]	["p"]	+delete
+813291	1226	0	41	0	42	[""]	["."]	+delete
+813337	1229	0	40	0	41	[""]	["x"]	+delete
+813369	1232	0	39	0	40	[""]	["e"]	+delete
+813400	1235	0	38	0	39	[""]	["d"]	+delete
+813434	1238	0	37	0	38	[""]	["n"]	+delete
+813467	1241	0	36	0	37	[""]	["i"]	+delete
+813500	1244	0	35	0	36	[""]	["/"]	+delete
+813533	1247	0	34	0	35	[""]	["r"]	+delete
+813571	1250	0	33	0	34	[""]	["b"]	+delete
+813600	1253	0	32	0	33	[""]	["."]	+delete
+813634	1256	0	31	0	32	[""]	["u"]	+delete
+813672	1259	0	30	0	31	[""]	["d"]	+delete
+813701	1262	0	29	0	30	[""]	["e"]	+delete
+813733	1265	0	28	0	29	[""]	["."]	+delete
+813771	1268	0	27	0	28	[""]	["m"]	+delete
+813800	1271	0	26	0	27	[""]	["a"]	+delete
+813833	1274	0	25	0	26	[""]	["f"]	+delete
+813867	1277	0	24	0	25	[""]	["u"]	+delete
+813900	1280	0	23	0	24	[""]	["."]	+delete
+813933	1283	0	22	0	23	[""]	["p"]	+delete
+813959	1286	0	21	0	22	[""]	["m"]	+delete
+813986	1289	0	20	0	21	[""]	["o"]	+delete
+814019	1292	0	19	0	20	[""]	["c"]	+delete
+814050	1295	0	18	0	19	[""]	["i"]	+delete
+814084	1298	0	17	0	18	[""]	["."]	+delete
+814116	1301	0	16	0	17	[""]	["h"]	+delete
+814150	1304	0	15	0	16	[""]	["c"]	+delete
+814191	1307	0	14	0	15	[""]	["n"]	+delete
+814223	1310	0	13	0	14	[""]	["e"]	+delete
+814250	1313	0	12	0	13	[""]	["b"]	+delete
+814284	1316	0	11	0	12	[""]	["e"]	+delete
+814317	1319	0	10	0	11	[""]	["d"]	+delete
+814350	1322	0	9	0	10	[""]	["o"]	+delete
+814384	1325	0	8	0	9	[""]	["c"]	+delete
+814421	1328	0	7	0	8	[""]	["/"]	+delete
+814450	1331	0	6	0	7	[""]	["/"]	+delete
+814484	1334	0	5	0	6	[""]	[":"]	+delete
+814517	1337	0	4	0	5	[""]	["s"]	+delete
+814550	1340	0	3	0	4	[""]	["p"]	+delete
+814583	1343	0	2	0	3	[""]	["t"]	+delete
+814621	1346	0	1	0	2	[""]	["t"]	+delete
+814650	1349	0	0	0	1	[""]	["h"]	+delete
+815491	1370	0	0	0	0	["n"]	[""]	+input
+815817	1374	0	1	0	1	["u"]	[""]	+input
+816084	1378	0	2	0	2	["m"]	[""]	+input
+824583	1386	0	3	0	3	[" "]	[""]	+input
+825749	1390	0	4	0	4	["="]	[""]	+input
+833189	1398	0	5	0	5	["i"]	[""]	+input
+833449	1402	0	6	0	6	["n"]	[""]	+input
+833865	1406	0	7	0	7	["t"]	[""]	+input
+834065	1410	0	8	0	8	[" "]	[""]	+input
+840515	1417	0	8	0	9	[""]	[" "]	+delete
+841569	1423	0	8	0	8	["()"]	[""]	+input
+843063	1429	0	9	0	9	["i"]	[""]	+input
+843682	1433	0	10	0	10	["n"]	[""]	+input
+844617	1437	0	11	0	11	["p"]	[""]	+input
+844918	1441	0	12	0	12	["u"]	[""]	+input
+847832	1444	0	12	0	13	[""]	["u"]	+delete
+848098	1448	0	11	0	12	[""]	["p"]	+delete
+849434	1453	0	11	0	11	["t"]	[""]	+input
+849813	1457	0	12	0	12	["p"]	[""]	+input
+850113	1461	0	13	0	13	["u"]	[""]	+input
+850318	1465	0	14	0	14	["t"]	[""]	+input
+857831	1472	0	11	0	12	[""]	["t"]	+delete
+865686	1482	0	15	0	15	[")"]	[""]	+input
+866897	1486	0	15	0	16	[""]	[")"]	+delete
+870199	1492	0	15	0	15	["()"]	[""]	+input
+897649	1504	1	41	1	42	[""]	["0"]	+delete
+898145	1508	1	40	1	41	[""]	["0"]	+delete
+898816	1512	1	39	1	40	[""]	["1"]	+delete
+900763	1517	1	39	1	39	["1"]	[""]	+input
+901413	1521	1	40	1	40	["0"]	[""]	+input
+902182	1525	1	41	1	41	["0"]	[""]	+input
+902433	1529	1	42	1	42	["9"]	[""]	+input
+906801	1532	1	42	1	43	[""]	["9"]	+delete
+906978	1536	1	41	1	42	[""]	["0"]	+delete
+908146	1541	1	41	1	41	["9"]	[""]	+input
+908346	1545	1	42	1	42	["0"]	[""]	+input
+911233	1548	1	42	1	43	[""]	["0"]	+delete
+911478	1552	1	41	1	42	[""]	["9"]	+delete
+911779	1556	1	40	1	41	[""]	["0"]	+delete
+913212	1561	1	40	1	40	["9"]	[""]	+input
+913329	1565	1	41	1	41	["9"]	[""]	+input
+913480	1569	1	42	1	42	["0"]	[""]	+input
+915762	1572	1	42	1	43	[""]	["0"]	+delete
+915954	1576	1	41	1	42	[""]	["9"]	+delete
+917146	1581	1	41	1	41	["0"]	[""]	+input
+917345	1585	1	42	1	42	["9"]	[""]	+input
+
+Local Run 5
+- event_time_delta_ms: 924145
+- raw_log_line: 1593
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+num =int(input)()
+print("Em" ,num, "a Ufam completo",num-1909, "anos de fundacao.")
+	
+```
+Run Output
+```text
+Traceback (most recent call last):
+File "main.py", line 1, in <module>
+num =int(input)()
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'builtin_function_or_method'
+```
+
+Edit Segment 6
+- raw_change_event_count: 3
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+932628	1600	1	44	1	45	[""]	[" "]	+delete
+934595	1605	1	10	1	11	[""]	[" "]	+delete
+936345	1610	1	15	1	16	[""]	[" "]	+delete
+
+Local Run 6
+- event_time_delta_ms: 940381
+- raw_log_line: 1619
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+num =int(input)()
+print("Em",num,"a Ufam completo",num-1909,"anos de fundacao.")
+	
+```
+Run Output
+```text
+Traceback (most recent call last):
+File "main.py", line 1, in <module>
+num =int(input)()
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'builtin_function_or_method'
+```
+
+Edit Segment 7
+- raw_change_event_count: 14
+TSV columns: event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+event_time_delta_ms	raw_log_line	from_line	from_ch	to_line	to_ch	inserted_text_json	removed_text_json	edit_origin
+945060	1624	0	16	0	17	[""]	[")"]	+delete
+945911	1628	0	15	0	16	[""]	["("]	+delete
+951184	1635	1	33	1	33	["("]	[""]	+input
+954210	1639	1	33	1	34	[""]	["("]	+delete
+959828	1644	0	14	0	15	[""]	[")"]	+delete
+960061	1648	0	14	0	14	["9"]	[""]	+input
+961510	1652	0	14	0	15	[""]	["9"]	+delete
+963029	1658	0	14	0	14	[")"]	[""]	+input
+963910	1664	0	15	0	15	["()"]	[""]	+input
+966993	1669	0	15	0	17	[""]	["()"]	+delete
+969333	1678	0	14	0	14	["()"]	[""]	+input
+973927	1684	0	15	0	15	[" "]	[""]	+input
+975277	1687	0	15	0	16	[""]	[" "]	+delete
+977045	1693	0	15	0	15	["\"\""]	[""]	+input
+
+Local Run 7
+- event_time_delta_ms: 992265
+- raw_log_line: 1702
+- command: "$ python3 main.py"
+Code After This Local Run
+```python
+num =int(input(""))
+print("Em",num,"a Ufam completo",num-1909,"anos de fundacao.")
+	
+```
+Run Output
+```text
+2020
+Em 2020 a Ufam completo 111 anos de fundacao.
+```
+
+Submit Anchor 1
+- event_time_delta_ms: 1002196
+- raw_log_line: 1703
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+num =int(input(""))
+print("Em",num,"a Ufam completo",num-1909,"anos de fundacao.")
+	
+```
+
+## Attempt 2
+
+- aligned_submit_index_0idx: 2
+
+- trace_base_timestamp: 2024-04-25T13:38:44.147000
+
+Execution Result
+
+- submitted_at: 2024-04-25 13:38:44
+- grade: 0.0
+- pass_count: 0
+- failed_test_indices_0idx: [0,1]
+- test_outcome: all_fail
+- test_results:
+  - test_index_0idx: 0 [FAIL]
+    input: "1959"
+    expected: "Em 1959 a UFAM completou 50 anos de fundacao."
+    actual: "Em 1959 a Ufam completo 50 anos de fundacao."
+  - test_index_0idx: 1 [FAIL]
+    input: "2020"
+    expected: "Em 2020 a UFAM completou 111 anos de fundacao."
+    actual: "Em 2020 a Ufam completo 111 anos de fundacao."
+
+Attempt Start Code
+```python
+num =int(input(""))
+print("Em",num,"a Ufam completo",num-1909,"anos de fundacao.")
+	
+```
+
+Trace Timeline
+
+Submit Anchor 1
+- event_time_delta_ms: 0
+- raw_log_line: 1710
+- feedback: "Your code did not produce the correct output. Please, correct your code and try again."
+Code At This Submit
+```python
+num =int(input(""))
+print("Em",num,"a Ufam completo",num-1909,"anos de fundacao.")
+	
+```
