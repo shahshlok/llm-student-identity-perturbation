@@ -131,4 +131,9 @@ Start here before opening implementation:
 
 Then move to `src/identity_perturbation/...` only if you need implementation inspection.
 
+For a complete no-code order and claim tracing, use:
+
+- [docs/overview-index.md](docs/overview-index.md)
+- [docs/claim-to-artifact-map.md](docs/claim-to-artifact-map.md)
+
 See also [docs/reviewer-onboarding.md](docs/reviewer-onboarding.md) for a structured first-pass checklist.
