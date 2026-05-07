@@ -2,65 +2,104 @@
 
 ## Purpose
 
-This artifact supports the empirical claim that personalized-sounding LLM student-model outputs should not be treated as evidence of student-specific prediction. It provides the code, prompts, model outputs, scoring results, and comparison reports used for the narrative and prediction audits.
+This repository is the public artifact for the identity-perturbation study on novice programming data.
 
-## Main Empirical Components
+It is designed for third-party review and replication of the following:
 
-### Narrative Audit
+- what was measured,
+- how matched conditions were built,
+- how scores were produced,
+- what those scores do and do not support.
 
-Location: `data/narrative_audit/`
+The artifact is not a production deployment package.
 
-The narrative audit contains 117 hydrated predictions per primary condition and the derived lexical/template analyses used to evaluate whether summaries appear individualized rather than templated.
+## What is included and why
 
-Primary files:
+### 1) Narrative audit
+
+Purpose:
+
+- examine whether narrative predictions appear individualized,
+- detect template and grounding differences across trace conditions,
+- check whether narratives track the focal student more than context.
+
+Primary locations:
 
 - `data/narrative_audit/full_trace/hydrated_predictions.json`
 - `data/narrative_audit/no_trace/hydrated_predictions.json`
+- `data/narrative_audit/trace_shuffled/hydrated_predictions.json`
 - `data/narrative_audit/comparisons/narrative_pattern_analysis.json`
 - `data/narrative_audit/comparisons/narrative_deep_analysis.json`
+- `data/narrative_audit/comparisons/cognitive_accuracy_tests.json`
 
-Primary code:
+Key code:
 
 - `src/identity_perturbation/narrative_audit/narrative_analysis.py`
 - `src/identity_perturbation/narrative_audit/narrative_deep_analysis.py`
 
-### Prediction Audit
+### 2) Prediction audit
 
-Location: `data/prediction_audit/`
+Purpose:
 
-The prediction audit is the main identity-perturbation analysis. It compares the top-ranked predicted next submission for a focal student against both the focal student's real next submission and matched peers' real next submissions.
+- test whether prediction quality is concentrated on focal students or mostly recoverable from shared state,
+- evaluate discrimination between focal and matched-peer predictions,
+- compare full-trace versus no-trace evidence conditions.
 
-Primary files:
+Primary locations:
 
+- `data/prediction_audit/selection_preparation/prep_report.json`
 - `data/prediction_audit/final_full_trace/manifest.json`
-- `data/prediction_audit/final_full_trace/scores_v2/report.json`
 - `data/prediction_audit/final_no_trace/manifest.json`
+- `data/prediction_audit/final_full_trace/scores_v2/report.json`
 - `data/prediction_audit/final_no_trace/scores_v2/report.json`
 - `data/prediction_audit/final_condition_comparison/report.json`
+- `data/prediction_audit/final_condition_comparison/README.md` (if present in your snapshot)
 
-Primary code:
+Key code:
 
 - `src/identity_perturbation/prediction_audit/report_full_trace_run_v2.py`
 - `src/identity_perturbation/prediction_audit/compare_condition_reports_v2.py`
-- `src/identity_perturbation/prediction_audit/full_trace_suite_v2.py`
 - `src/identity_perturbation/prediction_audit/full_trace_scorer_v2.py`
+- `src/identity_perturbation/prediction_audit/full_trace_suite_v2.py`
+- `src/identity_perturbation/prediction_audit/score_full_trace_bundle_v2.py`
 
-## Final Prediction-Audit Denominator
+## Final quantitative scope
 
-The final denominator is:
+For this public artifact, the final analyzed prediction scope is:
 
-- 91 matched assessment-state scopes
-- 209 prediction rows per condition
-- 310 directed focal-peer comparisons
+- 91 matched assessment-state scopes,
+- 209 prediction rows per condition,
+- 310 directed focal-peer comparisons,
+- two conditions: `full_trace` and `no_trace`.
 
-The larger `selection_preparation` directory records the multi-semester candidate universe before matching and filtering. Its `prep_report.json` records `combined_scope_record_count = 4290`; this is not the final scored scope count.
+The selection stage includes 4,290 candidate scope records (`selection_preparation/prep_report.json`) prior to filtering and matching. The 4,290 count is a pre-filter universe, not the final scoring denominator.
 
-## Conditions
+## Condition definitions
 
-`full_trace` includes submitted-code and execution evidence through the focal attempt, plus process trace evidence before the observed next submission.
+- `full_trace`: includes code, test outcome context, and trace context leading to target attempts.
+- `no_trace`: includes code and test outcome context but excludes trace context.
+- `trace_shuffled`: controls narrative and contextual robustness; retained for narrative-layer diagnostics.
 
-`no_trace` includes submitted-code and execution evidence through the focal attempt, but excludes IDE/process trace evidence. It is not a cold-start condition.
+These conditions are paired with identical scope matching in order to isolate whether added signal changes prediction identity behavior.
 
-## Inference
+## Inference strategy
 
-The primary comparison report uses matched assessment-state scope as the bootstrap cluster. The final condition comparison uses 10,000 bootstrap resamples with seed 42. The L2B code-distance sweep is sensitivity analysis; L2A matched assessment state is the primary denominator.
+The primary comparison is a matched-pair directional test:
+
+- each row produces focal→peer comparisons within the same assessment-state scope,
+- identity discrimination is calculated per-scope and aggregated by scope cluster to avoid false independence assumptions,
+- condition-level contrast uses bootstrap over scope clusters with seed `42` and `10000` resamples.
+
+`L2A` scope matching is the primary analytic denominator. `L2B` is used as a sensitivity analysis.
+
+## What this artifact can support
+
+- Interpretation of the identity-specific versus state-specific behavior claimed in the study.
+- Recalculation of final prediction score tables from archived outputs.
+- Independent review of whether claim boundaries are respected in interpretation.
+
+## What this artifact does not support
+
+- Claims of true belief reconstruction in production settings.
+- Guaranteed student-level behavioral inferences from model outputs.
+- Replacement for raw internal data access beyond what is shared in this artifact.

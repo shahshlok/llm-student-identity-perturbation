@@ -1,51 +1,65 @@
 # LLM Student Identity Perturbation
 
-This repository is the public research artifact for:
+## Purpose
+
+This repository is the public artifact for:
 
 **Do LLM Student Models Track the Student or the Situation? A Matched-Peer Study in Novice Programming**
 
-The artifact supports an identity-perturbation audit of LLM student models on novice Python programming data. The central question is whether an LLM prediction is targeted to the focal student, or whether it mainly reflects the shared programming situation: the same exercise and the same current test-outcome state.
+The artifact documents an identity-perturbation benchmark on novice Python submissions. The central hypothesis is that a model's next-submission prediction should be targeted to the focal student, not just to the shared assessment state (same task, same current outcomes, same visible history shape).
 
-## Artifact Summary
+## What is in this repository
 
-The study has two linked empirical parts:
+- Narrative audit: comparison of generated narrative responses across conditions.
+- Prediction audit: matched-peer identity perturbation comparisons on the final prompting conditions.
+- Full scoring contracts, metrics, and comparison logic used in the paper.
+- Minimal commands and scripts needed to verify key outputs.
 
-1. **Narrative audit**: 117 LLM-generated narrative cases are analyzed for variation, grounding, and repeated template language.
-2. **Prediction audit**: a matched-peer identity-perturbation analysis compares LLM predictions for students in the same assessed programming state.
+## Empirical design summary
 
-The final prediction-audit run uses:
+The public artifact records a two-part study:
 
-- 4 CodeBench semesters: `2022-2`, `2023-1`, `2023-2`, and `2024-1`
-- 91 matched assessment-state scopes
-- 209 prediction rows per condition
-- 310 directed focal-peer comparisons
-- 2 prediction conditions: `full_trace` and `no_trace`
+1. **Narrative audit**
+   - 117 hydrated narrative predictions across `full_trace`, `no_trace`, and `trace_shuffled` settings.
+   - Tests template reuse, personalization signals, and narrative variation patterns.
+2. **Prediction audit**
+   - Main test compares a model's top candidate against focal students and matched peers.
+   - Final scored comparison is done on:
+     - 4 CodeBench semesters: `2022-2`, `2023-1`, `2023-2`, `2024-1`
+     - 91 matched assessment-state scopes
+     - 209 predictions per condition
+     - 310 directed focal-peer comparisons
+   - Two conditions: `full_trace` and `no_trace`.
+
+Model and scorer configuration used for the packaged final runs:
+
 - model: `gpt-5.4`
 - reasoning effort: `xhigh`
-- scope-cluster bootstrap inference with 10,000 resamples and seed 42
+- condition comparison bootstrap: 10,000 samples, random seed 42
+- scoring contract: `v6_2_full_trace_scored_prediction_v2` (v2 metrics family)
 
-The larger selection-preparation artifact records 4,290 candidate scope records before matching, preflight, and L2A retention.
+The selection-preparation stage records 4,290 candidate rows before matching and strict scope filtering.
 
-## Repository Layout
+## Repository layout
 
 ```text
 .
 ├── data/
 │   ├── prediction_audit/
-│   │   ├── selection_preparation/        # multi-semester candidate-scope preparation
-│   │   ├── final_full_trace/             # final full-trace requests, bundles, and scores
-│   │   ├── final_no_trace/               # final no-trace requests, bundles, and scores
-│   │   ├── final_condition_comparison/   # cluster-bootstrap comparison report
-│   │   └── openai_batch_outputs/         # raw OpenAI batch output JSONL files
+│   │   ├── selection_preparation/        # candidate scope preparation
+│   │   ├── final_full_trace/             # final full-trace prompt bundles and scores
+│   │   ├── final_no_trace/               # final no-trace prompt bundles and scores
+│   │   ├── final_condition_comparison/   # bootstrap comparison output
+│   │   └── openai_batch_outputs/         # archived batch response JSONL
 │   └── narrative_audit/
 │       ├── full_trace/
 │       ├── no_trace/
 │       ├── trace_shuffled/
 │       └── comparisons/
 ├── src/identity_perturbation/
-│   ├── codebench_support/                # parsers and shared CodeBench helpers
-│   ├── prediction_audit/                 # matched-peer scoring and comparison code
-│   └── narrative_audit/                  # narrative audit code
+│   ├── codebench_support/                # dataset parsing and benchmark utilities
+│   ├── prediction_audit/                 # matching, scoring, and condition comparison
+│   └── narrative_audit/                  # narrative processing and comparison tooling
 ├── docs/
 │   ├── artifact.md
 │   ├── reproducibility.md
@@ -54,21 +68,15 @@ The larger selection-preparation artifact records 4,290 candidate scope records 
 └── tests/
 ```
 
-## Quick Start
+## Reproducibility playbook (from artifacts)
 
-Install dependencies with `uv`:
+Install dependencies:
 
 ```bash
 uv sync
 ```
 
-Run the test suite:
-
-```bash
-uv run pytest -q
-```
-
-Re-score the final prediction runs:
+Re-score the final full-trace and no-trace runs:
 
 ```bash
 uv run python -m identity_perturbation.prediction_audit.report_full_trace_run_v2 \
@@ -84,7 +92,7 @@ uv run python -m identity_perturbation.prediction_audit.report_full_trace_run_v2
   --out data/prediction_audit/final_no_trace/scores_v2/report.json
 ```
 
-Re-run the condition comparison:
+Recompute the condition comparison:
 
 ```bash
 uv run python -m identity_perturbation.prediction_audit.compare_condition_reports_v2 \
@@ -93,8 +101,34 @@ uv run python -m identity_perturbation.prediction_audit.compare_condition_report
   --out data/prediction_audit/final_condition_comparison/report.json
 ```
 
-## Data Use Note
+Run narrative summary checks:
 
-The artifact contains de-identified CodeBench-derived programming records, model requests, model outputs, and scoring artifacts. Identifiers are dataset keys rather than student names or demographic attributes. Local source-machine paths have been replaced with artifact-relative paths or placeholder roots such as `<CODEBENCH_DATA_ROOT>`.
+```bash
+uv run python -m identity_perturbation.narrative_audit.narrative_analysis
+```
 
-See [`docs/data_provenance.md`](docs/data_provenance.md) for the data boundary and [`docs/reproducibility.md`](docs/reproducibility.md) for verification commands.
+Run the test suite if you want a code-quality smoke check:
+
+```bash
+uv run pytest -q
+```
+
+## How to interpret the outputs
+
+- The primary inference target is whether full-trace condition improves identity discrimination over no-trace while controlling for shared states.
+- The interpretation boundary is reported in `docs/scoring_contract.md` and `docs/artifact.md`.
+- The paper-level focus is discrimination quality under same-state matching, not absolute generation quality.
+- All identifiers are dataset keys; no student names or protected attributes are included in this public artifact.
+
+## Reviewer path
+
+Start here before opening implementation:
+
+1. `docs/artifact.md` (artifact summary and study components)
+2. `docs/data_provenance.md` (sample construction and boundaries)
+3. `docs/scoring_contract.md` (metric definitions and limitations)
+4. `docs/reproducibility.md` (exact rerun commands)
+
+Then move to `src/identity_perturbation/...` only if you need implementation inspection.
+
+See also [docs/reviewer-onboarding.md](docs/reviewer-onboarding.md) for a structured first-pass checklist.
